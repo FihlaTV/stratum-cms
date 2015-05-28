@@ -98,7 +98,6 @@ exports.initLocals = function(req, res, next) {
 				});
 		}
 	}, function(err){
-		console.log(JSON.stringify(locals));
 		if(err){
 			console.log(err);
 		}
