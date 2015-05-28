@@ -6,7 +6,8 @@ require('dotenv').load();
 var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
-	widgets = require('./utils/stratumWidgets');
+	widgets = require('./utils/stratumWidgets'),
+	Helpers = require('./templates/views/helpers');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -27,7 +28,7 @@ keystone.init({
 		layoutsDir: 'templates/views/layouts',
 		partialsDir: 'templates/views/partials',
 		defaultLayout: 'default',
-		helpers: new require('./templates/views/helpers')(),
+		helpers: new Helpers(),
 		extname: '.hbs'
 	}).engine,
 	
@@ -80,7 +81,7 @@ keystone.set('nav', {
 	'galleries': 'galleries',
 	'enquiries': 'enquiries',
 	'users': 'users',
-	'widgets': 'widgets',
+	'widgets': 'widgets'
 });
 
 // Start Keystone to connect to your database and initialise the web server
