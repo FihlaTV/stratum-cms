@@ -1,0 +1,32 @@
+.news-widget {
+	position: relative;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	.news-widget-caption{
+		padding: 10px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background-color: fade(lighten(@gray, 40%), 90%);
+		transition: padding-top 0.12s ease-in;
+		.news-widget-caption-lead{
+			.hidden-sm();
+		}
+
+	}
+	img{
+		width: 100%;
+	}
+	a{
+		color: @text-color;
+	}
+	&:hover{
+		.news-widget-caption{
+			background-color: lighten(@gray, 40%);
+			padding-top: 35px;
+			transition: padding-top 0.12s ease-in;
+		}
+	}
+}
