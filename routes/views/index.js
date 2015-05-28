@@ -35,6 +35,17 @@ exports = module.exports = function(req, res) {
 
 	});
 
+	//Load Start Page settings
+	view.on('init', function(next){
+		var StartPage = keystone.list('StartPage').model;
+		StartPage.findOne(function(err, startPage){
+			if(!err && startPage){
+				locals.data.startPage = startPage;
+			}
+			next(err);
+		});
+	});
+
 	view.on('init', function(next) {
 		var q = keystone.list('NewsItem').model.find({
 			state: 'published'
