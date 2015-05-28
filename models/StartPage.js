@@ -10,7 +10,7 @@ var StartPage = new keystone.List('StartPage', {
 	nocreate: true,
 	nodelete: true,
 	map: { name: 'header' },
-	plural: 'StartPage'
+	plural: 'Start Page'
 	// autokey: { path: 'slug', from: 'title', unique: true }
 });
 
@@ -42,18 +42,21 @@ StartPage.add({
 				}]
 			},
 			image: {
+				label: 'Image',
 				type: Types.CloudinaryImage,
 				dependsOn: {
 					'informationBlurb.type': 'image'
 				}
 			},
 			imageText: {
+				label: 'Image Text',
 				type: String,
 				dependsOn: {
 					'informationBlurb.type': 'image'
 				}
 			},
 			meeting: {
+				label: 'Meeting',
 				type: String,
 				dependsOn: {
 					'informationBlurb.type': 'meeting'
@@ -70,6 +73,4 @@ StartPage.add({
 	}
 });
  
-// StartPage.defaultSort = 'category';
-// StartPage.defaultColumns = 'title, state|20%, category|20%, publishedDate|20%';
 StartPage.register();
