@@ -12,7 +12,6 @@ var _ = require('underscore'),
 	keystone = require('keystone'),
 	async = require('async');
 
-
 /**
 	Initialises the standard view locals
 	
@@ -23,12 +22,8 @@ var _ = require('underscore'),
 
 exports.initLocals = function(req, res, next) {
 	
-	var locals = res.locals;
-
-	var categoryQuery = keystone.list('ContentCategory').model
-				.find()
-				.populate('pages')
-				.sort('sortOrder');
+	var locals = res.locals,
+		context = {};
 
 	locals.navLinks = [
 		// { label: 'Home',		key: 'home',		href: '/' },
@@ -36,37 +31,79 @@ exports.initLocals = function(req, res, next) {
 	];
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
-	categoryQuery.exec(function(err, categories) {
-		if (err) {
-			console.log('could not load categories');
-		}
-		locals.categories = categories.map(function(category){
-			return {name: category.name, slug: category.slug};
-		});
-		async.eachSeries(categories, function(category, callback){
-			keystone.list('ContentPage').model.find()
-				.where('category', category.id)
-				.where('state', 'published')
+	async.series({
+		loadCategories: function(cb) {
+			keystone.list('ContentCategory').model
+				.find()
+				.populate('pages')
 				.sort('sortOrder')
-				.exec(function(err2, pages) {
-					var innerLinks;
-					if(!pages || pages.length <= 0){
-						callback(err2);
-						return;
-					}
-					innerLinks = pages.map(function(page){
-						return {label: page.title, key: category.slug + '/' + page.slug, href: '/' + category.slug + '/' + page.slug};
-					});
-					locals.navLinks.push({label: category.name, key: category.slug, href: (pages.length === 1 ? innerLinks[0].href : innerLinks), isSubmenu: pages.length > 1 });
-					callback(err2);
+				.exec(function(err, categories) {
+					context.categories = categories;
+					cb(err);
 				});
-		}, function(err){	
-			locals.navLinks.push({ label: 'Gallery',		key: 'gallery',		href: '/gallery' },
-				{ label: 'Contact',		key: 'contact',		href: '/contact' });
-			next(err);
-		});
+		},
+		loadPages: function(cb){
+			context.pages = [];
+			async.each(context.categories, function(category, callback) {
+				keystone.list('ContentPage').model
+					.find()
+					.where('category', category.id)
+					.where('state', 'published')
+					.sort('sortOrder')
+					.exec(function(err, pages) {
+						var innerLinks;
+						if (!pages || pages.length <= 0) {
+							callback(err);
+							return;
+						}
+						innerLinks = pages.map(function(page) {
+							return {
+								label: page.title,
+								key: category.slug + '/' + page.slug,
+								href: '/' + category.slug + '/' + page.slug
+							};
+						});
+						context.pages.push({
+							label: category.name,
+							key: category.slug,
+							href: (pages.length === 1 ? innerLinks[0].href : innerLinks),
+							isSubmenu: pages.length > 1,
+							sortOrder: category.sortOrder
+						});
+						callback(err);
+					});
+			}, cb);
+		},
+		addCategoriesToNav: function(cb) {
+			locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			locals.navLinks.push({
+				label: 'Gallery',
+				key: 'gallery',
+				href: '/gallery'
+			}, {
+				label: 'Contact',
+				key: 'contact',
+				href: '/contact'
+			});
+			cb();
+		},
+		lookupBrandName: function(cb){
+			var StartPage = keystone.list('StartPage');
+			StartPage.model
+				.findOne(function(err, startPage){
+					if(startPage){
+						locals.brandName = startPage.header;
+					}
+					cb(err);
+				});
+		}
+	}, function(err){
+		console.log(JSON.stringify(locals));
+		if(err){
+			console.log(err);
+		}
+		next();
 	});
-	
 };
 
 
