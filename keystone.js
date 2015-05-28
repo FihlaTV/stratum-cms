@@ -74,11 +74,13 @@ keystone.set('routes', require('./routes'));
  
 keystone.set('nav', {
 	'content': ['content-pages', 'content-categories'],
+	'start-pages': 'start-pages',
 	'news': 'news-items',
 	'posts': ['posts', 'post-categories'],
 	'galleries': 'galleries',
 	'enquiries': 'enquiries',
-	'users': 'users'
+	'users': 'users',
+	'widgets': 'widgets',
 });
 
 // Start Keystone to connect to your database and initialise the web server
