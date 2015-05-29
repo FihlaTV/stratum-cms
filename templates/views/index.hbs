@@ -1,24 +1,29 @@
 {{!< default}}
 <div id="head-carousel" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
 	<ol class="carousel-indicators">
-		{{# each data.posts.results}}
+		{{# each data.news}}
+		{{#if image.exists}}
 		<li data-target="#head-carousel" data-slide-to="{{@index}}" {{#if @first }}class="active"{{/if}}></li>
+		{{/if}}		
 		{{/each}}
 	</ol>
 	<!-- Indicators -->
 	<div class="carousel-inner" role="listbox">
-		{{# each data.posts.results}}
+		{{# each data.news}}
+		{{#if image.exists}}
 		<div class="item {{#if @first }}active{{/if}}">
-			<a href="{{postUrl slug}}"><img src="{{cloudinaryUrl image width="1024" height="400" crop="fill" gravity="north"}}">
+			<a href="{{newsUrl slug}}">
+				<img src="{{cloudinaryUrl image width="1024" height="400" crop="fill" gravity="north"}}">
 			</a>
 			<div class="carousel-caption">
 				<h2>{{{title}}}</h2>
 				<p class="hidden-xs">
 					{{content.brief}}
-					<a href="{{postUrl slug}}">...läs mer</a>
+					<a href="{{newsUrl slug}}">...läs mer</a>
 				</p>
 			</div>
 		</div>
+		{{/if}}
 		{{/each}}
 	</div>
 	<!-- Controls -->
