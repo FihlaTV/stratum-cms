@@ -12,7 +12,8 @@ var Widget = new keystone.List('Widget', {
 	autokey: {
 		from: 'name',
 		path: 'key'
-	}
+	},
+	sortable: true
 });
 
 Widget.add({
