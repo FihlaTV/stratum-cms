@@ -57,10 +57,10 @@
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
-	<div class="img-caption-ct">
+	<div class="caption-ct">
 		<img src="{{cloudinaryUrl informationBlurb.image width=600 height=400 crop='fill'}}" class="img-responsive">
 		{{#if informationBlurb.imageText}}
-		<div class="img-caption-text">
+		<div class="caption-text">
 			{{informationBlurb.imageText}}
 		</div>
 		{{/if}}

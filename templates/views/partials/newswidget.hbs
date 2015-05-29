@@ -1,10 +1,10 @@
 {{#with data.news.[0]}}
-<div class="news-widget">
+<div class="caption-ct news-widget">
 	<a href="{{newsUrl slug}}">
 	{{#if image}}
 	<img src="{{cloudinaryUrl image width="500" height="500" crop="fill"}}" alt="" class="img-responsive">
 	{{/if}}
-	<div class="news-widget-caption">
+	<div class="caption-text news-widget-caption">
 		<h2>{{title}}</h2>
 		<p class="news-widget-caption-lead">{{content.lead}}</p>
 	</div>
