@@ -33,6 +33,7 @@
 </div>
 {{#with data.startPage}}
 <div class="container-fluid">
+	<div class="row">
 	<div class="col-sm-8">
 		{{!-- <img src="/images/logo.svg" width="160" class="pull-right"> --}}
 		<h1>{{header}}</h1>
@@ -68,5 +69,13 @@
 	{{/ifeq}}
 	</div>
 	{{/with}}
+	</div>
+	<div class="row">
+		{{#each data.widgets}}
+		<div class="col-sm-4 col-lg-3">
+			{{>stratumwidget}}
+		</div>
+		{{/each}}
+	</div>
 </div>
 
