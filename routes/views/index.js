@@ -10,7 +10,8 @@ exports = module.exports = function(req, res) {
 	locals.section = 'home';
 	locals.data = {
 		posts: [],
-		news: []
+		news: [],
+		widgets: []
 	};
 	// Load the posts
 	view.on('init', function(next) {
@@ -44,6 +45,20 @@ exports = module.exports = function(req, res) {
 			}
 			next(err);
 		});
+	});
+
+	//Load widgets
+	view.on('init', function(next){
+		var Widget = keystone.list('Widget').model;
+		Widget.find()
+			.where('showOnStartPage', true)
+			.sort('sortOrder')
+			.limit(10)
+			.populate('stratumWidget')
+			.exec(function(err, widgets){
+				locals.data.widgets = widgets;
+				next(err);
+			});
 	});
 
 	view.on('init', function(next) {
