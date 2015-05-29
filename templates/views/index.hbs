@@ -31,16 +31,13 @@
 		<span class="sr-only">Next</span>
 	</a>
 </div>
+{{#with data.startPage}}
 <div class="container-fluid">
+	<div class="row">
 	<div class="col-sm-8">
 		{{!-- <img src="/images/logo.svg" width="160" class="pull-right"> --}}
-		<h1>Stratum<sup>3</sup></h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<h1>{{header}}</h1>
+		{{description}}
 		<hr>
 		<p>We have created a default Admin user for you with the email <strong>user@keystonejs.com</strong> and the password <strong>admin</strong>.</p>
 		<p><a href="/keystone/signin" style="margin-right: 10px" class="btn btn-lg btn-primary">Sign in</a> to use the Admin UI.</p>
@@ -51,6 +48,34 @@
 		</p>
 	</div>
 	<div class="col-sm-4">
-		{{>newsroll}}
+	{{#ifeq informationBlurb.type 'newsRoll'}}
+		{{>newsroll ./../..}}
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'newsItem'}}
+		{{>newswidget ./../..}}
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'meeting'}}
+		Meeting
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'image'}}
+	<div class="caption-ct">
+		<img src="{{cloudinaryUrl informationBlurb.image width=600 height=400 crop='fill'}}" class="img-responsive">
+		{{#if informationBlurb.imageText}}
+		<div class="caption-text">
+			{{informationBlurb.imageText}}
+		</div>
+		{{/if}}
+	</div>
+	{{/ifeq}}
+	</div>
+	{{/with}}
+	</div>
+	<div class="row">
+		{{#each data.widgets}}
+		<div class="col-sm-4 col-lg-3">
+			{{>stratumwidget}}
+		</div>
+		{{/each}}
 	</div>
 </div>
+

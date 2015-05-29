@@ -4,7 +4,7 @@ var keystone = require('keystone'),
 /**
  * Stratum Widget Model
  * ==========
- *
+ * Represents a widget in stratum as specified by the api
  *
  */
 
