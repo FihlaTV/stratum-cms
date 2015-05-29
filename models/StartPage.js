@@ -63,14 +63,14 @@ StartPage.add({
 				}
 			}
 		}
-	}, 'Widgets', {
-		widgets: {
-			'1': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-			'2': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-			'3': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-			'4': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-			'5': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true }
-	}
+	// }, 'Widgets', {
+	// 	widgets: {
+	// 		'1': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
+	// 		'2': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
+	// 		'3': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
+	// 		'4': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
+	// 		'5': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true }
+	// }
 });
  
 StartPage.register();
