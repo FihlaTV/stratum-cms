@@ -12,7 +12,7 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next){
 		view.query('users', keystone.list('User').model
 			.find()
-			// .where('showOnContactPage', true)
+			.where('showOnContactPage', true)
 			.sort({'name.last': 1, 'name.first': 1}));
 
 		next();
