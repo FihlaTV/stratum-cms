@@ -12,11 +12,13 @@ User.add({
 	name: { type: Types.Name, required: true, index: true },
 	email: { type: Types.Email, initial: true, required: true, index: true },
 	password: { type: Types.Password, initial: true, required: true },
+	image: { type: Types.CloudinaryImage },
+	phone: { type: String },
+	title: { type: String, label: 'Work Title'},
 	showOnContactPage: { type: Boolean }
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
-	isAuthorized: { type: Boolean, label: 'Can access login required pages', dependsOn: {isAdmin: false} },
-	image: { type: Types.CloudinaryImage }
+	isAuthorized: { type: Boolean, label: 'Can access login required pages', dependsOn: {isAdmin: false} }
 });
 
 // Provide access to Keystone

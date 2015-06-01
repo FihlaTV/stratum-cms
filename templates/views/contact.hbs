@@ -19,7 +19,10 @@
 						{{/if}}" alt="" class="">
 					<div class="contact-user-info">
 						<h3>{{name.full}}</h3>
-						<span class="glyphicon glyphicon-envelope"></span> <span class="">{{email}}</span>
+						{{#if title}}<p class="contact-user-title">{{title}}</p>{{/if}}
+						<p><span class="glyphicon glyphicon-envelope"></span> <span class="">{{email}}</span></p>
+						{{#if phone}}<p><span class="glyphicon glyphicon-phone"></span> {{phone}}</p>{{/if}}
+
 					</div>
 				</div>
 			{{!-- </div> --}}
