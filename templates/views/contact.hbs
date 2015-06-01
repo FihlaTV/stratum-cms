@@ -1,45 +1,32 @@
 <div class="container">
-	<h1>Contact Us</h1>
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-8 col-md-6">
-			{{#if enquirySubmitted}}
-			<h3>Thanks for getting in touch.</h3>
-			{{else}}
-			<form method="post">
-				<input type="hidden" name="action" value="contact">
-				<div class="form-group {{#if validationErrors.name}}has-error{{/if}}">
-					<label>Name</label>
-					<input type="text" name="name.full"  class="form-control" value="{{formData.[name.full]}}">
+		<div class="col-md-8">
+			<h1>Kontakta oss</h1>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa est aliquid, sunt mollitia unde laborum sed inventore nostrum atque placeat sequi excepturi alias adipisci! Perferendis doloribus labore officia neque corrupti.
+		</div>
+		<div class="col-md-4">
+		<h2>Kontaktpersoner</h2>
+		{{#each users}}
+			{{!-- <div class="col-xs-6 col-sm-4 col-md-3"> --}}
+				<div class="contact-user">
+					<img src="
+						{{#if image.exists}}
+							{{cloudinaryUrl image width="160" height="160" crop="fill" gravity="face"}}
+						{{else}}
+							/images/avatar.png
+						{{/if}}" alt="" class="">
+					<div class="contact-user-info">
+						<h3>{{name.full}}</h3>
+						{{#if title}}<p class="contact-user-title">{{title}}</p>{{/if}}
+						<p><span class="glyphicon glyphicon-envelope"></span> <span class="">{{email}}</span></p>
+						{{#if phone}}<p><span class="glyphicon glyphicon-phone"></span> {{phone}}</p>{{/if}}
+
+					</div>
 				</div>
-				<div class="form-group {{#if validationErrors.email}}has-error{{/if}}">
-					<label>Email</label>
-					<input type="email" name="email" class="form-control" value="{{formData.email}}">
-				</div>
-				<div class="form-group">
-					<label>Phone</label>
-					<input type="text" name="phone" placeholder="(optional)" class="form-control" value="{{formData.phone}}">
-				</div>
-				<div class="form-group {{#if validationErrors.enquiryType}}has-error{{/if}}">
-					<label>What are you contacting us about?</label>
-					<select name="enquiryType" class="form-control">
-						<option value="">(select one)</option>
-						{{#each enquiryTypes}}
-						<option value="{{value}}">{{label}}</option>
-						{{/each}}
-					</select>
-				</div>
-				<div class="form-group {{#if validationErrors.message}}has-error{{/if}} ">
-					<label>Message</label>
-					<textarea name="message" placeholder="Leave us a message..." rows="4" class="form-control">{{formData.message}}</textarea>
-				</div>
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Send</button>
-				</div>
-			</form>
-			{{/if}}
+			{{!-- </div> --}}
+		{{/each}}
 		</div>
 	</div>
-</div>
 </div>
