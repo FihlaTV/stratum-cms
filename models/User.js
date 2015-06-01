@@ -15,12 +15,17 @@ User.add({
 	showOnContactPage: { type: Boolean }
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
+	isAuthorized: { type: Boolean, label: 'Can access login required pages', dependsOn: {isAdmin: false} },
 	image: { type: Types.CloudinaryImage }
 });
 
 // Provide access to Keystone
 User.schema.virtual('canAccessKeystone').get(function() {
 	return this.isAdmin;
+});
+
+User.schema.virtual('canAccessProtected').get(function(){
+	return this.isAdmin || this.isAuthorized;
 });
 
 
@@ -35,5 +40,5 @@ User.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
  * Registration
  */
 
-User.defaultColumns = 'name, email, isAdmin';
+User.defaultColumns = 'name, email, isAdmin, showOnContactPage';
 User.register();
