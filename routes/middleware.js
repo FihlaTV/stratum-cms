@@ -81,9 +81,9 @@ exports.initLocals = function(req, res, next) {
 				key: 'gallery',
 				href: '/gallery'
 			}, {
-				label: 'Contact',
+				label: 'Kontakt',
 				key: 'contact',
-				href: '/contact'
+				href: '/kontakt'
 			});
 			cb();
 		},
