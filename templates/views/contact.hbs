@@ -1,13 +1,29 @@
 <div class="container">
-	<h1>Kontakt</h1>
 </div>
 <div class="container">
 	<div class="row">
-	{{#each users}}
-		<div class="col-sm-8 col-md-6">
-		{{name}}
+		<div class="col-md-8">
+			<h1>Kontakta oss</h1>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa est aliquid, sunt mollitia unde laborum sed inventore nostrum atque placeat sequi excepturi alias adipisci! Perferendis doloribus labore officia neque corrupti.
 		</div>
-	{{/each}}
+		<div class="col-md-4">
+		<h2>Kontaktpersoner</h2>
+		{{#each users}}
+			{{!-- <div class="col-xs-6 col-sm-4 col-md-3"> --}}
+				<div class="contact-user">
+					<img src="
+						{{#if image.exists}}
+							{{cloudinaryUrl image width="320" height="320" crop="fill" gravity="face"}}
+						{{else}}
+							/images/avatar.png
+						{{/if}}" alt="" class="img-responsive">
+					<div class="contact-user-info">
+						<h3>{{name.full}}</h3>
+						<span class="glyphicon glyphicon-envelope"></span> <span class="hidden-sm hidden-xs">{{email}}</span>
+					</div>
+				</div>
+			{{!-- </div> --}}
+		{{/each}}
+		</div>
 	</div>
-</div>
 </div>
