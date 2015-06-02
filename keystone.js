@@ -45,6 +45,9 @@ keystone.init({
 keystone.import('models');
 
 stratum.loadWidgets(); 
+stratum.loadRegisters(function(err){
+	console.log(err);
+});
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
