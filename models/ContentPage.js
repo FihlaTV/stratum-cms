@@ -22,10 +22,8 @@ ContentPage.add({
 	image: { type: Types.CloudinaryImage },
 	widget: { type: Types.Relationship, ref: 'StratumWidget', many: false },
 	content: {
-		brief: { type: Types.Textarea, height: 150, hidden: true },
-		extended: { type: Types.Html, wysiwyg: true, height: 400, hidden: true },
-		markdown: { label: 'Content Markdown', type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'H1,H6,Code' } },
-		wysiwyg: { type: Types.Html, height: 400, wysiwyg: true }
+		brief: { type: Types.Textarea, height: 150 },
+		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'H1,H6,Code' } }
 	}
 });
 
