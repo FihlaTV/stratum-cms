@@ -1,7 +1,7 @@
-var widget = require('../../utils/stratumWidgets');
+var stratum = require('../../utils/stratum');
 
 exports = module.exports = function(req, res) {
-	widget.load(function(err, context) {
+	stratum.loadWidgets(function(err, context) {
 		if (err) {
 			return res.apiResponse({
 				sucess: false,

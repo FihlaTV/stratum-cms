@@ -6,7 +6,7 @@ require('dotenv').load();
 var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
-	widgets = require('./utils/stratumWidgets'),
+	stratum = require('./utils/stratum'),
 	Helpers = require('./templates/views/helpers');
 
 // Initialise Keystone with your project's configuration.
@@ -44,7 +44,7 @@ keystone.init({
 
 keystone.import('models');
 
-widgets.load(); 
+stratum.loadWidgets(); 
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
