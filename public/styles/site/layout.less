@@ -1,4 +1,5 @@
 @navBlu: spin(@brand-primary, 0);//@gray;// #358FDA;
+@footer-height: 30px + 30px + 20px + 1px;
 html,body{
 	margin: 0;
 	padding: 0;
@@ -13,10 +14,10 @@ body{
 }
 #header {}
 #body{
-	padding-bottom:81px;
+	padding-bottom:@footer-height + 3*@gutter;
 }
 #footer {
-	height: 81px;
+	height: @footer-height;
 	position: absolute;
 	bottom: 0;
 	width: 100%;
