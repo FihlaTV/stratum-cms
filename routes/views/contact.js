@@ -16,6 +16,14 @@ exports = module.exports = function(req, res) {
 
 		next();
 	});
+
+	view.on('init', function(next){
+		view.query('register', keystone.list('RegisterInformation').model
+			.findOne()
+			.populate('subRegisters'));
+		next();
+	});
+
 	view.render('contact');
 	
 };
