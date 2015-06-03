@@ -49,6 +49,7 @@ exports = module.exports = function(app) {
 	// API
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
+	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 
 	// Views for dynamic routes
 	app.get('/:contentcategory?', routes.views.contentcategory); 
