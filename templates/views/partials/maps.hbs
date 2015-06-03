@@ -1,20 +1,28 @@
-{{#if googleApiKey}}
+{{#if register.geo}}
 <script type="text/javascript">
 	! function() {
 		window._mapsInit = function() {
-			var latlng = new google.maps.LatLng({{register.location.geo}}),
+			var latlng = new google.maps.LatLng({{register.geo}}),
 				mapOptions = {
-					zoom: 16,
-					center: latlng
-				},
-				map = new google.maps.Map(document.getElementById('map-canvas'),
-					mapOptions),
-				marker = new google.maps.Marker({
-					position: latlng,
-					map: map,
-					title: '{{register.name}}'
-				});
+						scrollwheel: false,
+						navigationControl: false,
+						mapTypeControl: false,
+						disableDefaultUI: true,
+						zoomControl: true,
+						zoom: 17,
+						center: latlng
+					},
+					map = new google.maps.Map(document.getElementById('map-canvas'),
+						mapOptions),
+					marker = new google.maps.Marker({
+						position: latlng,
+						map: map,
+						title: '{{register.name}}'
+					});
 			marker.setMap(map);
+			google.maps.event.addDomListener(window, 'resize', function() {
+			    map.setCenter(latlng);
+			});
 		}
 
 		function loadScript() {

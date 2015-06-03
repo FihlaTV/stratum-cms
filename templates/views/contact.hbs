@@ -10,13 +10,18 @@
 				<span class="glyphicon glyphicon-envelope pull-right"></span> {{register.email}}
 			</div>
 			{{/if}}
+			{{#if register.phone}}
+			<div class="contact-address">
+				<span class="glyphicon glyphicon-earphone pull-right"></span> {{register.phone}}
+			</div>
+			{{/if}}
 			{{#if register.location}}
 			<div class="contact-address">
 				<ul>
 					<li>{{register.name}}</li>
 					{{#with register.location}}
 					<li>{{street1}}</li>
-					<li>{{postcode}} {{suburb}}</li>
+					<li>{{zipCode}} {{city}}</li>
 					{{/with}}
 				</ul>
 			</div>
