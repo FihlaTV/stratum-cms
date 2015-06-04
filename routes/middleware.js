@@ -97,6 +97,15 @@ exports.initLocals = function(req, res, next) {
 					}
 					cb(err);
 				});
+		},
+		isPortalRegister: function(cb){
+			keystone.list('RegisterInformation').model
+				.findOne(function(err, register){
+					if(register){
+						locals.isPortal = register.isPortal;
+					}
+					cb(err);
+				});
 		}
 	}, function(err){
 		if(err){

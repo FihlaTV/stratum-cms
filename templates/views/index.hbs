@@ -52,6 +52,18 @@
 			<a href='https://twitter.com/keystonejs' target='_blank'>follow @keystonejs</a> on twitter for updates.
 		</p>
 	</div>
+	{{/with}}
+	{{#if isPortal}}
+	<div class="col-sm-4">
+	<h2>Delregister</h2>
+	<ul>
+	{{#each data.register.subRegisters}}
+		<li>{{name}}</li>
+	{{/each}}
+	</ul>
+	</div>
+	{{/if}}
+	{{#with data.startPage}}
 	<div class="col-sm-4">
 	{{#ifeq informationBlurb.type 'newsRoll'}}
 		{{>newsroll ./../..}}
@@ -75,6 +87,8 @@
 	</div>
 	{{/with}}
 	</div>
+	{{#if isPortal}}
+	{{else}}
 	<div class="row">
 		{{#each data.widgets}}
 		<div class="col-sm-4 col-lg-3">
@@ -82,5 +96,7 @@
 		</div>
 		{{/each}}
 	</div>
+	{{/if}}
+	
 </div>
 
