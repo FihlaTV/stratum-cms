@@ -14,7 +14,7 @@ var RegisterInformation = new keystone.List('RegisterInformation', {
 
 RegisterInformation.add({
 	name: { type: String, required: true },
-	description: { type: Types.Textarea, height: 150 },
+	description: { type: Types.Markdown, height: 300 },
 	email: { type: Types.Email },
 	// location: { type: Types.Location },
 	phone: { type: String }
@@ -26,6 +26,7 @@ RegisterInformation.add({
 		city: { type: String, label: 'City' }
 	},
 	showMap: { type: Boolean, note: 'Shows a map on the contact page' },
+	// Required currently disable since it doesn't regard the value of showMap
 	latitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
 	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
 	isPortal: { type: Boolean, note: 'Check here if the register is a portal of several registers' },
