@@ -77,10 +77,11 @@ keystone.set('routes', require('./routes'));
 keystone.set('nav', {
 	'content': ['content-pages', 'content-categories'],
 	'start-pages': 'start-pages',
+	'register-information': 'register-information',
 	'news': 'news-items',
-	'posts': ['posts', 'post-categories'],
-	'galleries': 'galleries',
-	'enquiries': 'enquiries',
+	// 'posts': ['posts', 'post-categories'],
+	// 'galleries': 'galleries',
+	// 'enquiries': 'enquiries',
 	'users': 'users',
 	'widgets': 'widgets'
 });
