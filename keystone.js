@@ -6,7 +6,7 @@ require('dotenv').load();
 var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
-	widgets = require('./utils/stratumWidgets'),
+	stratum = require('./utils/stratum'),
 	Helpers = require('./templates/views/helpers');
 
 // Initialise Keystone with your project's configuration.
@@ -23,7 +23,7 @@ keystone.init({
 	'favicon': 'public/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'hbs',
-	
+	'default region': 'SE',
 	'custom engine': handlebars.create({
 		layoutsDir: 'templates/views/layouts',
 		partialsDir: 'templates/views/partials',
@@ -44,7 +44,8 @@ keystone.init({
 
 keystone.import('models');
 
-widgets.load(); 
+stratum.loadWidgets(); 
+stratum.loadRegisters();
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
@@ -76,10 +77,11 @@ keystone.set('routes', require('./routes'));
 keystone.set('nav', {
 	'content': ['content-pages', 'content-categories'],
 	'start-pages': 'start-pages',
+	'register-information': 'register-information',
 	'news': 'news-items',
-	'posts': ['posts', 'post-categories'],
-	'galleries': 'galleries',
-	'enquiries': 'enquiries',
+	// 'posts': ['posts', 'post-categories'],
+	// 'galleries': 'galleries',
+	// 'enquiries': 'enquiries',
 	'users': 'users',
 	'widgets': 'widgets'
 });

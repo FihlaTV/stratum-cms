@@ -22,6 +22,8 @@ var keystone = require('keystone'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname);
 
+require('dotenv').load();
+
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
@@ -35,6 +37,15 @@ var routes = {
 // Setup Route Bindings
 exports = module.exports = function(app) {
 	
+	// API
+	app.all('/api*', keystone.middleware.api);
+	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
+	app.all('/api/stratum-registers', routes.api['stratum-registers']);
+
+	// Restrict all pages to logged in users for now...
+	if(process.env.PROTECT_ALL_PAGES){
+		app.get('/*', middleware.requireUser);
+	}
 	// Views
 	app.get('/', routes.views.index);
 
@@ -46,10 +57,6 @@ exports = module.exports = function(app) {
 	app.get('/gallery', routes.views.gallery);
 	app.get('/kontakt', routes.views.contact);
 	
-	// API
-	app.all('/api*', keystone.middleware.api);
-	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
-
 	// Views for dynamic routes
 	app.get('/:contentcategory?', routes.views.contentcategory); 
 	app.get('/:contentcategory?/:contentpage', routes.views.contentpage);

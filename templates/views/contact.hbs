@@ -1,10 +1,31 @@
-<div class="container">
-</div>
+<div class="container"><h1>{{register.name}}</h1></div>
+{{#if register.showMap}}<div id="map-canvas"></div>{{/if}}
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-lg-9">
-			<h1>Kontakta oss</h1>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa est aliquid, sunt mollitia unde laborum sed inventore nostrum atque placeat sequi excepturi alias adipisci! Perferendis doloribus labore officia neque corrupti.
+			<h2>Kontakta oss</h2>
+			<p>{{{register.description.html}}}</p>
+			{{#if register.email}}
+			<div class="contact-address">
+				<span class="glyphicon glyphicon-envelope pull-right"></span> {{register.email}}
+			</div>
+			{{/if}}
+			{{#if register.phone}}
+			<div class="contact-address">
+				<span class="glyphicon glyphicon-earphone pull-right"></span> {{register.phone}}
+			</div>
+			{{/if}}
+			{{#if register.location}}
+			<div class="contact-address">
+				<ul>
+					<li>{{register.name}}</li>
+					{{#with register.location}}
+					<li>{{street1}}</li>
+					<li>{{zipCode}} {{city}}</li>
+					{{/with}}
+				</ul>
+			</div>
+			{{/if}}
 		</div>
 		<div class="col-md-4 col-lg-3">
 		<h2>Kontaktpersoner</h2>
