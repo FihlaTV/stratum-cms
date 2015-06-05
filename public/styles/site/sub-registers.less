@@ -1,0 +1,30 @@
+.sub-registers{
+	ul{
+		.list-unstyled();
+		a {
+			font-size: 18px;
+			color: @text-color;
+			&:hover{
+				text-decoration: none;
+			}
+		}
+		li{
+			padding: @gutter;
+			margin-bottom: @gutter;
+			transition: background-color 0.25s ease;
+			.white-well();
+			&:hover{
+				background-color: @gray-lighter;
+				transition: background-color 0.25s ease;
+			}
+			.glyphicon-link();
+			&:before {
+				font-family: 'Glyphicons Halflings';
+				color: lighten(@gray, 40%);
+				// content: '\e135';
+				// .glyphicon-link();
+				float: right;
+			}
+		}
+	}
+}

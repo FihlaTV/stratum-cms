@@ -55,12 +55,14 @@
 	{{/with}}
 	{{#if isPortal}}
 	<div class="col-sm-4">
-	<h2>Delregister</h2>
-	<ul>
-	{{#each data.register.subRegisters}}
-		<li>{{name}}</li>
-	{{/each}}
-	</ul>
+		<h2>Delregister</h2>
+		<div class="sub-registers">
+			<ul>
+			{{#each data.register.subRegisters}}
+				<a href="#{{shortName}}"><li>{{name}}</li></a>
+			{{/each}}
+			</ul>
+		</div>
 	</div>
 	{{/if}}
 	{{#with data.startPage}}
@@ -97,6 +99,6 @@
 		{{/each}}
 	</div>
 	{{/if}}
-	
+
 </div>
 
