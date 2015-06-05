@@ -88,21 +88,23 @@ exports.initLocals = function(req, res, next) {
 			});
 			cb();
 		},
-		lookupBrandName: function(cb){
-			var StartPage = keystone.list('StartPage');
-			StartPage.model
-				.findOne(function(err, startPage){
-					if(startPage){
-						locals.brandName = startPage.header;
-					}
-					cb(err);
-				});
-		},
+		// lookupBrandName: function(cb){
+		// 	var StartPage = keystone.list('StartPage');
+		// 	StartPage.model
+		// 		.findOne(function(err, startPage){
+		// 			if(startPage){
+		// 				locals.brandName = startPage.header;
+		// 			}
+		// 			cb(err);
+		// 		});
+		// },
 		isPortalRegister: function(cb){
 			keystone.list('RegisterInformation').model
 				.findOne(function(err, register){
 					if(register){
 						locals.isPortal = register.isPortal;
+						locals.brandName = register.name;
+						locals.address = register.contactString;
 					}
 					cb(err);
 				});
