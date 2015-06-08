@@ -16,20 +16,32 @@ exports = module.exports = function(req, res) {
 
 	view.on('init', function(next) {
 
-		var q = keystone.list('ContentPage').model
+		keystone.list('ContentPage').model
 		.findOne({
 			state: 'published',
 			slug: locals.filters.page
 		})
-		.populate('widget');
-		
-
-		
-		q.exec(function(err, result) {
+		.populate('widget category')
+		.exec(function(err, result) {
 			locals.data.contentpage = result;
 			next(err);
 		});
 
+	});
+
+	view.on('init', function(next){
+		var categoryId = locals.data.contentpage.category;
+		keystone.list('ContentPage').model
+			.find()
+			.where('category', categoryId)
+			.where('state', 'published')
+			.sort('sortOrder')		
+			.exec(function(err, pages) {
+				if(!err && pages.length > 1){
+					locals.data.contentpages = pages;
+				}
+				next(err);
+			});
 	});
 
 	view.render('contentpage');
