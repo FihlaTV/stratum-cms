@@ -21,7 +21,9 @@ var loadStratumModel = function(Model, url, idField, mappedFields, callback) {
 				url: url,
 				json: true
 			}, function(err, res, body) {
-				context.stratumModels = body.data || [];
+				if(!err){
+					context.stratumModels = body.data || [];
+				}
 				next(err);
 			});
 		},
