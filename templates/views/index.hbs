@@ -36,30 +36,35 @@
 		<span class="sr-only">Next</span>
 	</a>
 </div>
-{{#with data.startPage}}
 <div class="container-fluid">
 	<div class="row">
 	<div class="col-sm-8">
-		{{!-- <img src="/images/logo.svg" width="160" class="pull-right"> --}}
-		<h1>{{header}}</h1>
+		<h1>{{brandName}}</h1>
+		{{#with data.startPage}}
 		{{description}}
-		<hr>
-		<p>We have created a default Admin user for you with the email <strong>user@keystonejs.com</strong> and the password <strong>admin</strong>.</p>
-		<p><a href="/keystone/signin" style="margin-right: 10px" class="btn btn-lg btn-primary">Sign in</a> to use the Admin UI.</p>
-		<hr>
-		<p>
-			Remember to <a href='https://github.com/keystonejs/keystone' target='_blank'>Star KeystoneJS on GitHub</a> and
-			<a href='https://twitter.com/keystonejs' target='_blank'>follow @keystonejs</a> on twitter for updates.
-		</p>
+		{{/with}}
 	</div>
+	{{#if isPortal}}
 	<div class="col-sm-4">
+		<h2>Delregister</h2>
+		<div class="sub-registers">
+			<ul>
+			{{#each data.register.subRegisters}}
+				<a href="#{{shortName}}"><li>{{name}}</li></a>
+			{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+	{{#with data.startPage}}
 	{{#ifeq informationBlurb.type 'newsRoll'}}
 		{{>newsroll ./../..}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'newsItem'}}
+		<h2>Senaste</h2>
 		{{>newswidget ./../..}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'meeting'}}
+		<h2>Kommande möte</h2>
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
@@ -75,6 +80,8 @@
 	</div>
 	{{/with}}
 	</div>
+	{{#if isPortal}}
+	{{else}}
 	<div class="row">
 		{{#each data.widgets}}
 		<div class="col-sm-4 col-lg-3">
@@ -82,5 +89,7 @@
 		</div>
 		{{/each}}
 	</div>
+	{{/if}}
+
 </div>
 

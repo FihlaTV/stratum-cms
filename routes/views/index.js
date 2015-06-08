@@ -47,6 +47,21 @@ exports = module.exports = function(req, res) {
 		});
 	});
 
+	//Load RegisterInformation
+	view.on('init', function(next){
+		var RegisterInformation = keystone.list('RegisterInformation').model;
+		RegisterInformation
+			.findOne()
+			.populate('subRegisters')
+			.exec(function(err, register){
+			if(!err && register){
+				locals.data.register = register;
+			}
+			next(err);
+		});
+	});
+
+
 	//Load widgets
 	view.on('init', function(next){
 		var Widget = keystone.list('Widget').model;
