@@ -11,8 +11,6 @@
 		</div>
 		<div class="col-lg-7 col-md-9">
 		{{#with data.contentpage}}
-{{href}}
-		{{!-- <div class="col-sm-12 col-md-8"> --}}
 			<article>
 				<header>
 					<h1>{{title}}{{#if subtitle}} <small>{{subtitle}}</small>{{/if}}</h1>
@@ -21,38 +19,25 @@
 						{{#if author.name.first}}by {{author.name.first}}{{/if}}
 					</h5>
 				</header>
-				<img src="{{cloudinaryUrl image width="750" crop="fill"}}" class="img-responsive">
-				{{!-- {{#if image.url }}<img src="{{image.url}}" alt="" class="img-responsive">{{/if}} --}}
+				<div class="caption-ct">
+					<img src="{{cloudinaryUrl image width="750" crop="fill"}}" class="img-responsive">
+					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
+				</div>
 				<div class="post">
-				{{{content.extended.html}}}
-					{{!-- <div class="well">
-						<span style="text-transform: uppercase; font-weight: bold; font-size: 12px; float: right;">Markdown</span>
-						{{#if content.markdown.html}}
-							{{{content.markdown.html}}}
-						{{else}}
-							No content...
-						{{/if}}
-					</div>
-					<div class="well">
-						<span style="text-transform: uppercase; font-weight: bold; font-size: 12px; float: right;">wysiwyg html</span>
-						{{#if content.wysiwyg}}
-							{{{content.wysiwyg}}}
-						{{else}}
-							No content...
-						{{/if}}
-					</div> --}}
+					{{{content.extended.html}}}
 				</div>
 			</article>
-			{{/with}}
+		{{/with}}
 		</div>
-		<div class="col-md-9 col-md-offset-3 col-lg-offset-0 col-lg-3">
-			<h2>Relaterad information</h2>
-			<ul class="well list-unstyled">
-				<li>lorem</li>
-				<li>ipsum</li>
-				<li>dolor</li>
-				<li>stratum</li>
-			</ul>
+		{{#if data.contentpage.images}}
+		<div class="content-page-images col-md-9 col-md-offset-3 col-lg-offset-0 col-lg-3">
+			<h2>Bilder</h2>
+			{{#each data.contentpage.images}}
+				{{!-- <div class="col-lg-12 col-sm-6"> --}}
+					<a href="{{cloudinaryUrl this}}"><img src="{{cloudinaryUrl this width="500" crop="fill"}}" class="img-responsive"></a>
+				{{!-- </div> --}}
+			{{/each}}
 		</div>
+		{{/if}}
 	</div>
 </div>

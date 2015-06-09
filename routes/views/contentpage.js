@@ -14,6 +14,7 @@ exports = module.exports = function(req, res) {
 	// Render the view
 	// view.render('gallery');
 
+	//Find current contentpage
 	view.on('init', function(next) {
 
 		keystone.list('ContentPage').model
@@ -29,6 +30,7 @@ exports = module.exports = function(req, res) {
 
 	});
 
+	//Find content pages in same category (for rendering the side menu)
 	view.on('init', function(next){
 		var categoryId = locals.data.contentpage.category;
 		keystone.list('ContentPage').model
