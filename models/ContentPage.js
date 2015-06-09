@@ -20,11 +20,13 @@ ContentPage.add({
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	subtitle: { type: String },
 	image: { type: Types.CloudinaryImage },
+	imageDescription: { type: String },
 	widget: { type: Types.Relationship, ref: 'StratumWidget', many: false },
 	content: {
 		brief: { type: Types.Textarea, height: 150 },
 		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'H1,H6,Code' } }
-	}
+	},
+	images: { type: Types.CloudinaryImages }
 });
 
 ContentPage.schema.virtual('content.full').get(function() {
