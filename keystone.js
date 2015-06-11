@@ -35,15 +35,18 @@ keystone.init({
 	
 	'auto update': true,
 	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
-	
+
 	'session': true,
 	'session store': 'mongo',
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
 	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
-	'stratum api key': process.env.STRATUM_API_KEY
+	'stratum api key': process.env.STRATUM_API_KEY,
 
+	// Redirect to regular page if whole site is access restricted
+	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
+	'signout redirect': '/'
 });
 
 // Load your project's Models
