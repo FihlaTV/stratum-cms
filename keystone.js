@@ -4,6 +4,7 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
+	pkg = require('./package.json'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
 	stratum = require('./utils/stratum'),
@@ -33,7 +34,10 @@ keystone.init({
 	}).engine,
 	
 	'auto update': true,
+	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
+	
 	'session': true,
+	'session store': 'mongo',
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
