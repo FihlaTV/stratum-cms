@@ -30,7 +30,6 @@ exports.initLocals = function(req, res, next) {
 		{ label: 'Nyheter',		key: 'news',		href: '/nyheter' }
 	];
 	locals.user = req.user;
-	locals.googleApiKey = keystone.get('google api key');
 	locals.lastCommit = keystone.get('last commit');
 	async.series({
 		loadCategories: function(cb) {

@@ -7,6 +7,7 @@ exports = module.exports = function(req, res) {
 	
 	// Set locals
 	locals.section = 'contact';
+	locals.googleApiKey = keystone.get('google api key');
 
 	view.on('init', function(next){
 		view.query('users', keystone.list('User').model
