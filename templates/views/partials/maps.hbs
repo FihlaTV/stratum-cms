@@ -10,6 +10,7 @@
 						disableDefaultUI: true,
 						zoomControl: true,
 						zoom: 17,
+						draggable: $(document).width() > 480,
 						center: latlng
 					},
 					map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -21,7 +22,10 @@
 					});
 			marker.setMap(map);
 			google.maps.event.addDomListener(window, 'resize', function() {
-			    map.setCenter(latlng);
+			    map.setOptions({
+			    	center: latlng,
+			    	draggable: $(document).width() > 480
+			    });
 			});
 		}
 
