@@ -36,7 +36,7 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': 'DZif7v6Sey|=B5I3R3c.?x`Hwequnei0MO*tA?9*anm4/zWikH~M9[$5*X<k3/$)'
+	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
 
 });
 
