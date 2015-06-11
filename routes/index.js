@@ -22,8 +22,6 @@ var keystone = require('keystone'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname);
 
-require('dotenv').load();
-
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
@@ -43,7 +41,7 @@ exports = module.exports = function(app) {
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 
 	// Restrict all pages to logged in users for now...
-	if(process.env.PROTECT_ALL_PAGES){
+	if(keystone.get('protect all pages')){
 		app.get('/*', middleware.requireUser);
 	}
 	// Views

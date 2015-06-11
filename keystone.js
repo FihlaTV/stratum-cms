@@ -37,6 +37,8 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
+	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
+	'stratum api key': process.env.STRATUM_API_KEY
 
 });
 

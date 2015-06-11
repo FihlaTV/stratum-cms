@@ -2,8 +2,6 @@ var keystone = require('keystone'),
 	request = require('request'),
 	async = require('async'),
 	_ = require('underscore');
-require('dotenv').load();
-// url = ;
 
 //!! Only run this after model initialization !!
 var loadStratumModel = function(Model, url, idField, mappedFields, callback) {
@@ -92,7 +90,7 @@ exports.loadWidgets = function(callback) {
 };
 
 exports.loadRegisters = function(callback) {
-	var apiKey = process.env.STRATUM_API_KEY;
+	var apiKey = keystone.get('stratum api key');
 	if (apiKey) {
 		loadStratumModel(keystone.list('StratumRegister').model,
 			'http://demo.registercentrum.se/api/metadata/registers?APIKey=' + apiKey,
