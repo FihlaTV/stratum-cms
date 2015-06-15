@@ -6,7 +6,9 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 
 	locals.section = req.params.contentpage;
-	locals.data = {};
+	locals.data = {
+		contentpage: {}
+	};
 	locals.filters = {
 		page: req.params.contentpage
 	};
