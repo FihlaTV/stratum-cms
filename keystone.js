@@ -4,11 +4,13 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
-	pkg = require('./package.json'),
+	path = require('path'),
+	root = process.env.ROOT || './',
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
-	stratum = require('./utils/stratum'),
-	Helpers = require('./templates/views/helpers');
+	stratum = require('./' + path.join(root, 'utils/stratum')),
+	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
+	pkg = require('./' + path.join(root, 'package.json'));
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -16,23 +18,22 @@ var keystone = require('keystone'),
 
 keystone.init({
 
-	'name': 'Test Keystone',
-	'brand': 'Test Keystone',
-	'wysiwyg cloudinary images': true,
-	'less': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
+	'name': process.env.BRAND || 'Stratum',
+	'brand': process.env.BRAND || 'Stratum',
+	'less': path.join(root, 'public'),
+	'static': path.join(root, 'public'),
+	'favicon': path.join(root, 'public/favicon.ico'),
+	'views': path.join(root, 'templates/views'),
 	'view engine': 'hbs',
-	'default region': 'SE',
 	'custom engine': handlebars.create({
-		layoutsDir: 'templates/views/layouts',
-		partialsDir: 'templates/views/partials',
+		layoutsDir: path.join(root, 'templates/views/layouts'),
+		partialsDir: path.join(root, 'templates/views/partials'),
 		defaultLayout: 'default',
 		helpers: new Helpers(),
 		extname: '.hbs'
 	}).engine,
 	
+	'updates': path.join(root, 'updates'),
 	'auto update': true,
 	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
 
@@ -43,15 +44,17 @@ keystone.init({
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
 	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
 	'stratum api key': process.env.STRATUM_API_KEY,
+	'wysiwyg cloudinary images': true,
 
 	// Redirect to regular page if whole site is access restricted
 	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
-	'signout redirect': '/'
+	'signout redirect': '/',
+	'default region': 'SE'
 });
 
 // Load your project's Models
 
-keystone.import('models');
+keystone.import(path.join(root, 'models'));
 
 stratum.loadWidgets(); 
 stratum.loadRegisters();
@@ -76,7 +79,7 @@ if(keystone.get('env') === 'development' && fs.existsSync('last_commit.json')){
 }
 // Load your project's Routes
 
-keystone.set('routes', require('./routes'));
+keystone.set('routes', require('./' + path.join(root, 'routes')));
 
 // Setup common locals for your emails. The following are required by Keystone's
 // default email templates, you may remove them if you're using your own.
