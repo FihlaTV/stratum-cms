@@ -108,6 +108,13 @@ exports.initLocals = function(req, res, next) {
 					}
 					cb(err);
 				});
+		},
+		getHostName: function(cb){
+			var host = req.headers.host,
+				regEx = RegExp('(^' + keystone.get('brand') + '|^www)\.', 'i');
+			locals.topHost = host.replace(regEx, '');
+			locals.host = host;
+			cb();
 		}
 	}, function(err){
 		if(err){
