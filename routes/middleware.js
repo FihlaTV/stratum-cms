@@ -31,6 +31,7 @@ exports.initLocals = function(req, res, next) {
 	];
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
+	locals.brand = keystone.get('brand');
 	async.series({
 		loadCategories: function(cb) {
 			keystone.list('ContentCategory').model
