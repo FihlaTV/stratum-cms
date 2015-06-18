@@ -90,6 +90,24 @@ exports = module.exports = function(req, res) {
 		});
 	}); 
 
+	// Load news with images
+	view.on('init', function(next) {
+		keystone.list('NewsItem').model.find({
+				state: 'published'
+			})
+			.exists('image')
+			.sort('-publishedDate')
+			.limit(3)
+			.exec(function(err, result) {
+				if(!err){
+					locals.data.newsWithImage = result.filter(function(newsItem){
+						return newsItem.image.exists;
+					});
+				}
+				next(err);
+			});
+	});
+
 	// Render the view
 	view.render('index');
 

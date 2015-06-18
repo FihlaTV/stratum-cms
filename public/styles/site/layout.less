@@ -111,6 +111,23 @@ article {
     line-height: 1;
     width: 100%;
 }
-#head-carousel {
+#head-carousel, .carousel-placeholder {
     margin-bottom: 30px;
 }
+.carousel-placeholder {
+	@carousel-main: darken(@brand-primary, 10%);
+	position: relative;
+	width: 100%;
+	padding-top: percentage(400/1024);
+	#gradient.directional(spin(@carousel-main, 20), @carousel-main, 135deg);
+	background-color: @carousel-main;
+	.carousel-placeholder-header{
+		position: absolute;
+		bottom: 7%;
+		right: 7%;
+		font-size: 78px;
+		color: @gray-lighter;
+		font-weight: 900;
+	}
+}
+
