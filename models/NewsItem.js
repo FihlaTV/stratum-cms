@@ -23,7 +23,7 @@ NewsItem.add({
 	content: {
 		lead: { type: Types.Textarea, height: 150 },
 		brief: { type: Types.Textarea, height: 150 },
-		extended: { type: Types.Html, wysiwyg: true, height: 400 }
+		extended: { type: Types.Markdown, height: 400 }
 	}
 	// categories: { type: Types.Relationship, ref: 'NewsItemCategory', many: true }
 });
