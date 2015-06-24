@@ -34,7 +34,12 @@ exports = module.exports = function(req, res) {
 
 	//Find content pages in same category (for rendering the side menu)
 	view.on('init', function(next){
-		var categoryId = locals.data.contentpage.category;
+		var categoryId;
+		if(!locals.data.contentpage){
+			next('missing contentpage');
+			return;
+		}
+		categoryId = locals.data.contentpage.category;
 		keystone.list('ContentPage').model
 			.find()
 			.where('category', categoryId)
