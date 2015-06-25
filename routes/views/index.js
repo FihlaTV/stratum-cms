@@ -48,7 +48,9 @@ exports = module.exports = function(req, res) {
 			.limit(10)
 			.populate('stratumWidget')
 			.exec(function(err, widgets) {
-				locals.data.widgets = widgets;
+				if(!err){
+					locals.data.widgets = widgets;
+				}
 				next(err);
 			});
 	});
@@ -62,13 +64,15 @@ exports = module.exports = function(req, res) {
 			.sort('-publishedDate')
 			.limit(10)
 			.populate('author categories')
-			.exec(function(err, result) {
-				locals.data.news = result;
+			.exec(function(err, news) {
+				if(!err){
+					locals.data.news = news;
+				}
 				next(err);
 			});
 	});
 
-	// Load news with images
+	// Load the latest 3 news items containing images
 	view.on('init', function(next) {
 		keystone.list('NewsItem').model.find({
 				state: 'published'
@@ -76,9 +80,9 @@ exports = module.exports = function(req, res) {
 			.exists('image')
 			.sort('-publishedDate')
 			.limit(3)
-			.exec(function(err, result) {
+			.exec(function(err, news) {
 				if (!err) {
-					locals.data.newsWithImage = result.filter(function(newsItem) {
+					locals.data.newsWithImage = news.filter(function(newsItem) {
 						return newsItem.image.exists;
 					});
 				}
