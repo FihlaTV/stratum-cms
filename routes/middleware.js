@@ -26,7 +26,6 @@ exports.initLocals = function(req, res, next) {
 		context = {};
 
 	locals.navLinks = [
-		// { label: 'Home',		key: 'home',		href: '/' },
 		{ label: 'Nyheter',		key: 'news',		href: '/nyheter' }
 	];
 	locals.user = req.user;
@@ -78,10 +77,6 @@ exports.initLocals = function(req, res, next) {
 		addCategoriesToNav: function(cb) {
 			locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
 			locals.navLinks.push({
-				label: 'Gallery',
-				key: 'gallery',
-				href: '/gallery'
-			}, {
 				label: 'Kontakt',
 				key: 'contact',
 				href: '/kontakt'

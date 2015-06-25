@@ -49,17 +49,9 @@ exports = module.exports = function(app) {
 
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
-	// app.get('/nyheter/:newsitem', routes.views.newsitem);
-	app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
-	app.get('/gallery', routes.views.gallery);
 	app.get('/kontakt', routes.views.contact);
 	
 	// Views for dynamic routes
 	app.get('/:contentcategory?', routes.views.contentcategory); 
 	app.get('/:contentcategory?/:contentpage', routes.views.contentpage);
-
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
-	
 };

@@ -91,9 +91,6 @@ keystone.set('nav', {
 	'start-pages': 'start-pages',
 	'register-information': 'register-information',
 	'news': 'news-items',
-	// 'posts': ['posts', 'post-categories'],
-	// 'galleries': 'galleries',
-	// 'enquiries': 'enquiries',
 	'users': 'users',
 	'widgets': 'widgets'
 });
