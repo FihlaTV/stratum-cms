@@ -20,8 +20,8 @@ keystone.init({
 
 	'name': process.env.BRAND || 'Stratum',
 	'brand': process.env.BRAND || 'Stratum',
-	'less': path.join(root, 'public'),
-	'static': path.join(root, 'public'),
+	'less': ['override', path.join(root, 'public')],
+	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
 	'view engine': 'hbs',
