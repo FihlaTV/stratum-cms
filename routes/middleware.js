@@ -21,61 +21,84 @@ var _ = require('underscore'),
 */
 
 exports.initLocals = function(req, res, next) {
-	
-	var locals = res.locals,
-		context = {};
 
-	locals.navLinks = [
-		{ label: 'Nyheter',		key: 'news',		href: '/nyheter' }
-	];
+	var locals = res.locals,
+		context = {
+			menu: []
+		};
+
+	locals.navLinks = [{
+		label: 'Nyheter',
+		key: 'news',
+		href: '/nyheter'
+	}];
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
 	async.series({
-		loadCategories: function(cb) {
-			keystone.list('ContentCategory').model
+		loadMenuBlocks: function(cb) {
+			keystone.list('MenuBlock').model
 				.find()
-				.populate('pages')
+				// .populate('pages')
 				.sort('sortOrder')
-				.exec(function(err, categories) {
-					context.categories = categories;
+				.exec(function(err, menu) {
+					if(!err){
+						context.menu = menu;
+					}
 					cb(err);
 				});
 		},
-		loadPages: function(cb){
-			context.pages = [];
-			async.each(context.categories, function(category, callback) {
-				keystone.list('ContentPage').model
-					.find()
-					.where('category', category.id)
-					.where('state', 'published')
-					.sort('sortOrder')
-					.exec(function(err, pages) {
-						var innerLinks;
-						if (!pages || pages.length <= 0) {
-							callback(err);
-							return;
-						}
-						innerLinks = pages.map(function(page) {
-							return {
-								label: page.title,
-								key: category.slug + '/' + page.slug,
-								href: '/' + category.slug + '/' + page.slug
-							};
-						});
-						context.pages.push({
-							label: category.name,
-							key: category.slug,
-							href: (pages.length === 1 ? innerLinks[0].href : innerLinks),
-							isSubmenu: pages.length > 1,
-							sortOrder: category.sortOrder
-						});
-						callback(err);
-					});
-			}, cb);
-		},
+		// loadCategories: function(cb) {
+		// 	keystone.list('ContentCategory').model
+		// 		.find()
+		// 		.populate('pages')
+		// 		.sort('sortOrder')
+		// 		.exec(function(err, categories) {
+		// 			context.categories = categories;
+		// 			cb(err);
+		// 		});
+		// },
+		// loadPages: function(cb) {
+		// 	context.pages = [];
+		// 	async.each(context.categories, function(category, callback) {
+		// 		keystone.list('Page').model
+		// 			.find()
+		// 			.where('category', category.id)
+		// 			.where('state', 'published')
+		// 			.sort('sortOrder')
+		// 			.exec(function(err, pages) {
+		// 				var innerLinks;
+		// 				if (!pages || pages.length <= 0) {
+		// 					callback(err);
+		// 					return;
+		// 				}
+		// 				innerLinks = pages.map(function(page) {
+		// 					return {
+		// 						label: page.title,
+		// 						key: category.slug + '/' + page.slug,
+		// 						href: '/' + category.slug + '/' + page.slug
+		// 					};
+		// 				});
+		// 				context.pages.push({
+		// 					label: category.name,
+		// 					key: category.slug,
+		// 					href: (pages.length === 1 ? innerLinks[0].href : innerLinks),
+		// 					isSubmenu: pages.length > 1,
+		// 					sortOrder: category.sortOrder
+		// 				});
+		// 				callback(err);
+		// 			});
+		// 	}, cb);
+		// },
 		addCategoriesToNav: function(cb) {
-			locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			context.menu.forEach(function(menuBlock){
+				locals.navLinks.push({
+					label: menuBlock.name,
+					key: menuBlock.slug,
+					href: '/' + menuBlock.slug
+				});
+			});
 			locals.navLinks.push({
 				label: 'Kontakt',
 				key: 'contact',
@@ -93,10 +116,10 @@ exports.initLocals = function(req, res, next) {
 		// 			cb(err);
 		// 		});
 		// },
-		isPortalRegister: function(cb){
+		isPortalRegister: function(cb) {
 			keystone.list('RegisterInformation').model
-				.findOne(function(err, register){
-					if(register){
+				.findOne(function(err, register) {
+					if (register) {
 						locals.isPortal = register.isPortal;
 						locals.brandName = register.name;
 						locals.address = register.contactString;
@@ -104,15 +127,15 @@ exports.initLocals = function(req, res, next) {
 					cb(err);
 				});
 		},
-		getHostName: function(cb){
+		getHostName: function(cb) {
 			var host = req.headers.host,
 				regEx = RegExp('(^' + keystone.get('brand') + '|^www)\.', 'i');
 			locals.topHost = host.replace(regEx, '');
 			locals.host = host;
 			cb();
 		}
-	}, function(err){
-		if(err){
+	}, function(err) {
+		if (err) {
 			console.log(err);
 		}
 		next();
@@ -125,18 +148,20 @@ exports.initLocals = function(req, res, next) {
 */
 
 exports.flashMessages = function(req, res, next) {
-	
+
 	var flashMessages = {
 		info: req.flash('info'),
 		success: req.flash('success'),
 		warning: req.flash('warning'),
 		error: req.flash('error')
 	};
-	
-	res.locals.messages = _.any(flashMessages, function(msgs) { return msgs.length; }) ? flashMessages : false;
-	
+
+	res.locals.messages = _.any(flashMessages, function(msgs) {
+		return msgs.length;
+	}) ? flashMessages : false;
+
 	next();
-	
+
 };
 
 

@@ -4,7 +4,7 @@
 			<ul class="nav nav-pills nav-stacked">
 			{{#each data.contentpages}}
 				<li {{#ifeq ../section slug}}class="active"{{else}}{{/ifeq}}>
-					<a href="/{{../data.contentpage.category.slug}}/{{slug}}">{{title}}</a>
+					<a href="/{{../data.contentpage.menu.slug}}/{{slug}}">{{title}}</a>
 				</li>
 			{{/each}}
 			</ul>

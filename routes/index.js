@@ -52,6 +52,6 @@ exports = module.exports = function(app) {
 	app.get('/kontakt', routes.views.contact);
 	
 	// Views for dynamic routes
-	app.get('/:contentcategory?', routes.views.contentcategory); 
-	app.get('/:contentcategory?/:contentpage', routes.views.contentpage);
+	app.get('/:menublock?', routes.views.page); 
+	app.get('/:menublock?/:page', routes.views.page);
 };

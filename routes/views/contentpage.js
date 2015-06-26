@@ -24,7 +24,7 @@ exports = module.exports = function(req, res) {
 			state: 'published',
 			slug: locals.filters.page
 		})
-		.populate('widget category')
+		.populate('widget menu')
 		.exec(function(err, result) {
 			locals.data.contentpage = result;
 			next(err);
@@ -34,15 +34,15 @@ exports = module.exports = function(req, res) {
 
 	//Find content pages in same category (for rendering the side menu)
 	view.on('init', function(next){
-		var categoryId;
+		var menuBlockId;
 		if(!locals.data.contentpage){
 			next('missing contentpage');
 			return;
 		}
-		categoryId = locals.data.contentpage.category;
+		menuBlockId = locals.data.contentpage.menu;
 		keystone.list('ContentPage').model
 			.find()
-			.where('category', categoryId)
+			.where('menu', menuBlockId)
 			.where('state', 'published')
 			.sort('sortOrder')		
 			.exec(function(err, pages) {
