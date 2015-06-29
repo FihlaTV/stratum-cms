@@ -6,8 +6,9 @@ exports = module.exports = function(req, res) {
 
 	locals.section = req.params.page;
 	locals.data = {
-		page: {},
-		currentMenuBlock: {}
+		currentMenuBlock: {},
+		pages: [],
+		page: {}
 	};
 	locals.filters = {
 		menu: req.params.menublock,
@@ -18,10 +19,11 @@ exports = module.exports = function(req, res) {
 		keystone.list('MenuBlock').model
 			.findOne()
 			.where('slug', locals.filters.menu)
-			.populate('pages')
+			// .populate('pages')
 			.exec(function(err, menu){
-				if(!err){
+				if(!err && menu){
 					locals.data.currentMenuBlock = menu;
+					locals.section = menu.slug;
 				}
 				//if no menu send 404?
 				next(err);
@@ -29,49 +31,35 @@ exports = module.exports = function(req, res) {
 	});
 
 	view.on('init', function(next){
-		if(locals.filters.page){
-			// debugger;
-		}
-		next();
+		keystone.list('Page').model
+			.find()
+			.where('menu', locals.data.currentMenuBlock._id)
+			.sort('sortOrder')
+			.select('slug title')
+			.exec(function(err, pages){
+				if(!err){
+					locals.data.pages = pages;
+				}
+				next(err);
+			});
 	});
-	// //Find current page
-	// view.on('init', function(next) {
 
-	// 	keystone.list('Page').model
-	// 	.findOne(locals.filters.page ? {
-	// 		state: 'published',
-	// 		slug: locals.filters.page
-	// 	} : {
-	// 		state: 'published'
-	// 	})
-	// 	.populate('menu')
-	// 	.exec(function(err, result) {
-	// 		locals.data.page = result;
-	// 		next(err);
-	// 	});
-
-	// });
-
-	//Find content pages in same category (for rendering the side menu)
-	// view.on('init', function(next){
-	// 	var menuBlockId;
-	// 	if(!locals.data.page){
-	// 		next('missing page');
-	// 		return;
-	// 	}
-	// 	menuBlockId = locals.data.page.menu;
-	// 	keystone.list('Page').model
-	// 		.find()
-	// 		.where('menu', menuBlockId)
-	// 		.where('state', 'published')
-	// 		.sort('sortOrder')		
-	// 		.exec(function(err, pages) {
-	// 			if(!err && pages.length > 1){
-	// 				locals.data.pages = pages;
-	// 			}
-	// 			next(err);
-	// 		});
-	// });
+	view.on('init', function(next){
+		var query = keystone.list('Page').model
+			.findOne()
+			.where('menu', locals.data.currentMenuBlock._id);
+		if(locals.filters.page){
+			query.where('slug', locals.filters.page);
+		} else{
+			query.sort('sortOrder');
+		}
+		query.exec(function(err, page){
+			if(!err){
+				locals.data.page = page;
+			}
+			next(err);
+		});
+	});
 
 	view.render('page');
 };

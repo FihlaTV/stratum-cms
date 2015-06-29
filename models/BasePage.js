@@ -8,30 +8,62 @@ var keystone = require('keystone'),
 
 var BasePage = new keystone.List('BasePage', {
 	sortable: true,
-	map: { name: 'title' },
-	autokey: { path: 'slug', from: 'title', unique: true },
+	map: {
+		name: 'title'
+	},
+	autokey: {
+		path: 'slug',
+		from: 'title',
+		unique: true
+	},
 	nocreate: true,
 	nodelete: true,
 	hidden: true
 });
 
 BasePage.add({
-	title: { type: String, required: true },
-	subtitle: { type: String },
+	title: {
+		type: String,
+		required: true
+	},
+	subtitle: {
+		type: String
+	},
 	// category: { type: Types.Relationship, ref: 'ContentCategory', many: false },
 	// menu: { type: Types.Relationship, ref: 'MenuBlock', many: false, label: 'Menu Block' },
 	// parentPage: { type: Types.Relationship, ref: 'BasePage', many: false, label: 'Sub Page to', filters: { menu: ':menu' }, dependsOn: {hasSubpages: false} },
-	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+	state: {
+		type: Types.Select,
+		options: 'draft, published, archived',
+		default: 'draft',
+		index: true
+	},
 	// author: { type: Types.Relationship, ref: 'User', index: true },
 	// publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-	image: { type: Types.CloudinaryImage },
-	imageDescription: { type: String },
-	widget: { type: Types.Relationship, ref: 'StratumWidget', many: false },
+	image: {
+		type: Types.CloudinaryImage
+	},
+	imageDescription: {
+		type: String
+	},
+	widget: {
+		type: Types.Relationship,
+		ref: 'StratumWidget',
+		many: false
+	},
 	// content: {
-		// brief: { type: Types.Textarea, height: 150 },
+	// brief: { type: Types.Textarea, height: 150 },
 	// },
-	content: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'H1,H6' } },
-	images: { type: Types.CloudinaryImages }
+	content: {
+		type: Types.Markdown,
+		height: 400,
+		toolbarOptions: {
+			hiddenButtons: 'H1,H6'
+		}
+	},
+	images: {
+		type: Types.CloudinaryImages
+	}
 });
 
 // BasePage.schema.virtual('content.full').get(function() {
@@ -71,5 +103,12 @@ var Page = new keystone.List('Page', {
 	nocreate: false,
 	nodelete: false
 });
-// Page.add({smenu: {type: String, readonly: true }});
+Page.add({
+	menu: {
+		// category: { type: Types.Relationship, ref: 'ContentCategory', many: false },
+		type: Types.Relationship,
+		ref: 'MenuBlock',
+		many: false
+	}
+});
 Page.register();
