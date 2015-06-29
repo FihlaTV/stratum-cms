@@ -2,7 +2,7 @@ var keystone = require('keystone'),
 	Types = keystone.Field.Types;
 
 /**
- * Menu Item Model
+ * Menu Block Model
  * ==========
  */
 

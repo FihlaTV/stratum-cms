@@ -2,7 +2,7 @@ var keystone = require('keystone'),
 	Types = keystone.Field.Types;
 
 /**
- * Content Page Model
+ * Base Page Model
  * ==========
  */
 
@@ -59,45 +59,3 @@ BasePage.add({
 });
 
 BasePage.register();
-
-//Page
-var Page = new keystone.List('Page', {
-	// sortContext: 'MenuBlock:pages', //sortContext not working properly
-	inherits: BasePage,
-	hidden: false,
-	nocreate: false,
-	nodelete: false
-});
-Page.add({
-	menu: {
-		type: Types.Relationship,
-		ref: 'MenuBlock',
-		many: false,
-		required: true,
-		initial: true
-	}
-});
-Page.relationship({
-	path: 'subPages',
-	ref: 'SubPage',
-	refPath: 'page'
-});
-Page.register();
-
-//SubPage
-var SubPage = new keystone.List('SubPage', {
-	inherits: BasePage,
-	hidden: false,
-	nocreate: false,
-	nodelete: false
-});
-SubPage.add({
-	page: {
-		type: Types.Relationship,
-		ref: 'Page',
-		many: false,
-		initial: true,
-		required: true
-	}
-});
-SubPage.register();
