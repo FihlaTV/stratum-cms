@@ -11,6 +11,7 @@ var SubPage = new keystone.List('SubPage', {
 	inherits: BasePage,
 	hidden: false,
 	nocreate: false,
+	defaultColumns: 'title, page',
 	nodelete: false
 });
 SubPage.add({

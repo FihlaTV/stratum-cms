@@ -10,6 +10,7 @@ var keystone = require('keystone'),
 var Page = new keystone.List('Page', {
 	// sortContext: 'MenuBlock:pages', //sortContext not working properly
 	inherits: BasePage,
+	defaultColumns: 'title, menu',
 	hidden: false,
 	nocreate: false,
 	nodelete: false
