@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+var keystone = require('keystone'),
+	_ = require('underscore');
 
 exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res),
@@ -8,57 +9,95 @@ exports = module.exports = function(req, res) {
 	locals.data = {
 		currentMenuBlock: {},
 		pages: [],
-		page: {}
+		page: {},
+		menuPage: {},
+		subPages: []
 	};
 	locals.filters = {
-		menu: req.params.menublock,
+		menu: req.params.menublock, //undefined bug
 		page: req.params.page
 	};
 
-	view.on('init', function(next){
+	//Current menu block
+	view.on('init', function(next) {
 		keystone.list('MenuBlock').model
 			.findOne()
 			.where('slug', locals.filters.menu)
 			// .populate('pages')
-			.exec(function(err, menu){
-				if(!err && menu){
+			.exec(function(err, menu) {
+				if(err){
+					next(err);
+				} else if(!menu){
+					res.status(404).send('Not found');
+				} else {
 					locals.data.currentMenuBlock = menu;
 					locals.section = menu.slug;
+					next();
 				}
-				//if no menu send 404?
-				next(err);
 			});
 	});
 
-	view.on('init', function(next){
+	//Pages in menu block
+	view.on('init', function(next) {
 		keystone.list('Page').model
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.sort('sortOrder')
 			.select('slug title')
-			.exec(function(err, pages){
-				if(!err){
+			.exec(function(err, pages) {
+				if (!err) {
 					locals.data.pages = pages;
 				}
 				next(err);
 			});
 	});
 
-	view.on('init', function(next){
-		var query = keystone.list('Page').model
+	//Current page
+	view.on('init', function(next) {
+		var query = keystone.list('BasePage').model
 			.findOne()
-			.where('menu', locals.data.currentMenuBlock._id);
-		if(locals.filters.page){
+			.or([{
+				'menu': locals.data.currentMenuBlock._id
+			}, {
+				'page': { //check for sub pages
+					'$in': _.pluck(locals.data.pages, '_id')
+				}
+			}]);
+		if (locals.filters.page) {
 			query.where('slug', locals.filters.page);
-		} else{
+		} else {
 			query.sort('sortOrder');
 		}
-		query.exec(function(err, page){
-			if(!err){
-				locals.data.page = page;
-			}
-			next(err);
-		});
+		query
+			.populate('page', 'slug title')
+			.exec(function(err, page) {
+				if (!err) {
+					if(!page){
+						res.redirect('/' + locals.filters.menu);
+						return;
+					}
+					locals.data.page = page;
+					locals.data.menuPage = page.page || page;
+				}
+				next(err);
+			});
+	});
+
+	//Sub pages
+	view.on('init', function(next) {
+		if (!locals.data.page) {
+			next();
+			return;
+		}
+		keystone.list('SubPage').model
+			.find()
+			.where('page', locals.data.menuPage._id)
+			.exec(function(err, subPages) {
+				if (!err) {
+					locals.data.subPages = subPages;
+				}
+				next(err);
+			});
 	});
 
 	view.render('page');
