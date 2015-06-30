@@ -20,7 +20,7 @@ Page.add({
 		type: Types.Relationship,
 		ref: 'MenuBlock',
 		many: false,
-		required: true,
+		// required: true,
 		initial: true
 	}
 });
