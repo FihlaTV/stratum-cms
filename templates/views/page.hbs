@@ -2,15 +2,26 @@
 	<div class="row">
 		<div class="col-lg-2 col-md-3">
 			<ul class="nav nav-pills nav-stacked">
-			{{#each data.contentpages}}
-				<li {{#ifeq ../section slug}}class="active"{{else}}{{/ifeq}}>
-					<a href="/{{../data.contentpage.menu.slug}}/{{slug}}">{{title}}</a>
+			{{#each data.pages}}
+			{{#ifeq ../data.menuPage.slug slug}}
+				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+					<ul class="nav nav-pills nav-stacked">
+					{{#each ../../data.subPages}}
+						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a></li>
+					{{/each}}
+					</ul>
 				</li>
+			{{else}}
+				<li>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+				</li>
+			{{/ifeq}}
 			{{/each}}
 			</ul>
 		</div>
 		<div class="col-lg-7 col-md-9">
-		{{#with data.contentpage}}
+		{{#with data.page}}
 			<article>
 				<header>
 					<h1>{{title}}{{#if subtitle}} <small>{{subtitle}}</small>{{/if}}</h1>
@@ -19,20 +30,22 @@
 						{{#if author.name.first}}by {{author.name.first}}{{/if}}
 					</h5>
 				</header>
+				{{#if image.exists}}
 				<div class="caption-ct">
 					<img src="{{cloudinaryUrl image width="750" crop="fill"}}" class="img-responsive">
 					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 				</div>
+				{{/if}}
 				<div class="post">
-					{{{content.extended.html}}}
+					{{{content.html}}}
 				</div>
 			</article>
 		{{/with}}
 		</div>
-		{{#if data.contentpage.images}}
+		{{#if data.page.images}}
 		<div class="content-page-images col-md-9 col-md-offset-3 col-lg-offset-0 col-lg-3">
 			<h2>Bilder</h2>
-			{{#each data.contentpage.images}}
+			{{#each data.page.images}}
 				{{!-- <div class="col-lg-12 col-sm-6"> --}}
 					<a href="{{cloudinaryUrl this}}"><img src="{{cloudinaryUrl this width="500" crop="fill"}}" class="img-responsive"></a>
 				{{!-- </div> --}}
