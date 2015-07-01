@@ -25,9 +25,9 @@ exports = module.exports = function(req, res) {
 			.where('slug', locals.filters.menu)
 			// .populate('pages')
 			.exec(function(err, menu) {
-				if(err){
+				if (err) {
 					next(err);
-				} else if(!menu){
+				} else if (!menu) {
 					res.status(404).send('Not found');
 				} else {
 					locals.data.currentMenuBlock = menu;
@@ -55,24 +55,25 @@ exports = module.exports = function(req, res) {
 	//Current page
 	view.on('init', function(next) {
 		var query = keystone.list('BasePage').model
-			.findOne()
-			.or([{
-				'menu': locals.data.currentMenuBlock._id
-			}, {
-				'page': { //check for sub pages
-					'$in': _.pluck(locals.data.pages, '_id')
-				}
-			}]);
+			.findOne();
 		if (locals.filters.page) {
-			query.where('slug', locals.filters.page);
+			query.where('slug', locals.filters.page)
+				.or([{
+					'menu': locals.data.currentMenuBlock._id
+				}, {
+					'page': { //check for sub pages
+						'$in': _.pluck(locals.data.pages, '_id')
+					}
+				}]);
 		} else {
-			query.sort('sortOrder');
+			query.where('menu', locals.data.currentMenuBlock._id)
+				.sort('sortOrder');
 		}
 		query
 			.populate('page', 'slug title')
 			.exec(function(err, page) {
 				if (!err) {
-					if(!page){
+					if (!page) {
 						res.redirect('/' + locals.filters.menu);
 						return;
 					}
@@ -92,6 +93,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('SubPage').model
 			.find()
 			.where('page', locals.data.menuPage._id)
+			.sort('sortOrder')
 			.exec(function(err, subPages) {
 				if (!err) {
 					locals.data.subPages = subPages;
