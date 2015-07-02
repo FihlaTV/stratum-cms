@@ -35,7 +35,7 @@ User.schema.virtual('canAccessProtected').get(function(){
  * Relationships
  */
 
-User.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
+User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
 
 
 /**
