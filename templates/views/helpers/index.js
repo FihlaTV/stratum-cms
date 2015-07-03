@@ -348,5 +348,16 @@ module.exports = function() {
 		return new hbs.SafeString(output.substring(0, length || 10));
 	};
 
+	_helpers.getTitle = function(breadcrumbs, inBrand, inSeparator){
+		// console.log(inSeparator);
+		var separator = arguments.length > 3 ? inSeparator : ' | ',
+		brand = arguments.length > 2 ? inBrand : '',
+		output = _.isEmpty(breadcrumbs) ? '' : _.pluck(breadcrumbs, 'label').reverse().join(separator);
+		if(!_.isEmpty(brand)){
+			output += _.isEmpty(output) ? brand : (separator + brand);
+		}
+		return new hbs.SafeString(output);
+	};
+
 	return _helpers;
 };

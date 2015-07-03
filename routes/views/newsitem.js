@@ -6,7 +6,8 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 	
 	// Set locals
-	locals.section = 'blog';
+	locals.section = 'news';
+	locals.breadcrumbs = [{label: 'Nyheter', path: '/nyheter'}];
 	locals.filters = {
 		newsItem: req.params.newsitem
 	};
@@ -24,7 +25,10 @@ exports = module.exports = function(req, res) {
 		}).populate('author categories');
 		
 		q.exec(function(err, result) {
-			locals.data.newsItem = result;
+			if(!err){
+				locals.data.newsItem = result;
+				locals.breadcrumbs.push({label: result.title, path: '/nyheter/' + result.slug});
+			}
 			next(err);
 		});
 		

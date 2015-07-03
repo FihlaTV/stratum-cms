@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{brand}}</title>
+		<title>{{{getTitle breadcrumbs brand ' > '}}}</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link href="/styles/site.min.css" rel="stylesheet">
 
@@ -64,6 +64,18 @@
 			</div>
 		</div>
 		<div id="body">
+		{{#if breadcrumbs}}
+			<ol class="breadcrumb">
+				<li><a href="/">Start</a></li>
+				{{#each breadcrumbs}}
+				{{#if @last}}
+				<li class="active">{{label}}</li>
+				{{else}}
+				<li><a href="{{path}}">{{label}}</a></li>
+				{{/if}}
+				{{/each}}
+			</ol>
+		{{/if}}
 			<!--
 				Flash messages allow you to display once-off status messages to users, e.g. form
 				validation errors, success messages, etc

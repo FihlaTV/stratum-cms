@@ -5,6 +5,7 @@ exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res),
 		locals = res.locals;
 
+	locals.breadcrumbs = [];
 	locals.section = req.params.page;
 	locals.data = {
 		currentMenuBlock: {},
@@ -32,6 +33,7 @@ exports = module.exports = function(req, res) {
 				} else {
 					locals.data.currentMenuBlock = menu;
 					locals.section = menu.slug;
+					locals.breadcrumbs.push({label: menu.name, path: '/' + menu.slug});
 					next();
 				}
 			});
@@ -79,6 +81,10 @@ exports = module.exports = function(req, res) {
 					}
 					locals.data.page = page;
 					locals.data.menuPage = page.page || page;
+					if(page.page){
+						locals.breadcrumbs.push({label: page.page.title, path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug});
+					}
+					locals.breadcrumbs.push({label: page.title, path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug});
 				}
 				next(err);
 			});

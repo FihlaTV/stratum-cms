@@ -8,6 +8,8 @@ exports = module.exports = function(req, res) {
 	
 	// Init locals
 	locals.section = 'news';
+	locals.breadcrumbs = [{label: 'Nyheter', path: '/news'}];
+
 	// locals.filters = {
 	// 	category: req.params.category
 	// };
