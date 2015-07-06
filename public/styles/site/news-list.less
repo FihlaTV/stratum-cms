@@ -1,0 +1,18 @@
+.news-list{
+	.news-list-item{
+		.white-well();
+		img{
+			border-top-left-radius: .15em;
+			border-top-right-radius: .15em;
+			width: 100%;
+		}
+		width: percentage((100/3 - 1*2) / 100);
+		margin: 1%;
+		.news-list-item-content{
+			:first-child{
+				margin-top: 0;
+			}
+			padding: @gutter;
+		}
+	}
+}

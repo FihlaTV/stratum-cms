@@ -3,23 +3,25 @@
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-8 col-md-9">
+		{{!-- <div class="col-sm-8 col-md-9"> --}}
 			{{!-- <h4 class="text-weight-normal">Showing {{ data.news.results.length}} post.</h4> --}}
-			<div class="blog">
+			<div class="news-list">
 				{{# each data.news.results}}
 				{{../../user}}
-				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user "NewsItem" _id}}{{/if}}" class="post clearfix">
-					<img src="{{cloudinaryUrl image width=200 height=200 crop='fill' gravity='north'}}" class="img-circle pull-right">
-					<h2><a href="{{newsUrl slug}}">{{{title}}}</a></h2>
-					<p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
+				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user "NewsItem" _id}}{{/if}}" class="news-list-item">
+					{{#if image.exists}}<img src="{{cloudinaryUrl image width=350 crop='fill'}}" class="">{{/if}}
+					<div class="news-list-item-content">
+						<h2><a href="{{newsUrl slug}}">{{{title}}}</a></h2>
+						<p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
 							{{#if author.name.first}}by {{author.name.first}}{{/if}}
-					</p>
-					<p>{{{content.brief}}}</p>
-					<p class="read-more"><a href="{{newsUrl slug}}">Read more...</a></p>
+						</p>
+						<p>{{{content.brief}}}</p>
+						<p class="read-more"><a href="{{newsUrl slug}}">Read more...</a></p>
+					</div>
 				</div>
 				{{/each}}
 			</div>
-		</div>
+{{!-- 		</div>
 		<div class="col-sm-4 col-md-3">
 			<h2>Categories</h2>
 			<div style="margin-top: 70px;" class="list-group">
@@ -28,7 +30,7 @@
 				<a href="{{categoryUrl key}}" class="false list-group-item">{{name}}</a>
 				{{/each}}
 			</div>
-		</div>
+		</div> --}}
 	</div>
 	{{>pagination}}
 </div>
