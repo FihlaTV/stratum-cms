@@ -6,11 +6,22 @@
 		{{!-- <div class="col-sm-8 col-md-9"> --}}
 			{{!-- <h4 class="text-weight-normal">Showing {{ data.news.results.length}} post.</h4> --}}
 			<div class="news-list">
+				<div class="news-list-sizer"></div>
+				<div class="news-list-gutter"></div>
 				{{# each data.news.results}}
 				{{../../user}}
 				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user "NewsItem" _id}}{{/if}}" class="news-list-item">
-					{{#if image.exists}}<img src="{{cloudinaryUrl image width=350 crop='fill'}}" class="">{{/if}}
+					{{#if image.exists}}
+					<div class="news-list-item-image">
+						<a href="{{newsUrl slug}}">
+							<img src="{{cloudinaryUrl image width=500 height=350 crop='fill'}}" class="">
+						</a>
+					</div>
+					{{/if}}
 					<div class="news-list-item-content">
+						<p class="published-at">
+							{{date publishedDate format="Do MMM, YYYY"}}
+						</p>
 						<h2><a href="{{newsUrl slug}}">{{{title}}}</a></h2>
 						<p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
 							{{#if author.name.first}}by {{author.name.first}}{{/if}}
