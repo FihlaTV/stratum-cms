@@ -47,7 +47,7 @@ BasePage.add({
 	},
 	widget: {
 		type: Types.Relationship,
-		ref: 'StratumWidget',
+		ref: 'Widget',
 		many: false
 	},
 	content: {
