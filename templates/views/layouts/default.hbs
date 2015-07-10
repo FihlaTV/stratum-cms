@@ -65,16 +65,18 @@
 		</div>
 		<div id="body">
 		{{#if breadcrumbs}}
-			<ol class="breadcrumb">
-				<li><a href="/">Start</a></li>
-				{{#each breadcrumbs}}
-				{{#if @last}}
-				<li class="active">{{label}}</li>
-				{{else}}
-				<li><a href="{{path}}">{{label}}</a></li>
-				{{/if}}
-				{{/each}}
-			</ol>
+			<div class="container">
+				<ol class="breadcrumb">
+					<li><a href="/">Start</a></li>
+					{{#each breadcrumbs}}
+					{{#if @last}}
+					<li class="active">{{label}}</li>
+					{{else}}
+					<li><a href="{{path}}">{{label}}</a></li>
+					{{/if}}
+					{{/each}}
+				</ol>
+			</div>
 		{{/if}}
 			<!--
 				Flash messages allow you to display once-off status messages to users, e.g. form
