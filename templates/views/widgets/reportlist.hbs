@@ -1,7 +1,9 @@
 <div class="report-list">
 {{#each reports}}
 	<div class="col-sm-4 col-xs-12">
-		<a href="{{cloudinaryUrl pdf}}" target="_blank"><img class="img-responsive" src="{{cloudinaryUrl pdf width='200' crop='fill' page='1' format='png'}}"></a>
+		<a href="{{cloudinaryUrl pdf}}" target="_blank" class="">
+			<img class="img-responsive report-list-report" src="{{cloudinaryUrl pdf width='200' crop='fill' page='1' format='png'}}">
+		</a>
 	</div>
 {{/each}}
 </div>
