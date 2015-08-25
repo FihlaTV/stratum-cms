@@ -9,7 +9,7 @@
     "dotenv": "~0.4.0",
     "express-handlebars": "~2.0.1",
     "handlebars": "~3.0.3",
-    "keystone": "~0.3.13",
+    "keystone": "~0.3.14",
     "moment": "~2.8.1",
     "mongodb": "^2.0.35",
     "request": "^2.55.0",
