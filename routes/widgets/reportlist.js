@@ -1,12 +1,12 @@
-var _ = require('underscore'),
-	keystone = require('keystone');
+var	keystone = require('keystone');
 
 exports = module.exports = function(_locals, next) {
 	var locals = _locals;
 	keystone.list('Report').model
 		.find()
+		.sort('-year')
 		.exec(function(err, reports) {
-			if(!err){
+			if (!err) {
 				locals.reports = reports;
 			}
 			next(err);
