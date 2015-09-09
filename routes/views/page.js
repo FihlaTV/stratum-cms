@@ -6,6 +6,8 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 
 	locals.breadcrumbs = [];
+	// locals.widget = 'reportlist';
+	locals.widget = {};
 	locals.section = req.params.page;
 	locals.data = {
 		currentMenuBlock: {},
@@ -73,12 +75,14 @@ exports = module.exports = function(req, res) {
 		}
 		query
 			.populate('page', 'slug title')
+			.populate('widget')
 			.exec(function(err, page) {
 				if (!err) {
 					if (!page) {
 						res.redirect('/' + locals.filters.menu);
 						return;
 					}
+					locals.data.widget = page.widget;
 					locals.data.page = page;
 					locals.data.menuPage = page.page || page;
 					if(page.page){
@@ -106,6 +110,33 @@ exports = module.exports = function(req, res) {
 				}
 				next(err);
 			});
+	});
+
+	//Load widget settings
+	view.on('init', function(next){
+		var widget = locals.data.widget;
+		if(widget && widget.getValue('type') === 'keystone'){
+			keystone.list('KeystoneWidget').model
+				.findOne({'_id': widget.get('keystoneWidget')})
+				.exec(function(err, kWidget){
+					var view;
+					if(!err && kWidget){
+						locals.widgetTpl = kWidget.name;
+						try{
+							view = require('../widgets/' + kWidget.name);
+							view(locals.widget, next);
+						} catch (e){
+							console.log(e);
+							next(e);
+						}
+					} else{
+						next();
+					}
+				});
+			// console.log(widget.get('name'));
+		} else{
+			next();
+		}
 	});
 
 	view.render('page');

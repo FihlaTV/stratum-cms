@@ -40,6 +40,7 @@ exports = module.exports = function(app) {
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 	app.all('/api/pages', routes.api.pages);
+	app.all('/api/load-widgets', routes.api['load-widgets']);
 
 	// Restrict all pages to logged in users for now...
 	if(keystone.get('protect all pages')){

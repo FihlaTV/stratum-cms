@@ -27,7 +27,7 @@ keystone.init({
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
 		layoutsDir: path.join(root, 'templates/views/layouts'),
-		partialsDir: path.join(root, 'templates/views/partials'),
+		partialsDir: [path.join(root, 'templates/views/partials'), path.join(root, 'templates/views/widgets')],
 		defaultLayout: 'default',
 		helpers: new Helpers(),
 		extname: '.hbs'

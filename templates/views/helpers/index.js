@@ -205,7 +205,10 @@ module.exports = function() {
 		context = context === null ? undefined : context;
 		
 		if ((context) && (context.public_id)) {
-			var imageName = context.public_id.concat('.',context.format);
+			var imageName = context.public_id;
+			if(!options.hash || !options.hash.format){
+				imageName = imageName.concat('.', context.format);
+			}
 			return cloudinary.url(imageName, options.hash);
 		}
 		else {

@@ -33,6 +33,9 @@ Widget.add({
 			value: 'stratum',
 			label: 'Stratum Widget'
 		}, {
+			value: 'keystone',
+			label: 'Keystone Widget'
+		}, {
 			value: 'other',
 			label: 'Other'
 		}]
@@ -44,11 +47,11 @@ Widget.add({
 			type: 'stratum'
 		}
 	},
-	advancedSettings: {
-		type: Types.Textarea,
-		collapse: true,
+	keystoneWidget: {
+		type: Types.Relationship,
+		ref: 'KeystoneWidget',
 		dependsOn: {
-			type: 'stratum'
+			type: 'keystone'
 		}
 	},
 	size: {
@@ -64,6 +67,13 @@ Widget.add({
 			value: 2,
 			label: 'Large'
 		}]
+	},
+	advancedSettings: {
+		type: Types.Textarea,
+		collapse: true,
+		dependsOn: {
+			type: ['stratum', 'keystone']
+		}
 	},
 	showOnStartPage: {
 		type: Boolean,

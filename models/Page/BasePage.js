@@ -16,9 +16,10 @@ var BasePage = new keystone.List('BasePage', {
 		from: 'title',
 		unique: true
 	},
+	// noedit: true,
 	nocreate: true,
 	nodelete: true,
-	hidden: true
+	// hidden: true
 });
 
 BasePage.add({
@@ -26,6 +27,9 @@ BasePage.add({
 		type: String,
 		required: true
 	},
+	pageType: { type: String, noedit: true, hidden: true, watch: true, value: function(callback){
+		callback(null, this.getValue('__t'));
+	}},
 	subtitle: {
 		type: String
 	},
@@ -43,7 +47,7 @@ BasePage.add({
 	},
 	widget: {
 		type: Types.Relationship,
-		ref: 'StratumWidget',
+		ref: 'Widget',
 		many: false
 	},
 	content: {
@@ -57,5 +61,6 @@ BasePage.add({
 		type: Types.CloudinaryImages
 	}
 });
+BasePage.defaultColumns = 'title, pageType|20%';
 
 BasePage.register();

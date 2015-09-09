@@ -80,7 +80,7 @@ var loadStratumModel = function(Model, url, idField, mappedFields, callback) {
 
 exports.loadWidgets = function(callback) {
 	loadStratumModel(keystone.list('StratumWidget').model,
-		'http://demo.registercentrum.se/widgets',
+		'https://stratum.registercentrum.se/widgets',
 		'WidgetSlug', {
 			'WidgetSlug': 'widgetSlug',
 			'PageID': 'pageId',
@@ -93,7 +93,7 @@ exports.loadRegisters = function(callback) {
 	var apiKey = keystone.get('stratum api key');
 	if (apiKey) {
 		loadStratumModel(keystone.list('StratumRegister').model,
-			'http://demo.registercentrum.se/api/metadata/registers?APIKey=' + apiKey,
+			'https://stratum.registercentrum.se/api/metadata/registers?APIKey=' + apiKey,
 			'RegisterID', {
 				'RegisterID': 'stratumId',
 				'RegisterName': 'name',
