@@ -51,16 +51,22 @@
 								{{/each}}
 								{{!-- <li id="login-button"></li> --}}
 							</ul>
+							{{#if stratumUser}}
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href="#">Inloggad som {{stratumUser.FirstName}} {{stratumUser.LastName}}</a></li>
+							</ul>
+							{{else}}
 							<ul class="nav navbar-nav navbar-right" id="login-nav">
 							</ul>
-							<ul class="nav navbar-nav navbar-right">
+							{{/if}}
+							{{!-- <ul class="nav navbar-nav navbar-right">
 								{{#if user}}
 								<li><a href="#" class="user"><img src="{{#if user.image.exists}}{{cloudinaryUrl user.image width="27" height="27" crop="fill"}}{{else}}/images/avatar.png{{/if}}" alt="" width="27" class="img-circle"></a></li>
 								<li><a href="/keystone/signout">Sign Out</a></li>
 								{{else}}
 								<li><a href="/keystone/signin">Sign In</a></li>
 								{{/if}}
-							</ul>
+							</ul> --}}
 						</div>
 					</div>
 				{{!-- </div> --}}

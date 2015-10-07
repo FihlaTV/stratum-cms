@@ -22,7 +22,8 @@ var keystone = require('keystone'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname),
 	babelify = require('babelify'),
-	browserify = require('browserify-middleware');
+	browserify = require('browserify-middleware'),
+	envify = require('envify');
 
 // Common Middleware
 keystone.pre('routes', middleware.mapContextId);
@@ -42,7 +43,7 @@ exports = module.exports = function(app) {
 	app.use('/js/react', browserify('./client/scripts', {
 		transform: [babelify.configure({
 			plugins: ['object-assign']
-		})]
+		}), envify]
 	}));
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);

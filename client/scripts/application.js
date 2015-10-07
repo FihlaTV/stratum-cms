@@ -1,26 +1,29 @@
 var React = require('react'),
-	NavItem = require('react-bootstrap').NavItem,
-	Button = require('react-bootstrap').Button;
+	// NavItem = require('react-bootstrap').NavItem,
+	// Modal = require('react-bootstrap').Modal,
+	// Popover = require('react-bootstrap').Popover,
+	// Tooltip = require('react-bootstrap').Tooltip,
+	// Button = require('react-bootstrap').Button,
+	// BIDLogin = require('./BIDLogin');
+	LoginModal = require('./LoginModal');
 
-var App = React.createClass({
-	render: function() {
-		return (
-			<h1>Hello World</h1>
-		);
-	}
-});
 
-function duder(eventKey){
-	console.log('duder: ', eventKey);
+// var App = React.createClass({
+// 	render: function() {
+// 		return (
+// 			<h1>Hello World</h1>
+// 		);
+// 	}
+// });
+
+
+// function duder(eventKey){
+// 	console.log('duder: ', eventKey);
+// }
+var loginNav = document.getElementById('login-nav');
+if(loginNav){
+	React.render(
+		<LoginModal title="Login" />,
+		loginNav		
+	);
 }
-
-React.render(
-	// <App/>,
-	// <Button bsStyle="success" bsSize="small" >
-	// 	Login
-	// </Button>,
-	<NavItem eventKey={1} onSelect={duder} href='/home'>
-		Logga in i stratum
-	</NavItem>,
-	document.getElementById('login-nav')
-);
