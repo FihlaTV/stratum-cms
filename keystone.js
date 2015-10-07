@@ -44,6 +44,7 @@ keystone.init({
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
 	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
 	'stratum api key': process.env.STRATUM_API_KEY,
+	'stratum server': process.env.STRATUM_SERVER,
 	'wysiwyg cloudinary images': true,
 
 	// Redirect to regular page if whole site is access restricted

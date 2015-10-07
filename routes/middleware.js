@@ -20,6 +20,19 @@ var _ = require('underscore'),
 	or replace it with your own templates / logic.
 */
 
+exports.mapContextId = function(req, res, next){
+	if (req.session && req.session.contextId) {
+		req.contextId = req.session.contextId;
+		if(req.session.stratumUser){
+			req.stratumUser = req.session.stratumUser;
+		}
+	} else{
+		req.stratumUser = null;
+		req.contextId = null;
+	}
+	next();
+};
+
 exports.initLocals = function(req, res, next) {
 
 	var locals = res.locals,
@@ -35,6 +48,8 @@ exports.initLocals = function(req, res, next) {
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
+	locals.contextId = req.contextId;
+	locals.stratumUser = req.stratumUser;
 	async.series({
 		loadMenuBlocks: function(cb) {
 			keystone.list('MenuBlock').model

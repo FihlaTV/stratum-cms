@@ -25,6 +25,7 @@ var keystone = require('keystone'),
 	browserify = require('browserify-middleware');
 
 // Common Middleware
+keystone.pre('routes', middleware.mapContextId);
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
 
@@ -48,6 +49,7 @@ exports = module.exports = function(app) {
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
+	app.all('/api/authenticate/context/', routes.api.context);
 
 	// Restrict all pages to logged in users for now...
 	if (keystone.get('protect all pages')) {
