@@ -30,6 +30,20 @@ BasePage.add({
 	pageType: { type: String, noedit: true, hidden: true, watch: true, value: function(callback){
 		callback(null, this.getValue('__t'));
 	}},
+	layout: {
+		type: Types.Select,
+		options: [{
+			value: 'standard',
+			label: '(Default) Menu and one extra image column on bigger displays'
+		}, {
+			value: 'wide',
+			label: 'Menu and one large column for text on all screens'
+		}, {
+			value: 'full',
+			label: 'Hide menu and use complete page width'
+		}],
+		default: 'standard'
+	},
 	subtitle: {
 		type: String
 	},
