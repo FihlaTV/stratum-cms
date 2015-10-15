@@ -20,7 +20,9 @@
 
 var keystone = require('keystone'),
 	middleware = require('./middleware'),
-	importRoutes = keystone.importer(__dirname);
+	importRoutes = keystone.importer(__dirname),
+	babelify = require('babelify'),
+	browserify = require('browserify-middleware');
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -34,8 +36,13 @@ var routes = {
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
-	
+
 	// API
+	app.use('/js/react', browserify('./client/scripts', {
+		transform: [babelify.configure({
+			plugins: ['object-assign']
+		})]
+	}));
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
@@ -43,7 +50,7 @@ exports = module.exports = function(app) {
 	app.all('/api/load-widgets', routes.api['load-widgets']);
 
 	// Restrict all pages to logged in users for now...
-	if(keystone.get('protect all pages')){
+	if (keystone.get('protect all pages')) {
 		app.get('/*', middleware.requireUser);
 	}
 	// Views
@@ -52,8 +59,8 @@ exports = module.exports = function(app) {
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
 	app.get('/kontakt', routes.views.contact);
-	
+
 	// Views for dynamic routes
-	app.get('/:menublock?', routes.views.page); 
+	app.get('/:menublock?', routes.views.page);
 	app.get('/:menublock?/:page', routes.views.page);
 };

@@ -35,7 +35,10 @@ exports = module.exports = function(req, res) {
 				} else {
 					locals.data.currentMenuBlock = menu;
 					locals.section = menu.slug;
-					locals.breadcrumbs.push({label: menu.name, path: '/' + menu.slug});
+					locals.breadcrumbs.push({
+						label: menu.name,
+						path: '/' + menu.slug
+					});
 					next();
 				}
 			});
@@ -85,10 +88,16 @@ exports = module.exports = function(req, res) {
 					locals.data.widget = page.widget;
 					locals.data.page = page;
 					locals.data.menuPage = page.page || page;
-					if(page.page){
-						locals.breadcrumbs.push({label: page.page.title, path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug});
+					if (page.page) {
+						locals.breadcrumbs.push({
+							label: page.page.title,
+							path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
+						});
 					}
-					locals.breadcrumbs.push({label: page.title, path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug});
+					locals.breadcrumbs.push({
+						label: page.title,
+						path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
+					});
 				}
 				next(err);
 			});
@@ -113,29 +122,45 @@ exports = module.exports = function(req, res) {
 	});
 
 	//Load widget settings
-	view.on('init', function(next){
+	view.on('init', function(next) {
 		var widget = locals.data.widget;
-		if(widget && widget.getValue('type') === 'keystone'){
-			keystone.list('KeystoneWidget').model
-				.findOne({'_id': widget.get('keystoneWidget')})
-				.exec(function(err, kWidget){
-					var view;
-					if(!err && kWidget){
-						locals.widgetTpl = kWidget.name;
-						try{
-							view = require('../widgets/' + kWidget.name);
-							view(locals.widget, next);
-						} catch (e){
-							console.log(e);
-							next(e);
+		switch (widget && widget.getValue('type')) {
+			case 'keystone':
+				keystone.list('KeystoneWidget').model
+					.findOne({
+						'_id': widget.get('keystoneWidget')
+					})
+					.exec(function(err, kWidget) {
+						var view;
+						if (!err && kWidget) {
+							locals.widgetTpl = kWidget.name;
+							try {
+								view = require('../widgets/' + kWidget.name);
+								view(locals.widget, next);
+							} catch (e) {
+								console.log(e);
+								next(e);
+							}
+						} else {
+							next();
 						}
-					} else{
-						next();
-					}
-				});
-			// console.log(widget.get('name'));
-		} else{
-			next();
+					});
+				// console.log(widget.get('name'));
+				break;
+			case 'stratum':
+				keystone.list('StratumWidget').model
+					.findOne({
+						'_id': widget.get('stratumWidget')
+					})
+					.exec(function(err, sWidget) {
+						if (sWidget) {
+							locals.stratumWidget = sWidget;
+						}
+						next(err);
+					});
+				break;
+			default:
+				next();
 		}
 	});
 
