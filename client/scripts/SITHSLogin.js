@@ -2,7 +2,6 @@ var React = require('react');
 var Button = require('react-bootstrap').Button;
 var $ = require('jquery');
 
-require('dotenv').load();
 
 module.exports = React.createClass({
 	getInitialState(){
@@ -12,7 +11,7 @@ module.exports = React.createClass({
 	},
 	login(){
 		$.ajax({
-			url: process.env.STRATUM_SERVER + '/api/authenticate/login',
+			url: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/login',
 			method: 'GET',
 			xhrFields: {
 				withCredentials: true
@@ -23,7 +22,7 @@ module.exports = React.createClass({
 					status: JSON.stringify(data)
 				});
 				$.ajax({
-					url: process.env.STRATUM_SERVER + '/api/authenticate/timeleft',
+					url: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/timeleft',
 					method: 'GET',
 					xhrFields: {
 						withCredentials: true

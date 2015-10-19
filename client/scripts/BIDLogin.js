@@ -8,8 +8,7 @@ var React = require('react'),
 	Button = require('react-bootstrap').Button,
 	BIDState;
 
-require('dotenv').load();
-
+ 
 BIDState = {
 	INIT: 0,
 	LOADING: 1,
@@ -39,8 +38,8 @@ module.exports = React.createClass({
 			initLoad: false,
 			delay: 2000,
 			repeats: 10,
-			orderUrl: process.env.STRATUM_SERVER + '/api/authenticate/bid/order/',
-			collectUrl: process.env.STRATUM_SERVER + '/api/authenticate/bid/collect/'
+			orderUrl: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/bid/order/',
+			collectUrl: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/bid/collect/'
 		};
 	},
 	componentWillReceiveProps(nextProps) {

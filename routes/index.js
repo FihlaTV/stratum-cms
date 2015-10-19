@@ -21,9 +21,13 @@
 var keystone = require('keystone'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname),
-	babelify = require('babelify'),
-	browserify = require('browserify-middleware'),
-	envify = require('envify');
+	//Webpack (dev only)
+	webpack = require('webpack'),
+	webpackDevMiddleware = require('webpack-dev-middleware'),
+	webpackHotMiddleware = require('webpack-hot-middleware'),
+	config = require('../webpack.config');
+	
+
 
 // Common Middleware
 keystone.pre('routes', middleware.mapContextId);
@@ -36,15 +40,19 @@ var routes = {
 	views: importRoutes('./views')
 };
 
+// Setup webpack compiler
+var compiler = webpack(config);
+
 // Setup Route Bindings
 exports = module.exports = function(app) {
 
+	//Activate webpack hot reload middleware
+	if(keystone.get('env') === 'development'){
+		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+		app.use(webpackHotMiddleware(compiler));
+	}
+
 	// API
-	app.use('/js/react', browserify('./client/scripts', {
-		transform: [babelify.configure({
-			plugins: ['object-assign']
-		}), envify]
-	}));
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
