@@ -34,5 +34,8 @@ npm-shrinkwrap.json
 # Minified CSS
 public/styles/site.min.css
 
+# Minified JS
+public/js/dist
+
 # Register configurations
 registers/
