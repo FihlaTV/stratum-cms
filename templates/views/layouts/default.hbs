@@ -150,8 +150,13 @@
 		<script type="text/javascript" src="/js/{{{src}}}"></script>
 		{{/each}}
 		{{!-- React scripts --}}
+		{{#ifeq env "production"}}
+		<script type="text/javascript" src="/js/dist/vendors.js"></script>
+		<script type="text/javascript" src="/js/dist/bundle.js"></script>
+		{{/ifeq}}
+		{{#ifeq env "development"}}
 		<script type="text/javascript" src="/js/bundle.js"></script>
-		
+		{{/ifeq}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
 		{{{isAdminEditorJS user}}}
 		{{#if register.showMap}}{{>maps}}{{/if}}

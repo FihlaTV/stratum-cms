@@ -50,6 +50,7 @@ exports.initLocals = function(req, res, next) {
 	locals.brand = keystone.get('brand');
 	locals.contextId = req.contextId;
 	locals.stratumUser = req.stratumUser;
+	locals.env = keystone.get('env');
 	async.series({
 		loadMenuBlocks: function(cb) {
 			keystone.list('MenuBlock').model
