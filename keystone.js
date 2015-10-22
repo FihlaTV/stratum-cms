@@ -96,6 +96,10 @@ keystone.set('nav', {
 	'widgets': 'widgets'
 });
 
+
+// Output environment variable
+console.log('Currently running in ' + keystone.get('env'));
+
 // Start Keystone to connect to your database and initialise the web server
 
 keystone.start();
