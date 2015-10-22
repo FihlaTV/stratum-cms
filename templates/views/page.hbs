@@ -52,6 +52,9 @@
 			{{#if ../stratumWidget}}
 			{{#with ../../stratumWidget}}
 				<div class="stratum-widget" id="sw-{{slug}}"></div>
+				<script type="text/javascript">
+				{{{../../../data.widget.advancedSettings}}}
+				</script>
 				<script type="text/javascript" src="//stratum.registercentrum.se/widgets/{{widgetSlug}}"></script>
 			{{/with}}
 			{{/if}}
