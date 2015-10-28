@@ -1,6 +1,6 @@
 var React = require('react'),
 	loginNav = document.getElementById('login-nav'),
-	Application = require('./Application');
+	Application = require('./components/Application');
 
 if(loginNav){
 	React.render(
