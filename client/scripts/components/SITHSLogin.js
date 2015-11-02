@@ -4,12 +4,12 @@ var $ = require('jquery');
 
 
 module.exports = React.createClass({
-	getInitialState(){
+	getInitialState: function(){
 		return {
 			status: 'nan'
 		};
 	},
-	login(){
+	login: function(){
 		$.ajax({
 			url: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/login',
 			method: 'GET',
@@ -50,7 +50,7 @@ module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-	render(){
+	render: function(){
 		return (
 			<div>
 				<h1>SITHS</h1>

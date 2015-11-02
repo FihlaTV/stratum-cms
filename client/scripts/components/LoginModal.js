@@ -1,16 +1,16 @@
 var React = require('react'),
-		Modal = require('react-bootstrap').Modal,
+		// Modal = require('react-bootstrap').Modal,
 		NavItem = require('react-bootstrap').NavItem,
-		Popover = require('react-bootstrap').Popover,
-		Tooltip = require('react-bootstrap').Tooltip,
-		Button = require('react-bootstrap').Button,
-		BIDLogin = require('./BIDLogin'),
-		LoginSelector = require('./LoginSelector.js'),
-		LoginModal;
+		// Popover = require('react-bootstrap').Popover,
+		// Tooltip = require('react-bootstrap').Tooltip,
+		// Button = require('react-bootstrap').Button,
+		// BIDLogin = require('./BIDLogin'),
+		LoginSelector = require('./LoginSelector.js');
+		// LoginModal;
 
-module.exports = LoginModal = React.createClass({
+module.exports = React.createClass({
 
-		getInitialState() {
+		getInitialState: function() {
 				// return { showModal: false };
 				return {
 						showModal: true,
@@ -18,12 +18,12 @@ module.exports = LoginModal = React.createClass({
 				};
 		},
 
-		close() {
+		close: function() {
 				this.setState({
 						showModal: false
 				});
 		},
-		loadComplete(success) {
+		loadComplete: function(success) {
 			console.log('load finnished' + (success ? ' without errors' : ' with errors...'));
 			this.setState({
 				initLoad: false,
@@ -31,20 +31,20 @@ module.exports = LoginModal = React.createClass({
 				proceedText: 'Klar'
 			});
 		},
-		open() {
+		open: function() {
 				this.setState({
 						showModal: true
 				});
 		},
-		initLogin() {
+		initLogin: function() {
 				this.setState({
 					initLoad: true,
 					disableButton: true,
 					proceedText: 'Laddar...'
 				});
 		},
-		render() {
-			var btn = (<Button disabled={this.state.disableButton} bsStyle="primary" onClick={this.initLogin}>{this.state.proceedText}</Button>);
+		render: function() {
+			// var btn = (<Button disabled={this.state.disableButton} bsStyle="primary" onClick={this.initLogin}>{this.state.proceedText}</Button>);
 				// let popover = <Popover title="popover">very popover. such engagement</Popover>;
 				// let tooltip = <Tooltip>wow.</Tooltip>;
 

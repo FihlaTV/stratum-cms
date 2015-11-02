@@ -6,12 +6,12 @@ var React = require('react'),
 
 
 var LoginList = React.createClass({
-	handleClick(id) {
+	handleClick: function(id) {
 		if (this.props.loginSelected) {
 			this.props.loginSelected(id);
 		}
 	},
-	render() {
+	render: function() {
 		return (
 			<div className="login-method-list row">
 				{this.props.items.slice(0, 4).map(function(item, i, items) {
@@ -38,7 +38,7 @@ module.exports = React.createClass({
 			loginId: loginId
 		});
 	},
-	getInitialState() {
+	getInitialState: function() {
 		return {
 			items: [{
 				text: 'Mobilt BankID',
@@ -52,7 +52,7 @@ module.exports = React.createClass({
 			}]
 		};
 	},
-	renderLogin() {
+	renderLogin: function() {
 		switch (this.state.loginId) {
 		case 'bankid':
 			return (
@@ -85,7 +85,7 @@ module.exports = React.createClass({
 				);
 		}
 	},
-	render() {
+	render: function() {
 		return (
 			<Modal show={this.props.show} onHide={this.props.onHide}>
 				<Modal.Header closeButton>

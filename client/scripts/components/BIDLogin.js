@@ -16,7 +16,7 @@ BIDState = {
 };
 
 module.exports = React.createClass({
-	getInitialState() {
+	getInitialState: function() {
 		return {
 			init: 'init',
 			validity: 'error',
@@ -33,7 +33,7 @@ module.exports = React.createClass({
 		repeats: React.PropTypes.number,
 		initLoad: React.PropTypes.bool
 	},
-	getDefaultProps() {
+	getDefaultProps: function() {
 		return {
 			initLoad: false,
 			delay: 2000,
@@ -42,7 +42,7 @@ module.exports = React.createClass({
 			collectUrl: process.env.CLIENT_STRATUM_SERVER + '/api/authenticate/bid/collect/'
 		};
 	},
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps: function(nextProps) {
 		// console.log('received props: ', nextProps);
 		// if (nextProps.initLoad && !this.state.loadInProgress) {
 		//  this.setState({
@@ -52,20 +52,20 @@ module.exports = React.createClass({
 		//  this.getToken();
 		// }
 	},
-	componentWillMount() {
+	componentWillMount: function() {
 		console.log('componentWillMount');
 	},
-	initLogin() {
+	initLogin: function() {
 		console.log('initLogin');
 	},
-	loadComplete(success) {
+	loadComplete: function(success) {
 		this.setState({
 			bidState: BIDState.LOAD_COMPLETE,
 			loadInProgress: false
 		});
 		this.props.onLoadComplete(success);
 	},
-	getToken() {
+	getToken: function() {
 		$.ajax({
 			url: this.props.orderUrl + this.state.personalNr,
 			method: 'GET'
@@ -83,7 +83,7 @@ module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-	doLoad() {
+	doLoad: function() {
 		var repeats = this.state.repeats;
 		if (repeats <= 0) {
 			this.setState({
@@ -151,13 +151,13 @@ module.exports = React.createClass({
 			}.bind(this)
 		});
 	},
-	personalNrChange(e) {
+	personalNrChange: function(e) {
 		this.setState({
 			personalNr: e.target.value,
 			validity: this.validatePersonalNr(e.target.value) ? 'success' : 'error'
 		});
 	},
-	validatePersonalNr(pnr) {
+	validatePersonalNr: function(pnr) {
 		var matches = pnr
 			.replace('-', '')
 			.trim()
@@ -168,7 +168,7 @@ module.exports = React.createClass({
 		}
 		return this.isValidSwedishPIN(matches[2]);
 	},
-	isValidSwedishPIN(pin) {
+	isValidSwedishPIN: function(pin) {
 		pin = pin
 			.replace(/\D/g, '') // strip out all but digits
 			.split('') // convert string to array
@@ -201,7 +201,7 @@ module.exports = React.createClass({
 		// sum must be divisible by 10
 		return 0 === sum % 10;
 	},
-	onSubmit(e) {
+	onSubmit: function(e) {
 		e.preventDefault();
 		if (this.state.validity !== 'success') {
 			this.setState({
@@ -220,7 +220,7 @@ module.exports = React.createClass({
 			this.getToken();
 		}
 	},
-	getAlert(){
+	getAlert: function(){
 		if(this.state.statusMsg){
 			return (
 				<Alert bsStyle="danger" dismissAfter={2000}>
@@ -231,7 +231,7 @@ module.exports = React.createClass({
 		}
 		return;
 	},
-	renderBody(){
+	renderBody: function(){
 		switch (this.state.bidState) {
 		case BIDState.INIT :
 			return (
@@ -275,7 +275,7 @@ module.exports = React.createClass({
 			);
 		}
 	},
-	render() {
+	render: function() {
 		return (
 			<div>
 				<Modal.Body className="bankid-modal">

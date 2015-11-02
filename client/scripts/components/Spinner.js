@@ -1,7 +1,7 @@
 var React = require('react');
 
 module.exports = React.createClass({
-    render() {
+    render: function() {
         return (<div className="load-spinner">Laddar...</div>);
     }
 });
