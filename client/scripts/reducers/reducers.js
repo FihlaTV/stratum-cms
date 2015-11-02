@@ -4,7 +4,7 @@ const initialState = {
 	loginMethod: null
 };
 
-function loginApp(state = initialState, action){
+export function loginApp(state = initialState, action){
 	switch (action.type){
 		case SET_LOGIN_METHOD:
 			return Object.assign({}, state, {
