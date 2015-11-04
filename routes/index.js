@@ -70,6 +70,7 @@ exports = module.exports = function(app) {
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
 	app.get('/kontakt', routes.views.contact);
+	app.get('/login', routes.views.login);
 
 	// Views for dynamic routes
 	app.get('/:menublock?', routes.views.page);
