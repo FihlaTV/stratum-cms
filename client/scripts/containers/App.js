@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { setLoginMethod, inputPersonalNumber, LoginMethods } from '../actions/actions';
+import ChangeLogin from '../components/ChangeLogin';
 
 class App extends Component {
 	render() {
@@ -9,6 +10,9 @@ class App extends Component {
 			<div>
 				<h1>Login</h1>
 				<strong>Login Method: </strong>{loginMethod}
+				<ChangeLogin onChangeClick={newLoginMethod => 
+					dispatch(setLoginMethod(newLoginMethod))
+				} />
 			</div>
 		);
 	}
