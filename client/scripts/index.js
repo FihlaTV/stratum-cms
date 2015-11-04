@@ -1,11 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Application from './components/Application';
-const loginNav = document.getElementById('login-nav');
+import { render } from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Application from './containers/App';
+import loginApp from './reducers/reducers.js';
 
-if(loginNav){
-	ReactDOM.render(
-		<Application />, 
-		loginNav
+const mainContainer = document.getElementById('login-page');
+
+let store = createStore(loginApp);
+
+if(mainContainer){
+	render(
+		<Provider store={store}>
+			<Application />
+		</Provider>, 
+		mainContainer
 	);
 }

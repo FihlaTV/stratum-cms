@@ -3,7 +3,7 @@ export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 
 export const LoginMethods = {
     BANDK_ID: 'BANK_ID',
-    SITH_CARD: 'SITHS_CARD'
+    SITHS_CARD: 'SITHS_CARD'
 };
 
 export function setLoginMethod(loginMethod) {

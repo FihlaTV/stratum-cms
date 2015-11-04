@@ -1,10 +1,11 @@
 import { LoginMethods, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER } from '../actions/actions.js';
+import { combineReducers } from 'redux';
 
 const initialState = {
-	loginMethod: null
+	loginMethod: LoginMethods.SITHS_CARD
 };
 
-export function loginApp(state = initialState, action){
+function login(state = initialState, action){
 	switch (action.type){
 		case SET_LOGIN_METHOD:
 			return Object.assign({}, state, {
@@ -18,3 +19,5 @@ export function loginApp(state = initialState, action){
 			return state;
 	}
 }
+
+export default combineReducers({login});
