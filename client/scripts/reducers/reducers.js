@@ -2,7 +2,7 @@ import { LoginMethods, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER } from '../action
 import { combineReducers } from 'redux';
 
 const initialState = {
-	loginMethod: LoginMethods.SITHS_CARD
+	// loginMethod: LoginMethods.SITHS_CARD
 };
 
 function login(state = initialState, action){

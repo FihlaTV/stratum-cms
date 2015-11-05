@@ -9,12 +9,22 @@ class App extends Component {
 		const { dispatch, loginMethod } = this.props;
 		return (
 			<div>
-				<h1>Login</h1>
-				<strong>Login Method: </strong>{loginMethod}
-				<SelectLogin selectLogin={loginMethod => 
-					dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.SITHS_CARD} loginMethodName="SITHS-Kort"/>
-				<SelectLogin selectLogin={loginMethod => 
-					dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.BANK_ID} loginMethodName="Mobilt BankID"/>
+				<h1>Login <small>{loginMethod}</small></h1>
+				{!loginMethod && 
+					<div className="login-method-list row">
+						<div className="col-sm-6">
+							<SelectLogin selectLogin={loginMethod => 
+								dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.SITHS_CARD} loginMethodName="SITHS-Kort"/>
+						</div>
+						<div className="col-sm-6">
+							<SelectLogin selectLogin={loginMethod => 
+								dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.BANK_ID} loginMethodName="Mobilt BankID"/>
+						</div>
+					</div>
+				}
+				{loginMethod &&
+				<button className="btn" onClick={x => dispatch(setLoginMethod())}>Reset state</button>
+				}
 			</div>
 		);
 	}
@@ -24,7 +34,7 @@ App.propTypes = {
   loginMethod: PropTypes.oneOf([
     'BANK_ID',
     'SITHS_CARD'
-  ]).isRequired
+  ])
 };
 
 // function initLogin(loginMethodName){
