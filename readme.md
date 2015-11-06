@@ -1,4 +1,4 @@
-# Stratum CMS [![Stories in Ready](https://badge.waffle.io/registercentrum/stratum-cms.png?label=ready&title=Ready)](http://waffle.io/registercentrum/stratum-cms) [![Stories in Progress](https://badge.waffle.io/registercentrum/stratum-cms.png?label=in+Progress&title=In%20Progress)](http://waffle.io/registercentrum/stratum-cms)
+# Stratum CMS [![Stories in Prepared](https://badge.waffle.io/registercentrum/stratum-cms.png?label=prepared&title=Prepared)](http://waffle.io/registercentrum/stratum-cms) [![Stories in Progress](https://badge.waffle.io/registercentrum/stratum-cms.png?label=in+Progress&title=In%20Progress)](http://waffle.io/registercentrum/stratum-cms)
 
 
 ## Register support
