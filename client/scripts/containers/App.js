@@ -15,11 +15,11 @@ class App extends Component {
 					<div className="login-method-list row">
 						<div className="col-sm-6">
 							<SelectLogin selectLogin={loginMethod => 
-								dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.SITHS_CARD} loginMethodName="SITHS-Kort"/>
+								dispatch(setLoginMethod(loginMethod))} logoClass="siths" loginMethod={LoginMethods.SITHS_CARD} loginMethodName="SITHS-Kort"/>
 						</div>
 						<div className="col-sm-6">
 							<SelectLogin selectLogin={loginMethod => 
-								dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.BANK_ID} loginMethodName="Mobilt BankID"/>
+								dispatch(setLoginMethod(loginMethod))} logoClass="bankid" loginMethod={LoginMethods.BANK_ID} loginMethodName="Mobilt BankID"/>
 						</div>
 					</div>
 				}
