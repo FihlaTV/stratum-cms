@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, inputPersonalNumber, LoginMethods } from '../actions/actions';
-import ChangeLogin from '../components/ChangeLogin';
+import { setLoginMethod, inputPersonalNumber, resetState, LoginMethods } from '../actions/actions';
+// import ChangeLogin from '../components/ChangeLogin';
 import SelectLogin from '../components/SelectLogin';
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
 					</div>
 				}
 				{loginMethod &&
-				<button className="btn" onClick={x => dispatch(setLoginMethod())}>Reset state</button>
+				<button className="btn" onClick={x => dispatch(resetState())}>Reset state</button>
 				}
 			</div>
 		);
@@ -42,11 +42,11 @@ App.propTypes = {
 
 // }
 
-function cycleLoginMethod(current){
-	let keys = Object.keys(LoginMethods);
-	let newKey = keys[(keys.findIndex(x => x.localeCompare(current) === 0) + 1) % keys.length];
-	return LoginMethods[newKey];
-}
+// function cycleLoginMethod(current){
+// 	let keys = Object.keys(LoginMethods);
+// 	let newKey = keys[(keys.findIndex(x => x.localeCompare(current) === 0) + 1) % keys.length];
+// 	return LoginMethods[newKey];
+// }
 
 function mapStateToProps(state){
 	return {

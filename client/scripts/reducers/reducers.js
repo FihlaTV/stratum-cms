@@ -1,4 +1,4 @@
-import { LoginMethods, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER } from '../actions/actions.js';
+import { LoginMethods, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER, RESET_STATE } from '../actions/actions.js';
 import { combineReducers } from 'redux';
 
 const initialState = {
@@ -15,6 +15,8 @@ function login(state = initialState, action){
 			return Object.assign({}, state, {
 				personalNumber: action.personalNumber
 			});
+		case RESET_STATE:
+			return {};
 		default:
 			return state;
 	}
