@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { setLoginMethod, inputPersonalNumber, resetState, LoginMethods } from '../actions/actions';
 // import ChangeLogin from '../components/ChangeLogin';
 import SelectLogin from '../components/SelectLogin';
+import InputPersonalNr from '../components/InputPersonalNr';
 
 class App extends Component {
 	render() {
-		const { dispatch, loginMethod } = this.props;
+		const { dispatch, loginMethod, personalNumber } = this.props;
 		return (
 			<div>
-				<h1>Login <small>{loginMethod}</small></h1>
+				<h1>Login <small>{loginMethod} {personalNumber}</small></h1>
 				{!loginMethod && 
 					<div className="login-method-list row">
 						<div className="col-sm-6">
@@ -20,6 +21,12 @@ class App extends Component {
 							<SelectLogin selectLogin={loginMethod => 
 								dispatch(setLoginMethod(loginMethod))} loginMethod={LoginMethods.BANK_ID} loginMethodName="Mobilt BankID"/>
 						</div>
+					</div>
+				}
+				{loginMethod === LoginMethods.BANK_ID &&
+					<div>
+						<h1>Bank ID</h1>
+						<InputPersonalNr onSubmit={x => dispatch(inputPersonalNumber(x))}/>
 					</div>
 				}
 				{loginMethod &&
@@ -50,7 +57,8 @@ App.propTypes = {
 
 function mapStateToProps(state){
 	return {
-		loginMethod: state.login.loginMethod
+		loginMethod: state.login.loginMethod,
+		personalNumber: state.login.personalNumber
 	};
 }
 
