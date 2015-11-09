@@ -6,7 +6,7 @@ var cloudinary = require('cloudinary');
 
 
 // Declare Constants
-var CLOUDINARY_HOST = 'http://res.cloudinary.com';
+var CLOUDINARY_HOST = '//res.cloudinary.com';
 
 // Collection of templates to interpolate
 var linkTemplate = _.template('<a href="<%= url %>"><%= text %></a>');
