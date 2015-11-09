@@ -205,11 +205,15 @@ module.exports = function() {
 		context = context === null ? undefined : context;
 		
 		if ((context) && (context.public_id)) {
-			var imageName = context.public_id;
+			var imageName = context.public_id, cloudinaryFn = cloudinary.url;
 			if(!options.hash || !options.hash.format){
 				imageName = imageName.concat('.', context.format);
 			}
-			return cloudinary.url(imageName, options.hash);
+			if(options.hash && options.hash.imageTag){
+				cloudinaryFn = cloudinary.image;
+				delete options.hash.imageTag;
+			}
+			return cloudinaryFn(imageName, options.hash);
 		}
 		else {
 			return null;
