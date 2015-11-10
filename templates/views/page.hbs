@@ -45,7 +45,7 @@
 			</header>
 			{{#if image.exists}}
 			<div class="caption-ct">
-				{{{cloudinaryUrl image imageTag="true" width="750" crop="fill" class="img-responsive"}}}
+				<img src="{{cloudinaryUrl image width="750" crop="fill"}}" class="img-responsive">
 				{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 			</div>
 			{{/if}}
@@ -80,7 +80,7 @@
 				{{else}}
 					<div class="col-sm-6 col-lg-4">
 				{{/ifeq}}
-					<a href="{{cloudinaryUrl this}}">{{{cloudinaryUrl this imageTag="true" width="500" crop="fill" class="img-responsive"}}}</a>
+					<a href="{{cloudinaryUrl this}}"><img src="{{cloudinaryUrl this width="500" crop="fill"}}" class="img-responsive"></a>
 					</div>
 			{{/each}}
 		{{/if}}

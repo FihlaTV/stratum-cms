@@ -13,7 +13,7 @@
 					<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user "NewsItem" _id}}{{/if}}" class="news-list-item">
 						{{#if image.exists}}
 						<div class="news-list-item-image">
-							{{{cloudinaryUrl image imageTag="true" width=500 height=350 crop='fill'}}}
+								<img src="{{cloudinaryUrl image width=500 height=350 crop='fill'}}" class="">
 						</div>
 						{{/if}}
 						<div class="news-list-item-content">
