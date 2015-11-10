@@ -189,7 +189,7 @@ module.exports = function() {
 	//
 	// Returns an src-string for a cloudinary image
 	
-	_helpers.cloudinaryUrl = function(context, options) {
+	var cloudinaryHelper = function(cloudinaryFn, context, options) {
 
 		// if we dont pass in a context and just kwargs
 		// then `this` refers to our default scope block and kwargs
@@ -206,14 +206,21 @@ module.exports = function() {
 		
 		if ((context) && (context.public_id)) {
 			var imageName = context.public_id;
-			if(!options.hash || !options.hash.format){
+			options.hash = options.hash || {};
+			if(!options.hash.format){
 				imageName = imageName.concat('.', context.format);
 			}
-			return cloudinary.url(imageName, options.hash);
+			return cloudinaryFn(imageName, options.hash);
 		}
 		else {
 			return null;
 		}		
+	};
+	_helpers.cloudinaryUrl = function(context, options) {
+		return cloudinaryHelper(cloudinary.url, context, options);
+	};
+	_helpers.cloudinaryImage = function(context, options){
+		return cloudinaryHelper(cloudinary.image, context, options);
 	};
 	
 	// ### News Helpers
