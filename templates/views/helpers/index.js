@@ -214,8 +214,6 @@ module.exports = function() {
 				cloudinaryFn = cloudinary.image;
 				delete options.hash.imageTag;
 			}
-			//Force https if secure is not set to false
-			options.hash.secure = String.prototype.localeCompare.call('false', options.hash.secure) !== 0;
 			return cloudinaryFn(imageName, options.hash);
 		}
 		else {
