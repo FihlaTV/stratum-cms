@@ -206,13 +206,16 @@ module.exports = function() {
 		
 		if ((context) && (context.public_id)) {
 			var imageName = context.public_id, cloudinaryFn = cloudinary.url;
-			if(!options.hash || !options.hash.format){
+			options.hash = options.hash || {};
+			if(!options.hash.format){
 				imageName = imageName.concat('.', context.format);
 			}
-			if(options.hash && options.hash.imageTag){
+			if(options.hash.imageTag){
 				cloudinaryFn = cloudinary.image;
 				delete options.hash.imageTag;
 			}
+			//Force https if secure is not set to false
+			options.hash.secure = String.prototype.localeCompare.call('false', options.hash.secure) !== 0;
 			return cloudinaryFn(imageName, options.hash);
 		}
 		else {
