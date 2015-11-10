@@ -54,7 +54,7 @@
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
 								{{#if user}}
-								<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryUrl user.image imageTag="true" class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
+								<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
 								<li><a href="/keystone/signout">Sign Out</a></li>
 								{{else}}
 								<li><a href="/keystone/signin">Sign In</a></li>

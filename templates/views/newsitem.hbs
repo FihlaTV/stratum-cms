@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</div>
-		{{{cloudinaryUrl image imageTag="true" width=1400 height=600 crop='fill' gravity='faces' class="news-item-main-img img-responsive"}}}
+		{{{cloudinaryImage image width=1400 height=600 crop='fill' gravity='faces' class="news-item-main-img img-responsive"}}}
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
@@ -34,7 +34,7 @@
 				<div class="news-item-author">
 					{{#with author}}
 					{{#if image.exists}}
-						{{{cloudinaryUrl image imageTag="true" width="80" height="80" crop="fill" gravity="face" alt="{{name.first}} {{name.last}}" }}}
+						{{{cloudinaryImage image width="80" height="80" crop="fill" gravity="face" alt="{{name.first}} {{name.last}}" }}}
 					{{/if}}
 					<div class="news-item-author-info">
 						<span class="news-item-name">{{name.first}} {{name.last}}</span>

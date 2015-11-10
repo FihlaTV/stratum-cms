@@ -33,7 +33,7 @@
 			{{!-- <div class="col-xs-6 col-sm-4 col-md-3"> --}}
 				<div class="contact-user">
 						{{#if image.exists}}
-							{{{cloudinaryUrl image imageTag="true" width="160" height="160" crop="fill" gravity="face"}}}
+							{{{cloudinaryImage image width="160" height="160" crop="fill" gravity="face"}}}
 						{{else}}
 							<img src="/images/avatar.png" alt="" class="">
 						{{/if}}
