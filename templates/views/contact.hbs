@@ -32,11 +32,12 @@
 		{{#each users}}
 			{{!-- <div class="col-xs-6 col-sm-4 col-md-3"> --}}
 				<div class="contact-user">
+					<img src="
 						{{#if image.exists}}
-							{{{cloudinaryUrl image imageTag="true" width="160" height="160" crop="fill" gravity="face"}}}
+							{{cloudinaryUrl image width="160" height="160" crop="fill" gravity="face"}}
 						{{else}}
-							<img src="/images/avatar.png" alt="" class="">
-						{{/if}}
+							/images/avatar.png
+						{{/if}}" alt="" class="">
 					<div class="contact-user-info">
 						<h3>{{name.full}}</h3>
 						{{#if title}}<p class="contact-user-title">{{title}}</p>{{/if}}
