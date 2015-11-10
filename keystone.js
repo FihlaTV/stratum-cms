@@ -32,6 +32,9 @@ keystone.init({
 		helpers: new Helpers(),
 		extname: '.hbs'
 	}).engine,
+
+	// Set https as default for cloudinary resources (override per image with secure=false)
+	'cloudinary config': {secure: true},
 	
 	'updates': path.join(root, 'updates'),
 	'auto update': true,

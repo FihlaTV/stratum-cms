@@ -16,7 +16,7 @@
 		{{# each data.newsWithImage}}
 		<div class="item {{#if @first }}active{{/if}}">
 			<a href="{{newsUrl slug}}">
-				<img src="{{cloudinaryUrl image width="1024" height="400" crop="fill" gravity="north"}}">
+				{{{cloudinaryImage image width="1024" height="400" crop="fill" gravity="north"}}}
 			</a>
 			<div class="carousel-caption">
 				<h2>{{{title}}}</h2>
@@ -80,7 +80,7 @@
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
 	<div class="caption-ct">
-		<img src="{{cloudinaryUrl informationBlurb.image width=600 height=400 crop='fill'}}" class="img-responsive">
+		{{{cloudinaryImage informationBlurb.image width=600 height=400 crop='fill' class="img-responsive"}}}
 		{{#if informationBlurb.imageText}}
 		<div class="caption-text">
 			{{informationBlurb.imageText}}
