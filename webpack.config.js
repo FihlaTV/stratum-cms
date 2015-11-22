@@ -31,7 +31,26 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.js$/,
-			loaders: ['babel'],
+			loader: 'babel',
+			query: {
+				"stage": 2,
+				"env": {
+				  "development": {
+				    "plugins": [
+				      "react-transform"
+				    ],
+				    "extra": {
+				      "react-transform": {
+				        "transforms": [{
+				          "transform":  "react-transform-hmr",
+				          "imports": ["react"],
+				          "locals":  ["module"]
+				        }]
+				      }
+				    }
+				  }
+				}
+			},
 			exclude: /node_modules/,
 			include: path.join(__dirname, '/client/')
 		}]
