@@ -1,56 +1,54 @@
 {{!< default}}
-{{#if data.newsWithImage}}
-<div id="head-carousel" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
-	{{#ifeq data.newsWithImage.length 1}}
-	{{else}}
-	<ol class="carousel-indicators">
-		{{# each data.newsWithImage}}
-		{{#if image.exists}}
-		<li data-target="#head-carousel" data-slide-to="{{@index}}" {{#if @first }}class="active"{{/if}}></li>
-		{{/if}}		
-		{{/each}}
-	</ol>
-	{{/ifeq}}
-	<!-- Indicators -->
-	<div class="carousel-inner" role="listbox">
-		{{# each data.newsWithImage}}
-		<div class="item {{#if @first }}active{{/if}}">
-			<a href="{{newsUrl slug}}">
-				{{{cloudinaryImage image width="1024" height="400" crop="fill" gravity="north"}}}
-			</a>
-			<div class="carousel-caption">
-				<h2>{{{title}}}</h2>
-				<p class="hidden-xs">
-					{{content.brief}}
-					<a href="{{newsUrl slug}}">...läs mer</a>
-				</p>
+<div class="container">
+	<div class="startpage-kicker">
+		<h2>Onlinestatistik i realtid</h2>
+		<p class="lead">
+			Siffrorna nedan visar genomsnittsvärden för alla registrerade patienter i Sverige sedan 2008. Vill man se värden för olika landsändar klickar man sig vidare.
+		</p>
+		<div class="row">
+			<div class="startpage-widget col-md-3 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						72,5%
+					</span>
+					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
+					<a href="#stat">Se mer statistik</a>
+				</div>
+			</div>
+			<div class="startpage-widget col-md-3 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						72,5%
+					</span>
+					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
+					<a href="#stat">Se mer statistik</a>
+				</div>
+			</div>
+			<div class="startpage-widget col-md-3 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						72,5%
+					</span>
+					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
+					<a href="#stat">Se mer statistik</a>
+				</div>
+			</div>
+			<div class="startpage-widget col-md-3 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						72,5%
+					</span>
+					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
+					<a href="#stat">Se mer statistik</a>
+				</div>
 			</div>
 		</div>
-		{{/each}}
 	</div>
-	<!-- Controls -->
-	{{#ifeq data.newsWithImage.length 1}}
-	{{else}}
-	<a class="left carousel-control" href="#head-carousel" role="button" data-slide="prev">
-		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	</a>
-	<a class="right carousel-control" href="#head-carousel" role="button" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	</a>
-	{{/ifeq}}
-
 </div>
-{{else}}
-<div class="carousel-placeholder">
-	<span class="carousel-placeholder-header">{{brand}}</span>
-</div>
-{{/if}}
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 	<div class="col-sm-8">
-		<h1>{{brandName}}</h1>
+		<h2>{{brandName}}</h2>
 		{{#with data.startPage}}
 		{{description}}
 		{{/with}}

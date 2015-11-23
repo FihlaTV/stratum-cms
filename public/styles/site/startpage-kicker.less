@@ -1,0 +1,39 @@
+.startpage-kicker{
+	background-color: @primary-lighter;
+	border-radius: .15em;
+	padding: @gutter-large;
+	h2{
+		font-size: 50px;
+		font-weight: 800;
+	}
+	h2, p.lead{
+		color: @brand-primary;
+	}
+	p.lead{
+		font-size: 19px;
+	}
+}
+
+.startpage-widget{
+	font-size: 13px;
+	border-right: 1px solid @gray;
+	.startpage-widget-digit{
+		display: block;
+		font-size: 50px;
+		font-weight: 800;
+		color: #9d1975;
+	}
+	.startpage-widget-text{
+		display: block;
+		font-weight: 800;
+	}
+	margin-bottom: @gutter-large;
+	&:nth-child(4n+0){
+		border-right: 0;
+	}
+	@media (max-width: @screen-sm-max) {
+		&:nth-child(2n+0){
+			border-right: 0;
+		}
+	}
+}
