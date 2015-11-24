@@ -91,7 +91,7 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
  
 keystone.set('nav', {
 	'pages': ['menu-blocks', 'pages', 'sub-pages'],
-	'start-pages': 'start-pages',
+	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
 	'users': 'users',

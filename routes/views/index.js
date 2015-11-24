@@ -55,6 +55,22 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
+	//Load static widgets
+	view.on('init', function(next) {
+		keystone.list('StartPageWidget').model
+			.find()
+			.where('showOnStartPage', true)
+			.sort('sortOrder')
+			.limit(8)
+			.exec(function(err, widgets) {
+				if(!err){
+					locals.data.startPageWidgets = widgets;
+				}
+				next(err);
+			});
+	});
+	
+
 	// Load the 10 latest news items
 	view.on('init', function(next) {
 		keystone.list('NewsItem').model

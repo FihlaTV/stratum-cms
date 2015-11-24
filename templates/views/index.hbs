@@ -6,42 +6,17 @@
 			Siffrorna nedan visar genomsnittsvärden för alla registrerade patienter i Sverige sedan 2008. Vill man se värden för olika landsändar klickar man sig vidare.
 		</p>
 		<div class="row">
+		{{#each data.startPageWidgets}}
 			<div class="startpage-widget col-md-3 col-xs-6">
 				<div class="">
 					<span class="startpage-widget-digit">
-						72,5%
+						{{digit}}
 					</span>
-					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
+					<span class="startpage-widget-text">{{description}}</span>
 					<a href="#stat">Se mer statistik</a>
 				</div>
 			</div>
-			<div class="startpage-widget col-md-3 col-xs-6">
-				<div class="">
-					<span class="startpage-widget-digit">
-						72,5%
-					</span>
-					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
-					<a href="#stat">Se mer statistik</a>
-				</div>
-			</div>
-			<div class="startpage-widget col-md-3 col-xs-6">
-				<div class="">
-					<span class="startpage-widget-digit">
-						72,5%
-					</span>
-					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
-					<a href="#stat">Se mer statistik</a>
-				</div>
-			</div>
-			<div class="startpage-widget col-md-3 col-xs-6">
-				<div class="">
-					<span class="startpage-widget-digit">
-						72,5%
-					</span>
-					<span class="startpage-widget-text">Lorem ipsum dolor sit.</span>
-					<a href="#stat">Se mer statistik</a>
-				</div>
-			</div>
+		{{/each}}
 		</div>
 	</div>
 </div>
