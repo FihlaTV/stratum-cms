@@ -1,25 +1,9 @@
-.startpage-kicker{
-	background-color: @primary-lighter;
-	border-radius: .15em;
-	padding: @gutter-large;
-	h2{
-		font-size: 50px;
-		font-weight: 800;
-	}
-	h2, p.lead{
-		color: @brand-primary;
-	}
-	p.lead{
-		font-size: 19px;
-	}
-}
-
 .startpage-widget{
-	font-size: 13px;
-	border-right: 1px solid @gray;
+	font-size: @font-size-base;
+	text-align: center;
 	.startpage-widget-digit{
 		display: block;
-		font-size: 50px;
+		font-size: @font-size-base*2.5;
 		font-weight: 800;
 		color: #9d1975;
 	}
@@ -28,12 +12,18 @@
 		font-weight: 800;
 	}
 	margin-bottom: @gutter-large;
-	&:nth-child(4n+0){
-		border-right: 0;
+	&:nth-child(2n){
+		border-left: 1px solid @gray;
 	}
-	@media (max-width: @screen-sm-max) {
-		&:nth-child(2n+0){
-			border-right: 0;
+	@media screen and (min-width: @screen-md-min) {
+		&:nth-child(3n){
+			border-left: 1px solid @gray;
+		}
+	}
+	@media screen and (min-width: @screen-sm-min) {
+		// text-align: left;
+		.startpage-widget-digit{
+			font-size: @font-size-base*3.5;
 		}
 	}
 }
