@@ -1,0 +1,29 @@
+.startpage-widget{
+	font-size: @font-size-base;
+	text-align: center;
+	.startpage-widget-digit{
+		display: block;
+		font-size: @font-size-base*2.5;
+		font-weight: 800;
+		color: #9d1975;
+	}
+	.startpage-widget-text{
+		display: block;
+		font-weight: 800;
+	}
+	margin-bottom: @gutter-large;
+	&:nth-child(2n){
+		border-left: 1px solid @gray;
+	}
+	@media screen and (min-width: @screen-md-min) {
+		&:nth-child(4n-1){
+			border-left: 1px solid @gray;
+		}
+	}
+	@media screen and (min-width: @screen-sm-min) {
+		// text-align: left;
+		.startpage-widget-digit{
+			font-size: @font-size-base*3.5;
+		}
+	}
+}
