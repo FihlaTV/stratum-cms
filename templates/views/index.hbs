@@ -1,13 +1,17 @@
 {{!< default}}
-<div class="container">
-	<div class="jumbotron">
+<div class="jumbotron jumbotron-top jumbotron-gradient">
+	<div class="container">
+	<div class="row">
+		<div class="col-lg-9">
 		<h1>Onlinestatistik i realtid</h1>
 		<p class="lead">
-			Siffrorna nedan visar genomsnittsvärden för alla registrerade patienter i Sverige sedan 2008. Vill man se värden för olika landsändar klickar man sig vidare.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum reprehenderit expedita deserunt accusantium ullam voluptatum. Consequatur dolor corporis veritatis accusantium aut quas eos fuga enim, porro nobis. Earum, natus, dolores!
 		</p>
+		</div>
+		</div>
 		<div class="row">
 		{{#each data.startPageWidgets}}
-			<div class="startpage-widget col-md-3 col-xs-6">
+			<div class="startpage-widget col-md-2 col-xs-6">
 				<div class="">
 					<span class="startpage-widget-digit">
 						{{digit}}
@@ -19,6 +23,8 @@
 		{{/each}}
 		</div>
 	</div>
+</div>
+<div class="container">
 </div>
 <div class="container">
 	<div class="row">

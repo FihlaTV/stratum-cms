@@ -1,8 +1,59 @@
-/* //
+//
 // Navbars
 // --------------------------------------------------
 
+// @navbar-image-height: 60px;
+@navbar-image-height: 40px;
 
+img.navbar-brand-image{
+		height: @navbar-image-height;
+		margin: ((@navbar-height - @navbar-image-height) / 2) 0;
+		margin-left: @navbar-padding-horizontal;
+		margin-right: @gutter;
+		float: left;
+  @media (min-width: @grid-float-breakpoint) {
+		margin-left: 0;	
+	}
+}
+
+.navbar-nav {
+  > li > a {
+    color: @navbar-default-link-color;
+
+    &:hover,
+    &:focus {
+      color: @navbar-default-link-hover-color;
+      background-color: @navbar-default-link-hover-bg;
+    }
+  }
+  > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @navbar-default-link-active-color;
+      background-color: @navbar-default-link-active-bg;
+    }
+  }
+  > .disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @navbar-default-link-disabled-color;
+      background-color: @navbar-default-link-disabled-bg;
+    }
+  }
+  > .search > a {
+	  @media (min-width: @screen-lg-min) {
+	  	margin-left: 2*@gutter;
+	  }
+  	font-size: 16px;
+  	.glyphicon;
+  	.glyphicon-search;
+  	top: 2px;
+  }
+}
+
+/*
 // Wrapper and base class
 //
 // Provide a static navbar from which we expand to create full-width, fixed, and
@@ -653,7 +704,7 @@
     }
   }
 }
- */
+*/
 .navbar-default{
 	
 }

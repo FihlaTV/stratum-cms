@@ -12,26 +12,28 @@ body{
 	min-height: 100%;
 	position: relative;
 }
-#header {}
+#header{
+	border-top: 4px solid @brand-primary;
+}
 #body{
 	padding-bottom:@footer-height + 3*@gutter;
 }
 .gallery-image img {
-    display: block;
-    max-width: 100%;
-    height: auto;
+	display: block;
+	max-width: 100%;
+	height: auto;
 }
 .post {
-    margin-bottom: @line-height-computed;
-    &:last-child {
-        margin-bottom: 0;
-    }
+	margin-bottom: @line-height-computed;
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 article {
-    img {
-        margin-bottom: @line-height-computed;
-        .img-responsive();
-    }
+	img {
+		margin-bottom: @line-height-computed;
+		.img-responsive();
+	}
 }
 .content-page-images{
 	img{
@@ -107,14 +109,14 @@ article {
 //     }
 // }
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
-    display: block;
-    height: auto;
-    max-width: 100%;
-    line-height: 1;
-    width: 100%;
+	display: block;
+	height: auto;
+	max-width: 100%;
+	line-height: 1;
+	width: 100%;
 }
 #head-carousel, .carousel-placeholder {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 .carousel-placeholder {
 	@carousel-main: darken(@brand-primary, 10%);

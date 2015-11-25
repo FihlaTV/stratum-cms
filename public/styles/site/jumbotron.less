@@ -2,6 +2,7 @@
 	h1,
 	.h1 {
 		// font-size: @font-size-base * 2.5;
+		margin-top: 0;
 		font-weight: 800;
 	}
 	@media screen and (min-width: @screen-sm-min) {
@@ -10,5 +11,11 @@
 		// .h1 {
 		// 	font-size: (@font-size-base * 3.5);
 		// }
+	}
+	&.jumbotron-top{
+		margin-top: -@navbar-margin-bottom;
+	}
+	&.jumbotron-gradient{
+		#gradient > .vertical(darken(@jumbotron-bg, 10); @jumbotron-bg);
 	}
 }

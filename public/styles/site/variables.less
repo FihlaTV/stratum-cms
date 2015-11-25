@@ -1,32 +1,33 @@
 // Override Bootstrap variables in this file, e.g.
 
+/* Font settings */
 @font-size-base: 14px;
 @headings-font-weight: 400;
 @font-family-sans-serif:  "open_sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-// @brand-primary:         #39B5CD; //#EA8300;//#428bca; //currently not overridden...
-@brand-primary:         #286d7d; //#EA8300;//#428bca; //currently not overridden...
-@brand-success:         #5cb85c; //currently not overridden...
-@brand-info:            #5bc0de; //currently not overridden...
-@brand-warning:         #f0ad4e; //currently not overridden...
-@brand-danger:          #c03825; //currently not overridden...
+/* Color variables */
+@brand-primary:                  #286d7d;
+@link-color:         	         #359aa3;
+@brand-success:                  #5cb85c; //currently not overridden...
+@brand-info:                     #5bc0de; //currently not overridden...
+@brand-warning:                  #f0ad4e; //currently not overridden...
+@brand-danger:                   #c03825; //currently not overridden...
 
-@gray:                   #58585a; //
-@gray-light:             #707072; //
-@gray-lighter:           #f0f1f1;
+@gray:                           #58585a;
+@gray-light:                     #707072;
+@gray-lighter:                   #f0f1f1;
 
+@well-bg:                        #e5edef;
 
-@well-bg:               #e5edef;
+@primary-light:                  #bed3d8;
+// @primary-light:                  lighten(@brand-primary, 20%);
+@primary-lighter:                #e5edef;
+// @primary-lighter:                lighten(@brand-primary, 30%);
 
 /* Gutters */
-@gutter: 10px;
-@gutter-small: floor(@gutter * 0.75);
-@gutter-large: floor(@gutter * 1.5);
-
-@primary-light: #bed3d8;
-// @primary-light: lighten(@brand-primary, 20%);
-@primary-lighter: #e5edef;
-// @primary-lighter: lighten(@brand-primary, 30%);
+@gutter:                         10px;
+@gutter-small:                   floor(@gutter * 0.75);
+@gutter-large:                   floor(@gutter * 1.5);
 
 /* Jumbotron */
 @jumbotron-bg:                   @well-bg;
@@ -34,5 +35,10 @@
 @jumbotron-font-size:            ceil((@font-size-base * 1.25));
 
 /* Navbar */
-@navbar-default-bg:                #ffffff;
-@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-bg:              #ffffff;
+@navbar-default-border:          darken(@navbar-default-bg, 6.5%);
+// @navbar-height: 98px;
+@navbar-height: 84px;
+@navbar-default-link-color:      @link-color;
+@navbar-default-link-active-bg:  @primary-light;
+// @navbar-default-link-hover-bg: 		none;
