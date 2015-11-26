@@ -41,6 +41,8 @@ exports = module.exports = function(app) {
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
 
+	// Stratum Proxy
+	app.all('/stratum/*', routes.api['stratum-proxy']);
 	// Restrict all pages to logged in users for now...
 	if (keystone.get('protect all pages')) {
 		app.get('/*', middleware.requireUser);
