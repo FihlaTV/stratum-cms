@@ -1,16 +1,16 @@
-// var keystone = require('keystone');
 var request = require('request');
-// var zlib = require('zlib');
 
 exports = module.exports = function(req, res) {
-	var url;
+	var protocol = req.secure ? 'https' : 'http',
+		stratumUrl = protocol + '://stratum.registercentrum.se/',
+		url;
 
 	if (!(/^\/stratum\/[^\/]/).test(req.url)) {
 		res.status(404)
 			.send('Not found');
 		return;
 	}
-	url = req.url.replace(/^\/stratum\//, 'https://stratum.registercentrum.se/');
+	url = req.url.replace(/^\/stratum\//, stratumUrl);
 
 	request(url).pipe(res);
 };
