@@ -80,7 +80,7 @@ var loadStratumModel = function(Model, url, idField, mappedFields, callback) {
 
 exports.loadWidgets = function(callback) {
 	loadStratumModel(keystone.list('StratumWidget').model,
-		'https://stratum.registercentrum.se/widgets',
+		'https://stratum.registercentrum.se/api/widgets',
 		'WidgetSlug', {
 			'WidgetSlug': 'widgetSlug',
 			'PageID': 'pageId',
