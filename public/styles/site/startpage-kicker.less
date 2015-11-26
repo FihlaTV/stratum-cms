@@ -1,5 +1,6 @@
 .startpage-widget{
 	font-size: @font-size-base;
+	border-left: 1px solid @gray;
 	text-align: center;
 	.startpage-widget-digit{
 		display: block;
@@ -12,12 +13,14 @@
 		font-weight: 800;
 	}
 	margin-bottom: @gutter-large;
-	&:nth-child(2n){
-		border-left: 1px solid @gray;
+	@media (max-width: @screen-sm-max) {
+		&:nth-child(2n+1){
+			border-left: 0;
+		}
 	}
 	@media screen and (min-width: @screen-md-min) {
-		&:nth-child(4n-1){
-			border-left: 1px solid @gray;
+		&:nth-child(5n+1){
+			border-left: 0;
 		}
 	}
 	@media screen and (min-width: @screen-sm-min) {
