@@ -29,11 +29,14 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	api: importRoutes('./api'),
-	views: importRoutes('./views')
+	views: importRoutes('./views'),
+	proxies: importRoutes('./proxies')
 };
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
+	// Proxies
+	app.all('/stratum/*', routes.proxies.stratum);
 
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
@@ -41,12 +44,11 @@ exports = module.exports = function(app) {
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
 
-	// Stratum Proxy
-	app.all('/stratum/*', routes.api['stratum-proxy']);
 	// Restrict all pages to logged in users for now...
 	if (keystone.get('protect all pages')) {
 		app.get('/*', middleware.requireUser);
 	}
+
 	// Views
 	app.get('/', routes.views.index);
 
