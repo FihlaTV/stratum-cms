@@ -36,3 +36,6 @@ public/styles/site.min.css
 
 # Register configurations
 registers/
+
+# VS Code specific 
+launch.json

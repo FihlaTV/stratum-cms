@@ -42,7 +42,7 @@ StratumWidget.schema.virtual('register').get(function() {
 	return match && match[1];
 });
 StratumWidget.schema.virtual('url').get(function() {
-	return 'http://stratum.registercentrum.se/widgets/' + this.widgetSlug;
+	return 'http://stratum.registercentrum.se/api/widgets/' + this.widgetSlug;
 });
 StratumWidget.defaultColumns = 'widgetSlug, description';
 StratumWidget.defaultSort = 'widgetSlug';
