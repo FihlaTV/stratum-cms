@@ -12,5 +12,7 @@ exports = module.exports = function(req, res) {
 	}
 	url = req.url.replace(/^\/stratum\//, stratumUrl);
 
-	request(url).pipe(res);
+	req.pipe(
+		request(url)
+	).pipe(res);
 };
