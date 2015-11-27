@@ -3,6 +3,7 @@ var request = require('request'),
 
 exports = module.exports = function(req, res) {
 	var protocol = req.secure ? 'https://' : 'http://',
+	// Might be a good idea to have a more fail safe approach to this string concatenation.
 		stratumUrl = protocol + keystone.get('stratum server') + '/',
 		uri;
 
