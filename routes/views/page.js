@@ -5,6 +5,7 @@ exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res),
 		locals = res.locals;
 
+	locals.stratumServer = keystone.get('stratum server');
 	locals.breadcrumbs = [];
 	// locals.widget = 'reportlist';
 	locals.widget = {};
