@@ -36,13 +36,16 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 @primary-lighter:                #e5edef;
 // @primary-lighter:                lighten(@brand-primary, 30%);
 
+@body-bg:                        @primary-lighter;
+
 /* Gutters */
 @gutter:                         10px;
 @gutter-small:                   floor(@gutter * 0.75);
 @gutter-large:                   floor(@gutter * 1.5);
+@gutter-xlarge:                   floor(@gutter * 2);
 
 /* Jumbotron */
-@jumbotron-bg:                   @well-bg;
+@jumbotron-bg:                   lighten(@primary-light, 5%);
 @jumbotron-heading-color:        @brand-primary;
 @jumbotron-font-size:            ceil((@font-size-base * 1.25));
 
@@ -54,3 +57,4 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 @navbar-default-link-color:      @link-color;
 @navbar-default-link-active-bg:  @primary-light;
 // @navbar-default-link-hover-bg: 		none;
+@border-radius-main: 3px;

@@ -1,8 +1,16 @@
 .white-well() {
 	background-color: #fff;
-  	border-radius: .15em;
-	box-shadow: 0 0 0 1px rgba(0,0,0,0.04),0 2px 0 rgba(0,0,0,0.04);
+  	border-radius: 3px;
+  	// color: fadein(color, 10%)
+	.box-shadow(@shadow: 0 1px fadeout(#000, 92%));
+	    // box-shadow: 0 1px rgba(0,0,0,.08);
+	// , 0 2px 0 rgba(0,0,0,0.04);
+
+	// box-shadow: 0 0 0 1px rgba(0,0,0,0.04),0 2px 0 rgba(0,0,0,0.04);
 }
 .white-well{
 	.white-well();
+}
+.base-shadow(){
+	.box-shadow(@shadow: 0 1px fadeout(#000, 92%));
 }

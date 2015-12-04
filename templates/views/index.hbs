@@ -1,6 +1,6 @@
 {{!< default}}
-<div class="jumbotron jumbotron-top jumbotron-gradient">
-	<div class="container">
+<div class="container">
+<div class="jumbotron">
 	<div class="row">
 		<div class="col-lg-9">
 		<h1>Onlinestatistik i realtid</h1>
@@ -11,7 +11,7 @@
 		</div>
 		<div class="row">
 		{{#each data.startPageWidgets}}
-			<div class="startpage-widget col-md-15 col-xs-6">
+			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
 				<div class="">
 					<span class="startpage-widget-digit">
 						{{digit}}
@@ -26,15 +26,15 @@
 </div>
 <div class="container">
 	<div class="row">
-	<div class="col-sm-8">
-		<h2>{{brandName}}</h2>
-	<div class="base-column">
+	<div class="col-sm-6 col-md-7">
+		<div class="base-column brief-info-column">
+			<h2>{{brandName}}</h2>
 		{{#with data.startPage}}
-		<p class="lead">{{description}}</p>
+			<p class="lead">{{description}}</p>
 		{{/with}}
 		</div>
 	</div>
-	<div class="col-sm-4">
+	<div class="col-sm-6 col-md-5">
 	{{#if isPortal}}
 		<h2>Delregister</h2>
 		<div class="sub-registers">
@@ -58,13 +58,20 @@
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
-	<div class="caption-ct">
-		{{{cloudinaryImage informationBlurb.image width=600 height=400 crop='fill' class="img-responsive"}}}
-		{{#if informationBlurb.imageText}}
-		<div class="caption-text">
-			{{informationBlurb.imageText}}
+{{!-- 			{{#if informationBlurb.imageText}}
+			<h2>
+				{{informationBlurb.imageText}}
+			</h2>
+			{{/if}} --}}
+	<div class="base-column">
+		{{!-- <div class="caption-ct"> --}}
+			{{{cloudinaryImage informationBlurb.image width=690 height=450 crop='fill' class="img-responsive"}}}
+{{!-- 			{{#if informationBlurb.imageText}}
+			<div class="caption-text">
+				{{informationBlurb.imageText}}
+			</div>
+			{{/if}} --}}
 		</div>
-		{{/if}}
 	</div>
 	{{/ifeq}}
 	</div>
