@@ -23,14 +23,16 @@
 		<div id="root-container">
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			{{!-- <div class="container"> --}}
-				<div role="navigation" class="navbar navbar-default navbar-static-top">
+				<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
 					<div class="navbar-header">
 						<div class="container">
 							<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 							</button>
-							<img src="/images/logo_hnsv_wide2.png" alt="{{brand}}" class="navbar-brand-image">
+							<a href="/" class="navbar-brand">
+								<img src="/images/logo_hnsv_wide2.png" alt="{{brand}}" class="navbar-brand-image-big">
+							</a>
 							{{!-- <a href="/" class="navbar-brand">{{#if brand}}{{brand}}{{else}}Stratum<sup>3</sup>{{/if}}</a> --}}
 						</div>
 					</div>
