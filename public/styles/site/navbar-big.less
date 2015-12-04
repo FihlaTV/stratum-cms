@@ -7,7 +7,8 @@
 // @navbar-height: 106px;
 @navbar-header-height: 106px;
 
-@navbar-image-height: 80px;
+// @navbar-image-height: 60px;
+@navbar-image-big-height: 80px;
 @navbar-main-height: 46px;
 @navbar-main-padding-vertical:          ((@navbar-main-height - @line-height-computed) / 2);
 
@@ -24,6 +25,8 @@
 
 .navbar-big {
 	.navbar-brand-image-big{
+		height: @navbar-image-big-height;
+		margin: ((@navbar-height - @navbar-image-big-height) / 2) 0;
 		display: none;
 	}
 	.navbar-header {
@@ -32,15 +35,23 @@
 			.navbar-brand-image-big{
 				display: inline;
 			}
+			.navbar-brand-image-small{
+				display: none;
+			}
 			float: none;
 			// height: 92px;
 		}
 	}
 	.navbar-brand {
+		padding: 0;
 		@media (min-width: @grid-float-breakpoint) {
 			height: @navbar-header-height;
-			padding: (@navbar-header-height - @navbar-image-height)/2 @navbar-padding-horizontal;
+			// padding: (@navbar-header-height - @navbar-image-big-height)/2 @navbar-padding-horizontal;
 		}
+		// @media (max-width: @grid-float-breakpoint - 1) {
+		height: @navbar-height;
+		// padding: (@navbar-height - @navbar-image-height)/2 @navbar-padding-horizontal;
+		// }
 		// float: left;
 		// padding: @navbar-padding-vertical @navbar-padding-horizontal;
 		// font-size: 28px;
