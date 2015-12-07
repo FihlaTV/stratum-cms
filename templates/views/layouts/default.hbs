@@ -6,6 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{{getTitle breadcrumbs brand ' > '}}}</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:700,400,300' rel='stylesheet' type='text/css'>
 		<link href="/styles/site.min.css" rel="stylesheet">
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
@@ -23,43 +24,54 @@
 		<div id="root-container">
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			{{!-- <div class="container"> --}}
-				<div role="navigation" class="navbar navbar-default navbar-static-top">
-					<div class="container">
-						<div class="navbar-header">
+				<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
+					<div class="navbar-header">
+						<div class="container">
 							<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 							</button>
-							<a href="/" class="navbar-brand"><img src="/images/logo_small.png" alt="{{brand}}">{{#if brand}}{{brand}}{{else}}Stratum<sup>3</sup>{{/if}}</a>
+							<a href="/" class="navbar-brand">
+								<img src="/images/logo_menu_big.png" alt="{{brand}}" class="navbar-brand-image-big">
+								<img src="/images/logo_menu_small.png" alt="{{brand}}" class="navbar-brand-image-small">
+							</a>
+							{{!-- <a href="/" class="navbar-brand">{{#if brand}}{{brand}}{{else}}Stratum<sup>3</sup>{{/if}}</a> --}}
 						</div>
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-left">
-									{{# each navLinks}}
-									<li class="{{#ifeq ../section key}}active {{else}}{{/ifeq}}{{#if isSubmenu}}dropdown{{else}}{{/if}}">
-										{{#if isSubmenu}}
-								          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ label }} <span class="caret"></span></a>
-								          <ul class="dropdown-menu" role="menu">
-											{{#each href}}
-								            <li><a href="{{ href }}">{{label}}</a></li>
-								            {{/each}}
-								          </ul>
-										{{else}}
-										<a href="{{ href }}">{{ label }}</a>
-										{{/if}}
+					</div>
+					<div class="navbar-main">
+						<div class="container">
+							<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav navbar-right">
+										{{# each navLinks}}
+										<li class="{{#ifeq ../section key}}active {{else}}{{/ifeq}}{{#if isSubmenu}}dropdown{{else}}{{/if}}">
+											{{#if isSubmenu}}
+									          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ label }} <span class="caret"></span></a>
+									          <ul class="dropdown-menu" role="menu">
+												{{#each href}}
+									            <li><a href="{{ href }}">{{label}}</a></li>
+									            {{/each}}
+									          </ul>
+											{{else}}
+											<a href="{{ href }}">{{ label }}</a>
+											{{/if}}
+										</li>
+									{{/each}}
+									<li class="search">
+										<a href="#search"></a>
 									</li>
-								{{/each}}
-								{{!-- <li id="login-button"></li> --}}
-							</ul>
-							<ul class="nav navbar-nav navbar-right" id="login-nav">
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-								{{#if user}}
-								<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
-								<li><a href="/keystone/signout">Sign Out</a></li>
-								{{else}}
-								<li><a href="/keystone/signin">Sign In</a></li>
-								{{/if}}
-							</ul>
+									{{!-- <li id="login-button"></li> --}}
+								</ul>
+								<ul class="nav navbar-nav navbar-right" id="login-nav">
+								</ul>
+								{{!-- <ul class="nav navbar-nav navbar-right">
+									{{#if user}}
+									<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
+									<li><a href="/keystone/signout">Sign Out</a></li>
+									{{else}}
+									<li><a href="/keystone/signin">Sign In</a></li>
+									{{/if}}
+								</ul> --}}
+							</div>
 						</div>
 					</div>
 				{{!-- </div> --}}
