@@ -22,7 +22,7 @@ StartPage.add({
 			header: {
 				type: String
 			},
-			content: {
+			description: {
 				type: Types.Markdown,
 				toolbarOptions: {
 					hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image'
