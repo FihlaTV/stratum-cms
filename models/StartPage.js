@@ -48,13 +48,6 @@ StartPage.add({
 					'informationBlurb.type': 'image'
 				}
 			},
-			imageText: {
-				label: 'Image Text',
-				type: String,
-				dependsOn: {
-					'informationBlurb.type': 'image'
-				}
-			},
 			meeting: {
 				label: 'Meeting',
 				type: String,
