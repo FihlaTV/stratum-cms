@@ -17,6 +17,19 @@ var StartPage = new keystone.List('StartPage', {
 StartPage.add({
 	header: { type: String, required: true },
 	description: { type: Types.Textarea, height: 150 }},
+	'Jumbotron', {
+		jumbotron: {
+			header: {
+				type: String
+			},
+			content: {
+				type: Types.Markdown,
+				toolbarOptions: {
+					hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image'
+				}
+			}
+		}
+	},
 	'Information Blurb', 
 	{
 		informationBlurb: {

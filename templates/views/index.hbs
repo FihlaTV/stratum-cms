@@ -1,14 +1,17 @@
 {{!< default}}
 <div class="container">
+{{#if data.startPage.jumbotron}}
 <div class="jumbotron">
 	<div class="row">
+		{{#with data.startPage.jumbotron}}
 		<div class="col-lg-9">
-		<h1>Onlinestatistik i realtid</h1>
+		<h1>{{header}}</h1>
 		<p class="lead">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum reprehenderit expedita deserunt accusantium ullam voluptatum. Consequatur dolor corporis veritatis accusantium aut quas eos fuga enim, porro nobis. Earum, natus, dolores!
+			{{{content.html}}}
 		</p>
 		</div>
 		</div>
+		{{/with}}
 		<div class="row">
 		{{#each data.startPageWidgets}}
 			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
@@ -24,6 +27,7 @@
 		</div>
 	</div>
 </div>
+{{/if}}
 <div class="container">
 	<div class="row">
 	<div class="col-md-7">
