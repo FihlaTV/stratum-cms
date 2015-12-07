@@ -43,10 +43,10 @@
 		}
 	}
 	.navbar-brand {
-		padding: 0;
+		padding: ((@navbar-height - @navbar-image-height) / 2) 0;
 		@media (min-width: @grid-float-breakpoint) {
 			height: @navbar-header-height;
-			// padding: (@navbar-header-height - @navbar-image-big-height)/2 @navbar-padding-horizontal;
+			padding: (@navbar-header-height - @navbar-image-big-height)/2 @navbar-padding-horizontal;
 		}
 		// @media (max-width: @grid-float-breakpoint - 1) {
 		height: @navbar-height;
