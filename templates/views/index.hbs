@@ -62,20 +62,7 @@
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
-{{!-- 			{{#if informationBlurb.imageText}}
-			<h2>
-				{{informationBlurb.imageText}}
-			</h2>
-			{{/if}} --}}
-	<div class="base-column">
-		{{!-- <div class="caption-ct"> --}}
-			{{{cloudinaryImage informationBlurb.image width=690 height=500 crop='fill' class="img-responsive"}}}
-{{!-- 			{{#if informationBlurb.imageText}}
-			<div class="caption-text">
-				{{informationBlurb.imageText}}
-			</div>
-			{{/if}} --}}
-		</div>
+		{{{cloudinaryImage informationBlurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
 	</div>
 	{{/ifeq}}
 	</div>
