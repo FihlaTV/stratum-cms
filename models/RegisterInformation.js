@@ -15,7 +15,7 @@ var RegisterInformation = new keystone.List('RegisterInformation', {
 
 RegisterInformation.add({
 	name: { type: String, required: true },
-	description: { type: Types.Markdown, height: 300 },
+	description: { type: Types.Markdown, height: 300, toolbarOptions: { hiddenButtons: 'Image,Quote,Code' } },
 	email: { type: Types.Email },
 	// location: { type: Types.Location },
 	phone: { type: String }
