@@ -68,7 +68,7 @@ BasePage.add({
 		type: Types.Markdown,
 		height: 400,
 		toolbarOptions: {
-			hiddenButtons: 'H1,H6'
+			hiddenButtons: 'H1,Image,Quote,Code'
 		}
 	},
 	images: {
