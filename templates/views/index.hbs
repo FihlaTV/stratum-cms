@@ -4,12 +4,10 @@
 <div class="jumbotron">
 	<div class="row">
 		{{#with data.startPage.jumbotron}}
-		<div class="col-lg-9">
 		<h1>{{header}}</h1>
 		<p class="lead">
 			{{{description.html}}}
 		</p>
-		</div>
 		</div>
 		{{/with}}
 		<div class="row">
@@ -31,12 +29,12 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-7">
-		<div class="base-column brief-info-column">
 		{{#with data.startPage}}
+		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
 			<h2>{{header}}</h2>
 			<p class="lead">{{{description.html}}}</p>
-		{{/with}}
 		</div>
+		{{/with}}
 	</div>
 	<div class="col-md-5">
 	{{#if isPortal}}
@@ -62,20 +60,7 @@
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
-{{!-- 			{{#if informationBlurb.imageText}}
-			<h2>
-				{{informationBlurb.imageText}}
-			</h2>
-			{{/if}} --}}
-	<div class="base-column">
-		{{!-- <div class="caption-ct"> --}}
-			{{{cloudinaryImage informationBlurb.image width=690 height=500 crop='fill' class="img-responsive"}}}
-{{!-- 			{{#if informationBlurb.imageText}}
-			<div class="caption-text">
-				{{informationBlurb.imageText}}
-			</div>
-			{{/if}} --}}
-		</div>
+		{{{cloudinaryImage informationBlurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
 	</div>
 	{{/ifeq}}
 	</div>
