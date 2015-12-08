@@ -31,12 +31,12 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-7">
-		<div class="base-column brief-info-column">
 		{{#with data.startPage}}
+		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
 			<h2>{{header}}</h2>
 			<p class="lead">{{{description.html}}}</p>
-		{{/with}}
 		</div>
+		{{/with}}
 	</div>
 	<div class="col-md-5">
 	{{#if isPortal}}
