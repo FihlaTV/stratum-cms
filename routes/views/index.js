@@ -71,14 +71,14 @@ exports = module.exports = function(req, res) {
 	});
 	
 
-	// Load the 10 latest news items
+	// Load the 3 latest news items
 	view.on('init', function(next) {
 		keystone.list('NewsItem').model
 			.find({
 				state: 'published'
 			})
 			.sort('-publishedDate')
-			.limit(10)
+			.limit(3)
 			.populate('author categories')
 			.exec(function(err, news) {
 				if(!err){

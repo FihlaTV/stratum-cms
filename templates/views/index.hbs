@@ -32,9 +32,9 @@
 	<div class="row">
 	<div class="col-md-7">
 		<div class="base-column brief-info-column">
-			<h2>{{brandName}}</h2>
 		{{#with data.startPage}}
-			<p class="lead">{{description}}</p>
+			<h2>{{header}}</h2>
+			<p class="lead">{{{description.html}}}</p>
 		{{/with}}
 		</div>
 	</div>
@@ -69,7 +69,7 @@
 			{{/if}} --}}
 	<div class="base-column">
 		{{!-- <div class="caption-ct"> --}}
-			{{{cloudinaryImage informationBlurb.image width=690 height=450 crop='fill' class="img-responsive"}}}
+			{{{cloudinaryImage informationBlurb.image width=690 height=500 crop='fill' class="img-responsive"}}}
 {{!-- 			{{#if informationBlurb.imageText}}
 			<div class="caption-text">
 				{{informationBlurb.imageText}}
