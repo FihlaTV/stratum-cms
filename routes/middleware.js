@@ -27,11 +27,7 @@ exports.initLocals = function(req, res, next) {
 			menu: []
 		};
 
-	locals.navLinks = [{
-		label: 'Nyheter',
-		key: 'news',
-		href: '/nyheter'
-	}];
+	locals.navLinks = [];
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
