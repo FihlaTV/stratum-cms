@@ -24,16 +24,14 @@
 		</div>
 		{{/ifeq}}
 		{{#ifeq data.page.layout "full"}}
-		<div class="col-md-12">
 		{{else}}
-		<div class="col-md-9 col-lg-10">
+		<div class="col-md-9 col-lg-7">
 		{{/ifeq}}
 		{{!-- {{> widget}} --}}
 				{{!-- {{#if ../stratumWidget}} --}}
 				{{!-- {{/if}} --}}
 		{{#with data.page}}
 		{{#ifeq ../data.page.layout "standard"}}
-		<div class="col-lg-9">
 		{{/ifeq}}
 		{{!-- <article> --}}
 			<header>
@@ -72,15 +70,16 @@
 		{{/ifeq}}
 		{{/with}}
 		{{#if data.page.images}}
-		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3{{/ifeq}}">
-			<h2>Bilder</h2>
+		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-md-offset-3 col-lg-offset-0{{/ifeq}}">
 			{{#each data.page.images}}
 				{{#ifeq ../data.page.layout "standard"}}
 					<div class="col-sm-6 col-lg-12">
 				{{else}}
 					<div class="col-sm-6 col-lg-4">
 				{{/ifeq}}
-					<a href="{{cloudinaryUrl this}}">{{{cloudinaryImage this width="500" crop="fill" class="img-responsive"}}}</a>
+						<a href="{{cloudinaryUrl this}}">
+							{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+						</a>
 					</div>
 			{{/each}}
 		{{/if}}
