@@ -44,9 +44,6 @@ BasePage.add({
 		}],
 		default: 'standard'
 	},
-	subtitle: {
-		type: String
-	},
 	state: {
 		type: Types.Select,
 		options: 'draft, published, archived',
