@@ -31,7 +31,6 @@ StartPage.add({
 			isVisible: {
 				label: 'Display the Jumbotron',
 				type: Boolean,
-				note: 'Check here if the Jumbotron should be visible',
 				default: true
 			},
 			header: {
