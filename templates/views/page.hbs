@@ -33,13 +33,13 @@
 		{{#with data.page}}
 		{{#ifeq ../data.page.layout "standard"}}
 		{{/ifeq}}
-		{{!-- <article> --}}
+		<article class="base-column">
 			<header>
 				<h1>{{title}}</h1>
-				<h5>
+{{!-- 				<h5>
 					{{{categoryList categories prefix="Posted in "}}}
 					{{#if author.name.first}}by {{author.name.first}}{{/if}}
-				</h5>
+				</h5> --}}
 			</header>
 			{{#if image.exists}}
 			<div class="caption-ct page-head-image">
@@ -64,24 +64,23 @@
 			<div class="post">
 				{{{content.html}}}
 			</div>
-		{{!-- </article> --}}
+		</article>
 		{{#ifeq ../data.page.layout "standard"}}
 		</div>
 		{{/ifeq}}
 		{{/with}}
 		{{#if data.page.images}}
-		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-md-offset-3 col-lg-offset-0{{/ifeq}}">
+		{{!-- <div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-md-offset-3 col-lg-offset-0{{/ifeq}}"> --}}
+		<div class="content-page-images col-lg-3 col-lg-offset-0 col-md-offset-3">
+			<div class="row">
 			{{#each data.page.images}}
-				{{#ifeq ../data.page.layout "standard"}}
-					<div class="col-sm-6 col-lg-12">
-				{{else}}
-					<div class="col-sm-6 col-lg-4">
-				{{/ifeq}}
-						<a href="{{cloudinaryUrl this}}">
-							{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
-						</a>
-					</div>
+				<div class="col-sm-6 col-lg-12">
+					<a href="{{cloudinaryUrl this}}">
+						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+					</a>
+				</div>
 			{{/each}}
+			</div>
 		{{/if}}
 		</div>
 	</div>
