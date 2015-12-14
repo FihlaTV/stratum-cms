@@ -8,15 +8,15 @@
 			{{#ifeq ../data.menuPage.slug slug}}
 				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
 					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
-					{{#with ../../data}}
-					{{#if subPages}}
+					{{#each ../../data.subPages}}
+					{{#if @first}}
 					<ul class="nav nav-pills nav-stacked nav-page-second">
-					{{#each subPages}}
+					{{/if}}
 						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a></li>
-					{{/each}}
+					{{#if @last}}
 					</ul>
 					{{/if}}
-					{{/with}}
+					{{/each}}
 				</li>
 			{{else}}
 				<li>
