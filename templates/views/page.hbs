@@ -3,16 +3,18 @@
 		{{#ifeq data.page.layout "full"}}
 		{{else}}
 		<div class="col-lg-2 col-md-3">
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav nav-pills nav-stacked nav-page">
 			{{#each data.pages}}
 			{{#ifeq ../data.menuPage.slug slug}}
 				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
 					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-					<ul class="nav nav-pills nav-stacked">
+					{{#if ../../data.subPages}}
+					<ul class="nav nav-pills nav-stacked nav-page-second">
 					{{#each ../../data.subPages}}
 						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
 					{{/each}}
 					</ul>
+					{{/if}}
 				</li>
 			{{else}}
 				<li>
@@ -36,10 +38,6 @@
 		<article class="base-page">
 			<header>
 				<h1>{{title}}</h1>
-{{!-- 				<h5>
-					{{{categoryList categories prefix="Posted in "}}}
-					{{#if author.name.first}}by {{author.name.first}}{{/if}}
-				</h5> --}}
 			</header>
 			{{#if image.exists}}
 			<div class="caption-ct base-page-head-image base-page-head-image-full">

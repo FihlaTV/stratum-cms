@@ -6,21 +6,24 @@
 // --------------------------------------------------
 
 .nav-pills.nav-stacked{
-	.white-well();
-	> li {
-		> a {
-			border-radius: 0;
-		}
-		&:first-child{
+	&.nav-page{
+		margin-bottom: @gutter-xlarge;
+		overflow: hidden;
+		.white-well();
+		> li {
+	    + li {
+	      margin-top: 0px;
+	    }
 			> a {
-				border-top-right-radius: 3px;
-				border-top-left-radius: 3px;
+				border-radius: 0;
 			}
 		}
-		&:last-child{
-			> a{
-				border-bottom-right-radius: 3px;
-				border-bottom-left-radius: 3px;
+	}
+	&.nav-page-second{
+		> li {
+			> a {
+				border-radius: 0;
+				padding-left: extract(@nav-link-padding, 1) + @gutter-large;
 			}
 		}
 	}
