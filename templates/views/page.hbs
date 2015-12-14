@@ -7,16 +7,16 @@
 			{{#each data.pages}}
 			{{#ifeq ../data.menuPage.slug slug}}
 				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
 					<ul class="nav nav-pills nav-stacked">
 					{{#each ../../data.subPages}}
-						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a></li>
+						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
 					{{/each}}
 					</ul>
 				</li>
 			{{else}}
 				<li>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
 				</li>
 			{{/ifeq}}
 			{{/each}}
