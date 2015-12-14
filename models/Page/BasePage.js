@@ -27,11 +27,6 @@ BasePage.add({
 		type: String,
 		required: true
 	},
-	menuTitle: {
-		type: String,
-		collapse: true,
-		note: 'Add a shorter version of the title which is adapted for the menu'
-	},
 	pageType: { type: String, noedit: true, hidden: true, watch: true, value: function(callback){
 		callback(null, this.getValue('__t'));
 	}},
@@ -78,9 +73,5 @@ BasePage.add({
 	}
 });
 BasePage.defaultColumns = 'title, pageType|20%';
-
-BasePage.schema.virtual('titleForMenu').get(function() {
-	return this.get('menuTitle') || this.get('title');
-});
 
 BasePage.register();
