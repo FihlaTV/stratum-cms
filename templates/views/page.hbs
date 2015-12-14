@@ -2,7 +2,7 @@
 	<div class="row">
 		{{#ifeq data.page.layout "full"}}
 		{{else}}
-		<div class="col-lg-2 col-md-3">
+		<div class="{{#ifeq data.page.layout "standard"}}col-lg-2 {{/ifeq}}col-md-3">
 			<ul class="nav nav-pills nav-stacked nav-page">
 			{{#each data.pages}}
 			{{#ifeq ../data.menuPage.slug slug}}
@@ -28,8 +28,9 @@
 		</div>
 		{{/ifeq}}
 		{{#ifeq data.page.layout "full"}}
+		<div class="col-xs-12">
 		{{else}}
-		<div class="col-md-9 col-lg-7">
+		<div class="col-md-9 {{#ifeq data.page.layout "standard"}}col-lg-7 {{/ifeq}}">
 		{{/ifeq}}
 		{{!-- {{> widget}} --}}
 				{{!-- {{#if ../stratumWidget}} --}}
@@ -65,23 +66,28 @@
 				{{{content.html}}}
 			</div>
 		</article>
-		{{#ifeq ../data.page.layout "standard"}}
 		</div>
-		{{/ifeq}}
 		{{/with}}
 		{{#if data.page.images}}
-		{{!-- <div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-md-offset-3 col-lg-offset-0{{/ifeq}}"> --}}
-		<div class="content-page-images col-lg-3 col-lg-offset-0 col-md-offset-3">
+		{{#ifeq data.page.layout "full"}}
+		<div class="content-page-images col-sm-12">
+		{{else}}
+		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-lg-offset-0 {{/ifeq}}col-md-9 col-md-offset-3">
+		{{/ifeq}}
 			<div class="row">
 			{{#each data.page.images}}
-				<div class="col-sm-6 col-lg-12">
+				{{#ifeq ../data.page.layout "full"}}
+				<div class="col-md-3 col-sm-6">
+				{{else}}
+				<div class="col-sm-6 {{#ifeq ../../data.page.layout "standard"}}col-lg-12{{/ifeq}}">
+				{{/ifeq}}
 					<a href="{{cloudinaryUrl this}}">
 						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
 					</a>
 				</div>
 			{{/each}}
 			</div>
-		{{/if}}
 		</div>
+		{{/if}}
 	</div>
 </div>
