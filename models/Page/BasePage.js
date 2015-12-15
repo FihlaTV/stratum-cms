@@ -44,9 +44,6 @@ BasePage.add({
 		}],
 		default: 'standard'
 	},
-	subtitle: {
-		type: String
-	},
 	state: {
 		type: Types.Select,
 		options: 'draft, published, archived',
@@ -68,7 +65,7 @@ BasePage.add({
 		type: Types.Markdown,
 		height: 400,
 		toolbarOptions: {
-			hiddenButtons: 'H1,Image,Quote,Code'
+			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
 	},
 	images: {

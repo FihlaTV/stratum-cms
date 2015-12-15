@@ -4,12 +4,14 @@
 		width: 100%;
 	}
 	.caption-text{
-		position: absolute;
-		bottom: 0px;
-		color: #ccc;
-		background-color: fade(@gray, 87%);
+		color: #fff;
+		background-color: darken(@brand-primary, 10%);
 		width: 100%;
 		padding: @gutter-small;
 		padding-top: @gutter;
+		font-size: @font-size-base * 0.85;
+		@media screen and (min-width: @screen-sm-min) {
+			font-size: @font-size-base;
+		}
 	}
 }
