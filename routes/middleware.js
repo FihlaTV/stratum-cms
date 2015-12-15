@@ -96,6 +96,10 @@ exports.initLocals = function(req, res, next) {
 				});
 			});
 			locals.navLinks.push({
+				label: 'Registrering',
+				key: 'registration',
+				href: '/registrering'
+			},{
 				label: 'Kontakt',
 				key: 'contact',
 				href: '/kontakt'
