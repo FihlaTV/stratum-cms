@@ -52,9 +52,11 @@ img.navbar-brand-image-small{
 		@media (min-width: @screen-lg-min) {
 			margin-left: 2*@gutter;
 		}
-		font-size: 16px;
-		.glyphicon;
-		.glyphicon-search;
+		.fa-icon();
+		&:before{
+			font-size: 16px;
+			content: @fa-var-search;
+		}
 		top: 2px;
 	}
 }
