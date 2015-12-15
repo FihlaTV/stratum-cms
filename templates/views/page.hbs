@@ -40,7 +40,7 @@
 		{{/ifeq}}
 		<article class="base-page">
 			<header>
-				<h1>{{title}}</h1>
+				<h1{{#unless image.exists}} class="base-page-divider"{{/unless}}>{{title}}</h1>
 			</header>
 			{{#if image.exists}}
 			<div class="caption-ct base-page-head-image base-page-head-image-full">
