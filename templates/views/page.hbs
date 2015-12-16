@@ -2,17 +2,21 @@
 	<div class="row">
 		{{#ifeq data.page.layout "full"}}
 		{{else}}
-		<div class="col-lg-2 col-md-3">
-			<ul class="nav nav-pills nav-stacked">
+		<div class="{{#ifeq data.page.layout "standard"}}col-lg-2 {{/ifeq}}col-md-3">
+			<ul class="nav nav-pills nav-stacked nav-page">
 			{{#each data.pages}}
 			{{#ifeq ../data.menuPage.slug slug}}
 				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
 					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-					<ul class="nav nav-pills nav-stacked">
 					{{#each ../../data.subPages}}
+					{{#if @first}}
+					<ul class="nav nav-pills nav-stacked nav-page-second">
+					{{/if}}
 						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
-					{{/each}}
+					{{#if @last}}
 					</ul>
+					{{/if}}
+					{{/each}}
 				</li>
 			{{else}}
 				<li>
@@ -24,27 +28,22 @@
 		</div>
 		{{/ifeq}}
 		{{#ifeq data.page.layout "full"}}
-		<div class="col-md-12">
+		<div class="col-xs-12">
 		{{else}}
-		<div class="col-md-9 col-lg-10">
+		<div class="col-md-9 {{#ifeq data.page.layout "standard"}}col-lg-7 {{/ifeq}}">
 		{{/ifeq}}
 		{{!-- {{> widget}} --}}
 				{{!-- {{#if ../stratumWidget}} --}}
 				{{!-- {{/if}} --}}
 		{{#with data.page}}
 		{{#ifeq ../data.page.layout "standard"}}
-		<div class="col-lg-9">
 		{{/ifeq}}
-		{{!-- <article> --}}
+		<article class="base-page">
 			<header>
-				<h1>{{title}}{{#if subtitle}} <small>{{subtitle}}</small>{{/if}}</h1>
-				<h5>
-					{{{categoryList categories prefix="Posted in "}}}
-					{{#if author.name.first}}by {{author.name.first}}{{/if}}
-				</h5>
+				<h1{{#unless image.exists}} class="base-page-divider"{{/unless}}>{{title}}</h1>
 			</header>
 			{{#if image.exists}}
-			<div class="caption-ct">
+			<div class="caption-ct base-page-head-image base-page-head-image-full">
 				{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
 				{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 			</div>
@@ -66,24 +65,29 @@
 			<div class="post">
 				{{{content.html}}}
 			</div>
-		{{!-- </article> --}}
-		{{#ifeq ../data.page.layout "standard"}}
+		</article>
 		</div>
-		{{/ifeq}}
 		{{/with}}
 		{{#if data.page.images}}
-		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3{{/ifeq}}">
-			<h2>Bilder</h2>
+		{{#ifeq data.page.layout "full"}}
+		<div class="content-page-images col-sm-12">
+		{{else}}
+		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-lg-offset-0 {{/ifeq}}col-md-9 col-md-offset-3">
+		{{/ifeq}}
+			<div class="row">
 			{{#each data.page.images}}
-				{{#ifeq ../data.page.layout "standard"}}
-					<div class="col-sm-6 col-lg-12">
+				{{#ifeq ../data.page.layout "full"}}
+				<div class="col-md-3 col-sm-6">
 				{{else}}
-					<div class="col-sm-6 col-lg-4">
+				<div class="col-sm-6 {{#ifeq ../../data.page.layout "standard"}}col-lg-12{{/ifeq}}">
 				{{/ifeq}}
-					<a href="{{cloudinaryUrl this}}">{{{cloudinaryImage this width="500" crop="fill" class="img-responsive"}}}</a>
-					</div>
+					<a href="{{cloudinaryUrl this}}">
+						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+					</a>
+				</div>
 			{{/each}}
-		{{/if}}
+			</div>
 		</div>
+		{{/if}}
 	</div>
 </div>

@@ -1,6 +1,3 @@
-// Open Sans
-
-@import "site/opensans.less";
 
 // Bootstrap
 // =========
@@ -13,19 +10,26 @@
 
 @import "bootstrap/bootstrap.less";
 
-// The easiest way to customise Bootstrap variables while
-// being able to easily override the source files with new
-// versions is to override the ones you want in another file.
-//
-// You can also add your own custom variables to this file for
-// use in your site stylesheets.
+// Open Sans
+// ===========
+@import "site/opensans.less";
 
+// Robot Slab
+// ===========
+@import "site/roboto-slab.less";
+
+// Font Awesome
+// ===========
+@import "font-awesome/font-awesome.less";
+
+
+// Variables for overiding frame works
+// ===========
 @import "site/variables.less";
 
 // Mixins
 // ===========
 @import "site/mixins.less";
-
 
 // Site Styles
 // ===========
@@ -43,10 +47,12 @@
 @import "site/sub-registers.less";
 @import "site/widgets/report-list.less";
 @import "site/startpage.less";
+@import "site/base-page.less";
 @import "site/col-15.less";
 @import "site/grid.less";
 
 // Bootstrap overrides
+@import "site/navs.less";
 @import "site/navbar.less";
 @import "site/navbar-big.less";
 @import "site/jumbotron.less";
