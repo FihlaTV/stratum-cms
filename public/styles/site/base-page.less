@@ -1,0 +1,27 @@
+.base-page{
+	.white-well();
+	margin-bottom: @gutter-xlarge;
+	h1{
+		margin-bottom: @gutter;
+		.base-page-divider{
+			border-bottom: 1px solid @primary-light;
+			padding-bottom: @gutter;
+		}
+	}
+	padding: @gutter-large;
+	@media (min-width: @screen-md-min) {
+		padding: floor(@gutter-large*1.6) @gutter-large*2 @gutter-large*2 @gutter-large*2;
+	}
+}
+.base-page-head-image{
+	margin-top: @gutter-large;
+	margin-bottom: @gutter-large;
+	&.base-page-head-image-full{
+		margin-left: -@gutter-large;
+		margin-right: -@gutter-large;
+		@media (min-width: @screen-md-min) {
+			margin-left: -@gutter-large*2;
+			margin-right: -@gutter-large*2;
+		}
+	}
+}
