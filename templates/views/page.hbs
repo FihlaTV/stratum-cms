@@ -7,12 +7,12 @@
 			{{#each data.pages}}
 			{{#ifeq ../data.menuPage.slug slug}}
 				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
 					{{#each ../../data.subPages}}
 					{{#if @first}}
 					<ul class="nav nav-pills nav-stacked nav-page-second">
 					{{/if}}
-						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a></li>
+						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
 					{{#if @last}}
 					</ul>
 					{{/if}}
@@ -20,7 +20,7 @@
 				</li>
 			{{else}}
 				<li>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{title}}</a>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
 				</li>
 			{{/ifeq}}
 			{{/each}}
