@@ -88,21 +88,21 @@ exports.initLocals = function(req, res, next) {
 		// },
 		addCategoriesToNav: function(cb) {
 			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			locals.navLinks.push({
+				label: 'Registrering m.m.',
+				key: 'registration',
+				href: '/registrering'
+			// },{
+			// 	label: 'Kontakt',
+			// 	key: 'contact',
+			// 	href: '/kontakt'
+			});
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,
 					key: menuBlock.slug,
 					href: '/' + menuBlock.slug
 				});
-			});
-			locals.navLinks.push({
-				label: 'Registrering',
-				key: 'registration',
-				href: '/registrering'
-			},{
-				label: 'Kontakt',
-				key: 'contact',
-				href: '/kontakt'
 			});
 			cb();
 		},
