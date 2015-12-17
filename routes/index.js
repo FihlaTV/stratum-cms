@@ -55,7 +55,7 @@ exports = module.exports = function(app) {
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
 	app.get('/registrering', routes.views.registration);
-	app.get('/kontakt', routes.views.contact);
+	// app.get('/kontakt', routes.views.contact);
 
 	// Views for dynamic routes
 	app.get('/:menublock?', routes.views.page);
