@@ -1,61 +1,42 @@
 {{!< default}}
-{{#if data.newsWithImage}}
-<div id="head-carousel" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
-	{{#ifeq data.newsWithImage.length 1}}
-	{{else}}
-	<ol class="carousel-indicators">
-		{{# each data.newsWithImage}}
-		{{#if image.exists}}
-		<li data-target="#head-carousel" data-slide-to="{{@index}}" {{#if @first }}class="active"{{/if}}></li>
-		{{/if}}		
-		{{/each}}
-	</ol>
-	{{/ifeq}}
-	<!-- Indicators -->
-	<div class="carousel-inner" role="listbox">
-		{{# each data.newsWithImage}}
-		<div class="item {{#if @first }}active{{/if}}">
-			<a href="{{newsUrl slug}}">
-				{{{cloudinaryImage image width="1024" height="400" crop="fill" gravity="north"}}}
-			</a>
-			<div class="carousel-caption">
-				<h2>{{{title}}}</h2>
-				<p class="hidden-xs">
-					{{content.brief}}
-					<a href="{{newsUrl slug}}">...läs mer</a>
-				</p>
-			</div>
+<div class="container">
+{{#if data.startPage.jumbotron.isVisible}}
+<div class="jumbotron">
+	<div class="row">
+		{{#with data.startPage.jumbotron}}
+		<h1>{{header}}</h1>
+		<p class="lead">
+			{{{description.html}}}
+		</p>
 		</div>
+		{{/with}}
+		<div class="row">
+		{{#each data.startPageWidgets}}
+			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						{{digit}}
+					</span>
+					<span class="startpage-widget-text">{{description}}</span>
+					<a href="#stat">Se mer statistik.</a>
+				</div>
+			</div>
 		{{/each}}
+		</div>
 	</div>
-	<!-- Controls -->
-	{{#ifeq data.newsWithImage.length 1}}
-	{{else}}
-	<a class="left carousel-control" href="#head-carousel" role="button" data-slide="prev">
-		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	</a>
-	<a class="right carousel-control" href="#head-carousel" role="button" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	</a>
-	{{/ifeq}}
-
-</div>
-{{else}}
-<div class="carousel-placeholder">
-	<span class="carousel-placeholder-header">{{brand}}</span>
 </div>
 {{/if}}
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
-	<div class="col-sm-8">
-		<h1>{{brandName}}</h1>
+	<div class="col-md-7">
 		{{#with data.startPage}}
-		{{description}}
+		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
+			<h2>{{header}}</h2>
+			<p class="lead">{{{description.html}}}</p>
+		</div>
 		{{/with}}
 	</div>
-	<div class="col-sm-4">
+	<div class="col-md-5">
 	{{#if isPortal}}
 		<h2>Delregister</h2>
 		<div class="sub-registers">
@@ -79,13 +60,7 @@
 		Meeting
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'image'}}
-	<div class="caption-ct">
-		{{{cloudinaryImage informationBlurb.image width=600 height=400 crop='fill' class="img-responsive"}}}
-		{{#if informationBlurb.imageText}}
-		<div class="caption-text">
-			{{informationBlurb.imageText}}
-		</div>
-		{{/if}}
+		{{{cloudinaryImage informationBlurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
 	</div>
 	{{/ifeq}}
 	</div>

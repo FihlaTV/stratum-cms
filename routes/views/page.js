@@ -5,6 +5,7 @@ exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res),
 		locals = res.locals;
 
+	locals.stratumServer = keystone.get('stratum server');
 	locals.breadcrumbs = [];
 	// locals.widget = 'reportlist';
 	locals.widget = {};
@@ -50,7 +51,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.sort('sortOrder')
-			.select('slug title')
+			.select('slug title menuTitle')
 			.exec(function(err, pages) {
 				if (!err) {
 					locals.data.pages = pages;

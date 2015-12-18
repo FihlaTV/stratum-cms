@@ -37,7 +37,8 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	api: importRoutes('./api'),
-	views: importRoutes('./views')
+	views: importRoutes('./views'),
+	proxies: importRoutes('./proxies')
 };
 
 // Setup webpack compiler
@@ -45,6 +46,8 @@ var compiler = webpack(config);
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
+	// Proxies
+	app.all('/stratum/*', routes.proxies.stratum);
 
 	//Activate webpack hot reload middleware
 	if(keystone.get('env') === 'development'){
@@ -64,14 +67,18 @@ exports = module.exports = function(app) {
 	if (keystone.get('protect all pages')) {
 		app.get('/*', middleware.requireUser);
 	}
+
 	// Views
 	app.get('/', routes.views.index);
 
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
-	app.get('/kontakt', routes.views.contact);
-	app.get('/login', routes.views.login);
+	app.get('/registrering', routes.views.registration);
+	// app.get('/kontakt', routes.views.contact);
 
+	// React Login
+	app.get('/login', routes.views.login);
+	
 	// Views for dynamic routes
 	app.get('/:menublock?', routes.views.page);
 	app.get('/:menublock?/:page', routes.views.page);

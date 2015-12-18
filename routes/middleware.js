@@ -40,11 +40,7 @@ exports.initLocals = function(req, res, next) {
 			menu: []
 		};
 
-	locals.navLinks = [{
-		label: 'Nyheter',
-		key: 'news',
-		href: '/nyheter'
-	}];
+	locals.navLinks = [];
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
@@ -108,17 +104,21 @@ exports.initLocals = function(req, res, next) {
 		// },
 		addCategoriesToNav: function(cb) {
 			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			locals.navLinks.push({
+				label: 'Registrering m.m.',
+				key: 'registration',
+				href: '/registrering'
+			// },{
+			// 	label: 'Kontakt',
+			// 	key: 'contact',
+			// 	href: '/kontakt'
+			});
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,
 					key: menuBlock.slug,
 					href: '/' + menuBlock.slug
 				});
-			});
-			locals.navLinks.push({
-				label: 'Kontakt',
-				key: 'contact',
-				href: '/kontakt'
 			});
 			cb();
 		},

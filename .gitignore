@@ -39,3 +39,6 @@ public/js/dist
 
 # Register configurations
 registers/
+
+# VS Code specific 
+.vscode

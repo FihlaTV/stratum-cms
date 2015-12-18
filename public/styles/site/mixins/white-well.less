@@ -1,7 +1,10 @@
+.base-shadow(){
+	.box-shadow(@shadow: 0 1px fadeout(#000, 92%));
+}
 .white-well() {
 	background-color: #fff;
-  	border-radius: .15em;
-	box-shadow: 0 0 0 1px rgba(0,0,0,0.04),0 2px 0 rgba(0,0,0,0.04);
+  	border-radius: 3px;
+  	.base-shadow();
 }
 .white-well{
 	.white-well();

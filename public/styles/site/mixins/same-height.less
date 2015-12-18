@@ -1,0 +1,15 @@
+.same-responsive-height-as(@width; @height; @lg-cols: 12; @md-cols: 12; @sm-cols: 12; @xs-cols: 12){
+	.calculate-height(@container-sm; @xs-cols);
+	@media screen and (min-width: @screen-sm-min){
+		.calculate-height(@container-sm; @sm-cols);
+	}
+	@media screen and (min-width: @screen-md-min){
+		.calculate-height(@container-md; @md-cols);
+	}
+	@media screen and (min-width: @screen-lg-min){
+		.calculate-height(@container-lg; @lg-cols);
+	}
+	.calculate-height(@screen-size; @cols) when (@cols < 12) {
+		min-height: ((@screen-size / 12) * @cols - @grid-gutter-width) * (@height / @width)
+	}
+}
