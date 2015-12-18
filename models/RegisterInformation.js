@@ -31,7 +31,9 @@ RegisterInformation.add({
 	latitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
 	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
 	isPortal: { type: Boolean, note: 'Check here if the register is a portal of several registers' },
-	subRegisters: { type: Types.Relationship, ref: 'StratumRegister', many: true, dependsOn: {isPortal: true} }
+	subRegisters: { type: Types.Relationship, ref: 'StratumRegister', many: true, dependsOn: {isPortal: true} },
+	newsAsTopMenu: { type: Boolean, default: true, note: 'Shows the news as a top menu' },
+	menuWithNews: { type: String, dependsOn: { newsAsTopMenu: true } }
 });
  
 RegisterInformation.schema.path('latitude').validate(function(value){
