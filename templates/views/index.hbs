@@ -1,52 +1,81 @@
 {{!< default}}
-<div id="head-carousel" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
-	<ol class="carousel-indicators">
-		{{# each data.posts.results}}
-		<li data-target="#head-carousel" data-slide-to="{{@index}}" {{#if @first }}class="active"{{/if}}></li>
-		{{/each}}
-	</ol>
-	<!-- Indicators -->
-	<div class="carousel-inner" role="listbox">
-		{{# each data.posts.results}}
-		<div class="item {{#if @first }}active{{/if}}">
-			<a href="{{postUrl slug}}"><img src="{{cloudinaryUrl image width="1024" height="400" crop="fill" gravity="north"}}">
-			</a>
-			<div class="carousel-caption">
-				<h2>{{{title}}}</h2>
-				<p class="hidden-xs">
-					{{content.brief}}
-					<a href="{{postUrl slug}}">...läs mer</a>
-				</p>
+<div class="container">
+{{#if data.startPage.jumbotron.isVisible}}
+<div class="jumbotron">
+	<div class="row">
+		{{#with data.startPage.jumbotron}}
+		<h1>{{header}}</h1>
+		<p class="lead">
+			{{{description.html}}}
+		</p>
+		</div>
+		{{/with}}
+		<div class="row">
+		{{#each data.startPageWidgets}}
+			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
+				<div class="">
+					<span class="startpage-widget-digit">
+						{{digit}}
+					</span>
+					<span class="startpage-widget-text">{{description}}</span>
+					<a href="#stat">Se mer statistik.</a>
+				</div>
 			</div>
+		{{/each}}
+		</div>
+	</div>
+</div>
+{{/if}}
+<div class="container">
+	<div class="row">
+	<div class="col-md-7">
+		{{#with data.startPage}}
+		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
+			<h2>{{header}}</h2>
+			<p class="lead">{{{description.html}}}</p>
+		</div>
+		{{/with}}
+	</div>
+	<div class="col-md-5">
+	{{#if isPortal}}
+		<h2>Delregister</h2>
+		<div class="sub-registers">
+			<ul>
+			{{#each data.register.subRegisters}}
+				<a href="//{{shortName}}.{{../topHost}}"><li>{{name}}</li></a>
+			{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+	{{#with data.startPage}}
+	{{#ifeq informationBlurb.type 'newsRoll'}}
+		{{>newsroll ./../..}}
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'newsItem'}}
+		<h2>Senaste</h2>
+		{{>newswidget ./../..}}
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'meeting'}}
+		<h2>Kommande möte</h2>
+		Meeting
+	{{/ifeq}}
+	{{#ifeq informationBlurb.type 'image'}}
+		{{{cloudinaryImage informationBlurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
+	</div>
+	{{/ifeq}}
+	</div>
+	{{/with}}
+	</div>
+	{{#if isPortal}}
+	{{else}}
+	<div class="row">
+		{{#each data.widgets}}
+		<div class="col-sm-4 col-lg-3">
+			{{>stratumwidget}}
 		</div>
 		{{/each}}
 	</div>
-	<!-- Controls -->
-	<a class="left carousel-control" href="#head-carousel" role="button" data-slide="prev">
-		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	</a>
-	<a class="right carousel-control" href="#head-carousel" role="button" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	</a>
+	{{/if}}
+
 </div>
-<div class="container">
-	<img src="/images/logo.svg" width="160" class="pull-right">
-	<h1>Welcome?</h1>
-	<p>This is your new <a href='http://keystonejs.com', target='_blank'>KeystoneJS</a> website.</p>
-	<p>
-		It includes the latest versions of
-		<a href='http://getbootstrap.com/' target='_blank'>Bootstrap</a>
-		and <a href='http://www.jquery.com/' target='_blank'>jQuery</a>.
-	</p>
-	<p>Visit the <a href='http://keystonejs.com/guide' target='_blank'>Getting Started</a> guide to learn how to customise it.</p>
-	<hr>
-	<p>We have created a default Admin user for you with the email <strong>user@keystonejs.com</strong> and the password <strong>admin</strong>.</p>
-	<p><a href="/keystone/signin" style="margin-right: 10px" class="btn btn-lg btn-primary">Sign in</a> to use the Admin UI.</p>
-	<hr>
-	<p>
-		Remember to <a href='https://github.com/keystonejs/keystone' target='_blank'>Star KeystoneJS on GitHub</a> and
-		<a href='https://twitter.com/keystonejs' target='_blank'>follow @keystonejs</a> on twitter for updates.
-	</p>
-</div>
+

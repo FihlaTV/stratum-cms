@@ -8,8 +8,9 @@
  * modules in your project's /lib directory.
  */
 
-var _ = require('underscore');
-
+var _ = require('underscore'),
+	keystone = require('keystone'),
+	async = require('async');
 
 /**
 	Initialises the standard view locals
@@ -20,20 +21,125 @@ var _ = require('underscore');
 */
 
 exports.initLocals = function(req, res, next) {
-	
-	var locals = res.locals;
-	
-	locals.navLinks = [
-		{ label: 'Home',		key: 'home',		href: '/' },
-		{ label: 'Blog',		key: 'blog',		href: '/blog' },
-		{ label: 'Gallery',		key: 'gallery',		href: '/gallery' },
-		{ label: 'Contact',		key: 'contact',		href: '/contact' }
-	];
-	
+
+	var locals = res.locals,
+		context = {
+			menu: []
+		};
+
+	locals.navLinks = [];
 	locals.user = req.user;
-	
-	next();
-	
+	locals.lastCommit = keystone.get('last commit');
+	locals.brand = keystone.get('brand');
+	async.series({
+		loadMenuBlocks: function(cb) {
+			keystone.list('MenuBlock').model
+				.find()
+				// .populate('pages')
+				.sort('sortOrder')
+				.exec(function(err, menu) {
+					if(!err){
+						context.menu = menu;
+					}
+					cb(err);
+				});
+		},
+		// loadCategories: function(cb) {
+		// 	keystone.list('ContentCategory').model
+		// 		.find()
+		// 		.populate('pages')
+		// 		.sort('sortOrder')
+		// 		.exec(function(err, categories) {
+		// 			context.categories = categories;
+		// 			cb(err);
+		// 		});
+		// },
+		// loadPages: function(cb) {
+		// 	context.pages = [];
+		// 	async.each(context.categories, function(category, callback) {
+		// 		keystone.list('Page').model
+		// 			.find()
+		// 			.where('category', category.id)
+		// 			.where('state', 'published')
+		// 			.sort('sortOrder')
+		// 			.exec(function(err, pages) {
+		// 				var innerLinks;
+		// 				if (!pages || pages.length <= 0) {
+		// 					callback(err);
+		// 					return;
+		// 				}
+		// 				innerLinks = pages.map(function(page) {
+		// 					return {
+		// 						label: page.title,
+		// 						key: category.slug + '/' + page.slug,
+		// 						href: '/' + category.slug + '/' + page.slug
+		// 					};
+		// 				});
+		// 				context.pages.push({
+		// 					label: category.name,
+		// 					key: category.slug,
+		// 					href: (pages.length === 1 ? innerLinks[0].href : innerLinks),
+		// 					isSubmenu: pages.length > 1,
+		// 					sortOrder: category.sortOrder
+		// 				});
+		// 				callback(err);
+		// 			});
+		// 	}, cb);
+		// },
+		addCategoriesToNav: function(cb) {
+			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
+			locals.navLinks.push({
+				label: 'Registrering m.m.',
+				key: 'registration',
+				href: '/registrering'
+			// },{
+			// 	label: 'Kontakt',
+			// 	key: 'contact',
+			// 	href: '/kontakt'
+			});
+			context.menu.forEach(function(menuBlock){
+				locals.navLinks.push({
+					label: menuBlock.name,
+					key: menuBlock.slug,
+					href: '/' + menuBlock.slug
+				});
+			});
+			cb();
+		},
+		// lookupBrandName: function(cb){
+		// 	var StartPage = keystone.list('StartPage');
+		// 	StartPage.model
+		// 		.findOne(function(err, startPage){
+		// 			if(startPage){
+		// 				locals.brandName = startPage.header;
+		// 			}
+		// 			cb(err);
+		// 		});
+		// },
+		isPortalRegister: function(cb) {
+			keystone.list('RegisterInformation').model
+				.findOne(function(err, register) {
+					if (register) {
+						locals.isPortal = register.isPortal;
+						locals.brandName = register.name;
+						locals.address = register.contactString;
+					}
+					cb(err);
+				});
+		},
+		getHostName: function(cb) {
+			var host = req.headers.host,
+				regEx = RegExp('(^' + keystone.get('brand') + '|^www)\.', 'i');
+			locals.topHost = host.replace(regEx, '');
+			locals.host = host;
+			cb();
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		}
+		next();
+	});
 };
 
 
@@ -42,18 +148,20 @@ exports.initLocals = function(req, res, next) {
 */
 
 exports.flashMessages = function(req, res, next) {
-	
+
 	var flashMessages = {
 		info: req.flash('info'),
 		success: req.flash('success'),
 		warning: req.flash('warning'),
 		error: req.flash('error')
 	};
-	
-	res.locals.messages = _.any(flashMessages, function(msgs) { return msgs.length; }) ? flashMessages : false;
-	
+
+	res.locals.messages = _.any(flashMessages, function(msgs) {
+		return msgs.length;
+	}) ? flashMessages : false;
+
 	next();
-	
+
 };
 
 
@@ -62,12 +170,11 @@ exports.flashMessages = function(req, res, next) {
  */
 
 exports.requireUser = function(req, res, next) {
-	
-	if (!req.user) {
+	// console.log(req.user.canAccessProtected);
+	if (!req.user || !req.user.canAccessProtected) {
 		req.flash('error', 'Please sign in to access this page.');
 		res.redirect('/keystone/signin');
 	} else {
 		next();
 	}
-	
 };

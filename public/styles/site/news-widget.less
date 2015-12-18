@@ -1,0 +1,22 @@
+.news-widget {
+	margin-bottom: @gutter;
+	.news-widget-caption{
+		padding: 10px;
+		width: 100%;
+		transition: padding-top 0.12s ease-in, background-color 0.12s ease;
+		.news-widget-caption-lead{
+			.hidden-sm();
+		}
+
+	}
+	a{
+		color: #ccc;
+	}
+	&:hover{
+		.news-widget-caption{
+			background-color: @gray;
+			padding-top: 35px;
+			transition: padding-top 0.12s ease-in, background-color 0.12s ease;
+		}
+	}
+}

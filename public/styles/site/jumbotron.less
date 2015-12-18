@@ -1,0 +1,27 @@
+.jumbotron{
+	margin-bottom: @gutter-xlarge;
+	h1,
+	.h1 {
+		// font-size: @font-size-base * 2.5;
+		margin-top: 0;
+		font-weight: 700;
+		text-transform: inherit;
+	}
+	@media screen and (min-width: @screen-sm-min) {
+		// Actual size according to specification (bit small?)
+		// h1,
+		// .h1 {
+		// 	font-size: (@font-size-base * 3.5);
+		// }
+	}
+	&.jumbotron-top{
+		margin-top: -@navbar-margin-bottom;
+	}
+	&.jumbotron-gradient{
+		#gradient > .vertical(darken(@jumbotron-bg, 10); @jumbotron-bg);
+	}
+	.container & {
+	  border-radius: @border-radius-main; // Only round corners at higher resolutions if contained in a container
+	  .base-shadow();
+	}
+}

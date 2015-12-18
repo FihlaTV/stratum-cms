@@ -6,7 +6,7 @@ var cloudinary = require('cloudinary');
 
 
 // Declare Constants
-var CLOUDINARY_HOST = 'http://res.cloudinary.com';
+var CLOUDINARY_HOST = '//res.cloudinary.com';
 
 // Collection of templates to interpolate
 var linkTemplate = _.template('<a href="<%= url %>"><%= text %></a>');
@@ -70,8 +70,12 @@ module.exports = function() {
 		
 		var f = options.hash.format || 'MMM Do, YYYY',
 			timeago = options.hash.timeago,
+			locale = options.hash.locale || 'sv',
 			date;
 		
+		// set to swedish if nothing else is specified
+		moment.locale(locale);
+
 		// if context is undefined and given to moment then current timestamp is given
 		// nice if you just want the current year to define in a tmpl
 		if (timeago) {
@@ -167,9 +171,9 @@ module.exports = function() {
 	};
 	
 	// Used to generate the link for the admin edit post button
-	_helpers.adminEditableUrl = function(user, options) {
+	_helpers.adminEditableUrl = function(user, list, options) {
 		var rtn = keystone.app.locals.editable(user, {
-			'list': 'Post',
+			'list': list,
 			'id': options
 		});
 		return rtn;
@@ -185,7 +189,7 @@ module.exports = function() {
 	//
 	// Returns an src-string for a cloudinary image
 	
-	_helpers.cloudinaryUrl = function(context, options) {
+	var cloudinaryHelper = function(cloudinaryFn, context, options) {
 
 		// if we dont pass in a context and just kwargs
 		// then `this` refers to our default scope block and kwargs
@@ -201,14 +205,29 @@ module.exports = function() {
 		context = context === null ? undefined : context;
 		
 		if ((context) && (context.public_id)) {
-			var imageName = context.public_id.concat('.',context.format);
-			return cloudinary.url(imageName, options.hash);
+			var imageName = context.public_id;
+			options.hash = options.hash || {};
+			if(!options.hash.format){
+				imageName = imageName.concat('.', context.format);
+			}
+			return cloudinaryFn(imageName, options.hash);
 		}
 		else {
 			return null;
 		}		
 	};
+	_helpers.cloudinaryUrl = function(context, options) {
+		return cloudinaryHelper(cloudinary.url, context, options);
+	};
+	_helpers.cloudinaryImage = function(context, options){
+		return cloudinaryHelper(cloudinary.image, context, options);
+	};
 	
+	// ### News Helpers
+	_helpers.newsUrl = function(newsSlug){
+		return ('/nyheter/' + newsSlug);
+	};
+
 	// ### Content Url Helpers
 	// KeystoneJS url handling so that the routes are in one place for easier
 	// editing.  Should look at Django/Ghost which has an object layer to access
@@ -334,5 +353,21 @@ module.exports = function() {
 		return new hbs.SafeString(output);
 	};
 	
+	_helpers.shortenString = function(string, length){
+		var output = string + '';
+		return new hbs.SafeString(output.substring(0, length || 10));
+	};
+
+	_helpers.getTitle = function(breadcrumbs, inBrand, inSeparator){
+		// console.log(inSeparator);
+		var separator = arguments.length > 3 ? inSeparator : ' | ',
+		brand = arguments.length > 2 ? inBrand : '',
+		output = _.isEmpty(breadcrumbs) ? '' : _.pluck(breadcrumbs, 'label').reverse().join(separator);
+		if(!_.isEmpty(brand)){
+			output += _.isEmpty(output) ? brand : (separator + brand);
+		}
+		return new hbs.SafeString(output);
+	};
+
 	return _helpers;
 };

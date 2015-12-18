@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Test Keystone</title>
+		<title>{{{getTitle breadcrumbs brand ' > '}}}</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link href="/styles/site.min.css" rel="stylesheet">
 
@@ -12,48 +12,91 @@
 			- only renders when user is logged in and admin--}}
 		{{{isAdminEditorCSS user}}}
 
-		{{!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-		//- Safely remove this block if you are not targeting IE8 --}}
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" />
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" />
+		  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
 	</head>
 	<body>
-		<div id="header"{{#ifeq section 'home'}} class="header-first"{{/ifeq}}>
+		<div id="root-container">
+		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			{{!-- <div class="container"> --}}
-				<div role="navigation" class="navbar navbar-default navbar-static-top">
-					<div class="container">
-						<div class="navbar-header">
+				<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
+					<div class="navbar-header">
+						<div class="container">
 							<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 							</button>
-							<a href="/" class="navbar-brand">Stratum<sup>3</sup></a>
+							<a href="/" class="navbar-brand">
+								<img src="/images/logo_menu_big.png" alt="{{brand}}" class="navbar-brand-image-big">
+								<img src="/images/logo_menu_small.png" alt="{{brand}}" class="navbar-brand-image-small">
+							</a>
+							{{!-- <a href="/" class="navbar-brand">{{#if brand}}{{brand}}{{else}}Stratum<sup>3</sup>{{/if}}</a> --}}
 						</div>
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-left">
-									{{# each navLinks}}
-									<li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
-										<a href="{{ href }}">{{ label }}</a>
+					</div>
+					<div class="navbar-main">
+						<div class="container">
+							<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav navbar-left">
+										{{# each navLinks}}
+										<li class="{{#ifeq ../section key}}active {{else}}{{/ifeq}}{{#if isSubmenu}}dropdown{{else}}{{/if}}">
+											{{#if isSubmenu}}
+									          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ label }} <span class="caret"></span></a>
+									          <ul class="dropdown-menu" role="menu">
+												{{#each href}}
+									            <li><a href="{{ href }}">{{label}}</a></li>
+									            {{/each}}
+									          </ul>
+											{{else}}
+											<a href="{{ href }}">{{ label }}</a>
+											{{/if}}
+										</li>
+									{{/each}}
+									{{!-- <li id="login-button"></li> --}}
+								</ul>
+								<ul class="nav navbar-nav navbar-right">
+									<li class="search">
+										<a href="#search"></a>
 									</li>
-								{{/each}}
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-								{{#if user}}
-								<li><a href="#" class="user"><img src="{{#if user.image.exists}}{{cloudinaryUrl user.image width="27" height="27" crop="fill"}}{{else}}/images/avatar.png{{/if}}" alt="" width="27" class="img-circle"></a></li>
-								<li><a href="/keystone/signout">Sign Out</a></li>
-								{{else}}
-								<li><a href="/keystone/signin">Sign In</a></li>
-								{{/if}}
-							</ul>
+									{{#if user}}
+									{{!-- <li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li> --}}
+									<li><a href="/keystone/signout">Logga ut</a></li>
+									{{else}}
+									<li><a href="/keystone/signin">Logga in</a></li>
+									{{/if}}
+								</ul>
+								{{!-- <ul class="nav navbar-nav navbar-right">
+									{{#if user}}
+									<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
+									<li><a href="/keystone/signout">Sign Out</a></li>
+									{{else}}
+									<li><a href="/keystone/signin">Sign In</a></li>
+									{{/if}}
+								</ul> --}}
+							</div>
 						</div>
 					</div>
 				{{!-- </div> --}}
 			</div>
 		</div>
 		<div id="body">
+		{{#if breadcrumbs}}
+			<div class="container">
+				<ol class="breadcrumb">
+					<li><a href="/">Start</a></li>
+					{{#each breadcrumbs}}
+					{{#if @last}}
+					<li class="active">{{label}}</li>
+					{{else}}
+					<li><a href="{{path}}">{{label}}</a></li>
+					{{/if}}
+					{{/each}}
+				</ol>
+			</div>
+		{{/if}}
 			<!--
 				Flash messages allow you to display once-off status messages to users, e.g. form
 				validation errors, success messages, etc
@@ -85,10 +128,21 @@
 			<!-- The content block should contain the body of your template's content-->
 			{{{body}}}
 		</div>
-		<div class="container">
-			<div id="footer">
-				<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p>
+		<footer>
+			<div class="container">
+			{{#if lastCommit}}
+			{{#with lastCommit.commit}}
+				<div id="dev-info" class="hidden-xs" style="float: right; text-align: right; margin-bottom: 10px;">
+					<img src="{{author.avatar_url}}&s=40" width="20" height="20" class="img-rounded"> <a target="_blank" href="{{author.html_url}}">{{author.login}}</a> authored {{date commit.author.date locale="en" timeago=true}}<br>
+					branch {{/with}}<a target="_blank" href="{{lastCommit._links.html}}">{{lastCommit.name}}</a>, 
+					{{#with lastCommit.commit}}latest commit <a target="_blank" href="{{html_url}}">{{shortenString sha 10}}</a><br>
+				</div>
+			{{/with}}
+			{{/if}}
+			{{address}}
+				{{!-- <p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p> --}}
 			</div>
+		</footer>
 		</div>
 		{{!--
 			//- jQuery 1.11.1 is included by default, and required by both Bootstrap
@@ -101,6 +155,12 @@
 			//- them specifically here, instead of bootstrap-3.2.0.min.js
 		--}}
 		<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
+		<script src="/js/lib/masonry/masonry.pkgd.min.js"></script>
+		<script src="/js/lib/masonry/imagesloaded.pkgd.min.js"></script>
+		{{#each pageScripts}}
+		<script type="text/javascript" src="/js/{{{src}}}"></script>
+		{{/each}}
 		{{{isAdminEditorJS user}}}
+		{{#if register.showMap}}{{>maps}}{{/if}}
 	</body>
 </html>

@@ -1,0 +1,93 @@
+<div class="container">
+	<div class="row">
+		{{#ifeq data.page.layout "full"}}
+		{{else}}
+		<div class="{{#ifeq data.page.layout "standard"}}col-lg-2 {{/ifeq}}col-md-3">
+			<ul class="nav nav-pills nav-stacked nav-page">
+			{{#each data.pages}}
+			{{#ifeq ../data.menuPage.slug slug}}
+				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+					{{#each ../../data.subPages}}
+					{{#if @first}}
+					<ul class="nav nav-pills nav-stacked nav-page-second">
+					{{/if}}
+						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+					{{#if @last}}
+					</ul>
+					{{/if}}
+					{{/each}}
+				</li>
+			{{else}}
+				<li>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+				</li>
+			{{/ifeq}}
+			{{/each}}
+			</ul>
+		</div>
+		{{/ifeq}}
+		{{#ifeq data.page.layout "full"}}
+		<div class="col-xs-12">
+		{{else}}
+		<div class="col-md-9 {{#ifeq data.page.layout "standard"}}col-lg-7 {{/ifeq}}">
+		{{/ifeq}}
+		{{!-- {{> widget}} --}}
+				{{!-- {{#if ../stratumWidget}} --}}
+				{{!-- {{/if}} --}}
+		{{#with data.page}}
+		{{#ifeq ../data.page.layout "standard"}}
+		{{/ifeq}}
+		<article class="base-page">
+			<header>
+				<h1{{#unless image.exists}} class="base-page-divider"{{/unless}}>{{title}}</h1>
+			</header>
+			{{#if image.exists}}
+			<div class="caption-ct base-page-head-image base-page-head-image-full">
+				{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
+				{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
+			</div>
+			{{/if}}
+			{{#if ../stratumWidget}}
+			{{#with ../../stratumWidget}}
+				<div class="stratum-widget" id="sw-{{slug}}"></div>
+				<script type="text/javascript">
+				{{{../../../data.widget.advancedSettings}}}
+				</script>
+				<script type="text/javascript" src="/stratum/api/widgets/{{widgetSlug}}"></script>
+			{{/with}}
+			{{/if}}
+			{{!-- Widget --}}
+			{{#if ../widgetTpl}}
+	 		{{> (lookup ../.. 'widgetTpl') ../../widget }}
+	 		{{/if}}
+	 		{{!-- /Widget --}}
+			<div class="post">
+				{{{content.html}}}
+			</div>
+		</article>
+		</div>
+		{{/with}}
+		{{#if data.page.images}}
+		{{#ifeq data.page.layout "full"}}
+		<div class="content-page-images col-sm-12">
+		{{else}}
+		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-lg-offset-0 {{/ifeq}}col-md-9 col-md-offset-3">
+		{{/ifeq}}
+			<div class="row">
+			{{#each data.page.images}}
+				{{#ifeq ../data.page.layout "full"}}
+				<div class="col-md-3 col-sm-6">
+				{{else}}
+				<div class="col-sm-6 {{#ifeq ../../data.page.layout "standard"}}col-lg-12{{/ifeq}}">
+				{{/ifeq}}
+					<a href="{{cloudinaryUrl this}}">
+						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+					</a>
+				</div>
+			{{/each}}
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</div>

@@ -28,20 +28,36 @@ keystone.pre('render', middleware.flashMessages);
 
 // Import Route Controllers
 var routes = {
-	views: importRoutes('./views')
+	api: importRoutes('./api'),
+	views: importRoutes('./views'),
+	proxies: importRoutes('./proxies')
 };
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
-	
+	// Proxies
+	app.all('/stratum/*', routes.proxies.stratum);
+
+	app.all('/api*', keystone.middleware.api);
+	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
+	app.all('/api/stratum-registers', routes.api['stratum-registers']);
+	app.all('/api/pages', routes.api.pages);
+	app.all('/api/load-widgets', routes.api['load-widgets']);
+
+	// Restrict all pages to logged in users for now...
+	if (keystone.get('protect all pages')) {
+		app.get('/*', middleware.requireUser);
+	}
+
 	// Views
 	app.get('/', routes.views.index);
-	app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
-	app.get('/gallery', routes.views.gallery);
-	app.all('/contact', routes.views.contact);
-	
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
-	
+
+	app.get('/nyheter', routes.views.news);
+	app.get('/nyheter/:newsitem/', routes.views.newsitem);
+	app.get('/registrering', routes.views.registration);
+	// app.get('/kontakt', routes.views.contact);
+
+	// Views for dynamic routes
+	app.get('/:menublock?', routes.views.page);
+	app.get('/:menublock?/:page', routes.views.page);
 };
