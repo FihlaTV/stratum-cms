@@ -27,6 +27,33 @@
 			}
 		}
 	}
+	li.has-sub-pages{
+		> a {
+			padding-right: extract(@nav-link-padding, 2) + 10px;
+		}
+		> a:before{
+			.fa-icon();
+			position: absolute;
+			content: @fa-var-chevron-right;
+			color: @link-color;
+			top: 50%;
+			right: extract(@nav-link-padding, 2);
+			transform: translateY(-50%);
+		}
+		&.expanded{
+			> a:before{
+				content: @fa-var-chevron-down;
+			}
+			&.active > a:before{
+		        color: @nav-pills-active-link-hover-color;		
+			}
+		}
+		&:hover{
+			a:before{
+				color: @link-hover-color;
+			}
+		}
+	}
 }
 
 /* //
