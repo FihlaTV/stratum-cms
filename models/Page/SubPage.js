@@ -26,43 +26,65 @@ SubPage.add({
 		required: true
 	}
 });
-SubPage.schema.pre('save', function (next) {
-	var postPage = this, Page = keystone.list('Page'), context = {};
+SubPage.schema.pre('remove', function (done) {
+	SubPage.model
+		.findOne()
+		.where('_id', this._id)
+		.populate('page')
+		.exec(function (err, subPage) {
+			// Decrease subpage
+			if(subPage && subPage.page){	
+				subPage.set('decreaseSubPages');
+				console.log('on remove decrease sub page');
+			}
+			done();
+		});
+});
+SubPage.schema.pre('save', function (done) {
+	var postSubPage = this, Page = keystone.list('Page'), context = {};
 	async.series({
-		checkSubPage: function (_next) {
+		getPrePage: function(next){
 			SubPage.model
 				.findOne()
-				.where('_id', postPage._id)
+				.where('_id', postSubPage._id)
 				.populate('page')
-				.exec(function (err, prePage) {
-						if (prePage && prePage.page._id.equals(postPage.page)) {
-							console.log('same, do nothing');
-							//Same do nothing
-						} else {
-							context.decreasePrePage = !!prePage;
-							context.incrementPostPage = true;
-						}
-					_next(err);
+				.exec(function (err, preSubPage) {
+					context.prePage = preSubPage && preSubPage.page;
+					next(err);
 				});
 		},
-		increasePostPage: function(_next){
-			if(!context.incrementPostPage){
-				_next();
-				return;
-			}
-			console.log('increase post page');
-			_next();
+		getPostPage: function(next){
+			Page.model
+				.findOne()
+				.where('_id', postSubPage.page)
+				.exec(function(err, postPage){
+					context.postPage = postPage;
+					next(err);
+				});
 		},
-		decreasePrePage: function(_next){
-			if(!context.decreasePrePage){
-				_next();
+		checkIfPageDiffers: function(next){
+			if(context.postPage && context.prePage && context.postPage.equals(context.prePage)){
+				//Do nothing
+				// console.log('Do nothing');
+				next();
 				return;
+			} 
+			if(context.postPage){
+				//Increase postpage
+				context.postPage.set('increaseSubPages');
+				context.postPage.save();
+				// console.log('Increase Post Page');
 			}
-			console.log('decrease pre page');
-			_next();
+			if(context.prePage){
+				//Decrease pre page
+				context.prePage.set('decreaseSubPages');
+				context.prePage.save();
+				// console.log('Decrease Pre Page');
+			}
+			next();
 		}
 	}, function (err) {
-		next();
+		done(err);
 	});
 });
 
