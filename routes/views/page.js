@@ -51,7 +51,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.sort('sortOrder')
-			.select('slug title menuTitle')
+			.select('slug title menuTitle numberOfSubPages')
 			.exec(function(err, pages) {
 				if (!err) {
 					locals.data.pages = pages;
@@ -78,7 +78,7 @@ exports = module.exports = function(req, res) {
 				.sort('sortOrder');
 		}
 		query
-			.populate('page', 'slug title')
+			.populate('page', 'slug title numberOfSubPages')
 			.populate('widget')
 			.exec(function(err, page) {
 				if (!err) {

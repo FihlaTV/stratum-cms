@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
 	stratum = require('./' + path.join(root, 'utils/stratum')),
+	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
 	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
 	pkg = require('./' + path.join(root, 'package.json'));
 
@@ -62,6 +63,9 @@ keystone.import(path.join(root, 'models'));
 
 stratum.loadWidgets(); 
 stratum.loadRegisters();
+
+// Update Sub Page counter on Pages
+subPageCount.updateCount();
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
