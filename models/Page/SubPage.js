@@ -34,10 +34,11 @@ SubPage.schema.pre('remove', function (done) {
 		.exec(function (err, subPage) {
 			// Decrease subpage
 			if(subPage && subPage.page){	
-				subPage.set('decreaseSubPages');
-				console.log('on remove decrease sub page');
+				subPage.page.set('decreaseSubPages');
+				subPage.page.save(done)
+			} else{
+				done();
 			}
-			done();
 		});
 });
 SubPage.schema.pre('save', function (done) {
@@ -65,7 +66,6 @@ SubPage.schema.pre('save', function (done) {
 		checkIfPageDiffers: function(next){
 			if(context.postPage && context.prePage && context.postPage.equals(context.prePage)){
 				//Do nothing
-				// console.log('Do nothing');
 				next();
 				return;
 			} 
@@ -73,13 +73,11 @@ SubPage.schema.pre('save', function (done) {
 				//Increase postpage
 				context.postPage.set('increaseSubPages');
 				context.postPage.save();
-				// console.log('Increase Post Page');
 			}
 			if(context.prePage){
 				//Decrease pre page
 				context.prePage.set('decreaseSubPages');
 				context.prePage.save();
-				// console.log('Decrease Pre Page');
 			}
 			next();
 		}
