@@ -69,7 +69,16 @@ img.navbar-brand-image-small{
 		}
 		top: 2px;
 	}
+	.active.dropdown{
+		display: none;
+	}
 	@media (max-width: @grid-float-breakpoint-max) {
+		.active.dropdown{
+			display: inherit;
+		}
+		.dropdown-mobile > a{
+			display: none;
+		}
 		// Dropdowns get custom display when collapsed
 		.open .dropdown-menu {
 			> li.sub-sub-nav > a {

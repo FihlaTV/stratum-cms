@@ -42,7 +42,7 @@
 							<div class="collapse navbar-collapse">
 								<ul class="nav navbar-nav navbar-left" role="menu">
 										{{# each navLinks}}
-										<li class="{{#ifeq ../section key}}active dropdown{{else}}{{/ifeq}}">
+										<li class="{{#ifeq ../section key}}dropdown{{/ifeq}}{{#ifeq ../../data.page.slug slug}} active{{/ifeq}}">
 											{{#ifeq ../section key}}
 											{{!-- Change to css properties --}}
 											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ label }} <span class="caret"></span></a>
@@ -52,15 +52,9 @@
 												<li class="{{#ifeq ../../../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
 													<a href="/{{../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
 												</li>
-													{{#each ../../../../data.subPages}}
-													{{#if @first}}
-													<!--<ul class="nav navbar-nav">-->
-													{{/if}}
-														<li class="sub-sub-nav{{#ifeq ../../../../../data.page.slug slug}} active{{/ifeq}}"><a href="/{{../../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
-													{{#if @last}}
-													<!--</ul>-->
-													{{/if}}
-													{{/each}}
+												{{#each ../../../../data.subPages}}
+													<li class="sub-sub-nav{{#ifeq ../../../../../data.page.slug slug}} active{{/ifeq}}"><a href="/{{../../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+												{{/each}}
 												{{else}}
 												<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
 													<a href="/{{../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
@@ -69,9 +63,11 @@
 											{{/each}}
 											</ul>
 											{{else}}
-											<a href="{{ href }}">{{ label }}</a>
-											{{/ifeq}}
 										</li>
+											{{/ifeq}}
+											<li class="{{#ifeq ../section key}}active dropdown-mobile{{/ifeq}}">
+											<a href="{{ href }}">{{ label }}</a>
+											</li>
 									{{/each}}
 									{{!-- <li id="login-button"></li> --}}
 								</ul>
