@@ -26,6 +26,11 @@ img.navbar-brand-image-small{
 		&:focus {
 			color: @navbar-default-link-hover-color;
 			background-color: @navbar-default-link-hover-bg;
+			@media (min-width: @grid-float-breakpoint) {
+				border-bottom: 3px solid @brand-primary;
+				margin-bottom: -3px;
+				transition: border-bottom .2s ease-in-out;
+			}
 		}
 	}
 	// > li > ul {
@@ -64,10 +69,8 @@ img.navbar-brand-image-small{
 		}
 		.fa-icon();
 		&:before{
-			font-size: 16px;
 			content: @fa-var-search;
 		}
-		top: 2px;
 	}
 	.active.dropdown{
 		display: none;
@@ -748,6 +751,3 @@ img.navbar-brand-image-small{
   }
 }
 */
-.navbar-default{
-	
-}

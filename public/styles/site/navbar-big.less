@@ -119,10 +119,10 @@
 						padding-top:    @navbar-main-padding-vertical;
 						padding-bottom: @navbar-main-padding-vertical;
 					}
-				}
-				> li.active {
-					> a {
-						padding-bottom: @navbar-main-padding-vertical+1px;
+					&.active, &:hover {
+						> a {
+							padding-bottom: @navbar-main-padding-vertical+1;
+						}
 					}
 				}
 			}
