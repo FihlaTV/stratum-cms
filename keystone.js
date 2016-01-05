@@ -61,12 +61,6 @@ keystone.init({
 
 keystone.import(path.join(root, 'models'));
 
-stratum.loadWidgets(); 
-stratum.loadRegisters();
-
-// Update Sub Page counter on Pages
-subPageCount.updateCount();
-
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
 // for each request) should be added to ./routes/middleware.js
@@ -101,6 +95,14 @@ keystone.set('nav', {
 	'news': 'news-items',
 	'users': 'users',
 	'widgets': 'widgets'
+});
+
+keystone.post('updates', function(){
+	stratum.loadWidgets(); 
+	stratum.loadRegisters();
+
+	// Update Sub Page counter on Pages
+	subPageCount.updateCount();
 });
 
 // Start Keystone to connect to your database and initialise the web server
