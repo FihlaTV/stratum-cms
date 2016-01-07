@@ -6,14 +6,16 @@
 // --------------------------------------------------
 
 .nav-pills.nav-stacked{
+	> li {
+		+ li {
+			margin-top: 0px;
+		}
+	}
 	&.nav-page{
 		margin-bottom: @gutter-xlarge;
 		overflow: hidden;
 		.white-well();
 		> li {
-	    + li {
-	      margin-top: 0px;
-	    }
 			> a {
 				border-radius: 0;
 			}
@@ -24,6 +26,13 @@
 			> a {
 				border-radius: 0;
 				padding-left: extract(@nav-link-padding, 1) + @gutter-large;
+				border-left-width: 5px;
+				border-left-style: solid;
+			}
+			&.active { 
+				> a {
+					border-left-color: @link-color;	
+				}
 			}
 		}
 	}
@@ -45,7 +54,7 @@
 				content: @fa-var-chevron-down;
 			}
 			&.active > a:before{
-		        color: @nav-pills-active-link-hover-color;		
+		        color: @nav-pills-active-link-hover-color;	
 			}
 		}
 		&:hover{

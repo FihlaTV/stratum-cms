@@ -1,36 +1,9 @@
 <div class="container">
 	<div class="row">
 		{{#ifeq data.page.layout "full"}}
-		{{else}}
-		<div class="{{#ifeq data.page.layout "standard"}}col-lg-2 {{/ifeq}}col-md-3">
-			<ul class="nav nav-pills nav-stacked nav-page">
-			{{#each data.pages}}
-			{{#ifeq ../data.menuPage.slug slug}}
-				<li class="{{#ifeq ../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-					{{#each ../../data.subPages}}
-					{{#if @first}}
-					<ul class="nav nav-pills nav-stacked nav-page-second">
-					{{/if}}
-						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
-					{{#if @last}}
-					</ul>
-					{{/if}}
-					{{/each}}
-				</li>
-			{{else}}
-				<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-				</li>
-			{{/ifeq}}
-			{{/each}}
-			</ul>
-		</div>
-		{{/ifeq}}
-		{{#ifeq data.page.layout "full"}}
 		<div class="col-xs-12">
 		{{else}}
-		<div class="col-md-9 {{#ifeq data.page.layout "standard"}}col-lg-7 {{/ifeq}}">
+		<div class="col-md-8">
 		{{/ifeq}}
 		{{!-- {{> widget}} --}}
 				{{!-- {{#if ../stratumWidget}} --}}
@@ -68,26 +41,54 @@
 		</article>
 		</div>
 		{{/with}}
-		{{#if data.page.images}}
-		{{#ifeq data.page.layout "full"}}
-		<div class="content-page-images col-sm-12">
-		{{else}}
-		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-lg-offset-0 {{/ifeq}}col-md-9 col-md-offset-3">
-		{{/ifeq}}
+		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-4{{/ifeq}}">
 			<div class="row">
-			{{#each data.page.images}}
-				{{#ifeq ../data.page.layout "full"}}
-				<div class="col-md-3 col-sm-6">
-				{{else}}
-				<div class="col-sm-6 {{#ifeq ../../data.page.layout "standard"}}col-lg-12{{/ifeq}}">
-				{{/ifeq}}
-					<a href="{{cloudinaryUrl this}}">
-						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
-					</a>
-				</div>
+		{{#ifeq data.page.layout "full"}}
+		{{else}}
+			<div class="col-xs-12 sub-menu">
+			<ul class="nav nav-pills nav-stacked nav-page">
+			{{#each data.pages}}
+			{{#ifeq ../data.menuPage.slug slug}}
+				<li class="{{#ifeq ../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+					{{#each ../../data.subPages}}
+					{{#if @first}}
+					<ul class="nav nav-pills nav-stacked nav-page-second">
+					{{/if}}
+						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+					{{#if @last}}
+					</ul>
+					{{/if}}
+					{{/each}}
+				</li>
+			{{else}}
+				<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
+					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+				</li>
+			{{/ifeq}}
 			{{/each}}
+			</ul>
 			</div>
+		{{/ifeq}}
+			{{#if data.page.images}}
+			{{#ifeq data.page.layout "full"}}
+			<div class="content-page-images">
+			{{else}}
+			<div class="content-page-images">
+			{{/ifeq}}
+				{{#each data.page.images}}
+					{{#ifeq ../../data.page.layout "full"}}
+					<div class="col-md-4 col-sm-6">
+					{{else}}
+					<div class="col-md-12 col-sm-6">
+					{{/ifeq}}
+						<a href="{{cloudinaryUrl this}}">
+							{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+						</a>
+					</div>
+				{{/each}}
+			</div></div>
+			{{/if}}
 		</div>
-		{{/if}}
 	</div>
 </div>

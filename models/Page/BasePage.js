@@ -39,10 +39,7 @@ BasePage.add({
 		type: Types.Select,
 		options: [{
 			value: 'standard',
-			label: '(Default) Menu and one extra image column on bigger displays'
-		}, {
-			value: 'wide',
-			label: 'Menu and one large column for text on all screens'
+			label: '(Default) Two columns on larger screens, menu to the right'
 		}, {
 			value: 'full',
 			label: 'Hide menu and use complete page width'
