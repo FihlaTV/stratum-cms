@@ -4,6 +4,9 @@ var keystone = require('keystone'),
 
 var EXTRA_IMAGE_NAMES = ['one', 'two', 'three'];
 
+//TODO
+// Did not work as intended when run on dev server
+
 // Move all images from `images` to `extraImages`
 exports = module.exports = function (done) {
 	var context = {
@@ -42,9 +45,6 @@ exports = module.exports = function (done) {
 					// Set new images
 					page.set('extraImage', tmpImgs);
 					
-					// Remove old images
-					page.set('images', undefined);
-
 					page.save(cb);
 				}
 			}, next);
