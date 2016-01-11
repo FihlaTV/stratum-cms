@@ -5,6 +5,22 @@ var keystone = require('keystone'),
  * Base Page Model
  * ==========
  */
+var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'],
+	EXTRA_IMAGE = {
+		type: Types.CloudinaryImage
+	},
+	EXTRA_IMAGE_CAPTION = {
+		type: Types.Textarea, collapse: true
+	};
+
+function extraImages(_names){
+	var tmp = {}, names = _names || EXTRA_IMAGES_NAMES;
+	names.forEach(function (name) {
+		tmp[name] = EXTRA_IMAGE;
+		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
+	});
+	return tmp;
+}
 
 var BasePage = new keystone.List('BasePage', {
 	sortable: true,
@@ -70,14 +86,26 @@ BasePage.add({
 			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
 	},
-	images: {
-		type: Types.CloudinaryImages
-	}
+	extraImage: extraImages()
 });
 BasePage.defaultColumns = 'title, pageType|20%';
 
 BasePage.schema.virtual('titleForMenu').get(function() {
 	return this.get('menuTitle') || this.get('title');
+});
+
+BasePage.schema.virtual('extraImages').get(function(){
+	var me = this, extraImages = [];
+	EXTRA_IMAGES_NAMES.forEach(function(name){
+		var path = me.extraImage;
+		if(path && path[name] && path[name].exists) {
+			extraImages.push({	
+				image: path[name],
+				caption: path[name + 'Caption']
+			});
+		}
+	});
+	return extraImages;
 });
 
 BasePage.register();

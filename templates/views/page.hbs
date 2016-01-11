@@ -69,25 +69,22 @@
 			{{/each}}
 			</ul>
 			</div>
-		{{/ifeq}}
-			{{#if data.page.images}}
-			{{#ifeq data.page.layout "full"}}
+		{{/ifeq}}		
+			{{#if data.page.extraImages}}
 			<div class="content-page-images">
-			{{else}}
-			<div class="content-page-images">
-			{{/ifeq}}
-				{{#each data.page.images}}
-					{{#ifeq ../../data.page.layout "full"}}
-					<div class="col-md-4 col-sm-6">
-					{{else}}
-					<div class="col-md-12 col-sm-6">
-					{{/ifeq}}
-						<a href="{{cloudinaryUrl this}}">
-							{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
+				{{#each data.page.extraImages}}
+				<div class="col-md-{{#ifeq ../../data.page.layout "full"}}4{{else}}12{{/ifeq}} col-sm-6">
+					<div class="caption-image">
+						<a href="{{cloudinaryUrl image}}">
+							{{{cloudinaryImage image width="500" crop="fill" class="img-responsive" alt=caption}}}
 						</a>
+						{{#if caption}}
+						<div class="caption-text">{{caption}}</div>
+						{{/if}}
 					</div>
+				</div>
 				{{/each}}
-			</div></div>
+			</div>
 			{{/if}}
 		</div>
 	</div>
