@@ -86,9 +86,6 @@ BasePage.add({
 			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
 	},
-	images: {
-		type: Types.CloudinaryImages
-	},
 	extraImage: extraImages()
 });
 BasePage.defaultColumns = 'title, pageType|20%';
