@@ -25,23 +25,28 @@ exports = module.exports = function (done) {
 				});
 		},
 		updatePages: function (next) {
-			async.forEach(context.pages, function (page, cb) {
+			async.each(context.pages, function (page, cb) {
 				var tmpImgs = {}, i = 0;
-				page.images.forEach(function (image) {
-					if (i < 3 && image && image._doc) {
-						tmpImgs[EXTRA_IMAGE_NAMES[i++]] = image._doc;
-					} else {
-						console.log('Skipped image on page ' + page.get('slug'));
-					}
-				});
-				
-				// Set new images
-				page.set('extraImage', tmpImgs);
-				
-				// Remove old images
-				page.set('images', undefined);
 
-				page.save(cb);
+				if(!page || !page.images || !page.images.forEach){
+					cb();
+				} else {
+					page.images.forEach(function (image) {
+						if (i < 3 && image && image._doc) {
+							tmpImgs[EXTRA_IMAGE_NAMES[i++]] = image._doc;
+						} else {
+							console.log('Skipped image on page ' + page.get('slug'));
+						}
+					});
+					
+					// Set new images
+					page.set('extraImage', tmpImgs);
+					
+					// Remove old images
+					page.set('images', undefined);
+
+					page.save(cb);
+				}
 			}, next);
 		}
 	}, done);
