@@ -74,17 +74,23 @@ BasePage.add({
 	imageDescription: {
 		type: String
 	},
-	widget: {
-		type: Types.Relationship,
-		ref: 'Widget',
-		many: false
-	},
 	content: {
 		type: Types.Markdown,
 		height: 400,
 		toolbarOptions: {
 			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
+	},
+	widget: {
+		type: Types.Relationship,
+		ref: 'Widget',
+		many: false
+	},
+	contacts: {
+		type: Types.Relationship,
+		ref: 'Contact',
+		many: true,
+		note: 'Add contact persons to this page, shown in the right margin'
 	},
 	extraImage: extraImages()
 });

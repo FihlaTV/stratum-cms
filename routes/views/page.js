@@ -78,7 +78,7 @@ exports = module.exports = function(req, res) {
 				.sort('sortOrder');
 		}
 		query
-			.populate('page', 'slug title numberOfSubPages')
+			.populate('page', 'slug title numberOfSubPages contacts')
 			.populate('widget')
 			.exec(function(err, page) {
 				if (!err) {
@@ -117,6 +117,25 @@ exports = module.exports = function(req, res) {
 			.exec(function(err, subPages) {
 				if (!err) {
 					locals.data.subPages = subPages;
+				}
+				next(err);
+			});
+	});
+
+	//Contacts
+	view.on('init', function(next) {
+		if (!locals.data.page || !locals.data.page.contacts) {
+			next();
+			return;
+		}
+		keystone.list('Contact').model
+			.find()
+			.where('_id')
+			.in(locals.data.page.contacts)
+			.sort('sortOrder')
+			.exec(function(err, contacts) {
+				if (!err) {
+					locals.data.contacts = contacts;
 				}
 				next(err);
 			});

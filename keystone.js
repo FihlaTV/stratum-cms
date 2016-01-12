@@ -90,10 +90,14 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
  
 keystone.set('nav', {
 	'pages': ['menu-blocks', 'pages', 'sub-pages'],
+	'contacts': 'contacts',
 	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
-	'users': 'users',
+	
+	// Hide users from menu for now
+	// 'users': 'users',
+	
 	'widgets': 'widgets'
 });
 
