@@ -94,7 +94,10 @@ keystone.set('nav', {
 	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
-	'users': 'users',
+	
+	// Hide users from menu for now
+	// 'users': 'users',
+	
 	'widgets': 'widgets'
 });
 
