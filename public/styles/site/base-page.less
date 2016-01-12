@@ -47,3 +47,46 @@
 		margin-bottom: @gutter-xlarge;
 	}
 }
+.content-page-contacts{
+	.contact-person{
+		.clearfix();
+		.white-well();
+		padding: @gutter-large;
+		margin-bottom: @gutter-xlarge;
+		
+		.contact-person-image{
+			.make-xs-column(3);
+			.make-md-column(12);
+			> img {
+				.img-responsive();
+				.img-circle();
+			}
+		}
+		.contact-person-info{
+			.make-xs-column(9);
+			.make-md-column(12);
+			h3{
+				text-transform: none;
+			}
+			.contact-person-title {
+				font-size: @font-size-base * 0.9;
+				font-style: italic;
+				margin-bottom: 8px;
+			}
+			p{
+				font-size: floor(@font-size-base * 0.85);
+				margin-bottom: 5px;
+			}
+		}
+		@media (min-width: @screen-md-min) {
+			& .contact-person-image > img {
+				.square(160px);
+				margin-bottom: @gutter-large;
+				.center-block();
+			}
+			& .contact-person-info{
+				text-align: center;					
+			}
+		}
+	}
+}
