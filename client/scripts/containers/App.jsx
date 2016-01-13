@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { setLoginMethod, inputPersonalNumber, resetState, LoginMethods } from '../actions/actions';
 // import ChangeLogin from '../components/ChangeLogin';
-import SelectLogin from '../components/SelectLogin';
-import InputPersonalNr from '../components/InputPersonalNr';
+import SelectLogin from '../components/SelectLogin.jsx';
+import InputPersonalNr from '../components/InputPersonalNr.jsx';
 
 class App extends Component {
 	render() {
