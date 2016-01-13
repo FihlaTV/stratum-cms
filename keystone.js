@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
 	stratum = require('./' + path.join(root, 'utils/stratum')),
+	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
 	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
 	pkg = require('./' + path.join(root, 'package.json'));
 
@@ -60,9 +61,6 @@ keystone.init({
 
 keystone.import(path.join(root, 'models'));
 
-stratum.loadWidgets(); 
-stratum.loadRegisters();
-
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
 // for each request) should be added to ./routes/middleware.js
@@ -92,11 +90,23 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
  
 keystone.set('nav', {
 	'pages': ['menu-blocks', 'pages', 'sub-pages'],
+	'contacts': 'contacts',
 	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
-	'users': 'users',
+	
+	// Hide users from menu for now
+	// 'users': 'users',
+	
 	'widgets': 'widgets'
+});
+
+keystone.post('updates', function(){
+	stratum.loadWidgets(); 
+	stratum.loadRegisters();
+
+	// Update Sub Page counter on Pages
+	subPageCount.updateCount();
 });
 
 // Start Keystone to connect to your database and initialise the web server

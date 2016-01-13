@@ -6,14 +6,16 @@
 // --------------------------------------------------
 
 .nav-pills.nav-stacked{
+	> li {
+		+ li {
+			margin-top: 0px;
+		}
+	}
 	&.nav-page{
 		margin-bottom: @gutter-xlarge;
 		overflow: hidden;
 		.white-well();
 		> li {
-	    + li {
-	      margin-top: 0px;
-	    }
 			> a {
 				border-radius: 0;
 			}
@@ -24,6 +26,40 @@
 			> a {
 				border-radius: 0;
 				padding-left: extract(@nav-link-padding, 1) + @gutter-large;
+				border-left-width: 5px;
+				border-left-style: solid;
+			}
+			&.active { 
+				> a {
+					border-left-color: @link-color;	
+				}
+			}
+		}
+	}
+	li.has-sub-pages{
+		> a {
+			padding-right: extract(@nav-link-padding, 2) + 10px;
+		}
+		> a:before{
+			.fa-icon();
+			position: absolute;
+			content: @fa-var-chevron-right;
+			color: @link-color;
+			top: 50%;
+			right: extract(@nav-link-padding, 2);
+			transform: translateY(-50%);
+		}
+		&.expanded{
+			> a:before{
+				content: @fa-var-chevron-down;
+			}
+			&.active > a:before{
+		        color: @nav-pills-active-link-hover-color;	
+			}
+		}
+		&:hover{
+			a:before{
+				color: @link-hover-color;
 			}
 		}
 	}

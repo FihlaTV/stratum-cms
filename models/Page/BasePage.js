@@ -5,6 +5,22 @@ var keystone = require('keystone'),
  * Base Page Model
  * ==========
  */
+var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'],
+	EXTRA_IMAGE = {
+		type: Types.CloudinaryImage
+	},
+	EXTRA_IMAGE_CAPTION = {
+		type: Types.Textarea, collapse: true
+	};
+
+function extraImages(_names){
+	var tmp = {}, names = _names || EXTRA_IMAGES_NAMES;
+	names.forEach(function (name) {
+		tmp[name] = EXTRA_IMAGE;
+		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
+	});
+	return tmp;
+}
 
 var BasePage = new keystone.List('BasePage', {
 	sortable: true,
@@ -39,10 +55,7 @@ BasePage.add({
 		type: Types.Select,
 		options: [{
 			value: 'standard',
-			label: '(Default) Menu and one extra image column on bigger displays'
-		}, {
-			value: 'wide',
-			label: 'Menu and one large column for text on all screens'
+			label: '(Default) Two columns on larger screens, menu to the right'
 		}, {
 			value: 'full',
 			label: 'Hide menu and use complete page width'
@@ -61,11 +74,6 @@ BasePage.add({
 	imageDescription: {
 		type: String
 	},
-	widget: {
-		type: Types.Relationship,
-		ref: 'Widget',
-		many: false
-	},
 	content: {
 		type: Types.Markdown,
 		height: 400,
@@ -73,14 +81,37 @@ BasePage.add({
 			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
 	},
-	images: {
-		type: Types.CloudinaryImages
-	}
+	widget: {
+		type: Types.Relationship,
+		ref: 'Widget',
+		many: false
+	},
+	contacts: {
+		type: Types.Relationship,
+		ref: 'Contact',
+		many: true,
+		note: 'Add contact persons to this page, shown in the right margin'
+	},
+	extraImage: extraImages()
 });
 BasePage.defaultColumns = 'title, pageType|20%';
 
 BasePage.schema.virtual('titleForMenu').get(function() {
 	return this.get('menuTitle') || this.get('title');
+});
+
+BasePage.schema.virtual('extraImages').get(function(){
+	var me = this, extraImages = [];
+	EXTRA_IMAGES_NAMES.forEach(function(name){
+		var path = me.extraImage;
+		if(path && path[name] && path[name].exists) {
+			extraImages.push({	
+				image: path[name],
+				caption: path[name + 'Caption']
+			});
+		}
+	});
+	return extraImages;
 });
 
 BasePage.register();

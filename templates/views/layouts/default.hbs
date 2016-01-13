@@ -20,7 +20,6 @@
 
 	</head>
 	<body>
-		<div id="root-container">
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			{{!-- <div class="container"> --}}
 				<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
@@ -40,20 +39,34 @@
 					<div class="navbar-main">
 						<div class="container">
 							<div class="collapse navbar-collapse">
-								<ul class="nav navbar-nav navbar-left">
+								<ul class="nav navbar-nav navbar-left" role="menu">
 										{{# each navLinks}}
-										<li class="{{#ifeq ../section key}}active {{else}}{{/ifeq}}{{#if isSubmenu}}dropdown{{else}}{{/if}}">
-											{{#if isSubmenu}}
-									          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ label }} <span class="caret"></span></a>
-									          <ul class="dropdown-menu" role="menu">
-												{{#each href}}
-									            <li><a href="{{ href }}">{{label}}</a></li>
-									            {{/each}}
-									          </ul>
+										<li class="{{#ifeq ../section key}}dropdown{{/ifeq}}{{#ifeq ../../data.page.slug slug}} active{{/ifeq}}">
+											{{#ifeq ../section key}}
+											{{!-- Change to css properties --}}
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ label }} <span class="caret"></span></a>
+											<ul class="dropdown-menu">
+											{{#each ../../data.pages}}
+												{{#ifeq ../../../data.menuPage.slug slug}}
+												<li class="{{#ifeq ../../../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
+													<a href="/{{../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+												</li>
+												{{#each ../../../../data.subPages}}
+													<li class="sub-sub-nav{{#ifeq ../../../../../data.page.slug slug}} active{{/ifeq}}"><a href="/{{../../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+												{{/each}}
+												{{else}}
+												<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
+													<a href="/{{../../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+												</li>
+												{{/ifeq}}
+											{{/each}}
+											</ul>
 											{{else}}
-											<a href="{{ href }}">{{ label }}</a>
-											{{/if}}
 										</li>
+											{{/ifeq}}
+											<li class="{{#ifeq ../section key}}active dropdown-mobile{{/ifeq}}">
+											<a href="{{ href }}">{{ label }}</a>
+											</li>
 									{{/each}}
 									{{!-- <li id="login-button"></li> --}}
 								</ul>
@@ -143,7 +156,6 @@
 				{{!-- <p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p> --}}
 			</div>
 		</footer>
-		</div>
 		{{!--
 			//- jQuery 1.11.1 is included by default, and required by both Bootstrap
 			//- and the KeystoneJS Content Editor. If you are not targeting IE8,

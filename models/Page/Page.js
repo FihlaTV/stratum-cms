@@ -22,11 +22,26 @@ Page.add({
 		many: false,
 		// required: true,
 		initial: true
+	},
+	numberOfSubPages: {
+		type: Number,
+		// hidden: true,
+		noedit: true,
+		default: 0
 	}
 });
 Page.relationship({
 	path: 'subPages',
 	ref: 'SubPage',
 	refPath: 'page'
+});
+Page.schema.virtual('decreaseSubPages').set(function() {
+	this.set('numberOfSubPages', Math.max(0, this.numberOfSubPages - 1));
+});
+Page.schema.virtual('increaseSubPages').set(function() {
+	this.set('numberOfSubPages', this.numberOfSubPages + 1);
+});
+Page.schema.virtual('hasSubPages').get(function(){
+	return this.get('numberOfSubPages') > 0;
 });
 Page.register();

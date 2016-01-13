@@ -1,18 +1,17 @@
 @navBlu: spin(@brand-primary, 0);//@gray;// #358FDA;
-html,body{
-	margin: 0;
-	padding: 0;
-	height: 100%;
+html{
+	position: relative;
+	min-height: 100%;
 }
-// #root-container{
-// 	min-height: 100%;
-// 	position: relative;
-// }
+body{
+	margin-bottom: 100px;
+	.clearfix();
+}
 #header{
 	border-top: 4px solid @brand-primary;
 }
 #body{
-	// padding-bottom:@footer-height;
+	margin-bottom: @gutter-xlarge;
 }
 .gallery-image img {
 	display: block;
@@ -31,79 +30,6 @@ article {
 		.img-responsive();
 	}
 }
-.content-page-images{
-	img{
-		width: 100%;
-		margin-bottom: @line-height-computed;
-	}
-}
-// .navbar-default {
-// 	.navbar-brand {
-// 		img{
-// 			margin-top: -4px;
-// 			margin-right: 7px;
-// 			height: 28px;
-// 			max-width: 100px;
-// 		}
-// 	}
-//     background-color: @navBlu;
-//     border-color: darken(@navBlu, 10%);
-//     .navbar-nav>li>a, .navbar-brand {
-//         color: lighten(@navBlu, 35%);
-//         &:hover {
-//             color: lighten(@navBlu, 45%);
-//         }
-//     }
-//     .navbar-nav>li>a.user {
-//         display: none;
-//         @media (min-width: @grid-float-breakpoint) {
-//         	display: block;
-//             padding-top: 11px;
-//             padding-bottom: 11px;
-//             padding-right: 0px;
-//         }
-//     }
-//     .navbar-nav>.active>a, .navbar-nav>.active>a:hover, {
-//         background-color: lighten(@navBlu, 20%);
-//         color: darken(@navBlu, 10%);
-//         // color: lighten(@navBlu, 10%);
-//     }
-//     .navbar-toggle {
-//         border-color: lighten(@navBlu, 30%);
-//         &:hover, &:focus {
-//             background-color: darken(@navBlu, 10%);
-//         }
-//         .icon-bar {
-//             background-color: lighten(@navBlu, 30%);
-//         }
-//     }
-// }
-// ul.nav{
-// 	ul.nav{
-// 		li{
-// 			margin-left: 10px;
-// 		}
-// 	}
-// }
-// .header-first {
-//     .navbar {
-//         margin: 0;
-//     }
-//     @media (min-width: @grid-float-breakpoint) {
-//         position: absolute;
-//         width: 100%;
-//         .navbar {
-//             background-color: fade(@navBlu, 80%);
-//             width: 90%;
-//             top: 21px;
-//             margin: 0 auto;
-//             border-radius: 8px;
-//         }
-//         .container {
-//             width: 98%;
-//         }
-//     }
-// }
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
 	display: block;
 	height: auto;
