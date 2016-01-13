@@ -1,93 +1,111 @@
 <div class="container">
 	<div class="row">
-		{{#ifeq data.page.layout "full"}}
-		{{else}}
-		<div class="{{#ifeq data.page.layout "standard"}}col-lg-2 {{/ifeq}}col-md-3">
-			<ul class="nav nav-pills nav-stacked nav-page">
-			{{#each data.pages}}
-			{{#ifeq ../data.menuPage.slug slug}}
-				<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-					{{#each ../../data.subPages}}
-					{{#if @first}}
-					<ul class="nav nav-pills nav-stacked nav-page-second">
-					{{/if}}
-						<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
-					{{#if @last}}
-					</ul>
-					{{/if}}
-					{{/each}}
-				</li>
-			{{else}}
-				<li>
-					<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
-				</li>
-			{{/ifeq}}
-			{{/each}}
-			</ul>
-		</div>
-		{{/ifeq}}
-		{{#ifeq data.page.layout "full"}}
-		<div class="col-xs-12">
-		{{else}}
-		<div class="col-md-9 {{#ifeq data.page.layout "standard"}}col-lg-7 {{/ifeq}}">
-		{{/ifeq}}
-		{{!-- {{> widget}} --}}
-				{{!-- {{#if ../stratumWidget}} --}}
-				{{!-- {{/if}} --}}
-		{{#with data.page}}
-		{{#ifeq ../data.page.layout "standard"}}
-		{{/ifeq}}
-		<article class="base-page">
-			<header>
-				<h1{{#unless image.exists}} class="base-page-divider"{{/unless}}>{{title}}</h1>
-			</header>
-			{{#if image.exists}}
-			<div class="caption-ct base-page-head-image base-page-head-image-full">
-				{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
-				{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
-			</div>
-			{{/if}}
-			{{#if ../stratumWidget}}
-			{{#with ../../stratumWidget}}
-				<div class="stratum-widget" id="sw-{{slug}}"></div>
-				<script type="text/javascript">
-				{{{../../../data.widget.advancedSettings}}}
-				</script>
-				<script type="text/javascript" src="/stratum/api/widgets/{{widgetSlug}}"></script>
-			{{/with}}
-			{{/if}}
-			{{!-- Widget --}}
-			{{#if ../widgetTpl}}
-	 		{{> (lookup ../.. 'widgetTpl') ../../widget }}
-	 		{{/if}}
-	 		{{!-- /Widget --}}
-			<div class="post">
-				{{{content.html}}}
-			</div>
-		</article>
+		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-8{{/ifeq}}">
+			{{!-- {{> widget}} --}}
+					{{!-- {{#if ../stratumWidget}} --}}
+					{{!-- {{/if}} --}}
+			{{#with data.page}}
+			<article class="base-page">
+				<header>
+					<h1{{#unless image.exists}} class="base-page-divider"{{/unless}}>{{title}}</h1>
+				</header>
+				{{#if image.exists}}
+				<div class="caption-ct base-page-head-image base-page-head-image-full">
+					{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
+					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
+				</div>
+				{{/if}}
+				{{#if ../stratumWidget}}
+				{{#with ../../stratumWidget}}
+					<div class="stratum-widget" id="sw-{{slug}}"></div>
+					<script type="text/javascript">
+					{{{../../../data.widget.advancedSettings}}}
+					</script>
+					<script type="text/javascript" src="/stratum/api/widgets/{{widgetSlug}}"></script>
+				{{/with}}
+				{{/if}}
+				{{!-- Widget --}}
+				{{#if ../widgetTpl}}
+				{{> (lookup ../.. 'widgetTpl') ../../widget }}
+				{{/if}}
+				{{!-- /Widget --}}
+				<div class="post">
+					{{{content.html}}}
+				</div>
+			</article>
 		</div>
 		{{/with}}
-		{{#if data.page.images}}
-		{{#ifeq data.page.layout "full"}}
-		<div class="content-page-images col-sm-12">
-		{{else}}
-		<div class="content-page-images {{#ifeq data.page.layout "standard"}}col-lg-3 col-lg-offset-0 {{/ifeq}}col-md-9 col-md-offset-3">
-		{{/ifeq}}
-			<div class="row">
-			{{#each data.page.images}}
-				{{#ifeq ../data.page.layout "full"}}
-				<div class="col-md-3 col-sm-6">
+		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-4{{/ifeq}}">
+			{{#ifeq data.page.layout "full"}}
+			{{else}}
+			<div class="sub-menu">
+				<ul class="nav nav-pills nav-stacked nav-page">
+				{{#each data.pages}}
+				{{#ifeq ../data.menuPage.slug slug}}
+					<li class="{{#ifeq ../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
+						<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+						{{#each ../../data.subPages}}
+						{{#if @first}}
+						<ul class="nav nav-pills nav-stacked nav-page-second">
+						{{/if}}
+							<li{{#ifeq ../../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+						{{#if @last}}
+						</ul>
+						{{/if}}
+						{{/each}}
+					</li>
 				{{else}}
-				<div class="col-sm-6 {{#ifeq ../../data.page.layout "standard"}}col-lg-12{{/ifeq}}">
+					<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
+						<a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+					</li>
 				{{/ifeq}}
-					<a href="{{cloudinaryUrl this}}">
-						{{{cloudinaryImage this width="500" crop="fill" class="img-responsive base-column"}}}
-					</a>
-				</div>
-			{{/each}}
+				{{/each}}
+				</ul>
 			</div>
+			{{/ifeq}}
+			{{#if data.contacts}}
+			<h2>Kontaktpersoner</h2>
+			<div class="content-page-contacts">
+				{{#each data.contacts}}
+				<div class="contact-person">
+					<div class="contact-person-image">
+					{{#if image.exists}}
+						{{{cloudinaryImage image width="160" height="160" crop="thumb" gravity="face"}}}
+					{{else}}
+						<img src="/images/avatar.png" alt="">
+					{{/if}}
+					</div>
+					<div class="contact-person-info">
+						<h3>{{name.full}}</h3>
+						{{#if description}}<p class="contact-person-title">{{description}}</p>{{/if}}
+						{{#if email}}<p><a href="mailto:{{email}}"><span class="glyphicon glyphicon-envelope"></span> <span class="">{{email}}</span></a></p>{{/if}}
+						{{#if phone}}<p><span class="glyphicon glyphicon-phone"></span> {{phone}}</p>{{/if}}
+					</div>
+				</div>
+				{{/each}}
+			</div>
+			{{/if}}
+			{{#if data.page.extraImages}}
+			<h2>Bilder</h2>
+			<div class="content-page-images">
+				<div class="row">
+					{{#each data.page.extraImages}}
+					<div class="col-md-{{#ifeq ../../data.page.layout "full"}}4{{else}}12{{/ifeq}} col-sm-6 col-xs-12">
+						<div class="caption-image">
+							<a href="{{cloudinaryUrl image}}">
+								{{{cloudinaryImage image width="500" crop="fill" class="img-responsive" alt=caption}}}
+							</a>
+							{{#if caption}}
+							<div class="caption-text">
+								{{caption}}
+							</div>
+							{{/if}}
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			{{/if}}
 		</div>
-		{{/if}}
 	</div>
 </div>

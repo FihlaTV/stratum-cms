@@ -62,6 +62,7 @@ exports = module.exports = function(app) {
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
 	app.all('/api/authenticate/context/', routes.api.context);
+	app.all('/api/sub-page-count', routes.api['sub-page-count']);
 
 	// Restrict all pages to logged in users for now...
 	if (keystone.get('protect all pages')) {

@@ -22,7 +22,7 @@ exports = module.exports = function(req, res) {
 		// intercepting and parsing the request first.
 		request.post({ 
 			uri: uri, 
-			form: req.headers['content-type'] === 'application/json' ? JSON.stringify(req.body) : req.body, 
+			form: req.headers['content-type'].indexOf('application/json') === 0 ? JSON.stringify(req.body) : req.body, 
 			headers: {
 				'Cookie': req.headers['cookie'],
 				'User-Agent': req.headers['user-agent'],
