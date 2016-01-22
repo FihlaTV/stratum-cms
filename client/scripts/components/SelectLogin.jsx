@@ -3,15 +3,17 @@ import React, { Component, PropTypes } from 'react';
 export default class SelectLogin extends Component {
 	render(){
 		return (
-			<a href="#" onClick={(e) => this.changeLogin(e)}>
-				<div className={`login-method login-method-${this.props.logoClass}`}>
-					<div className="login-method-logo"/>
-					{this.props.loginMethodName}
-				</div>
-			</a>
+			<div className="col-sm-6">
+				<a href="#" onClick={(e) => this.changeLogin(e)}>
+					<div className={`login-method login-method-${this.props.logoClass}`}>
+						<div className="login-method-logo"/>
+						{this.props.children}
+					</div>
+				</a>
+			</div>
 		);
 	}
 	changeLogin(e){
-		this.props.selectLogin(this.props.loginMethod);
+		this.props.onClick(this.props.loginMethod);
 	}
 }

@@ -1,8 +1,8 @@
-import { LoginMethods, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER, RESET_STATE } from '../actions/actions.js';
+import { LoginMethod, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER, RESET_STATE } from '../actions/actions.js';
 import { combineReducers } from 'redux';
 
 const initialState = {
-	// loginMethod: LoginMethods.SITHS_CARD
+	loginMethod: LoginMethod.NOT_SELECTED
 };
 
 function login(state = initialState, action){
@@ -16,7 +16,7 @@ function login(state = initialState, action){
 				personalNumber: action.personalNumber
 			});
 		case RESET_STATE:
-			return {};
+			return initialState;
 		default:
 			return state;
 	}
