@@ -1,13 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App.jsx';
 import loginApp from './reducers/reducers.js';
 
 const mainContainer = document.getElementById('login-page');
 
-let store = createStore(loginApp);
+let store = applyMiddleware(thunkMiddleware)(createStore)(loginApp);
 
 if(mainContainer){
 	render(

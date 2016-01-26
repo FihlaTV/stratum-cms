@@ -34,7 +34,7 @@ class App extends Component {
 					</div>
 				);
 			default :
-				return (<div></div>);
+				return (<div>Unknown state error</div>);
 		}
 	}
 }

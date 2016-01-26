@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 
  
 const InputPersonalNr = ({
-		onSubmit
+		onSubmit,
+		valid
 	}) => {
 	
 	let input;
@@ -24,6 +25,7 @@ const InputPersonalNr = ({
 						}
 					}
 				/>
+				{valid ? 'Valid' : ''}
 			</div>
 			<button className="btn btn-primary" type="submit">Next</button>
 		</form>
