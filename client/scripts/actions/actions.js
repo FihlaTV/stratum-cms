@@ -86,9 +86,17 @@ export function validatePersonalNumber(personalNumber) {
 	}
 }
 
+function receiveBIDToken(json){
+    
+}
+
 const getToken = () => {
     // Get token
-    
+    return dispatch => {
+        return fetch('http://stratum.registercentrum.se/api/metadata/registers/100?APIKey=bK3H9bwaG4o%3D')
+            .then(req => req.json())
+            .then(json => dispatch(receiveBIDToken(json)));
+    };
 }
 
 //BankID actions
