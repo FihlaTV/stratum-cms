@@ -14,6 +14,7 @@
     "envify": "^3.4.0",
     "express-handlebars": "~2.0.1",
     "handlebars": "~3.0.3",
+    "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.1.4",
     "keystone": "~0.3.14",
     "moment": "^2.8.4",

@@ -1,4 +1,4 @@
-// import moment from 'moment';
+import fetch from 'isomorphic-fetch';
 
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
@@ -86,26 +86,38 @@ export function validatePersonalNumber(personalNumber) {
 	}
 }
 
+const getToken = () => {
+    // Get token
+    
+}
 
 //BankID actions
 export const SET_BID_STAGE = 'SET_BID_STAGE';
+export const SET_BID_STATUS = 'SET_BID_STATUS';
 
 export const LoginStages = {
 	INPUT_PERSONAL_NUMBER: 'INPUT_PERSONAL_NUMBER',
-	AWAIT_BID_INIT: 'AWAIT_BID_INIT'
+	AWAIT_BID_TOKEN: 'AWAIT_BID_TOKEN'
 };
 
 export function setBIDStage(bidStage){
 	return {
 		type: SET_BID_STAGE,
 		bidStage
-	}
+	};
+}
+
+export function setBIDStatus(status){
+    return {
+        type: SET_BID_STATUS,
+        status
+    };
 }
 
 export function initiateBID(personalNumber) {
-	return (dispatch, state) => {
-		if(state.login.validPersonalNumber) {
-			return dispatch(setBIDStage(LoginStages.AWAIT_BID_INIT));
+	return (dispatch, getState) => {
+		if(getState().login.personalNumberValidity) {
+			return dispatch(setBIDStage(LoginStages.AWAIT_BID_TOKEN));
 		}
-	}
+	};
 }

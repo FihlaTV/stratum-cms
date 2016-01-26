@@ -1,7 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    render: function() {
-        return (<div className="load-spinner">Laddar...</div>);
-    }
-});
+const Spinner = () => 
+    (<div className="load-spinner">Laddar...</div>);
+
+export default Spinner;
