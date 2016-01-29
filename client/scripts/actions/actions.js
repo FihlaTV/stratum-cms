@@ -108,63 +108,6 @@ function incrementBIDTries(){
 	};
 }
 
-export function synchronizeBIDLogin(orderRef) {
-	return (dispatch, getState) => {
-		return fetch(`https://stratum.registercentrum.se/api/authentication/bid/collect/${orderRef}`)
-			.then(function (response) {
-				if (response.status >= 400) {
-					const error = new Error("Bad response from server");
-					dispatch(bidError(error));
-					throw (error);
-				}
-				return response.json();
-			})
-			.then(json => {
-				if (json.success) {
-					const state = getState();
-					dispatch(setBIDStatus(json.data));
-					if (isBIDCompleted(state)) {
-						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
-					} else if(shouldContinueBIDCollect(state)){
-						// Repeat call until completion
-						dispatch(incrementBIDTries());
-						return setTimeout(() => dispatch(synchronizeBIDLogin(orderRef)), 2000);
-					}
-				} else {
-					const error = new Error(json.message);
-					dispatch(bidError(error));
-					throw (error);
-				}
-			});
-	}
-}
-
-export function getToken(personalNumber) {
-    // Get token
-    return dispatch => {
-        return fetch(`https://stratum.registercentrum.se/api/authentication/bid/order/${personalNumber}`)
-			.then(function (response) {
-				if (response.status >= 400) {
-					const error = new Error("Bad response from server");
-					dispatch(bidError(error));
-					throw (error);
-				}
-				return response.json();
-			})
-            .then(json => {
-				if(json.success){
-					dispatch(receivedBIDToken(json.data));
-					dispatch(setBIDStage(LoginStages.BID_COLLECT));
-					return dispatch(synchronizeBIDLogin(json.data.orderRef));
-				} else {
-					const error = new Error(json.message);
-					dispatch(bidError(error));
-					throw (error);
-				}
-			});
-    };
-}
-
 //BankID actions
 export const SET_BID_STAGE = 'SET_BID_STAGE';
 export const SET_BID_STATUS = 'SET_BID_STATUS';
@@ -209,4 +152,48 @@ export function initiateBID(personalNumber) {
 			return dispatch(getToken(state.login.personalNumber));
 		}
 	};
+}
+
+export function collectBIDLogin(orderRef) {
+	return (dispatch, getState) => {
+		return fetch(`https://stratum.registercentrum.se/api/authentication/bid/collect/${orderRef}`)
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					const state = getState();
+					dispatch(setBIDStatus(json.data));
+					if (isBIDCompleted(state)) {
+						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
+					} else if(shouldContinueBIDCollect(state)){
+						// Repeat call until completion
+						dispatch(incrementBIDTries());
+						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
+					}
+				} else {
+					const error = new Error(json.message);
+					dispatch(bidError(error));
+					throw (error);
+				}
+			})
+			.catch(error => { console.log('request failed', error); });
+	}
+}
+
+export function getToken(personalNumber) {
+    return dispatch => {
+        return fetch(`https://stratum.registercentrum.se/api/authentication/bid/order/${personalNumber}`)
+			.then(res => res.json())
+            .then(json => {
+				if(json.success){
+					dispatch(receivedBIDToken(json.data));
+					dispatch(setBIDStage(LoginStages.BID_COLLECT));
+					return dispatch(collectBIDLogin(json.data.orderRef));
+				} else {
+					const error = new Error(json.message);
+					dispatch(bidError(error));
+					throw (error);
+				}
+			})
+			.catch(error => { console.log('request failed', error); });
+    };
 }
