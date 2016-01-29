@@ -95,13 +95,6 @@ function receivedBIDToken(data) {
 }
 
 function shouldContinueBIDCollect(state){
-	// dispatch => {
-	// 	if(state.bankId.bidTries <= 0){
-	// 		const error = new Error('Det tog för lång tid för att skapa koppling med BankID');			
-	// 		dispatch(setBIDStage(LoginStages.LOGIN_ERROR))
-	// 	}
-	// }
-	// return state.bankId.bidTries > 0 && state.bankId.bidStage === 'BID_COLLECT';
 	return state.bankId.bidStage === 'BID_COLLECT';
 }
 
@@ -109,9 +102,9 @@ function isBIDCompleted(state){
 	return state.bankId.status === 'COMPLETE';
 }
 
-function decrementBIDTries(){
+function incrementBIDTries(){
 	return {
-		type: DECREMENT_BID_TRIES
+		type: INCREMENT_BID_TRIES
 	};
 }
 
@@ -134,7 +127,7 @@ export function synchronizeBIDLogin(orderRef) {
 						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 					} else if(shouldContinueBIDCollect(state)){
 						// Repeat call until completion
-						dispatch(decrementBIDTries());
+						dispatch(incrementBIDTries());
 						return setTimeout(() => dispatch(synchronizeBIDLogin(orderRef)), 2000);
 					}
 				} else {
@@ -177,7 +170,7 @@ export const SET_BID_STAGE = 'SET_BID_STAGE';
 export const SET_BID_STATUS = 'SET_BID_STATUS';
 export const SET_BID_ORDER = 'SET_BID_ORDER';
 export const BID_ERROR = 'BID_ERROR';
-export const DECREMENT_BID_TRIES = 'DECREMENT_BID_TRIES';
+export const INCREMENT_BID_TRIES = 'INCREMENT_BID_TRIES';
 
 export const LoginStages = {
 	INPUT_PERSONAL_NUMBER: 'INPUT_PERSONAL_NUMBER',
