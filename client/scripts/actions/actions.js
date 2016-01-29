@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { isValidPersonalNumber } from '../utils/personalNumber.js';
 
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
@@ -18,74 +19,11 @@ export function setLoginMethod(loginMethod) {
     };
 }
 
-export function inputPersonalNumber(personalNumber) {
-    return {
-        type: INPUT_PERSONAL_NUMBER,
-        personalNumber
-    };
-}
-
-export function setPersonalNumberValidity(validity) {
-	return {
-		type: SET_PERSONAL_NUMBER_VALIDITY,
-		validity
-	};
-}
-
 export function resetState() {
 	return {
 		type: RESET_STATE
 	};
 }
-
-function isValidSwedishPIN(pin) {
-	pin = pin
-		.replace(/\D/g, '') // strip out all but digits
-		.split('') // convert string to array
-		.reverse() // reverse order for Luhn
-		.slice(0, 10); // keep only 10 digits (i.e. 1977 becomes 77)
-
-	// verify we got 10 digits, otherwise it is invalid
-	if (pin.length !== 10) {
-		return false;
-	}
-	var sum = pin
-	// convert to number
-		.map(function (n) {
-			return Number(n);
-		})
-	// perform arithmetic and return sum
-		.reduce(function (previous, current, index) {
-			// multiply every other number with two
-			if (index % 2) {
-				current *= 2;
-			}
-			// if larger than 10 get sum of individual digits (also n-9)
-			if (current > 9) {
-				current -= 9;
-			}
-			// sum it up
-			return previous + current;
-		});
-
-	// sum must be divisible by 10
-	return 0 === sum % 10;
-}
-
-export function validatePersonalNumber(personalNumber) {
-	return dispatch => {
-		var matches = personalNumber
-			.replace('-', '')
-			.trim()
-			.match(/^(\d\d){0,1}((\d{2})(\d{2})(\d{2})\d{4})$/);
-		var century = matches && matches[1] || '19';
-		if (!matches) { //|| !moment(century + matches.slice(3, 6).join('-')).isValid()) {
-			return dispatch(setPersonalNumberValidity(false));
-		}
-		return dispatch(setPersonalNumberValidity(isValidSwedishPIN(matches[2])));
-	}
-}
-
 
 //BankID actions
 export const SET_BID_STAGE = 'SET_BID_STAGE';
@@ -101,6 +39,19 @@ export const LoginStages = {
 	LOGIN_COMPLETED: 'LOGIN_COMPLETED',
 	LOGIN_ERROR: 'LOGIN_ERROR'
 };
+export function inputPersonalNumber(personalNumber) {
+    return {
+        type: INPUT_PERSONAL_NUMBER,
+        personalNumber
+    };
+}
+
+export function setPersonalNumberValidity(validity) {
+	return {
+		type: SET_PERSONAL_NUMBER_VALIDITY,
+		validity
+	};
+}
 
 export function setBIDStage(bidStage) {
 	return {
@@ -135,7 +86,11 @@ function receivedBIDToken(data) {
 	};
 }
 
-
+export function validatePersonalNumber(personalNumber){
+	return dispatch => {
+		dispatch(setPersonalNumberValidity(isValidPersonalNumber(personalNumber)));	
+	};
+}
 
 export function initiateBID(personalNumber) {
 	return (dispatch, getState) => {
@@ -166,10 +121,6 @@ export function getToken(personalNumber) {
     };
 }
 
-function shouldContinueBIDCollect(state){
-	return state.bankId.bidStage === 'BID_COLLECT';
-}
-
 function isBIDCompleted(state){
 	return state.bankId.status === 'COMPLETE';
 }
@@ -183,7 +134,7 @@ export function collectBIDLogin(orderRef) {
 					dispatch(setBIDStatus(json.data));
 					if (isBIDCompleted(getState())) {
 						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
-					} else if(shouldContinueBIDCollect(getState())){
+					} else {
 						// Repeat call until completion, delay for 2 seconds
 						dispatch(incrementBIDTries());
 						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
