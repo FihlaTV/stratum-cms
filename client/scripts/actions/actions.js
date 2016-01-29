@@ -86,27 +86,6 @@ export function validatePersonalNumber(personalNumber) {
 	}
 }
 
-function receivedBIDToken(data) {
-    return {
-		type: SET_BID_ORDER,
-		orderRef: data.orderRef,
-		autoStartToken: data.autoStartToken
-	};
-}
-
-function shouldContinueBIDCollect(state){
-	return state.bankId.bidStage === 'BID_COLLECT';
-}
-
-function isBIDCompleted(state){
-	return state.bankId.status === 'COMPLETE';
-}
-
-function incrementBIDTries(){
-	return {
-		type: INCREMENT_BID_TRIES
-	};
-}
 
 //BankID actions
 export const SET_BID_STAGE = 'SET_BID_STAGE';
@@ -136,6 +115,11 @@ export function setBIDStatus(status) {
         status
     };
 }
+function incrementBIDTries(){
+	return {
+		type: INCREMENT_BID_TRIES
+	};
+}
 
 export function bidError(error) {
 	return {
@@ -143,6 +127,15 @@ export function bidError(error) {
 		error
 	};
 }
+function receivedBIDToken(data) {
+    return {
+		type: SET_BID_ORDER,
+		orderRef: data.orderRef,
+		autoStartToken: data.autoStartToken
+	};
+}
+
+
 
 export function initiateBID(personalNumber) {
 	return (dispatch, getState) => {
@@ -152,31 +145,6 @@ export function initiateBID(personalNumber) {
 			return dispatch(getToken(state.login.personalNumber));
 		}
 	};
-}
-
-export function collectBIDLogin(orderRef) {
-	return (dispatch, getState) => {
-		return fetch(`https://stratum.registercentrum.se/api/authentication/bid/collect/${orderRef}`)
-			.then(res => res.json())
-			.then(json => {
-				if (json.success) {
-					const state = getState();
-					dispatch(setBIDStatus(json.data));
-					if (isBIDCompleted(state)) {
-						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
-					} else if(shouldContinueBIDCollect(state)){
-						// Repeat call until completion
-						dispatch(incrementBIDTries());
-						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
-					}
-				} else {
-					const error = new Error(json.message);
-					dispatch(bidError(error));
-					throw (error);
-				}
-			})
-			.catch(error => { console.log('request failed', error); });
-	}
 }
 
 export function getToken(personalNumber) {
@@ -196,4 +164,36 @@ export function getToken(personalNumber) {
 			})
 			.catch(error => { console.log('request failed', error); });
     };
+}
+
+function shouldContinueBIDCollect(state){
+	return state.bankId.bidStage === 'BID_COLLECT';
+}
+
+function isBIDCompleted(state){
+	return state.bankId.status === 'COMPLETE';
+}
+
+export function collectBIDLogin(orderRef) {
+	return (dispatch, getState) => {
+		return fetch(`https://stratum.registercentrum.se/api/authentication/bid/collect/${orderRef}`)
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(setBIDStatus(json.data));
+					if (isBIDCompleted(getState())) {
+						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
+					} else if(shouldContinueBIDCollect(getState())){
+						// Repeat call until completion, delay for 2 seconds
+						dispatch(incrementBIDTries());
+						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
+					}
+				} else {
+					const error = new Error(json.message);
+					dispatch(bidError(error));
+					throw (error);
+				}
+			})
+			.catch(error => { console.log('request failed', error); });
+	}
 }
