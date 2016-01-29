@@ -10,6 +10,8 @@ const BankID = ({
 	personalNumber,
 	stage,
     status,
+	orderRef,
+	error,
 	validPNr
 }) => {
     switch (stage) {
@@ -22,13 +24,35 @@ const BankID = ({
                 </div>
             );
         case LoginStages.AWAIT_BID_TOKEN:
+		case LoginStages.BID_COLLECT:
             return (
                 <div>
                     <h1>Genomför synkning</h1>
                     <Spinner />
                     <p>{status}</p>
+					<p>{orderRef}</p>
+					<p>{error && error.message}</p>
                 </div>
             );
+		case LoginStages.LOGIN_COMPLETED:
+			return (
+				<div>
+					<h1>Inloggning genomförd</h1>
+				</div>
+			);
+		case LoginStages.LOGIN_ERROR:
+			return (
+				<div>
+					<h1>Fel!</h1>
+					<p>{error && error.message}</p>
+				</div>	
+			);
+		default:
+			return (
+				<div>
+				 Ok?
+				</div>
+			);
     }
 }
 
@@ -36,7 +60,10 @@ const mapStateToProps = (state) => {
 	return {
 		personalNumber: state.login.personalNumber,
 		validPNr: state.login.personalNumberValidity,
-		stage: state.bankId.bidStage
+		stage: state.bankId.bidStage,
+		orderRef: state.bankId.orderRef,
+		status: state.bankId.status,
+		error: state.bankId.error
 	};
 };
 const mapDispatchToProps = (dispatch) => {
