@@ -13,7 +13,7 @@ exports = module.exports = function(req, res) {
 			error: 'Server error'
 		});
 	}
-	apiUrl = url.resolve(stratumServer, '/api/authenticate/context');
+	apiUrl = url.resolve(stratumServer, '/api/authentication/context');
 	req.headers['accept-encoding'] = 'gzip;q=0,deflate,sdch';
 
 	req.pipe(request({
