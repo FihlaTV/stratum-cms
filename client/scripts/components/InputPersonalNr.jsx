@@ -2,18 +2,24 @@ import React, { Component, PropTypes } from 'react';
 
  
 const InputPersonalNr = ({
+        onBlur,
 		onSubmit,
 		valid
 	}) => {
 	
 	let input;
+    let classNames = ['form-group', valid ? 'has-success' : 'has-error'];
+    
 	
 	return (
-		<form className="form-inline" onSubmit={(e) => {
+		<form className="form-inline" onChange={(e) => {
+                return onBlur(input.value);
+            }}
+            onSubmit={(e) => {
 				e.preventDefault();
 				return onSubmit(input.value);
 			}}>
-			<div className="form-group">
+			<div className={classNames.join(' ')}>
 				<label htmlFor="bankIDPersonalNr">Personnummer: </label>
 				<input 
 					type="text" 
@@ -27,7 +33,7 @@ const InputPersonalNr = ({
 				/>
 				{valid ? 'Valid' : ''}
 			</div>
-			<button className="btn btn-primary" type="submit">Next</button>
+			<button className="btn btn-primary" type="submit" disabled={!valid}>Next</button>
 		</form>
 	);
 	

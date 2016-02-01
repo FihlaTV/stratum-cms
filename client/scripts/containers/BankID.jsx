@@ -7,6 +7,7 @@ import Spinner from '../components/Spinner.jsx';
 
 const BankID = ({
 	onSubmit,
+    onPersonalNumberBlur,
 	personalNumber,
 	stage,
     status,
@@ -19,8 +20,7 @@ const BankID = ({
             return (
                 <div>
                     <h1>Bank ID <small>{personalNumber}</small></h1>
-                    <InputPersonalNr onSubmit={onSubmit} valid={validPNr}/>
-                    <h2>{stage}</h2>
+                    <InputPersonalNr onBlur={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
                 </div>
             );
         case LoginStages.AWAIT_BID_TOKEN:
@@ -70,9 +70,11 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onSubmit: (personalNumber) => {
 			dispatch(inputPersonalNumber(personalNumber));
-			dispatch(validatePersonalNumber(personalNumber));
 			dispatch(initiateBID(personalNumber));
-		}
+		},
+        onPersonalNumberBlur: (personalNumber) => {
+			dispatch(validatePersonalNumber(personalNumber));
+        } 
 	};
 };
 
