@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { LoginStages, inputPersonalNumber, validatePersonalNumber, initiateBID } from '../actions/actions';
 import InputPersonalNr from '../components/InputPersonalNr.jsx';
 import SelectLogin from '../components/SelectLogin.jsx';
+import BIDStatusMessage from '../components/BIDStatusMessage.jsx';
 import Spinner from '../components/Spinner.jsx';
 
 const BankID = ({
@@ -29,9 +30,7 @@ const BankID = ({
                 <div>
                     <h1>Genomför synkning</h1>
                     <Spinner />
-                    <p>{status}</p>
-					<p>{orderRef}</p>
-					<p>{error && error.message}</p>
+                    <BIDStatusMessage status={status}/>
                 </div>
             );
 		case LoginStages.LOGIN_COMPLETED:
