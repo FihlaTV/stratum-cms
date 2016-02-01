@@ -4,13 +4,17 @@ var keystone = require('keystone'),
 // var zlib = require('zlib');
 
 exports = module.exports = function(req, res) {
-	var stratumServer = keystone.get('stratum server'),
+	var referer = req.header('referer'),
+		protocol = referer ? referer.split('/')[0] : 
+			req.secure ? 'https://' : 'http://',
+		// stratumServer = protocol + keystone.get('stratum server'),
+		stratumServer = 'https://' + keystone.get('stratum server'),
 		apiUrl;
 
 	if (!stratumServer) {
 		return res.apiResponse({
 			success: false,
-			error: 'Server error'
+			message: 'Stratum URI lookup error'
 		});
 	}
 	apiUrl = url.resolve(stratumServer, '/api/authentication/context');
@@ -29,7 +33,7 @@ exports = module.exports = function(req, res) {
 				jsonBody = {};
 				return res.apiResponse({
 					success: false,
-					error: 'Error handling authentication request'
+					message: 'Error handling authentication request'
 				});
 				// delete req.session.contextId;
 			}
@@ -39,11 +43,15 @@ exports = module.exports = function(req, res) {
 			} else {
 				delete req.session.contextId;
 				delete req.session.stratumUser;
+				jsonBody = {
+					success: false,
+					message: 'Could not find user data, most likely error with login synchronization'
+				};
 			}
 		} else {
 			jsonBody = {
 				success: false,
-				error: 'Server error'
+				message: 'Server error'
 			};
 		}
 		return res.apiResponse(jsonBody);

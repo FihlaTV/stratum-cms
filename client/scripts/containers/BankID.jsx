@@ -45,7 +45,7 @@ const BankID = ({
 				<div>
 					<h1>Fel!</h1>
 					<p>{error && error.message}</p>
-				</div>	
+				</div>
 			);
 		default:
 			return (

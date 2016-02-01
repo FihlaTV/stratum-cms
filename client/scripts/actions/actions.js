@@ -37,7 +37,8 @@ export const LoginStages = {
 	AWAIT_BID_TOKEN: 'AWAIT_BID_TOKEN',
 	BID_COLLECT: 'BID_COLLECT',
 	LOGIN_COMPLETED: 'LOGIN_COMPLETED',
-	LOGIN_ERROR: 'LOGIN_ERROR'
+	LOGIN_ERROR: 'LOGIN_ERROR',
+	COOKIE_COLLECTED: 'COOKIE_COLLECTED'
 };
 export function inputPersonalNumber(personalNumber) {
     return {
@@ -121,6 +122,23 @@ export function getToken(personalNumber) {
     };
 }
 
+export function getStratumCookie(){
+	return dispatch => {
+		return fetch('/api/authentication/context')
+			.then(res => res.json())
+			.then(json => {
+				if(json.success){
+					return dispatch(setBIDStage(LoginStages.COOKIE_COLLECTED));
+				} else {
+					const error = new Error(json.message);
+					dispatch(bidError(error));
+					throw (error);
+				}
+			})
+			.catch(error => { console.log('request failed', error); });
+	};
+}
+
 function isBIDCompleted(state){
 	return state.bankId.status === 'COMPLETE';
 }
@@ -134,6 +152,7 @@ export function collectBIDLogin(orderRef) {
 					dispatch(setBIDStatus(json.data));
 					if (isBIDCompleted(getState())) {
 						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
+						dispatch(getStratumCookie());
 					} else {
 						// Repeat call until completion, delay for 2 seconds
 						dispatch(incrementBIDTries());
