@@ -114,11 +114,13 @@ export function getToken(personalNumber) {
 					return dispatch(collectBIDLogin(json.data.orderRef));
 				} else {
 					const error = new Error(json.message);
-					dispatch(bidError(error));
 					throw (error);
 				}
 			})
-			.catch(error => { console.log('request failed', error); });
+			.catch(error => { 
+				console.log('request failed', error); 
+				dispatch(bidError(error));
+			});
     };
 }
 
@@ -131,11 +133,13 @@ export function getStratumCookie(){
 					return dispatch(setBIDStage(LoginStages.COOKIE_COLLECTED));
 				} else {
 					const error = new Error(json.message);
-					dispatch(bidError(error));
 					throw (error);
 				}
 			})
-			.catch(error => { console.log('request failed', error); });
+			.catch(error => { 
+				console.log('request failed', error); 
+				dispatch(bidError(error));
+			});
 	};
 }
 
@@ -160,10 +164,12 @@ export function collectBIDLogin(orderRef) {
 					}
 				} else {
 					const error = new Error(json.message);
-					dispatch(bidError(error));
-					throw (error);
+				throw (error);
 				}
 			})
-			.catch(error => { console.log('request failed', error); });
+			.catch(error => { 
+				dispatch(bidError(error));
+				console.log('request failed', error); 
+			});
 	}
 }
