@@ -105,7 +105,7 @@ export function initiateBID(personalNumber) {
 
 export function getToken(personalNumber) {
     return dispatch => {
-        return fetch(`https://stratum.registercentrum.se/api/authentication/bid/order/${personalNumber}`)
+        return fetch(`/stratum/api/authentication/bid/order/${personalNumber}`, { credentials: 'include' })
 			.then(res => res.json())
             .then(json => {
 				if(json.success){
@@ -124,9 +124,9 @@ export function getToken(personalNumber) {
     };
 }
 
-export function getStratumCookie(){
+export function loginToStratum(){
 	return dispatch => {
-		return fetch('/api/authentication/context')
+		return fetch('/api/authentication/login', { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -149,14 +149,14 @@ function isBIDCompleted(state){
 
 export function collectBIDLogin(orderRef) {
 	return (dispatch, getState) => {
-		return fetch(`https://stratum.registercentrum.se/api/authentication/bid/collect/${orderRef}`)
+		return fetch(`/stratum/api/authentication/bid/collect/${orderRef}`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
 					dispatch(setBIDStatus(json.data));
 					if (isBIDCompleted(getState())) {
 						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
-						dispatch(getStratumCookie());
+						dispatch(loginToStratum());
 					} else {
 						// Repeat call until completion, delay for 2 seconds
 						dispatch(incrementBIDTries());

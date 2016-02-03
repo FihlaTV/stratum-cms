@@ -61,7 +61,7 @@ exports = module.exports = function(app) {
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
-	app.all('/api/authentication/context/', routes.api.context);
+	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
 
 	// Restrict all pages to logged in users for now...

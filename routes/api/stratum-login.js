@@ -6,9 +6,9 @@ var keystone = require('keystone'),
 exports = module.exports = function(req, res) {
 	var referer = req.header('referer'),
 		protocol = referer ? referer.split('/')[0] : 
-			req.secure ? 'https://' : 'http://',
-		// stratumServer = protocol + keystone.get('stratum server'),
-		stratumServer = 'https://' + keystone.get('stratum server'),
+			req.secure ? 'https:' : 'http:',
+		stratumServer = protocol + '//' + keystone.get('stratum server'),
+		
 		apiUrl;
 
 	if (!stratumServer) {
@@ -17,7 +17,7 @@ exports = module.exports = function(req, res) {
 			message: 'Stratum URI lookup error'
 		});
 	}
-	apiUrl = url.resolve(stratumServer, '/api/authentication/context');
+	apiUrl = url.resolve(stratumServer, '/api/authentication/login');
 	req.headers['accept-encoding'] = 'gzip;q=0,deflate,sdch';
 
 	req.pipe(request({
