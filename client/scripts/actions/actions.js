@@ -31,6 +31,7 @@ export const SET_BID_STATUS = 'SET_BID_STATUS';
 export const SET_BID_ORDER = 'SET_BID_ORDER';
 export const BID_ERROR = 'BID_ERROR';
 export const INCREMENT_BID_TRIES = 'INCREMENT_BID_TRIES';
+export const SET_USER_NAME = 'SET_USER_NAME';
 
 export const LoginStages = {
 	INPUT_PERSONAL_NUMBER: 'INPUT_PERSONAL_NUMBER',
@@ -45,6 +46,13 @@ export function inputPersonalNumber(personalNumber) {
         type: INPUT_PERSONAL_NUMBER,
         personalNumber
     };
+}
+
+export function setUserName(userName){
+	return {
+		type: SET_USER_NAME,
+		userName
+	};
 }
 
 export function setPersonalNumberValidity(validity) {
@@ -130,7 +138,8 @@ export function loginToStratum(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					return dispatch(setBIDStage(LoginStages.COOKIE_COLLECTED));
+					dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
+					return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
@@ -155,7 +164,7 @@ export function collectBIDLogin(orderRef) {
 				if (json.success) {
 					dispatch(setBIDStatus(json.data));
 					if (isBIDCompleted(getState())) {
-						dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
+						dispatch(setBIDStage(LoginStages.COOKIE_COLLECTED));
 						dispatch(loginToStratum());
 					} else {
 						// Repeat call until completion, delay for 2 seconds

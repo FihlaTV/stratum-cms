@@ -14,6 +14,7 @@ const BankID = ({
     status,
 	orderRef,
 	error,
+	userName,
 	validPNr
 }) => {
     switch (stage) {
@@ -26,6 +27,7 @@ const BankID = ({
             );
         case LoginStages.AWAIT_BID_TOKEN:
 		case LoginStages.BID_COLLECT:
+		case LoginStages.COOKIE_COLLECTED:
             return (
                 <div>
                     <h1>Genomför synkning</h1>
@@ -37,6 +39,7 @@ const BankID = ({
 			return (
 				<div>
 					<h1>Inloggning genomförd</h1>
+					Inloggad som <strong>{userName}</strong>
 				</div>
 			);
 		case LoginStages.LOGIN_ERROR:
@@ -49,7 +52,7 @@ const BankID = ({
 		default:
 			return (
 				<div>
-				 Ok?
+				?
 				</div>
 			);
     }
@@ -62,6 +65,7 @@ const mapStateToProps = (state) => {
 		stage: state.bankId.bidStage,
 		orderRef: state.bankId.orderRef,
 		status: state.bankId.status,
+		userName: state.bankId.userName,
 		error: state.bankId.error
 	};
 };

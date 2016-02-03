@@ -1,5 +1,5 @@
 // import { LoginMethod, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER, RESET_STATE } from '../actions/actions.js';
-import { LoginStages, ADVANCE_LOGIN, SET_BID_STAGE, SET_BID_STATUS, SET_BID_ORDER, BID_ERROR, RESET_STATE, INCREMENT_BID_TRIES } from '../actions/actions.js';
+import { LoginStages, ADVANCE_LOGIN, SET_BID_STAGE, SET_BID_STATUS, SET_BID_ORDER, BID_ERROR, RESET_STATE, INCREMENT_BID_TRIES, SET_USER_NAME } from '../actions/actions.js';
 
 const initialState = {
 	bidStage: LoginStages.INPUT_PERSONAL_NUMBER,
@@ -29,6 +29,10 @@ export default (state = initialState, action) => {
 		case INCREMENT_BID_TRIES:
 			return Object.assign({}, state, {
 				bidTries: state.bidTries+1
+			});
+		case SET_USER_NAME:
+			return Object.assign({}, state, {
+				userName: action.userName
 			});
 		case RESET_STATE:
 			return initialState;
