@@ -9,7 +9,7 @@ const ResetState = ({
 			e => {
 				e.preventDefault();
 				onClick();
-			}}>Reset State</button>
+			}}>Avbryt</button>
 	);
 }
 
