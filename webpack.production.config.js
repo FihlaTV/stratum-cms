@@ -6,7 +6,7 @@ require('dotenv').load();
 
 module.exports = {
 	entry: {
-		app: path.resolve(__dirname, 'client/scripts/index.js'),
+		app: path.resolve(__dirname, 'client/scripts/index.jsx'),
 		vendors: ['react', 'jquery', 'moment', 'react-bootstrap']
 	},
 	output: {
@@ -27,7 +27,7 @@ module.exports = {
 	],
 	module: {
 		loaders: [{
-			test: /\.js$/,
+			test: /\.jsx{0,1}$/,
 			exclude: [node_modules_dir],
 			loader: 'babel'
 		}]
