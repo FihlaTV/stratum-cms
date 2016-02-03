@@ -15,7 +15,7 @@ class App extends Component {
 			case LoginMethod.NOT_SELECTED:
 				return (
 					<div>
-						<h1>Login <small>{loginMethod} {personalNumber}</small></h1>
+						<h1>Logga In <small>välj metod</small></h1>
 						<LoginSelectorList />
 					</div>
 				);
