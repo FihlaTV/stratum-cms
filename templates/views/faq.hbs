@@ -1,0 +1,43 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-9">
+			<div class="base-page">
+				<h1>Frågor och svar</h1>
+				<p class="lead">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam tenetur excepturi totam repellendus sapiente dolorum molestiae, natus repudiandae ab quidem, quaerat non, et modi. Nihil inventore beatae iusto nostrum soluta!
+				</p>
+				{{#each data.questionCategories}}
+				{{#each this}}
+				{{#if @first}}
+				<h2>{{category.category}}</h2>
+				<div class="panel-group" id="faq-accordion-c{{@../index}}" role="tablist" aria-multiselectable="true">
+				{{/if}}
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="faq-heading-c{{@../index}}-q{{@index}}">
+							<h3 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#faq-accordion-c{{@../index}}" href="#faq-collapse-c{{@../index}}-q{{@index}}" aria-expanded="true" aria-controls="faq-collapse-c{{@../index}}-q{{@index}}">
+									{{question}}
+								</a>
+							</h3>
+						</div>
+						<div id="faq-collapse-c{{@../index}}-q{{@index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="faq-heading-c{{@../index}}-q{{@index}}">
+							<div class="panel-body">
+								{{{answer.html}}}
+							</div>
+						</div>
+					</div>
+				{{#if @last}}
+				</div>
+				{{/if}}
+				{{/each}}
+				{{/each}}
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="base-page">
+				<h2>Hittar du inte svar på din fråga?</h2>
+				<p><a href="mailto:{{email}}">{{email}}</a></p>
+			</div>
+		</div>
+	</div>
+</div>

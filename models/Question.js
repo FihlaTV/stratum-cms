@@ -11,7 +11,7 @@ var Question = new keystone.List('Question', {
 });
 
 Question.add({
-	question: { type: Types.Textarea, required: true, index: true, initial: true },
+	question: { type: String, required: true, index: true, initial: true },
 	answer: {
 		type: Types.Markdown,
 		required: true,

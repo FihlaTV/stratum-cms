@@ -123,6 +123,7 @@ exports.initLocals = function(req, res, next) {
 						locals.isPortal = register.isPortal;
 						locals.brandName = register.name;
 						locals.address = register.contactString;
+						locals.email = register.email;
 					}
 					cb(err);
 				});
