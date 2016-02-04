@@ -12,6 +12,16 @@
 	@media (min-width: @screen-md-min) {
 		padding: floor(@gutter-large*1.6) @gutter-large*2 @gutter-large*2 @gutter-large*2;
 	}
+	.post {
+		img {
+			.img-responsive();
+			width: 100%;
+		}
+		> table {
+			.table();
+			.table-striped();
+		}
+	}
 }
 .base-page-head-image{
 	margin-top: @gutter-large;
