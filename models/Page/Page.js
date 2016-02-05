@@ -20,6 +20,7 @@ Page.add({
 		type: Types.Relationship,
 		ref: 'MenuBlock',
 		many: false,
+		filters: { static: false },
 		// required: true,
 		initial: true
 	},

@@ -27,6 +27,23 @@ MenuBlock.add({
 	registerSpecific: {
 		type: Boolean,
 		note: 'Only visible to logged in users'
+	},
+	static: {
+		type: Boolean,
+		note: 'Check this if this menu item should link to a specific URL'
+	},
+	staticLink: {
+		type: Types.Url,
+		dependsOn: {
+			static: true
+		}
+	},
+	key: {
+		type: String,
+		collapse: true,
+		dependsOn: {
+			static: true
+		}
 	}
 });
 MenuBlock.relationship({
