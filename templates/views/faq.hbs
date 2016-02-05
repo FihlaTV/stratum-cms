@@ -10,12 +10,12 @@
 				{{#each this}}
 				{{#if @first}}
 				<h2>{{category.category}}</h2>
-				<div class="panel-group" id="faq-accordion-c{{@../index}}" role="tablist" aria-multiselectable="true">
+				<div class="panel-group panel-group-faq" id="faq-accordion-c{{@../index}}" role="tablist" aria-multiselectable="true">
 				{{/if}}
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="faq-heading-c{{@../index}}-q{{@index}}">
 							<h3 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#faq-accordion-c{{@../index}}" href="#faq-collapse-c{{@../index}}-q{{@index}}" aria-expanded="true" aria-controls="faq-collapse-c{{@../index}}-q{{@index}}">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#faq-accordion-c{{@../index}}" href="#faq-collapse-c{{@../index}}-q{{@index}}" aria-expanded="true" aria-controls="faq-collapse-c{{@../index}}-q{{@index}}">
 									{{question}}
 								</a>
 							</h3>

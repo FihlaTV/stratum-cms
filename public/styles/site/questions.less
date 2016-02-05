@@ -1,0 +1,14 @@
+.panel-group-faq{
+	.panel-title {
+		position: relative;
+		> a.collapsed:after {
+			content: @fa-var-chevron-down;
+		}
+		> a:after {
+			.fa-icon();
+			content: @fa-var-chevron-up;
+			position: absolute;
+			right: 0;
+		}
+	}
+}
