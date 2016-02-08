@@ -100,8 +100,8 @@ exports.initLocals = function(req, res, next) {
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,
-					key: menuBlock.key || menuBlock.slug,
-					href: menuBlock.static ? menuBlock.staticLink : ('/' + menuBlock.slug)
+					key: menuBlock.key,
+					href: menuBlock.href //menuBlock.static ? menuBlock.staticLink : ('/' + menuBlock.slug)
 				});
 			});
 			cb();

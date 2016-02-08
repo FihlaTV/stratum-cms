@@ -30,19 +30,24 @@ MenuBlock.add({
 	},
 	static: {
 		type: Boolean,
-		note: 'Check this if this menu item should link to a specific URL'
+		note: 'Advanced option: Check this if this menu item should link to a specific URL'
 	},
-	staticLink: {
-		type: Types.Url,
+	section: {
+		type: Types.Select,
+		options: [
+			{ value: 'external', label: 'External Link' },
+			{ value: 'news', label: 'News' },
+			{ value: 'questions', label: 'Questions' },
+			{ value: 'contact', label: 'Contact Page' }
+		],
 		dependsOn: {
 			static: true
 		}
 	},
-	key: {
-		type: String,
-		collapse: true,
+	staticLink: {
+		type: Types.Url,
 		dependsOn: {
-			static: true
+			section: 'external'
 		}
 	}
 });
@@ -50,6 +55,21 @@ MenuBlock.relationship({
 	path: 'pages',
 	ref: 'Page',
 	refPath: 'menu'
+});
+
+MenuBlock.schema.virtual('key').get(function() {
+	return this.get('section') || this.get('slug');
+});
+
+MenuBlock.schema.virtual('href').get(function () {
+	var sectionLinks = {
+		'news': '/nyheter',
+		'questions': '/faq',
+		'contact': '/kontakt',
+		'external': this.get('staticLink')
+	};
+
+	return this.get('static') ? sectionLinks[this.get('section')] : ('/' + this.get('slug'));
 });
 
 MenuBlock.register();
