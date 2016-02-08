@@ -20,10 +20,6 @@ MenuBlock.add({
 		type: String,
 		required: true
 	},
-	description: {
-		type: Types.Textarea,
-		height: 150
-	},
 	registerSpecific: {
 		type: Boolean,
 		note: 'Only visible to logged in users'
