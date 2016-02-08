@@ -7,13 +7,11 @@ var keystone = require('keystone'),
 
 exports = module.exports = function (done) {
 
-	//Find all pages with have images
 	MenuBlock.model
 		.find()
 		.exists('static', false)
 		.exec(function (err, menuBlocks) {
 			if (!err) {
-				// context.pages = pages;
 				async.each(menuBlocks, function (menuBlock, cb) {
 					menuBlock.set('static', false);
 					menuBlock.save(cb);
