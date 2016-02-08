@@ -58,7 +58,7 @@ MenuBlock.relationship({
 });
 
 MenuBlock.schema.virtual('key').get(function () {
-	return this.get('section') || this.get('slug');
+	return this.get('static') ? this.get('section') : this.get('slug');
 });
 
 MenuBlock.schema.virtual('href').get(function () {
