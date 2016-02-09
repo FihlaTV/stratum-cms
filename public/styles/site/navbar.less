@@ -74,8 +74,8 @@ img.navbar-brand-image-small{
 	}
 	// Hide caret and dropdown in desktop
 	@media (min-width: @grid-float-breakpoint) {
-		.active.dropdown{
-			.caret, > ul {
+		.active{
+			a > .caret, > ul.dropdown-menu {
 				display: none;
 			}
 		}
