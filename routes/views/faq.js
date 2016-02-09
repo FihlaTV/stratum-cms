@@ -18,7 +18,7 @@ exports = module.exports = function (req, res) {
 	locals.breadcrumbs = [{ label: label, path: '/faq' }];
 
 	locals.data = {
-		questionCategories: {}
+		questionCategories: []
 	};
 	
 	// Load Questions
@@ -26,13 +26,14 @@ exports = module.exports = function (req, res) {
 
 		keystone.list('Question').model
 			.where('isActive', true)
-			.sort('-sortOrder')
+			.sort('sortOrder')
 			.populate('category')
 			.exec(function (err, questions) {
 				if (!err && questions) {
 					questions.forEach(function (question) {
 						var categories = locals.data.questionCategories,
-							id = question.category._id;
+							category = question.category,
+							id = Number.isInteger(category.sortOrder) ? category.sortOrder : 0;
 						categories[id] = categories[id] || [];
 						categories[id].push(question);
 					});

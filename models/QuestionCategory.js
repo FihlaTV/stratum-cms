@@ -7,7 +7,8 @@ var keystone = require('keystone'),
  */
 
 var QuestionCategory = new keystone.List('QuestionCategory', {
-	map: { name: 'category' }
+	map: { name: 'category' },
+	sortable: true
 });
 
 QuestionCategory.add({
