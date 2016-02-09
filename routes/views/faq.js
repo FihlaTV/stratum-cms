@@ -1,25 +1,27 @@
 var keystone = require('keystone'),
-	async = require('async');
+	async = require('async'),
+	_ = require('underscore');
 
 exports = module.exports = function (req, res) {
 
 	var view = new keystone.View(req, res),
-		locals = res.locals;
+		locals = res.locals, navLink, label;
 	
-	// Init locals
-	locals.section = 'news';
-	locals.breadcrumbs = [{ label: 'Frågor och svar', path: '/faq' }];
-	// locals.pageScripts = [{src: 'views/news.js'}];
+	locals.section = 'faq';
+	
+	// Find the nav link matching FAQ to look for a label
+	navLink = _.find(locals.navLinks, function (nav) {
+		return nav.key === locals.section;
+	});
+	label = navLink ? navLink.label : 'FAQ';
 
-	// locals.filters = {
-	// 	category: req.params.category
-	// };
+	locals.breadcrumbs = [{ label: label, path: '/faq' }];
+
 	locals.data = {
-		questionCategories: {}//,
-		// categories: []
+		questionCategories: {}
 	};
 	
-	// Load news
+	// Load Questions
 	view.on('init', function (next) {
 
 		keystone.list('Question').model
