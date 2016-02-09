@@ -36,7 +36,7 @@ MenuBlock.add({
 			options: [
 				{ value: 'external', label: 'External Link' },
 				{ value: 'news', label: 'News' },
-				{ value: 'questions', label: 'Questions' },
+				{ value: 'faq', label: 'Questions' },
 				{ value: 'contact', label: 'Contact Page' }
 			],
 			dependsOn: {
@@ -64,7 +64,7 @@ MenuBlock.schema.virtual('key').get(function () {
 MenuBlock.schema.virtual('href').get(function () {
 	var sectionLinks = {
 		'news': '/nyheter',
-		'questions': '/faq',
+		'faq': '/faq',
 		'contact': '/kontakt',
 		'external': this.get('staticLink')
 	};
