@@ -116,8 +116,8 @@ exports.initLocals = function(req, res, next) {
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,
-					key: menuBlock.slug,
-					href: '/' + menuBlock.slug
+					key: menuBlock.key,
+					href: menuBlock.href //menuBlock.static ? menuBlock.staticLink : ('/' + menuBlock.slug)
 				});
 			});
 			cb();
@@ -139,6 +139,7 @@ exports.initLocals = function(req, res, next) {
 						locals.isPortal = register.isPortal;
 						locals.brandName = register.name;
 						locals.address = register.contactString;
+						locals.email = register.email;
 					}
 					cb(err);
 				});

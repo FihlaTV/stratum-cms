@@ -75,6 +75,7 @@ exports = module.exports = function(app) {
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
 	app.get('/registrering', routes.views.registration);
+	app.get('/faq', routes.views.faq);
 	// app.get('/kontakt', routes.views.contact);
 
 	// React Login

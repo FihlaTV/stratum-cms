@@ -1,0 +1,16 @@
+.panel-group-faq{
+	.panel-title {
+		position: relative;
+		> a.collapsed:after {
+			.rotate(-180deg);
+		}
+		> a:after {
+			display: inline-block;
+			.fa-icon();
+			content: @fa-var-chevron-down;
+			.transition(transform .2s ease-in-out);
+			position: absolute;
+			right: 0;
+		}
+	}
+}
