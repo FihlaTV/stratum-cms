@@ -1,10 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { isValidPersonalNumber } from '../utils/personalNumber.js';
 
-export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';
-export const SET_PERSONAL_NUMBER_VALIDITY = 'SET_PERSONAL_NUMBER_VALIDITY';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
@@ -26,6 +24,8 @@ export function resetState() {
 }
 
 //BankID actions
+export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
+export const SET_PERSONAL_NUMBER_VALIDITY = 'SET_PERSONAL_NUMBER_VALIDITY';
 export const SET_BID_STAGE = 'SET_BID_STAGE';
 export const SET_BID_STATUS = 'SET_BID_STATUS';
 export const SET_BID_ORDER = 'SET_BID_ORDER';
@@ -104,9 +104,9 @@ export function validatePersonalNumber(personalNumber){
 export function initiateBID(personalNumber) {
 	return (dispatch, getState) => {
 		const state = getState();
-		if (state.login.personalNumberValidity) {
+		if (state.bankId.personalNumberValidity) {
 			dispatch(setBIDStage(LoginStages.AWAIT_BID_TOKEN));
-			return dispatch(getToken(state.login.personalNumber));
+			return dispatch(getToken(state.bankId.personalNumber));
 		}
 	};
 }
