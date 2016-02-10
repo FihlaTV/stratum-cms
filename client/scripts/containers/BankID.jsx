@@ -22,7 +22,7 @@ const BankID = ({
             return (
                 <div>
                     <h1>Bank ID <small>{personalNumber}</small></h1>
-                    <InputPersonalNr onBlur={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
+                    <InputPersonalNr onChange={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
                 </div>
             );
         case LoginStages.AWAIT_BID_TOKEN:

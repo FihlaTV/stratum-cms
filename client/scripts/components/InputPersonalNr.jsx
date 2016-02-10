@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
  
 const InputPersonalNr = ({
-        onBlur,
+        onChange,
 		onSubmit,
 		valid
 	}) => {
@@ -13,7 +13,7 @@ const InputPersonalNr = ({
 	
 	return (
 		<form className="form-inline" onChange={(e) => {
-                return onBlur(input.value);
+                return onChange(input.value);
             }}
             onSubmit={(e) => {
 				e.preventDefault();
