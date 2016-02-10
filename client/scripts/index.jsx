@@ -13,6 +13,13 @@ let store = compose(
 	    window.devToolsExtension ? window.devToolsExtension() : f => f
 	)(createStore)(loginApp);
 
+if(module.hot){
+	module.hot.accept('./reducers/reducers.js', () => {
+      const nextReducer = require('./reducers/reducers.js');
+      store.replaceReducer(nextReducer);
+    });
+}
+
 if(mainContainer){
 	render(
 		<Provider store={store}>
