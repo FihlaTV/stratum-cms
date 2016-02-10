@@ -21,7 +21,7 @@ const BankID = ({
         case LoginStages.INPUT_PERSONAL_NUMBER:
             return (
                 <div>
-                    <h1>Bank ID <small>{personalNumber}</small></h1>
+                    <h1>Bank ID</h1>
                     <InputPersonalNr onChange={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
                 </div>
             );
@@ -60,8 +60,8 @@ const BankID = ({
 
 const mapStateToProps = (state) => {
 	return {
-		personalNumber: state.login.personalNumber,
-		validPNr: state.login.personalNumberValidity,
+		personalNumber: state.bankId.personalNumber,
+		validPNr: state.bankId.personalNumberValidity,
 		stage: state.bankId.bidStage,
 		orderRef: state.bankId.orderRef,
 		status: state.bankId.status,
