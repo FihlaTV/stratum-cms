@@ -152,6 +152,9 @@ export function loginToStratum(){
 	};
 }
 
+function shouldContinueCollect(state){
+	return state.bankId.bidStage === LoginStages.BID_COLLECT;
+}
 function isBIDCompleted(state){
 	return state.bankId.status === 'COMPLETE';
 }
@@ -166,14 +169,14 @@ export function collectBIDLogin(orderRef) {
 					if (isBIDCompleted(getState())) {
 						dispatch(setBIDStage(LoginStages.COOKIE_COLLECTED));
 						dispatch(loginToStratum());
-					} else {
+					} else if(shouldContinueCollect(getState())) {
 						// Repeat call until completion, delay for 2 seconds
 						dispatch(incrementBIDTries());
 						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
 					}
 				} else {
 					const error = new Error(json.message);
-				throw (error);
+					throw (error);
 				}
 			})
 			.catch(error => { 
