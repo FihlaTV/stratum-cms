@@ -1,5 +1,4 @@
 var keystone = require('keystone'),
-	s = require('underscore.string'),
 	Types = keystone.Field.Types,
 	longLatRegEx = /^($|(\-?\d+(\.\d+)?)$)/;
 
@@ -44,7 +43,8 @@ RegisterInformation.schema.virtual('geo').get(function() {
 	return this.showMap && this.latitude && this.longitude ? [this.latitude, this.longitude] : null;
 });
 RegisterInformation.schema.virtual('contactString').get(function(){
-	return s(', ').join(this.name, (this.location.zipCode + ' ' + this.location.city), this.phone, this.email).clean().value();
+	var infoArr = [this.name, this.location.zipCode + ' ' + this.location.city, this.phone, this.email, this.ee];
+	return infoArr.filter(function(x) { return !!x; }).join(', ');
 });
 
 RegisterInformation.register();
