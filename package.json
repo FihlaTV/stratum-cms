@@ -55,7 +55,7 @@
   },
   "scripts": {
     "start": "node keystone.js",
-    "deploy_cmd": "set NODE_ENV=production && webpack -p --config webpack.production.config.js"
+    "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js"
   },
   "main": "keystone.js"
 }
