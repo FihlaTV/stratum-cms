@@ -25,7 +25,7 @@ var keystone = require('keystone'),
 	webpack = require('webpack'),
 	webpackDevMiddleware = require('webpack-dev-middleware'),
 	webpackHotMiddleware = require('webpack-hot-middleware'),
-	config = require('../webpack.config');
+	webpackConfig = require('../webpack.config');
 	
 
 
@@ -42,7 +42,6 @@ var routes = {
 };
 
 // Setup webpack compiler
-var compiler = webpack(config);
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
@@ -51,7 +50,8 @@ exports = module.exports = function(app) {
 
 	//Activate webpack hot reload middleware
 	if(keystone.get('env') === 'development'){
-		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+        var compiler = webpack(webpackConfig);
+		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
 		app.use(webpackHotMiddleware(compiler));
 	}
 
