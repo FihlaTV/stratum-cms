@@ -23,6 +23,22 @@ export function resetState() {
 	};
 }
 
+// SITHS actions
+
+export const SET_SITHS_STAGE = 'SET_SITHS_STAGE'; 
+export const SITHSStages = {
+	INFORM: 'INFORM',
+	DO_LOGIN: 'DO_LOGIN'
+};
+
+export function setSITHSStage(sithsStage){
+	return {
+		type: SET_SITHS_STAGE,
+		sithsStage: sithsStage
+	};
+}
+
+
 //BankID actions
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
 export const SET_PERSONAL_NUMBER_VALIDITY = 'SET_PERSONAL_NUMBER_VALIDITY';

@@ -1,4 +1,4 @@
-import { LoginMethod, SET_LOGIN_METHOD, INPUT_PERSONAL_NUMBER, RESET_STATE, SET_PERSONAL_NUMBER_VALIDITY } from '../actions/actions.js';
+import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STAGE, RESET_STATE,  } from '../actions/actions.js';
 
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED
@@ -12,6 +12,10 @@ export default (state = initialState, action) => {
 			});
 		case RESET_STATE:
 			return initialState;
+		case SET_SITHS_STAGE:
+			return Object.assign({}, state, {
+				sithsState: action.sithsState
+			});
 		default:
 			return state;
 	}
