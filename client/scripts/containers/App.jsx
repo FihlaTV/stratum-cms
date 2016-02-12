@@ -6,6 +6,7 @@ import SelectLogin from '../components/SelectLogin.jsx';
 import InputPersonalNr from '../components/InputPersonalNr.jsx';
 import ResetState from '../components/ResetState.jsx';
 import LoginSelectorList from './LoginSelectorList.jsx';
+import SITHSLogin from '../components/SITHSLogin.jsx';
 import BankID from './BankID.jsx';
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
 			case LoginMethod.SITHS_CARD:
 				return (
 					<div>
-						<h1>SITHS</h1>
+						<SITHSLogin/>
 						<ResetState onClick={resetState} />
 					</div>
 				);
