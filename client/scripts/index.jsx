@@ -3,8 +3,8 @@ import { render } from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
-import Application from './containers/App.jsx';
-import loginApp from './reducers/reducers.js';
+import Application from './containers/App';
+import loginApp from './reducers/reducers';
 
 const mainContainer = document.getElementById('login-page');
 

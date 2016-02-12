@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod } from '../actions/actions';
 // import ChangeLogin from '../components/ChangeLogin';
-import SelectLogin from '../components/SelectLogin.jsx';
-import InputPersonalNr from '../components/InputPersonalNr.jsx';
-import ResetState from '../components/ResetState.jsx';
-import LoginSelectorList from './LoginSelectorList.jsx';
-import SITHSLogin from '../components/SITHSLogin.jsx';
-import BankID from './BankID.jsx';
+import SelectLogin from '../components/SelectLogin';
+import InputPersonalNr from '../components/InputPersonalNr';
+import ResetState from '../components/ResetState';
+import LoginSelectorList from './LoginSelectorList';
+import SITHSLogin from '../components/SITHSLogin';
+import BankID from './BankID';
 
 class App extends Component {
 	render() {

@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { isValidPersonalNumber } from '../utils/personalNumber.js';
+import { isValidPersonalNumber } from '../utils/personalNumber';
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';

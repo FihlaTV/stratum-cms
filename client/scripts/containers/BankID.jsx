@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { LoginStages, inputPersonalNumber, validatePersonalNumber, initiateBID } from '../actions/actions';
-import InputPersonalNr from '../components/InputPersonalNr.jsx';
-import SelectLogin from '../components/SelectLogin.jsx';
-import BIDStatusMessage from '../components/BIDStatusMessage.jsx';
-import Spinner from '../components/Spinner.jsx';
+import InputPersonalNr from '../components/InputPersonalNr';
+import SelectLogin from '../components/SelectLogin';
+import BIDStatusMessage from '../components/BIDStatusMessage';
+import Spinner from '../components/Spinner';
 
 const BankID = ({
 	onSubmit,

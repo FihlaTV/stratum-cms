@@ -1,4 +1,4 @@
-import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STAGE, RESET_STATE,  } from '../actions/actions.js';
+import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STAGE, RESET_STATE,  } from '../actions/actions';
 
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED

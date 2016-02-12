@@ -1,5 +1,5 @@
-import login from './login.js';
-import bankId from './bankId.js';
+import login from './login';
+import bankId from './bankId';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
