@@ -31,27 +31,38 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [{
-            test: /\.jsx{0,1}$/,
-            loader: 'babel-loader',
-            query: {
-                'presets': ['es2015', 'react'],
-                'env': {
-                    'development': {
-                        'plugins': [['react-transform', {
+        loaders: [
+            {
+                test: /\.jsx{0,1}$/,
+                loader: 'babel-loader',
+                query: {
+                    'presets': ['es2015', 'react'],
+                    'env': {
+                        'development': {
+                            'plugins': [['react-transform', {
                                 'transforms': [{
                                     'transform': 'react-transform-hmr',
                                     'imports': ['react'],
                                     'locals': ['module']
                                 }]
                             }]
-                        ]
+                            ]
+                        }
                     }
-                }
-            },
-            exclude: /node_modules/,
-            include: path.join(__dirname, '/client/')
-        }]
+                },
+                exclude: /node_modules/,
+                include: path.join(__dirname, '/client/')
+            }, {
+                test: /\.less$/,
+                loader: "style!css?-url!less"
+            }, {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url?limit=10000&mimetype=application/font-woff"
+            }, {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file"
+            }
+        ]
     },
     resolve: {
         extensions: ['', '.js', '.jsx']
