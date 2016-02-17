@@ -17,7 +17,10 @@ class App extends Component {
 				return (
 					<div>
 						<h1>Logga In <small>välj metod</small></h1>
-						<LoginSelectorList />
+						<LoginSelectorList loginSelectors={[
+                            {cssClass: 'bankid', loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'},
+                            {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'}
+                            ]}/>
 					</div>
 				);
 			case LoginMethod.BANK_ID:

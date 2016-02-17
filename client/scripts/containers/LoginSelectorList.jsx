@@ -4,16 +4,16 @@ import { LoginMethod, setLoginMethod } from '../actions/actions';
 import SelectLogin from '../components/SelectLogin';
 
 const LoginSelectorList = ({
-	onClick
+	onClick,
+    loginSelectors
 }) => {
 	return (
 		<div className="login-method-list row">
-			<SelectLogin logoClass="siths" onClick={onClick} loginMethod={LoginMethod.SITHS_CARD}>
-				SITHS-Kort
-			</SelectLogin>
-			<SelectLogin logoClass="bankid" onClick={onClick} loginMethod={LoginMethod.BANK_ID} >
-				Mobilt BankID
-			</SelectLogin>
+            {loginSelectors.map(l => 
+                <SelectLogin logoClass={l.cssClass} onClick={onClick} loginMethod={l.loginMethod}>
+                    {l.title}
+                </SelectLogin>
+            )}
 		</div>
 	);
 }
