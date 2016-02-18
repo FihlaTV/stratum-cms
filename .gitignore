@@ -37,6 +37,9 @@ public/styles/site.min.css
 # Minified JS
 public/js/dist
 
+# Minified CSS/JS
+public/dist/
+
 # Register configurations
 registers/
 

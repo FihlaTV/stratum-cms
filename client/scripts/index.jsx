@@ -5,6 +5,10 @@ import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
 import loginApp from './reducers/reducers';
+
+// Webpack dependencies
+// import 'jquery'; // not needed, bundled with bootstrap
+import 'bootstrap';
 import '../../public/styles/site.less';
 
 const mainContainer = document.getElementById('login-page');

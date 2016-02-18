@@ -28,7 +28,11 @@ module.exports = {
                 }
                 return o;
             }, {})
-        })
+        }),
+		new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery"
+       })
     ],
     module: {
         loaders: [
@@ -54,7 +58,7 @@ module.exports = {
                 include: path.join(__dirname, '/client/')
             }, {
                 test: /\.less$/,
-                loader: "style!css?-url!less"
+                loader: "style!css!less"
             }, {
 				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'url?limit=10000&mimetype=application/font-woff'

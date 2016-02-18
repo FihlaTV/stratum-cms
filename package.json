@@ -4,13 +4,16 @@
   "private": true,
   "dependencies": {
     "async": "^1.5.2",
+    "bootstrap": "^3.3.6",
     "cloudinary": "^1.3.0",
     "connect-mongo": "^0.8.1",
     "dotenv": "~1.2.0",
     "envify": "^3.4.0",
     "express-handlebars": "^3.0.0",
+    "font-awesome": "^4.5.0",
     "handlebars": "^4.0.5",
     "isomorphic-fetch": "^2.2.1",
+    "jquery": "^1.11.1",
     "keystone": "^0.3.16",
     "moment": "^2.11.1",
     "mongodb": "^2.1.4",
@@ -36,6 +39,7 @@
     "css-loader": "^0.23.1",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^2.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "gulp": "~3.9.0",
     "gulp-eslint": "^1.1.1",
@@ -60,7 +64,8 @@
   },
   "scripts": {
     "start": "node keystone.js",
-    "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js"
+    "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
+    "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js"
   },
   "main": "keystone.js"
 }
