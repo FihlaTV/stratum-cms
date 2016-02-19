@@ -25,6 +25,7 @@ const InputPersonalNr = ({
 					type="text" 
 					className="form-control" 
 					placeholder="19xxxxxx-xxxx" 
+					autoComplete="off" 
 					id="bankIDPersonalNr" 
 					ref={(node) => {
 							input = node;
