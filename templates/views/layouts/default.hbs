@@ -23,10 +23,6 @@
 
 	</head>
 	<body>
-		{{!-- React scripts --}}
-		{{#ifeq env "development"}}
-		<script type="text/javascript" src="/js/bundle.js"></script>
-		{{/ifeq}}
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			{{!-- <div class="container"> --}}
 				<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
@@ -183,7 +179,9 @@
 		<script type="text/javascript" src="/js/{{{src}}}"></script>
 		{{/each}}
 		{{!-- React scripts --}}
-		{{#ifeq env "production"}}
+		{{#ifeq env "development"}}
+		<script type="text/javascript" src="/js/bundle.js"></script>
+		{{else}}
 		<script type="text/javascript" src="/dist/vendors.js"></script>
 		<script type="text/javascript" src="/dist/bundle.js"></script>
 		{{/ifeq}}
