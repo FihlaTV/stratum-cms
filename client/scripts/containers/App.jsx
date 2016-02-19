@@ -5,19 +5,19 @@ import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod } from '..
 import SelectLogin from '../components/SelectLogin';
 import InputPersonalNr from '../components/InputPersonalNr';
 import ResetState from '../components/ResetState';
-import LoginSelectorList from './LoginSelectorList';
+import LoginSelectorList from '../components/LoginSelectorList';
 import SITHSLogin from '../components/SITHSLogin';
 import BankID from './BankID';
 
 class App extends Component {
 	render() {
-		const { dispatch, loginMethod, personalNumber, resetState } = this.props;
+		const { dispatch, loginMethod, personalNumber, resetState, loginSelect } = this.props;
 		switch(loginMethod){
 			case LoginMethod.NOT_SELECTED:
 				return (
 					<div>
 						<h1>Logga In <small>välj metod</small></h1>
-						<LoginSelectorList loginSelectors={[
+						<LoginSelectorList onClick={loginSelect} loginSelectors={[
                             {cssClass: 'bankid', loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'},
                             {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'}
                             ]}/>
@@ -55,6 +55,9 @@ function mapDispatchToProps(dispatch){
 	return {
 		resetState: () => {
 			dispatch(resetState());
+		},
+		loginSelect: (method) => {
+			dispatch(setLoginMethod(method));
 		}
 	};
 }

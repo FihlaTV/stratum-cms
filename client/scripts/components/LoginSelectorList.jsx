@@ -10,7 +10,7 @@ const LoginSelectorList = ({
 	return (
 		<div className="login-method-list row">
             {loginSelectors.map(l => 
-                <SelectLogin logoClass={l.cssClass} onClick={onClick} loginMethod={l.loginMethod}>
+                <SelectLogin key={l.loginMethod} logoClass={l.cssClass} onClick={onClick} loginMethod={l.loginMethod}>
                     {l.title}
                 </SelectLogin>
             )}
@@ -18,15 +18,4 @@ const LoginSelectorList = ({
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {};
-};
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onClick: (method) => {
-			dispatch(setLoginMethod(method));
-		}
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginSelectorList);
+export default LoginSelectorList;
