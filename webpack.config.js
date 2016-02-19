@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
+
 
 require('dotenv').load();
 
@@ -7,7 +9,7 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
         'webpack-hot-middleware/client',
-        './client/scripts/index.jsx'
+        path.resolve(__dirname, 'client/scripts/index.jsx')
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -30,15 +32,17 @@ module.exports = {
             }, {})
         }),
 		new webpack.ProvidePlugin({
-           $: "jquery",
-           jQuery: "jquery"
-       })
+			$: "jquery",
+			jQuery: "jquery"
+		})
     ],
     module: {
         loaders: [
             {
                 test: /\.jsx{0,1}$/,
                 loader: 'babel-loader',
+                exclude: node_modules_dir,
+                include: path.join(__dirname, '/client/'),
                 query: {
                     'presets': ['es2015', 'react'],
                     'env': {
@@ -53,9 +57,7 @@ module.exports = {
                             ]
                         }
                     }
-                },
-                exclude: /node_modules/,
-                include: path.join(__dirname, '/client/')
+                }
             }, {
                 test: /\.less$/,
                 loader: "style!css!less"
