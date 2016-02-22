@@ -71,13 +71,10 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onSubmit: (personalNumber) => {
+		onPersonalNumberBlur: (personalNumber) => {
 			dispatch(inputPersonalNumber(personalNumber));
-			dispatch(initiateBID(personalNumber));
-		},
-        onPersonalNumberBlur: (personalNumber) => {
 			dispatch(validatePersonalNumber(personalNumber));
-        } 
+		} 
 	};
 };
 

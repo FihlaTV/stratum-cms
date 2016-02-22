@@ -3,6 +3,7 @@ import { isValidPersonalNumber } from '../utils/personalNumber';
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';
+export const HAS_NEXT_STATE = 'HAS_NEXT_STATE';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
@@ -25,19 +26,46 @@ export function resetState() {
 
 // SITHS actions
 
-export const SET_SITHS_STAGE = 'SET_SITHS_STAGE'; 
+export const SET_SITHS_STATUS = 'SET_SITHS_STATUS'; 
 export const SITHSStages = {
 	INFORM: 'INFORM',
 	DO_LOGIN: 'DO_LOGIN'
 };
 
-export function setSITHSStage(sithsStage){
+export function setSITHSStatus(sithsStatus){
 	return {
-		type: SET_SITHS_STAGE,
-		sithsStage: sithsStage
+		type: SET_SITHS_STATUS,
+		sithsStatus: sithsStatus
 	};
 }
 
+export function setHasNextState(hasNextState){
+	return {
+		type: HAS_NEXT_STATE,
+		hasNextState: hasNextState
+	};
+}
+
+export function initiateSITHSLogin(){
+	return (dispatch) => {
+		dispatch(setHasNextState(false));
+		dispatch(setSITHSStatus('SITHS_DO_LOGIN'));
+	};
+}
+
+export function toggleNextState(){
+	return (dispatch, getState) => {
+		const state = getState();
+		const loginMethod = state.login.loginMethod;
+		if (loginMethod === LoginMethod.SITHS_CARD) {
+			return dispatch(initiateSITHSLogin());
+		} else if (loginMethod === LoginMethod.BANK_ID &&
+			state.bankId.bidStage === LoginStages.INPUT_PERSONAL_NUMBER &&
+			state.bankId.personalNumberValidity) {
+			return dispatch(initiateBID());
+		}
+	}
+}
 
 //BankID actions
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
@@ -117,10 +145,11 @@ export function validatePersonalNumber(personalNumber){
 	};
 }
 
-export function initiateBID(personalNumber) {
+export function initiateBID() {
 	return (dispatch, getState) => {
 		const state = getState();
 		if (state.bankId.personalNumberValidity) {
+			dispatch(setHasNextState(false));
 			dispatch(setBIDStage(LoginStages.AWAIT_BID_TOKEN));
 			return dispatch(getToken(state.bankId.personalNumber));
 		}

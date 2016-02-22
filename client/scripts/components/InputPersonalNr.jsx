@@ -33,7 +33,6 @@ const InputPersonalNr = ({
 					}
 				/>
 			</div>
-			<button className="btn btn-primary" type="submit" disabled={!valid}>Next</button>
 		</form>
 	);
 	

@@ -1,7 +1,9 @@
-import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STAGE, RESET_STATE,  } from '../actions/actions';
+import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STATUS, RESET_STATE, HAS_NEXT_STATE } from '../actions/actions';
 
 const initialState = {
-	loginMethod: LoginMethod.NOT_SELECTED
+	loginMethod: LoginMethod.NOT_SELECTED,
+	hasNextState: true,
+	sithsStatus: 'SITHS_INTRO'
 };
 
 export default (state = initialState, action) => {
@@ -12,9 +14,13 @@ export default (state = initialState, action) => {
 			});
 		case RESET_STATE:
 			return initialState;
-		case SET_SITHS_STAGE:
+		case SET_SITHS_STATUS:
 			return Object.assign({}, state, {
-				sithsState: action.sithsState
+				sithsStatus: action.sithsStatus
+			});
+		case HAS_NEXT_STATE: 
+			return Object.assign({}, state, {
+				hasNextState: action.hasNextState
 			});
 		default:
 			return state;
