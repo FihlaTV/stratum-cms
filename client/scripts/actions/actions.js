@@ -51,6 +51,20 @@ export function initiateSITHSLogin(){
 	return (dispatch) => {
 		dispatch(setHasNextState(false));
 		dispatch(setSITHSStatus('SITHS_DO_LOGIN'));
+		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/login`, { credentials: 'include' })
+			.then(res => res.json())
+			.then(json => {
+				if(json.success){
+					return dispatch(loginToStratum());
+				} else {
+					const error = new Error(json.message);
+					throw (error);
+				}
+			})
+			.catch(error => { 
+				console.log('request failed', error); 
+				dispatch(bidError(error));
+			});
 	};
 }
 
