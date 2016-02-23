@@ -13,7 +13,8 @@ import BankID from './BankID';
 class App extends Component {
 	render() {
 		const { 
-			dispatch, 
+			dispatch,
+			error, 
 			loginMethod, 
 			personalNumber, 
 			resetState, 
@@ -23,6 +24,17 @@ class App extends Component {
 			hasNextState,
 			sithsStatus
 		} = this.props;
+		if(error){
+			return (
+				<div>
+					<h1>Error</h1>
+					<p>
+						{error.message}
+					</p>
+					<ResetState onClick={resetState} />
+				</div>
+			);
+		}
 		switch(loginMethod){
 			case LoginMethod.NOT_SELECTED:
 				return (
@@ -80,6 +92,7 @@ function mapDispatchToProps(dispatch){
 }
 function mapStateToProps(state){
 	return {
+		error: state.login.error,
 		loginMethod: state.login.loginMethod,
 		personalNumber: state.login.personalNumber,
 		validPNr: state.bankId.personalNumberValidity,

@@ -39,5 +39,5 @@ export function isValidPersonalNumber(personalNumber) {
 		.match(/^(\d\d){0,1}((\d{2})(\d{2})(\d{2})\d{4})$/);
 	// var century = matches && matches[1] || '19';
 
-	return (matches && isValidSwedishPIN(matches[2]));
+	return !!(matches && isValidSwedishPIN(matches[2]));
 }

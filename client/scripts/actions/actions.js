@@ -4,6 +4,7 @@ import { isValidPersonalNumber } from '../utils/personalNumber';
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';
 export const HAS_NEXT_STATE = 'HAS_NEXT_STATE';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
@@ -29,6 +30,13 @@ export function setHasNextState(hasNextState){
 	return {
 		type: HAS_NEXT_STATE,
 		hasNextState: hasNextState
+	};
+}
+
+export function loginError(error) {
+	return {
+		type: LOGIN_ERROR,
+		error
 	};
 }
 
@@ -63,7 +71,7 @@ export function initiateSITHSLogin(){
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidError(error));
+				dispatch(loginError(error));
 			});
 	};
 }
@@ -88,7 +96,6 @@ export const SET_PERSONAL_NUMBER_VALIDITY = 'SET_PERSONAL_NUMBER_VALIDITY';
 export const SET_BID_STAGE = 'SET_BID_STAGE';
 export const SET_BID_STATUS = 'SET_BID_STATUS';
 export const SET_BID_ORDER = 'SET_BID_ORDER';
-export const BID_ERROR = 'BID_ERROR';
 export const INCREMENT_BID_TRIES = 'INCREMENT_BID_TRIES';
 export const SET_USER_NAME = 'SET_USER_NAME';
 
@@ -140,12 +147,6 @@ function incrementBIDTries(){
 	};
 }
 
-export function bidError(error) {
-	return {
-		type: BID_ERROR,
-		error
-	};
-}
 function receivedBIDToken(data) {
     return {
 		type: SET_BID_ORDER,
@@ -156,7 +157,19 @@ function receivedBIDToken(data) {
 
 export function validatePersonalNumber(personalNumber){
 	return dispatch => {
-		dispatch(setPersonalNumberValidity(isValidPersonalNumber(personalNumber)));	
+		const valid = isValidPersonalNumber(personalNumber);
+		
+		dispatch(setPersonalNumberValidity(valid));
+		if(valid){
+			dispatch(inputPersonalNumber(personalNumber));
+		}	
+	};
+}
+
+function bidLoginError(error){
+	return dispatch => {
+		dispatch(setBIDStage(LoginStages.LOGIN_ERROR));
+		dispatch(loginError(error));
 	};
 }
 
@@ -187,7 +200,7 @@ export function getToken(personalNumber) {
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidError(error));
+				dispatch(bidLoginError(error));
 			});
     };
 }
@@ -207,7 +220,7 @@ export function loginToStratum(){
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidError(error));
+				dispatch(bidLoginError(error));
 			});
 	};
 }
@@ -240,7 +253,7 @@ export function collectBIDLogin(orderRef) {
 				}
 			})
 			.catch(error => { 
-				dispatch(bidError(error));
+				dispatch(bidLoginError(error));
 				console.log('request failed', error); 
 			});
 	}

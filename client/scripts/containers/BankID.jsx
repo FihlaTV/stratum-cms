@@ -72,7 +72,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onPersonalNumberBlur: (personalNumber) => {
-			dispatch(inputPersonalNumber(personalNumber));
 			dispatch(validatePersonalNumber(personalNumber));
 		} 
 	};

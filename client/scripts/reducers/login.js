@@ -1,4 +1,4 @@
-import { LoginMethod, SET_LOGIN_METHOD, SET_SITHS_STATUS, RESET_STATE, HAS_NEXT_STATE } from '../actions/actions';
+import { LoginMethod, LoginStages, LOGIN_ERROR, SET_LOGIN_METHOD, SET_SITHS_STATUS, RESET_STATE, HAS_NEXT_STATE } from '../actions/actions';
 
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED,
@@ -21,6 +21,10 @@ export default (state = initialState, action) => {
 		case HAS_NEXT_STATE: 
 			return Object.assign({}, state, {
 				hasNextState: action.hasNextState
+			});
+		case LOGIN_ERROR:
+			return Object.assign({}, state, {
+				error: action.error
 			});
 		default:
 			return state;
