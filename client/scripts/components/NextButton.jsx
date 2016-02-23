@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react';
 
  
 const NextButton = (props) => {
-	const {children, onClick, ...other} = props;
+	const {children = 'Nästa', onClick, isLoading, loadingText = 'Laddar', ...other} = props;
+	const spinner = (<span>{loadingText} <i className="fa fa-circle-o-notch fa-spin"></i></span>);
 	return (
 		<button {...other} className="btn btn-primary" onClick={ 
 			e => {
 				e.preventDefault();
 				onClick();
-			}}>{children || 'Nästa'}</button>
+			}}>{isLoading ? spinner : children}</button>
 	);
 }
 

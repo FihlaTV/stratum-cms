@@ -24,6 +24,14 @@ export function resetState() {
 	};
 }
 
+
+export function setHasNextState(hasNextState){
+	return {
+		type: HAS_NEXT_STATE,
+		hasNextState: hasNextState
+	};
+}
+
 // SITHS actions
 
 export const SET_SITHS_STATUS = 'SET_SITHS_STATUS'; 
@@ -36,13 +44,6 @@ export function setSITHSStatus(sithsStatus){
 	return {
 		type: SET_SITHS_STATUS,
 		sithsStatus: sithsStatus
-	};
-}
-
-export function setHasNextState(hasNextState){
-	return {
-		type: HAS_NEXT_STATE,
-		hasNextState: hasNextState
 	};
 }
 

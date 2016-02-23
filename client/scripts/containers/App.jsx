@@ -40,7 +40,7 @@ class App extends Component {
 					<div>
 						<BankID onSubmit={nextState}/>
 						<ResetState onClick={resetState} />
-						<NextButton onClick={nextState} disabled={!(validPNr && hasNextState)}/>
+						<NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
 					</div>
 				);
 			case LoginMethod.SITHS_CARD:
@@ -48,7 +48,7 @@ class App extends Component {
 					<div>
 						<SITHSLogin status={sithsStatus} />
 						<ResetState onClick={resetState} />
-						<NextButton onClick={nextState} disabled={!hasNextState}/>
+						<NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
 					</div>
 				);
 			default :
