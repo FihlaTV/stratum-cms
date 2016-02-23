@@ -168,7 +168,6 @@ export function validatePersonalNumber(personalNumber){
 
 function bidLoginError(error){
 	return dispatch => {
-		dispatch(setBIDStage(LoginStages.LOGIN_ERROR));
 		dispatch(loginError(error));
 	};
 }

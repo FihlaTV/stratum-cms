@@ -41,19 +41,6 @@ const BankID = ({
 					Inloggad som <strong>{userName}</strong>
 				</div>
 			);
-		case LoginStages.LOGIN_ERROR:
-			return (
-				<div>
-					<h1>Fel!</h1>
-					<p>{error && error.message}</p>
-				</div>
-			);
-		default:
-			return (
-				<div>
-				?
-				</div>
-			);
     }
 }
 

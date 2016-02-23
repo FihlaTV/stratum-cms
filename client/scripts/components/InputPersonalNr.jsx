@@ -12,7 +12,7 @@ const InputPersonalNr = ({
     
 	
 	return (
-		<form className="form-inline" onChange={(e) => {
+		<form onChange={(e) => {
                 return onChange(input.value);
             }}
             onSubmit={(e) => {
