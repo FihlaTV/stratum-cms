@@ -8,6 +8,7 @@ import ResetState from '../components/ResetState';
 import NextButton from '../components/NextButton';
 import LoginSelectorList from '../components/LoginSelectorList';
 import SITHSLogin from '../components/SITHSLogin';
+import Modal from '../components/Modal';
 import BankID from './BankID';
 
 class App extends Component {
@@ -26,45 +27,58 @@ class App extends Component {
 		} = this.props;
 		if(error){
 			return (
-				<div>
-					<h1>Error</h1>
-					<p>
-						{error.message}
-					</p>
-					<ResetState onClick={resetState} />
-				</div>
+                <Modal title="Fel!">
+					<Modal.Body>
+                        <div className="alert alert-danger">
+                            {error.message}
+                        </div>
+					</Modal.Body>
+					<Modal.Footer>
+                        <ResetState onClick={resetState} />
+                    </Modal.Footer>
+				</Modal>
 			);
 		}
 		switch(loginMethod){
 			case LoginMethod.NOT_SELECTED:
 				return (
-					<div>
-						<h1>Logga In <small>välj metod</small></h1>
-						<LoginSelectorList onClick={loginSelect} loginSelectors={[
-                            {cssClass: 'bankid', 
-								loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'},
-                            {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'}
-						]}/>
-					</div>
+					<Modal title="Logga in" titleSmall="Välj metod">
+                        <Modal.Body>
+                            <LoginSelectorList onClick={loginSelect} loginSelectors={[
+                                {cssClass: 'bankid', 
+                                    loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'},
+                                {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'}
+                            ]}/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <ResetState onClick={resetState} />
+                        </Modal.Footer>
+					</Modal>
 				);
 			case LoginMethod.BANK_ID:
 				return (
-					<div>
-						<BankID onSubmit={nextState}/>
-						<ResetState onClick={resetState} />
-						<NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
-					</div>
+					<Modal title="Mobilt BankID">
+                        <Modal.Body>
+                            <BankID onSubmit={nextState}/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <ResetState onClick={resetState} />
+                            <NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
+                        </Modal.Footer>
+					</Modal>
 				);
 			case LoginMethod.SITHS_CARD:
 				return (
-					<div>
-						<SITHSLogin status={sithsStatus} />
-						<ResetState onClick={resetState} />
-						<NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
-					</div>
+					<Modal title="SITHS-kort">
+                        <Modal.Body>
+                            <SITHSLogin status={sithsStatus} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <ResetState onClick={resetState} />
+                            <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
+                        </Modal.Footer>
+					</Modal>
 				);
-			default :
-				return (<div>Unknown state error</div>);
 		}
 	}
 }

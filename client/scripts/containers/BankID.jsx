@@ -21,7 +21,6 @@ const BankID = ({
         case LoginStages.INPUT_PERSONAL_NUMBER:
             return (
                 <div>
-                    <h1>Bank ID</h1>
                     <InputPersonalNr onChange={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
                 </div>
             );
@@ -30,7 +29,7 @@ const BankID = ({
 		case LoginStages.COOKIE_COLLECTED:
             return (
                 <div>
-                    <h1>Genomför synkning</h1>
+                    <p>Genomför synkning</p>
                     <Spinner />
                     <BIDStatusMessage status={status}/>
                 </div>
@@ -38,7 +37,7 @@ const BankID = ({
 		case LoginStages.LOGIN_COMPLETED:
 			return (
 				<div>
-					<h1>Inloggning genomförd</h1>
+					<p>Inloggning genomförd</p>
 					Inloggad som <strong>{userName}</strong>
 				</div>
 			);
