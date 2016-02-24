@@ -27,9 +27,10 @@ class App extends Component {
 		} = this.props;
 		if(error){
 			return (
-                <Modal title="Fel!">
+                <Modal title="Inloggningen Misslyckades">
 					<Modal.Body>
                         <div className="alert alert-danger">
+							<i className="fa fa-exclamation-triangle pull-right"></i>
                             {error.message}
                         </div>
 					</Modal.Body>
