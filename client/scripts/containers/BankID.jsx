@@ -29,9 +29,8 @@ const BankID = ({
 		case LoginStages.COOKIE_COLLECTED:
             return (
                 <div>
-                    <p>Genomför synkning</p>
                     <Spinner />
-                    <BIDStatusMessage status={status}/>
+                    <BIDStatusMessage statusCode={status}/>
                 </div>
             );
 		case LoginStages.LOGIN_COMPLETED:
