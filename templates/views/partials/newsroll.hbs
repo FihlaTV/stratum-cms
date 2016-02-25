@@ -1,7 +1,7 @@
 <h2>Nyheter</h2>
 <div class="news-roll">
 	<ul>
-	{{#each data.news}}
+	{{#each this}}
 		<li>
 			<span class="news-roll-date">{{date publishedDate timeago=true}}</span>
 			<span class="news-roll-title"><a href="{{newsUrl slug}}">

@@ -1,22 +1,33 @@
 .news-widget {
+	border-radius: 3px;
+	overflow: hidden;
 	margin-bottom: @gutter;
 	.news-widget-caption{
-		padding: 10px;
+		padding: @gutter;
 		width: 100%;
 		transition: padding-top 0.12s ease-in, background-color 0.12s ease;
-		.news-widget-caption-lead{
-			.hidden-sm();
-		}
-
+	}
+	img+.news-widget-caption{
+		position: absolute;
+		bottom: 0px;
 	}
 	a{
 		color: #ccc;
+		&:hover{
+			text-decoration: none;
+		}
 	}
 	&:hover{
 		.news-widget-caption{
-			background-color: @gray;
-			padding-top: 35px;
-			transition: padding-top 0.12s ease-in, background-color 0.12s ease;
+			h2,h3,h4,h5,h6{
+				color: darken(@brand-primary, 10%);
+				transition: 0.12s ease-in;
+			}
+			background-color: lighten(@brand-primary, 2);
+			transition: 0.12s ease-in;
+		}
+		img+.news-widget-caption{
+			padding-top: 30px;
 		}
 	}
 }

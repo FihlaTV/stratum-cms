@@ -49,11 +49,10 @@
 	{{/if}}
 	{{#with data.startPage}}
 	{{#ifeq informationBlurb.type 'newsRoll'}}
-		{{>newsroll ./../..}}
+		{{>newsroll ../data.news}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'newsItem'}}
-		<h2>Senaste</h2>
-		{{>newswidget ./../..}}
+		{{>newswidget ../data.firstNews}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'meeting'}}
 		<h2>Kommande möte</h2>
