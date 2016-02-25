@@ -5,12 +5,20 @@ export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';
 export const HAS_NEXT_STATE = 'HAS_NEXT_STATE';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const SHOW_LOGIN_MODAL = 'SHOW_LOGIN_MODAL';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
     SITHS_CARD: 'SITHS_CARD',
 
 };
+
+export function showLoginModal(show){
+	return {
+		type: SHOW_LOGIN_MODAL,
+		showLoginModal: show
+	};
+}
 
 export function setLoginMethod(loginMethod) {
     return {

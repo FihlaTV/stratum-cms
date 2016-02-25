@@ -11,7 +11,7 @@ import loginApp from './reducers/reducers';
 import 'bootstrap';
 import '../../public/styles/site.less';
 
-const mainContainer = document.getElementById('login-page');
+const mainContainer = document.getElementById('login-button-react');
 
 let store = compose(
 		applyMiddleware(thunkMiddleware),
