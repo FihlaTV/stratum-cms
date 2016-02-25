@@ -5,10 +5,11 @@ const LoginModal = ({
 	children,
     title,
 	show,
-    titleSmall
+    titleSmall,
+	...other
 }) => {
 	return (
-		<Modal show={show}>
+		<Modal {...other} show={show}>
 			<Modal.Header closeButton>
 				<Modal.Title>{title} <small>{titleSmall}</small></Modal.Title> 
 			</Modal.Header>
