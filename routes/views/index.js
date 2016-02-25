@@ -83,6 +83,7 @@ exports = module.exports = function(req, res) {
 			.exec(function(err, news) {
 				if(!err){
 					locals.data.news = news;
+					locals.data.firstNews = news && news.length > 0 && locals.data.news[0];
 				}
 				next(err);
 			});
