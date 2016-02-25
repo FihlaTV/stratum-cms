@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import '../../../public/styles/site/form.less';
 
  
 const InputPersonalNr = ({
@@ -8,7 +9,7 @@ const InputPersonalNr = ({
 	}) => {
 	
 	let input;
-    let classNames = ['form-group', valid ? 'has-success' : 'has-error'];
+    let classNames = ['form-group', 'has-feedback', 'form-right-icon', valid ? 'has-success' : 'has-error'];
     
 	
 	return (
@@ -21,17 +22,21 @@ const InputPersonalNr = ({
 			}}>
 			<div className={classNames.join(' ')}>
 				<label htmlFor="bankIDPersonalNr">Personnummer: </label>
-				<input 
-					type="text" 
-					className="form-control" 
-					placeholder="19xxxxxx-xxxx" 
-					autoComplete="off" 
-					id="bankIDPersonalNr" 
-					ref={(node) => {
-							input = node;
+				<div className="input-group">
+					<span className="input-group-addon"><i className="fa fa-user"></i></span>
+					<input 
+						type="text" 
+						className="form-control check-validation next-to-icon" 
+						placeholder="19xxxxxx-xxxx" 
+						autoComplete="off" 
+						id="bankIDPersonalNr" 
+						ref={(node) => {
+								input = node;
+							}
 						}
-					}
-				/>
+					/>
+				</div>
+				<span className={`fa fa-check form-control-feedback ${valid ? '' : 'hidden'}`}></span>
 			</div>
 		</form>
 	);
