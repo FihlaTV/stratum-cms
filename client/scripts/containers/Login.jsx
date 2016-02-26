@@ -9,6 +9,7 @@ import NextButton from '../components/NextButton';
 import LoginSelectorList from '../components/LoginSelectorList';
 import SITHSLogin from '../components/SITHSLogin';
 import LoginModal from '../components/LoginModal';
+import Alert from '../components/Alert';
 import BankID from './BankID';
 
 class Login extends Component {
@@ -31,10 +32,9 @@ class Login extends Component {
 			return (
                 <LoginModal show={showModal} title="Inloggningen Misslyckades">
 					<LoginModal.Body>
-                        <div className="alert alert-danger">
-							<i className="fa fa-exclamation-triangle pull-right"></i>
+                        <Alert alertType="danger" faIcon="fa-exclamation-triangle">
                             {error.message}
-                        </div>
+                        </Alert>
 					</LoginModal.Body>
 					<LoginModal.Footer>
                         <ResetState onClick={resetState} />

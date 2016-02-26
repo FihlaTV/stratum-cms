@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from './Alert';
 
 const StatusCodes = {
 	NO_CLIENT: 'NO_CLIENT',
@@ -38,12 +39,10 @@ const BIDStatusMessage = ({
 }) => {
 	const status = getStatus(statusCode);
 	return (
-		<div className={`alert alert-${status.alert}`}>
-			<i className={`fa ${status.icon} pull-right`}></i>
+		<Alert alertType={status.alert} faIcon={status.icon}>
 			{status.message}
-		</div>
-	);	
+		</Alert>
+	);
 }
-
 
 export default BIDStatusMessage;
