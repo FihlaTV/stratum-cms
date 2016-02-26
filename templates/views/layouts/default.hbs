@@ -75,26 +75,20 @@
                                     </li>
                                 {{/each}}
 								</ul>
-								<div id="login-button-react"></div>
 								<ul class="nav navbar-nav navbar-right">
 									<li class="search">
 										<a href="#search"></a>
 									</li>
-									{{#if user}}
-									{{!-- <li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li> --}}
-									<li><a href="/keystone/signout">Logga ut</a></li>
-									{{else}}
-									<li><a href="/keystone/signin">Logga in</a></li>
-									{{/if}}
 								</ul>
-								{{!-- <ul class="nav navbar-nav navbar-right">
-									{{#if user}}
-									<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
-									<li><a href="/keystone/signout">Sign Out</a></li>
-									{{else}}
-									<li><a href="/keystone/signin">Sign In</a></li>
-									{{/if}}
-								</ul> --}}
+								{{#if stratumUser}}
+								<ul class="nav navbar-nav navbar-right">
+									<li>
+										<a href="/logout">Logga ut ({{stratumUser.FirstName}} {{stratumUser.LastName}})</a>
+									</li>
+								</ul>
+								{{else}}
+								<div id="login-button-react"></div>
+								{{/if}}
 							</div>
 						</div>
 					</div>
