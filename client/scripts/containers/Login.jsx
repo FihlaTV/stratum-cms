@@ -37,7 +37,7 @@ class Login extends Component {
                         </Alert>
 					</LoginModal.Body>
 					<LoginModal.Footer>
-                        <ResetState onClick={resetState} />
+                        <ResetState onClick={resetState}>Tillbaka</ResetState>
                     </LoginModal.Footer>
 				</LoginModal>
 			);
@@ -65,7 +65,7 @@ class Login extends Component {
                             <BankID onSubmit={nextState}/>
                         </LoginModal.Body>
                         <LoginModal.Footer>
-                            <ResetState onClick={resetState} />
+							<ResetState onClick={resetState}>Tillbaka</ResetState>
                             <NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
                         </LoginModal.Footer>
 					</LoginModal>
@@ -77,7 +77,7 @@ class Login extends Component {
                             <SITHSLogin status={sithsStatus} />
                         </LoginModal.Body>
                         <LoginModal.Footer>
-                            <ResetState onClick={resetState} />
+							<ResetState onClick={resetState}>Tillbaka</ResetState>
                             <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
                         </LoginModal.Footer>
 					</LoginModal>

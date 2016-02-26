@@ -2,14 +2,15 @@ import React, { Component, PropTypes } from 'react';
 
  
 const ResetState = ({
-	onClick
+	onClick,
+	children = 'Avbryt'
 }) => {
 	return (
 		<button className="btn btn-primary" onClick={ 
 			e => {
 				e.preventDefault();
 				onClick();
-			}}>Avbryt</button>
+			}}>{children}</button>
 	);
 }
 
