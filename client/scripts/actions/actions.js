@@ -218,8 +218,9 @@ export function loginToStratum(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
-					return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
+					window.location.reload(); // For now...
+					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
+					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
