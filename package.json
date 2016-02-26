@@ -1,6 +1,6 @@
 {
   "name": "stratum-cms",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "async": "^1.5.2",
