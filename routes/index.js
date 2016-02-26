@@ -78,8 +78,8 @@ exports = module.exports = function(app) {
 	app.get('/faq', routes.views.faq);
 	// app.get('/kontakt', routes.views.contact);
 
-	// React Login
-	app.get('/login', routes.views.login);
+	// Logout
+	app.get('/logout', routes.views.logout);
 	
 	// Views for dynamic routes
 	app.get('/:menublock?', routes.views.page);
