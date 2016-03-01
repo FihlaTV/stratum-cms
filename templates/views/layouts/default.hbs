@@ -6,7 +6,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{{getTitle breadcrumbs brand ' > '}}}</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-		<link href="/styles/site.min.css" rel="stylesheet">
+		
+		{{#ifeq env "production"}}
+		<link href="/dist/styles.css" rel="stylesheet">
+		{{/ifeq}}
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
 			- only renders when user is logged in and admin--}}
@@ -71,27 +74,21 @@
                                         {{/ifeq}}
                                     </li>
                                 {{/each}}
-									{{!-- <li id="login-button"></li> --}}
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
 									<li class="search">
 										<a href="#search"></a>
 									</li>
-									{{#if user}}
-									{{!-- <li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li> --}}
-									<li><a href="/keystone/signout">Logga ut</a></li>
-									{{else}}
-									<li><a href="/keystone/signin">Logga in</a></li>
-									{{/if}}
 								</ul>
-								{{!-- <ul class="nav navbar-nav navbar-right">
-									{{#if user}}
-									<li><a href="#" class="user">{{#if user.image.exists}}{{{cloudinaryImage user.image class="img-circle" width="27" height="27" crop="fill"}}}{{else}}<img src="/images/avatar.png" alt="" width="27" class="img-circle">{{/if}}</a></li>
-									<li><a href="/keystone/signout">Sign Out</a></li>
-									{{else}}
-									<li><a href="/keystone/signin">Sign In</a></li>
-									{{/if}}
-								</ul> --}}
+								{{#if stratumUser}}
+								<ul class="nav navbar-nav navbar-right">
+									<li>
+										<a href="/logout">Logga ut ({{stratumUser.FirstName}} {{stratumUser.LastName}})</a>
+									</li>
+								</ul>
+								{{else}}
+								<div id="login-button-react"></div>
+								{{/if}}
 							</div>
 						</div>
 					</div>
@@ -164,18 +161,26 @@
 			//- and the KeystoneJS Content Editor. If you are not targeting IE8,
 			//- you can upgrade to 2.1.1 (also bundled) for better performance.
 		--}}
-		<script src="/js/lib/jquery/jquery-1.11.1.min.js"></script>
+		<!--<script src="/js/lib/jquery/jquery-1.11.1.min.js"></script>-->
 		{{!--
 			//- Customise which Bootstrap javascript files are served by including
 			//- them specifically here, instead of bootstrap-3.2.0.min.js
 		--}}
-		<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
+		<!--<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>-->
 		<script src="/js/lib/masonry/masonry.pkgd.min.js"></script>
 		<script src="/js/lib/masonry/imagesloaded.pkgd.min.js"></script>
 		{{#each pageScripts}}
 		<script type="text/javascript" src="/js/{{{src}}}"></script>
 		{{/each}}
-		{{{isAdminEditorJS user}}}
+		{{!-- React scripts --}}
+		{{#ifeq env "development"}}
+		<script type="text/javascript" src="/js/bundle.js"></script>
+		{{else}}
+		<script type="text/javascript" src="/dist/vendors.js"></script>
+		<script type="text/javascript" src="/dist/bundle.js"></script>
+		{{/ifeq}}
+		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
+		<!--{{{isAdminEditorJS user}}}-->
 		{{#if register.showMap}}{{>maps}}{{/if}}
 	</body>
 </html>

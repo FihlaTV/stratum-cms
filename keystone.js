@@ -21,7 +21,6 @@ keystone.init({
 
 	'name': process.env.BRAND || 'Stratum',
 	'brand': process.env.BRAND || 'Stratum',
-	'less': ['override', path.join(root, 'public')],
 	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
@@ -101,6 +100,9 @@ keystone.set('nav', {
 	
 	'widgets': 'widgets'
 });
+
+// Output environment variable
+console.log('Currently running in ' + keystone.get('env'));
 
 keystone.post('updates', function(){
 	stratum.loadWidgets(); 

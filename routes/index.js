@@ -20,9 +20,17 @@
 
 var keystone = require('keystone'),
 	middleware = require('./middleware'),
-	importRoutes = keystone.importer(__dirname);
+	importRoutes = keystone.importer(__dirname),
+	//Webpack (dev only)
+	webpack = require('webpack'),
+	webpackDevMiddleware = require('webpack-dev-middleware'),
+	webpackHotMiddleware = require('webpack-hot-middleware'),
+	webpackConfig = require('../webpack.config');
+	
+
 
 // Common Middleware
+keystone.pre('routes', middleware.mapContextId);
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
 
@@ -33,16 +41,27 @@ var routes = {
 	proxies: importRoutes('./proxies')
 };
 
+// Setup webpack compiler
+
 // Setup Route Bindings
 exports = module.exports = function(app) {
 	// Proxies
 	app.all('/stratum/*', routes.proxies.stratum);
 
+	//Activate webpack hot reload middleware
+	if(keystone.get('env') === 'development'){
+        var compiler = webpack(webpackConfig);
+		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
+		app.use(webpackHotMiddleware(compiler));
+	}
+
+	// API
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/load-widgets', routes.api['load-widgets']);
+	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
 
 	// Restrict all pages to logged in users for now...
@@ -59,6 +78,9 @@ exports = module.exports = function(app) {
 	app.get('/faq', routes.views.faq);
 	// app.get('/kontakt', routes.views.contact);
 
+	// Logout
+	app.get('/logout', routes.views.logout);
+	
 	// Views for dynamic routes
 	app.get('/:menublock?', routes.views.page);
 	app.get('/:menublock?/:page', routes.views.page);
