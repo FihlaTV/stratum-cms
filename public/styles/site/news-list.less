@@ -15,27 +15,17 @@
 }
 .news-list-item{
 	.white-well();
-  	border-radius: 0;
-	margin: 0;
-	h1,h2,h3,h4,h5,h6{
-		margin-top: 0;
-	}
+    overflow: hidden;
+  	border-radius: 3px;
+	margin: 0 0 1% 0;
 	p{
 		color: @text-color;
-	}
-	@media (min-width: @screen-sm-min) { 
-		margin-bottom: 1%;
-	  	border-radius: .15em;
 	}
 	&:hover .news-list-item-image img{
 		transform: scale(1.1);
 	}
 	.news-list-item-image{
 		overflow: hidden;
-		@media (min-width: @screen-sm-min) { 
-			border-top-left-radius: .15em;
-			border-top-right-radius: .15em;
-		}
 		img{
 			width: 100%;
 			transition: all .2s ease-in-out;
