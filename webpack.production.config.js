@@ -2,17 +2,32 @@ var path = require('path');
 var webpack = require('webpack');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var glob = require('glob');
 
 require('dotenv').load();
 
+var jsEntry = {
+	app: path.resolve(__dirname, 'client/scripts/index.jsx'),
+	vendors: ['react', 'jquery', 'react-bootstrap', 'react-dom', 'redux']
+};
+
+function findRegisters() {
+	var registerStyles = jsEntry;
+	glob.sync('registers/*/override/styles/site.less').forEach(function (stylePath) {
+		var match = /^registers\/([^\/]+)\//.exec(stylePath);
+		if (match) {
+			registerStyles[match[1]] = path.resolve(__dirname, stylePath);
+	}
+	});
+	return registerStyles;
+}
+
+
 module.exports = {
-    entry: {
-        app: path.resolve(__dirname, 'client/scripts/index.jsx'),
-        vendors: ['react', 'jquery', 'moment', 'react-bootstrap']
-    },
+    entry: findRegisters(),
     output: {
         path: path.resolve(__dirname, 'public/dist/'),
-        filename: 'bundle.js'
+        filename: '[name].bundle.js'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -31,7 +46,7 @@ module.exports = {
 			$: "jquery",
 			jQuery: "jquery"
 		}),
-		new ExtractTextPlugin('styles.css'),
+		new ExtractTextPlugin('[name].styles.css'),
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
     ],
     module: {

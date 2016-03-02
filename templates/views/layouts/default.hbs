@@ -8,7 +8,7 @@
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		
 		{{#ifeq env "production"}}
-		<link href="/dist/styles.css" rel="stylesheet">
+		<link href="{{styleEntry}}" rel="stylesheet">
 		{{/ifeq}}
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
@@ -177,7 +177,7 @@
 		<script type="text/javascript" src="/js/bundle.js"></script>
 		{{else}}
 		<script type="text/javascript" src="/dist/vendors.js"></script>
-		<script type="text/javascript" src="/dist/bundle.js"></script>
+		<script type="text/javascript" src="/dist/app.bundle.js"></script>
 		{{/ifeq}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
 		<!--{{{isAdminEditorJS user}}}-->

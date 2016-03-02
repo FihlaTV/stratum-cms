@@ -28,6 +28,7 @@ keystone.init({
 	
 	//Gets the name of the currently active directory
 	'app name': appName,
+	'style entry': '/dist/' + (process.env.OVERRIDES_STYLES ? appName : 'app') + '.styles.css',
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
 		layoutsDir: path.join(root, 'templates/views/layouts'),
