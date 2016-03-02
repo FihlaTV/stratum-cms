@@ -11,6 +11,7 @@ var keystone = require('keystone'),
 	stratum = require('./' + path.join(root, 'utils/stratum')),
 	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
 	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
+	appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app',
 	pkg = require('./' + path.join(root, 'package.json'));
 
 // Initialise Keystone with your project's configuration.
@@ -24,6 +25,10 @@ keystone.init({
 	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
+	
+	//Gets the name of the currently active directory
+	'app name': appName,
+	'style entry': '/dist/' + (process.env.OVERRIDES_STYLES ? appName : 'app') + '.styles.css',
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
 		layoutsDir: path.join(root, 'templates/views/layouts'),
