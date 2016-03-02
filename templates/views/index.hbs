@@ -1,14 +1,12 @@
 {{!< default}}
 <div class="container">
-{{#if data.startPage.jumbotron.isVisible}}
-<div class="jumbotron">
-	<div class="row">
+	{{#if data.startPage.jumbotron.isVisible}}
+	<div class="jumbotron">
 		{{#with data.startPage.jumbotron}}
 		<h1>{{header}}</h1>
 		<p class="lead">
 			{{{description.html}}}
 		</p>
-		</div>
 		{{/with}}
 		<div class="row">
 		{{#each data.startPageWidgets}}
@@ -24,9 +22,7 @@
 		{{/each}}
 		</div>
 	</div>
-</div>
-{{/if}}
-<div class="container">
+	{{/if}}
 	<div class="row">
 	<div class="col-md-7">
 		{{#with data.startPage}}
@@ -75,6 +71,4 @@
 		{{/each}}
 	</div>
 	{{/if}}
-
 </div>
-
