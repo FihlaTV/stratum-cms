@@ -15,15 +15,6 @@
 					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 				</div>
 				{{/if}}
-				{{#if ../stratumWidget}}
-				{{#with ../../stratumWidget}}
-					<div class="stratum-widget" id="sw-{{slug}}"></div>
-					<script type="text/javascript">
-					{{{../../../data.widget.advancedSettings}}}
-					</script>
-					<script type="text/javascript" src="/stratum/api/widgets/{{widgetSlug}}"></script>
-				{{/with}}
-				{{/if}}
 				{{!-- Widget --}}
 				{{#if ../widgetTpl}}
 				{{> (lookup ../.. 'widgetTpl') ../../widget }}
@@ -63,6 +54,15 @@
 				</ul>
 			</div>
 			{{/ifeq}}
+			{{!-- Stratum Widget --}}
+			{{stratumWidget}}
+			{{#if stratumWidget}}
+			{{#with stratumWidget}}
+			<h2>{{slug}}</h2>
+			<div class="stratum-widget" id="sw-{{slug}}"></div>
+			<script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget=RC/NumberOfRegistrations&target=sw-{{slug}}"></script>
+			{{/with}}
+			{{/if}}
 			{{#if data.contacts}}
 			<h2>Kontaktpersoner</h2>
 			<div class="content-page-contacts">
