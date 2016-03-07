@@ -1,5 +1,7 @@
+import es6Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 import { isValidPersonalNumber } from '../utils/personalNumber';
+es6Promise.polyfill();
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
 export const RESET_STATE = 'RESET_STATE';
