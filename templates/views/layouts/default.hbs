@@ -167,11 +167,6 @@
 			//- them specifically here, instead of bootstrap-3.2.0.min.js
 		--}}
 		<!--<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>-->
-		<script src="/js/lib/masonry/masonry.pkgd.min.js"></script>
-		<script src="/js/lib/masonry/imagesloaded.pkgd.min.js"></script>
-		{{#each pageScripts}}
-		<script type="text/javascript" src="/js/{{{src}}}"></script>
-		{{/each}}
 		{{!-- React scripts --}}
 		{{#ifeq env "development"}}
 		<script type="text/javascript" src="/js/bundle.js"></script>
@@ -179,6 +174,9 @@
 		<script type="text/javascript" src="/dist/vendors.js"></script>
 		<script type="text/javascript" src="/dist/app.bundle.js"></script>
 		{{/ifeq}}
+		{{#each pageScripts}}
+		<script type="text/javascript" src="/js/{{{src}}}"></script>
+		{{/each}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
 		<!--{{{isAdminEditorJS user}}}-->
 		{{#if register.showMap}}{{>maps}}{{/if}}

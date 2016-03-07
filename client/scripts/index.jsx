@@ -9,7 +9,13 @@ import loginApp from './reducers/reducers';
 // Webpack dependencies
 // import 'jquery'; // not needed, bundled with bootstrap
 import 'bootstrap';
+import Masonry from 'masonry-layout';
+import imagesLoaded from 'imagesloaded';
 import '../../public/styles/site.less';
+
+//Temporary Masonry solution until full React version of site...
+window.Masonry = Masonry;
+window.imagesLoaded = imagesLoaded;
 
 const mainContainer = document.getElementById('login-button-react');
 
