@@ -56,7 +56,7 @@ module.exports = {
             exclude: [node_modules_dir],
             query: {
                 presets: ['es2015', 'react'],
-				plugins: ['transform-object-rest-spread']
+				plugins: ['transform-object-rest-spread', 'transform-object-assign']
             }
 		}, {
 				test: /\.less$/,

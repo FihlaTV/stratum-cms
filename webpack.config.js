@@ -45,7 +45,7 @@ module.exports = {
                 include: path.join(__dirname, '/client/'),
                 query: {
                     'presets': ['es2015', 'react'],
-					'plugins': ['transform-object-rest-spread'],
+					'plugins': ['transform-object-rest-spread', 'transform-object-assign'],
                     'env': {
                         'development': {
                             'plugins': [['react-transform', {
