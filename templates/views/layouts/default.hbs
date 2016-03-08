@@ -177,6 +177,12 @@
 		{{#each pageScripts}}
 		<script type="text/javascript" src="/js/{{{src}}}"></script>
 		{{/each}}
+        {{!-- Stratum Widget --}}
+        {{#if stratumWidget}}
+        {{#with stratumWidget}}
+        <script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget={{widgetSlug}}&target=sw-{{slug}}"></script>
+        {{/with}}
+        {{/if}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
 		<!--{{{isAdminEditorJS user}}}-->
 		{{#if register.showMap}}{{>maps}}{{/if}}

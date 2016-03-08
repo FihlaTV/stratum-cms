@@ -55,12 +55,10 @@
 			</div>
 			{{/ifeq}}
 			{{!-- Stratum Widget --}}
-			{{stratumWidget}}
 			{{#if stratumWidget}}
+			<h2>{{data.widget.name}}</h2>
 			{{#with stratumWidget}}
-			<h2>{{slug}}</h2>
-			<div class="stratum-widget" id="sw-{{slug}}"></div>
-			<script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget=RC/NumberOfRegistrations&target=sw-{{slug}}"></script>
+			<div class="stratum-widget" id="sw-{{slug}}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam illum itaque vel possimus ad repudiandae voluptas voluptatum, eius, adipisci, blanditiis iste ab excepturi ut culpa omnis commodi dicta beatae nostrum!</div>
 			{{/with}}
 			{{/if}}
 			{{#if data.contacts}}
