@@ -168,6 +168,14 @@
 		{{/each}}
         {{!-- Stratum Widget --}}
         {{#if stratumWidget}}
+		{{#if data.widget.advancedSettings}}
+		<script type="text/javascript">
+			/**  
+			 * Advanced widget settings
+			 */
+			{{{data.widget.advancedSettings}}}
+		</script>
+		{{/if}}
         {{#with stratumWidget}}
         <script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget={{widgetSlug}}&target=sw-{{slug}}"></script>
         {{/with}}
