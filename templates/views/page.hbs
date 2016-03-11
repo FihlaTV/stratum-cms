@@ -21,6 +21,9 @@
 				{{/if}}
 				{{!-- /Widget --}}
 				<div class="post">
+					{{#if lead}}
+					<p class="lead">{{lead}}</p>
+					{{/if}}
 					{{{content.html}}}
 				</div>
 			</article>
