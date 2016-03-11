@@ -17,6 +17,9 @@ StartPageWidget.add({
 	showOnStartPage: { type: Boolean },
 	description: { type: Types.Textarea },
 	linkType: { type: Types.Select, options: ['static', 'page'] },
+	linkText: { type: String, default: 'Se mer statistik', dependsOn: {
+		linkType: ['static', 'page']
+	}},
 	page: {
 		type: Types.Relationship,
 		ref: 'BasePage',
