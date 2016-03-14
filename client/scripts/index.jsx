@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
+import BOAArtrosSkola from './widgets/BOAArtrosSkola';
 import loginApp from './reducers/reducers';
 
 // Webpack dependencies
@@ -19,6 +20,7 @@ window.imagesLoaded = imagesLoaded;
 window.Stratum = {};
 
 const mainContainer = document.getElementById('login-button-react');
+const keystoneWidget = document.getElementById('keystone-widget');
 
 let store = compose(
 		applyMiddleware(thunkMiddleware),
@@ -39,4 +41,10 @@ if(mainContainer){
 		</Provider>, 
 		mainContainer
 	);
+}
+if(keystoneWidget){
+    render(
+        <BOAArtrosSkola />,
+        keystoneWidget
+    );
 }

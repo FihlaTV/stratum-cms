@@ -154,13 +154,15 @@ exports = module.exports = function(req, res) {
 						var view;
 						if (!err && kWidget) {
 							locals.widgetTpl = kWidget.name;
-							try {
-								view = require('../widgets/' + kWidget.name);
-								view(locals.widget, next);
-							} catch (e) {
-								console.log(e);
-								next(e);
-							}
+                            locals.keystoneWidget = kWidget;
+							next(); // Temp switch
+                            // try {
+							// 	view = require('../widgets/' + kWidget.name);
+							// 	view(locals.widget, next);
+							// } catch (e) {
+							// 	console.log(e);
+							// 	next(e);
+							// }
 						} else {
 							next();
 						}

@@ -17,9 +17,12 @@
 				{{/if}}
 				{{!-- Widget --}}
 				{{#if ../widgetTpl}}
+                {{!-- Not used
 				{{> (lookup ../.. 'widgetTpl') ../../widget }}
+                --}}
 				{{/if}}
 				{{!-- /Widget --}}
+                
 				<div class="post">
 					{{#if lead}}
 					<p class="lead">{{lead}}</p>
@@ -62,6 +65,13 @@
 			<h2>{{data.widget.name}}</h2>
 			{{#with stratumWidget}}
 			<div class="stratum-widget" id="sw-{{slug}}"></div>
+			{{/with}}
+			{{/if}}
+			{{!-- Keystone Widget --}}
+			{{#if keystoneWidget}}
+			<h2>{{data.widget.name}}</h2>
+			{{#with keystoneWidget}}
+			<div class="stratum-widget" id="keystone-widget"></div>
 			{{/with}}
 			{{/if}}
 			{{#if data.contacts}}
