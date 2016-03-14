@@ -16,7 +16,9 @@
 						{{digit}}
 					</span>
 					<span class="startpage-widget-text">{{description}}</span>
-					<a href="#stat">Se mer statistik.</a>
+					{{#if link}}
+                    <a href="{{link}}">{{linkText}}</a>
+                    {{/if}}
 				</div>
 			</div>
 		{{/each}}

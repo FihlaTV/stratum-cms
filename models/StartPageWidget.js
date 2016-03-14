@@ -16,8 +16,23 @@ StartPageWidget.add({
 	digit: { type: String },
 	showOnStartPage: { type: Boolean },
 	description: { type: Types.Textarea },
-	page: { type: Types.Relationship, ref: 'BasePage', index: true }
+	linkType: { type: Types.Select, options: ['static', 'page'] },
+	linkText: { type: String, default: 'Se mer statistik', dependsOn: {
+		linkType: ['static', 'page']
+	}},
+	page: {
+		type: Types.Relationship,
+		ref: 'BasePage',
+		index: true,
+		dependsOn: { linkType: 'page' },
+		note: 'Do not use, Not yet implemented!'
+	},
+	link: {
+		type: Types.Url,
+		dependsOn: { linkType: 'static' }
+	}
 });
 
-// StartPageWidget.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
+StartPageWidget.defaultColumns = 'title, showOnStartPage|20%';
 StartPageWidget.register();
+
