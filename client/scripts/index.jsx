@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
-import BOAArtrosSkola from './widgets/BOAArtrosSkola';
+import { BOAArtrosSkola } from './widgets';
 import loginApp from './reducers/reducers';
 
 // Webpack dependencies
