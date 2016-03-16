@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
 import { BOAArtrosSkola } from './widgets';
+import WidgetWrapper from './widgets/WidgetWrapper'
 import loginApp from './reducers/reducers';
 
 // Webpack dependencies
@@ -43,8 +44,10 @@ if(mainContainer){
 	);
 }
 if(keystoneWidget){
+	//Read widget id from data-attribute
+	const widgetId = keystoneWidget.getAttribute('data-keystone-widget');
     render(
-        <BOAArtrosSkola />,
+        <WidgetWrapper id={widgetId}/>,
         keystoneWidget
     );
 }
