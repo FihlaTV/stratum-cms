@@ -21,7 +21,7 @@ window.imagesLoaded = imagesLoaded;
 window.Stratum = {};
 
 const mainContainer = document.getElementById('login-button-react');
-const keystoneWidget = document.getElementById('keystone-widget');
+const keystoneWidgets = document.querySelectorAll('.keystone-widget');
 
 let store = compose(
 		applyMiddleware(thunkMiddleware),
@@ -43,11 +43,13 @@ if(mainContainer){
 		mainContainer
 	);
 }
-if(keystoneWidget){
+if(keystoneWidgets){
 	//Read widget id from data-attribute
-	const widgetId = keystoneWidget.getAttribute('data-keystone-widget');
-    render(
-        <WidgetWrapper id={widgetId}/>,
-        keystoneWidget
-    );
+	Array.prototype.forEach.call(keystoneWidgets, kw => {
+		const widgetId = kw.getAttribute('data-keystone-widget');
+		render(
+			<WidgetWrapper id={widgetId}/>,
+			kw
+		);
+	});
 }
