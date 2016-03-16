@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import widgets from './';
+import widgets from '../widgets/';
 
 class WidgetWrapper extends Component {
 	constructor(props) {
