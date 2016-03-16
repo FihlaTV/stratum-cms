@@ -5,15 +5,20 @@ var keystone = require('keystone'),
 	KeystoneWidget = keystone.list('KeystoneWidget');
 
 
-exports.loadWidgets = function(_path, _callback) {
-	var path = arguments.length === 2 ? _path : 'routes/widgets',
-		callback = arguments.length === 1 ? _path : _callback,
+exports.loadWidgets = function(opts) {
+	var path = opts.path || 'routes/widgets',
+		callback = _.isFunction(opts) ? opts : opts.callback,
 		context = {
-			widgetsInDB: []
+			widgetsInDB: [],
+			widgets: opts.widgets
 		};
 
 	async.series({
 			readFiles: function(next) {
+				if(context.widgets){
+					next();
+					return;
+				}
 				fs.readdir(path, function(err, files) {
 					if (!err) {
 						context.widgets = files.reduce(function(prev, file) {
