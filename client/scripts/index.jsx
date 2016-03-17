@@ -47,8 +47,9 @@ if(keystoneWidgets){
 	//Read widget id from data-attribute
 	Array.prototype.forEach.call(keystoneWidgets, kw => {
 		const widgetId = kw.getAttribute('data-keystone-widget');
+		const description = kw.getAttribute('data-widget-description');
 		render(
-			<WidgetWrapper id={widgetId}/>,
+			<WidgetWrapper id={widgetId} description={description} />,
 			kw
 		);
 	});

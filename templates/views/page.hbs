@@ -71,7 +71,7 @@
 			{{#if keystoneWidget}}
 			<h2>{{data.widget.name}}</h2>
 			{{#with keystoneWidget}}
-			<div class="keystone-widget stratum-widget" data-keystone-widget={{name}}></div>
+			<div class="keystone-widget stratum-widget" data-keystone-widget="{{name}}" data-widget-description="{{../data.widget.description}}"></div>
 			{{/with}}
 			{{/if}}
 			{{#if data.contacts}}

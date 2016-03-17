@@ -11,7 +11,7 @@ class BOAArtrosSkola extends Component {
 			<StratumSimpleData
 				url="//stratum.registercentrum.se/api/aggregate/BOA/UnitPraxis/Total/count(UP_UnitName)?APIKey=bK3H9bwaG4o%3D"
 			>
-				<p>erbjuder artrosskola och har rapporterat till BOA-registret</p>
+				<p>{this.props.description}</p>
 			</StratumSimpleData>
 		);
 	}
