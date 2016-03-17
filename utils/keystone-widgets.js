@@ -4,36 +4,27 @@ var keystone = require('keystone'),
 	fs = require('fs'),
 	KeystoneWidget = keystone.list('KeystoneWidget');
 
-
-exports.loadWidgets = function(opts) {
-	var path = opts.path || 'routes/widgets',
-		callback = _.isFunction(opts) ? opts : opts.callback,
-		context = {
-			widgetsInDB: [],
-			updatedWidgets: [],
-			widgets: _.keys(opts.widgets),
-			widgetsFull: opts.widgets
-		};
+exports.loadWidgets = function(callback) {
+	var context = {};
 
 	async.series({
-		readFiles: function(next) {
-			if (context.widgets) {
-				next();
-				return;
-			}
-			fs.readdir(path, function(err, files) {
-				if (!err) {
-					context.widgets = files.reduce(function(prev, file) {
-						if (file.substr(-3) === '.js') {
-							prev.push(file.slice(0, -3));
-						}
-						return prev;
-					}, []);
+		readWidgetMetadata: function(next) {
+			fs.readFile('./client/scripts/widgets/widgets.json', function(err, data) {
+				if (err) {
+					next(err);
+				} else {
+					try {
+						context.widgetsFull = JSON.parse(data);
+						context.widgets = _.keys(context.widgetsFull);
+						next();
+					} catch (jErr) {
+						next(jErr);
+					}
 				}
-				next(err);
 			});
 		},
-		findNewWidgets: function(next) {
+		addNewAndUpdateChanged: function(next) {
+			context.updatedWidgets = [];
 			async.each(context.widgetsFull, function(widget, cb) {
 				KeystoneWidget.model.findOne()
 					.where('name', widget.id)
@@ -62,7 +53,7 @@ exports.loadWidgets = function(opts) {
 					});
 			}, next);
 		},
-		addRemovedWidgets: function(next) {
+		addRemovedStatus: function(next) {
 			KeystoneWidget.model.update({
 				name: {
 					$in: context.widgets
@@ -92,7 +83,6 @@ exports.loadWidgets = function(opts) {
 		function(err) {
 			callback(err, {
 				indexed: context.widgets,
-				// widgetsInDB: context.widgetsInDB,
 				updatedWidgets: context.updatedWidgets,
 				newWidgets: context.newWidgets
 			});
