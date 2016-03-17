@@ -6,6 +6,12 @@
  */
 
 module.exports = {
-	'BOAArtrosSkola': { id: 'BOAArtrosSkola', description: 'Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola.' },
-	'BOAAndel': { id: 'BOAAndel', description: '' }
+	'BOAArtrosSkola': {
+		id: 'BOAArtrosSkola',
+		description: 'Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till.'
+	},
+	'BOAAndel': {
+		id: 'BOAAndel',
+		description: ''
+	}
 };
