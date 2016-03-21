@@ -24,6 +24,7 @@ class StratumSimpleData extends Component {
 						data: json.data,
 						loading: false
 					});
+					this.props.onLoadComplete && this.props.onLoadComplete(null);
 				} else {
 					const error = new Error(json.message);
 					throw (error);
@@ -31,6 +32,7 @@ class StratumSimpleData extends Component {
 			})
 			.catch(error => {
 				this.setState({ loading: false, error: error });
+				this.props.onLoadComplete && this.props.onLoadComplete(error);
 			});
 	}
 	render() {
@@ -58,7 +60,9 @@ StratumSimpleData.defaultProps = {
 
 StratumSimpleData.propTypes = {
 	url: PropTypes.string.isRequired,
-	indicatorClass: PropTypes.string
+	indicatorClass: PropTypes.string,
+	onStart: PropTypes.func,
+	onLoadComplete: PropTypes.func
 };
 
 export default StratumSimpleData
