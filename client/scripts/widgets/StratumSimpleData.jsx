@@ -47,7 +47,7 @@ class StratumSimpleData extends Component {
 		}
 		return (
 			<div>
-				<span style={style} className={this.props.indicatorClass}>{this.state.data}</span>
+				<span style={this.props.unstyled ? {} : style} className={this.props.indicatorClass}>{this.state.data}</span>
 				{this.props.children}
 			</div>
 		);
