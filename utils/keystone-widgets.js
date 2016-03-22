@@ -24,7 +24,8 @@ exports.loadWidgets = function(callback) {
 			});
 		},
 		addNewAndUpdateChanged: function(next) {
-			context.updatedWidgets = [];
+			context.updatedWidgets = [],
+			context.newWidgets = [];
 			async.each(context.widgetsFull, function(widget, cb) {
 				KeystoneWidget.model.findOne()
 					.where('name', widget.id)
