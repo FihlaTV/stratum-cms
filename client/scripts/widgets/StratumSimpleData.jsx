@@ -21,7 +21,7 @@ class StratumSimpleData extends Component {
 			.then(json => {
 				if (json.success) {
 					this.setState({
-						data: json.data,
+						data: this.props.format ? this.props.format(json.data) : json.data,
 						loading: false
 					});
 					this.props.onLoadComplete && this.props.onLoadComplete(null);
