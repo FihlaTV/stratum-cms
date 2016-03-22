@@ -18,7 +18,6 @@ import '../../public/styles/site.less';
 //Temporary Masonry solution until full React version of site...
 window.Masonry = Masonry;
 window.imagesLoaded = imagesLoaded;
-window.Stratum = {};
 
 const mainContainer = document.getElementById('login-button-react');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
