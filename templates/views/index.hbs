@@ -12,10 +12,16 @@
 		{{#each data.startPageWidgets}}
 			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
 				<div class="">
+					{{#if keystoneWidget}}
+					{{#with keystoneWidget}}
+					<div class="keystone-widget" data-keystone-widget="{{name}}" data-widget-description="{{../description}}"></div>
+					{{/with}}
+					{{else}}
 					<span class="startpage-widget-digit">
 						{{digit}}
 					</span>
 					<span class="startpage-widget-text">{{description}}</span>
+					{{/if}}
 					{{#if link}}
                     <a href="{{link}}">{{linkText}}</a>
                     {{/if}}
