@@ -6,5 +6,9 @@
 	"BOAAndel": {
 		"id": "BOAAndel",
 		"description": "En beskrivning som förklarar den här widgeten..."
+	},
+	"HNSVSign": {
+		"id": "HNSVSign",
+		"description": "En beskrivning som förklarar den här widgeten..."
 	}
 }

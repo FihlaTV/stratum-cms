@@ -23,6 +23,7 @@
     "masonry-layout": "^4.0.0",
     "moment": "^2.11.1",
     "mongodb": "^2.1.4",
+    "numeral": "^1.5.3",
     "react": "^0.14.7",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.7",
