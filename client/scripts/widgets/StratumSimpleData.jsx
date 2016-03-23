@@ -24,6 +24,17 @@ class StratumSimpleData extends Component {
 		super(props);
 		this.state = {};
 	}
+	format(val){
+		const format = this.props.format;
+		switch (typeof format){
+			case 'function' :
+				return format(val);
+			case 'string' : 
+				return numeral(val).format(format);
+			default :
+				return val;
+		}
+	}
 	componentDidMount() {
 		this.setState({ loading: true });
 		fetch(this.props.url)
@@ -31,7 +42,7 @@ class StratumSimpleData extends Component {
 			.then(json => {
 				if (json.success) {
 					this.setState({
-						data: this.props.format ? this.props.format(json.data) : json.data,
+						data: this.format(json.data),
 						loading: false
 					});
 					this.props.onLoadComplete && this.props.onLoadComplete(null);
@@ -72,7 +83,8 @@ StratumSimpleData.propTypes = {
 	url: PropTypes.string.isRequired,
 	indicatorClass: PropTypes.string,
 	onStart: PropTypes.func,
-	onLoadComplete: PropTypes.func
+	onLoadComplete: PropTypes.func,
+	format: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
 };
 
 export default StratumSimpleData
