@@ -37,7 +37,7 @@ keystone.init({
 		helpers: new Helpers(),
 		extname: '.hbs'
 	}).engine,
-
+	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
 	'cloudinary config': {secure: true},
 	
@@ -76,7 +76,7 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
-if(keystone.get('env') === 'development' && fs.existsSync('last_commit.json')){
+if(keystone.get('show version') && fs.existsSync('last_commit.json')){
 	try{
 		keystone.set('last commit', JSON.parse(fs.readFileSync('last_commit.json', 'utf8')));
 	} catch(e){
