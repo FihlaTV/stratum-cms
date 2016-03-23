@@ -10,5 +10,9 @@
 	"HNSVSign": {
 		"id": "HNSVSign",
 		"description": "En beskrivning som förklarar den här widgeten..."
+	},
+	"HNSVPirs": {
+		"id": "HNSVPirs",
+		"description": "En beskrivning som förklarar den här widgeten..."
 	}
 }
