@@ -18,6 +18,9 @@ StartPageWidget.add({
 	widget: {
 		type: Types.Relationship,
 		ref: 'Widget',
+		filters: { // only works with keystone widgets for now
+			type: 'keystone'	
+		},
 		dependsOn: { useWidget: true },
 		many: false
 	},
@@ -39,6 +42,6 @@ StartPageWidget.add({
 	}
 });
 
-StartPageWidget.defaultColumns = 'title, showOnStartPage|20%';
+StartPageWidget.defaultColumns = 'title, useWidget';
 StartPageWidget.register();
 
