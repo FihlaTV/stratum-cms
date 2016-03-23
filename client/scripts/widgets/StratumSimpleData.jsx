@@ -2,6 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import es6Promise from 'es6-promise';
 import Spinner from '../components/Spinner';
 import fetch from 'isomorphic-fetch';
+import numeral from 'numeral';
+
+// Initialize language for all widgets using format
+numeral.language('sv', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    }
+});
+numeral.language('sv');
 
 es6Promise.polyfill();
 

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
-
 class StartPageWidget extends Component {
 	constructor(props) {
 		super(props);
