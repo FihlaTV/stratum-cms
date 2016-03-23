@@ -11,7 +11,6 @@ exports = module.exports = function(req, res) {
 	locals.section = 'home';
 	locals.data = {
 		news: [],
-		newsWithImage: [],
 		widgets: []
 	};
 
@@ -39,28 +38,10 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-
-	//Load start page widgets
-	view.on('init', function(next) {
-		keystone.list('Widget').model
-			.find()
-			.where('showOnStartPage', true)
-			.sort('sortOrder')
-			.limit(10)
-			.populate('stratumWidget')
-			.exec(function(err, widgets) {
-				if (!err) {
-					locals.data.widgets = widgets;
-				}
-				next(err);
-			});
-	});
-
-	//Load static widgets
+	//Load StartPageWidgets
 	view.on('init', function(next) {
 		keystone.list('StartPageWidget').model
 			.find()
-			.where('showOnStartPage', true)
 			.sort('sortOrder')
 			.limit(8)
 			.populate('widget')
@@ -102,7 +83,7 @@ exports = module.exports = function(req, res) {
 			})
 			.sort('-publishedDate')
 			.limit(3)
-			.populate('author categories')
+			.populate('author')
 			.exec(function(err, news) {
 				if (!err) {
 					locals.data.news = news;
@@ -112,25 +93,6 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-	// Load the latest 3 news items containing images
-	view.on('init', function(next) {
-		keystone.list('NewsItem').model.find({
-				state: 'published'
-			})
-			.exists('image')
-			.sort('-publishedDate')
-			.limit(3)
-			.exec(function(err, news) {
-				if (!err) {
-					locals.data.newsWithImage = news.filter(function(newsItem) {
-						return newsItem.image.exists;
-					});
-				}
-				next(err);
-			});
-	});
-
 	// Render the view
 	view.render('index');
-
 };

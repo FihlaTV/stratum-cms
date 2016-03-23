@@ -57,12 +57,14 @@ exports = module.exports = function(app) {
 
 	// API
 	app.all('/api*', keystone.middleware.api);
-	app.all('/api/stratum-widgets', routes.api['stratum-widgets']);
-	app.all('/api/stratum-registers', routes.api['stratum-registers']);
 	app.all('/api/pages', routes.api.pages);
-	app.all('/api/load-widgets', routes.api['load-widgets']);
 	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
+	
+	// API calls for refreshing metadata
+	app.all('/api/refresh/stratum-widgets', routes.api['stratum-widgets']);
+	app.all('/api/refresh/stratum-registers', routes.api['stratum-registers']);
+	app.all('/api/refresh/keystone-widgets', routes.api['keystone-widgets']);
 
 	// Restrict all pages to logged in users for now...
 	if (keystone.get('protect all pages')) {

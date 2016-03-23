@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
 	stratum = require('./' + path.join(root, 'utils/stratum')),
+	keystoneWidgets = require('./' + path.join(root, 'utils/keystone-widgets')),
 	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
 	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
 	appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app',
@@ -113,6 +114,7 @@ keystone.post('updates', function(){
 	stratum.loadWidgets(); 
 	stratum.loadRegisters();
 
+	keystoneWidgets.loadWidgets();
 	// Update Sub Page counter on Pages
 	subPageCount.updateCount();
 });

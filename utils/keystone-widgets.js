@@ -1,10 +1,10 @@
 var keystone = require('keystone'),
 	async = require('async'),
 	_ = require('underscore'),
-	fs = require('fs'),
-	KeystoneWidget = keystone.list('KeystoneWidget');
+	fs = require('fs');
 
 exports.loadWidgets = function(callback) {
+	var KeystoneWidget = keystone.list('KeystoneWidget');
 	var context = {};
 
 	async.series({
@@ -25,7 +25,7 @@ exports.loadWidgets = function(callback) {
 		},
 		addNewAndUpdateChanged: function(next) {
 			context.updatedWidgets = [],
-			context.newWidgets = [];
+				context.newWidgets = [];
 			async.each(context.widgetsFull, function(widget, cb) {
 				KeystoneWidget.model.findOne()
 					.where('name', widget.id)
@@ -82,10 +82,12 @@ exports.loadWidgets = function(callback) {
 		}
 	},
 		function(err) {
-			callback(err, {
-				indexed: context.widgets,
-				updatedWidgets: context.updatedWidgets,
-				newWidgets: context.newWidgets
-			});
+			if (callback) {
+				callback(err, {
+					indexed: context.widgets,
+					updatedWidgets: context.updatedWidgets,
+					newWidgets: context.newWidgets
+				});
+			}
 		});
 };
