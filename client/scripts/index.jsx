@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
+import WidgetWrapper from './components/WidgetWrapper'
 import loginApp from './reducers/reducers';
 
 // Webpack dependencies
@@ -16,9 +17,9 @@ import '../../public/styles/site.less';
 //Temporary Masonry solution until full React version of site...
 window.Masonry = Masonry;
 window.imagesLoaded = imagesLoaded;
-window.Stratum = {};
 
 const mainContainer = document.getElementById('login-button-react');
+const keystoneWidgets = document.querySelectorAll('.keystone-widget');
 
 let store = compose(
 		applyMiddleware(thunkMiddleware),
@@ -39,4 +40,15 @@ if(mainContainer){
 		</Provider>, 
 		mainContainer
 	);
+}
+if(keystoneWidgets){
+	//Read widget id from data-attribute
+	Array.prototype.forEach.call(keystoneWidgets, kw => {
+		const widgetId = kw.getAttribute('data-keystone-widget');
+		const description = kw.getAttribute('data-widget-description');
+		render(
+			<WidgetWrapper id={widgetId} description={description} />,
+			kw
+		);
+	});
 }

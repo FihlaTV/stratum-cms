@@ -7,7 +7,6 @@ exports = module.exports = function(req, res) {
 
 	locals.stratumServer = keystone.get('stratum server');
 	locals.breadcrumbs = [];
-	// locals.widget = 'reportlist';
 	locals.widget = {};
 	locals.section = req.params.page;
 	locals.data = {
@@ -27,7 +26,6 @@ exports = module.exports = function(req, res) {
 		keystone.list('MenuBlock').model
 			.findOne()
 			.where('slug', locals.filters.menu)
-			// .populate('pages')
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -151,21 +149,11 @@ exports = module.exports = function(req, res) {
 						'_id': widget.get('keystoneWidget')
 					})
 					.exec(function(err, kWidget) {
-						var view;
-						if (!err && kWidget) {
-							locals.widgetTpl = kWidget.name;
-							try {
-								view = require('../widgets/' + kWidget.name);
-								view(locals.widget, next);
-							} catch (e) {
-								console.log(e);
-								next(e);
-							}
-						} else {
-							next();
+						if (!err) {
+                            locals.keystoneWidget = kWidget;
 						}
+						next(err);
 					});
-				// console.log(widget.get('name'));
 				break;
 			case 'stratum':
 				keystone.list('StratumWidget').model

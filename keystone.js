@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 	handlebars = require('express-handlebars'),
 	fs = require('fs'),
 	stratum = require('./' + path.join(root, 'utils/stratum')),
+	keystoneWidgets = require('./' + path.join(root, 'utils/keystone-widgets')),
 	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
 	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
 	appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app',
@@ -37,7 +38,7 @@ keystone.init({
 		helpers: new Helpers(),
 		extname: '.hbs'
 	}).engine,
-
+	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
 	'cloudinary config': {secure: true},
 	
@@ -76,7 +77,7 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
-if(keystone.get('env') === 'development' && fs.existsSync('last_commit.json')){
+if(keystone.get('show version') && fs.existsSync('last_commit.json')){
 	try{
 		keystone.set('last commit', JSON.parse(fs.readFileSync('last_commit.json', 'utf8')));
 	} catch(e){
@@ -113,6 +114,7 @@ keystone.post('updates', function(){
 	stratum.loadWidgets(); 
 	stratum.loadRegisters();
 
+	keystoneWidgets.loadWidgets();
 	// Update Sub Page counter on Pages
 	subPageCount.updateCount();
 });

@@ -28,21 +28,23 @@ Widget.add({
 	},
 	type: {
 		type: Types.Select,
-		// numeric: true,
 		options: [{
 			value: 'stratum',
 			label: 'Stratum Widget'
 		}, {
 			value: 'keystone',
 			label: 'Keystone Widget'
-		}, {
-			value: 'other',
-			label: 'Other'
+		// }, {
+		// 	value: 'other',
+		// 	label: 'Other'
 		}]
 	},
 	stratumWidget: {
 		type: Types.Relationship,
 		ref: 'StratumWidget',
+		filters: {
+			removed: false
+		},
 		dependsOn: {
 			type: 'stratum'
 		}
@@ -50,12 +52,16 @@ Widget.add({
 	keystoneWidget: {
 		type: Types.Relationship,
 		ref: 'KeystoneWidget',
+		filters: {
+			removed: false	
+		},
 		dependsOn: {
 			type: 'keystone'
 		}
 	},
 	size: {
 		type: Types.Select,
+		hidden: true,
 		numeric: true,
 		options: [{
 			value: 0,
@@ -77,9 +83,10 @@ Widget.add({
 	},
 	showOnStartPage: {
 		type: Boolean,
+		hidden: true,
 		note: 'Check here if this widget should be visible on the start page'
 	}
 });
-Widget.defaultColumns = 'name, description, showOnStartPage';
+Widget.defaultColumns = 'name, description, type';
 
 Widget.register();

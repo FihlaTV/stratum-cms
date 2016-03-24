@@ -1,0 +1,18 @@
+{
+	"BOAArtrosSkola": {
+		"id": "BOAArtrosSkola",
+		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
+	},
+	"BOAAndel": {
+		"id": "BOAAndel",
+		"description": "En beskrivning som förklarar den här widgeten..."
+	},
+	"HNSVSign": {
+		"id": "HNSVSign",
+		"description": "En beskrivning som förklarar den här widgeten..."
+	},
+	"HNSVPirs": {
+		"id": "HNSVPirs",
+		"description": "En beskrivning som förklarar den här widgeten..."
+	}
+}

@@ -45,3 +45,5 @@ registers/
 
 # VS Code specific 
 .vscode
+
+last_commit.json

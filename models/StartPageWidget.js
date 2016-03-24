@@ -13,9 +13,18 @@ var StartPageWidget = new keystone.List('StartPageWidget', {
 
 StartPageWidget.add({
 	name: { type: String, required: true },
-	digit: { type: String },
-	showOnStartPage: { type: Boolean },
-	description: { type: Types.Textarea },
+	useWidget: { type: Boolean },
+	digit: { type: String, dependsOn: { useWidget: false } },
+	widget: {
+		type: Types.Relationship,
+		ref: 'Widget',
+		filters: { // only works with keystone widgets for now
+			type: 'keystone'	
+		},
+		dependsOn: { useWidget: true },
+		many: false
+	},
+	description: { type: Types.Textarea, dependsOn: { useWidget: false } },
 	linkType: { type: Types.Select, options: ['static', 'page'] },
 	linkText: { type: String, default: 'Se mer statistik', dependsOn: {
 		linkType: ['static', 'page']
@@ -33,6 +42,6 @@ StartPageWidget.add({
 	}
 });
 
-StartPageWidget.defaultColumns = 'title, showOnStartPage|20%';
+StartPageWidget.defaultColumns = 'title, useWidget';
 StartPageWidget.register();
 
