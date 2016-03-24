@@ -1,9 +1,6 @@
 <div class="container">
 	<div class="row">
 		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-8{{/ifeq}}">
-			{{!-- {{> widget}} --}}
-					{{!-- {{#if ../stratumWidget}} --}}
-					{{!-- {{/if}} --}}
 			{{#with data.page}}
 			<article class="base-page">
 				<header>
@@ -14,15 +11,7 @@
 					{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
 					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 				</div>
-				{{/if}}
-				{{!-- Widget --}}
-				{{#if ../widgetTpl}}
-                {{!-- Not used
-				{{> (lookup ../.. 'widgetTpl') ../../widget }}
-                --}}
-				{{/if}}
-				{{!-- /Widget --}}
-                
+				{{/if}}              
 				<div class="post">
 					{{#if lead}}
 					<p class="lead">{{lead}}</p>
