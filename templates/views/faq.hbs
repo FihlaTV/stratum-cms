@@ -2,10 +2,18 @@
 	<div class="row">
 		<div class="col-lg-9">
 			<div class="base-page">
-				<h1>Frågor och svar</h1>
+				<h1>
+					{{#if data.page.title}}
+					{{data.page.title}}
+					{{else}}
+					Frågor och svar
+					{{/if}}
+				</h1>
+				{{#if data.page.lead}}
 				<p class="lead">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam tenetur excepturi totam repellendus sapiente dolorum molestiae, natus repudiandae ab quidem, quaerat non, et modi. Nihil inventore beatae iusto nostrum soluta!
+					{{data.page.lead}}
 				</p>
+				{{/if}}
 				{{#each data.questionCategories}}
 				{{#each this}}
 				{{#if @first}}
