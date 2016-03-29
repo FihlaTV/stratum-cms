@@ -1,9 +1,10 @@
 var keystone = require('keystone'),
-	_ = require('underscore');
+	_ = require('underscore'),
+	importRoutes = keystone.importer(__dirname);
 
 exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res),
-		locals = res.locals;
+		locals = res.locals, context = {};
 
 	locals.stratumServer = keystone.get('stratum server');
 	locals.breadcrumbs = [];
@@ -26,6 +27,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('MenuBlock').model
 			.findOne()
 			.where('slug', locals.filters.menu)
+			.where('static', false)
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -87,6 +89,7 @@ exports = module.exports = function(req, res) {
 					locals.data.widget = page.widget;
 					locals.data.page = page;
 					locals.data.menuPage = page.page || page;
+					context.contentType = page.contentType;
 					if (page.page) {
 						locals.breadcrumbs.push({
 							label: page.page.title,
@@ -119,6 +122,26 @@ exports = module.exports = function(req, res) {
 				next(err);
 			});
 	});
+
+	/**
+	 * Content type
+	 * If the type is other than page select a different view
+	 */
+	view.on('init', function(next){
+		if(context.contentType && context.contentType !== 'default'){
+			var contentViews = importRoutes('./content-types');
+			var contentView = contentViews[context.contentType];
+			if(!contentView){
+				next(); //TODO: Error handling
+				return;
+			}
+			// Redirect view to contentTypes view
+			contentViews[context.contentType](req, res); 
+		} else {
+			next();
+		}
+	});
+		
 
 	//Contacts
 	view.on('init', function(next) {

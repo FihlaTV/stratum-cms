@@ -7,17 +7,17 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 	
 	// Init locals
-	locals.section = 'news';
-	locals.breadcrumbs = [{label: 'Nyheter', path: '/news'}];
+	locals.section = locals.section || 'news';
+	locals.breadcrumbs = locals.breadcrumbs || [{label: 'Nyheter', path: '/news'}];
 	locals.pageScripts = [{src: 'views/news.js'}];
 
 	// locals.filters = {
 	// 	category: req.params.category
 	// };
-	locals.data = {
-		news: []//,
+	locals.data = locals.data || {
 		// categories: []
 	};
+	locals.data.news = [];
 	
 	// Load news
 	view.on('init', function(next) {
