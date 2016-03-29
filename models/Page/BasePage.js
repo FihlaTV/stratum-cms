@@ -51,6 +51,20 @@ BasePage.add({
 	pageType: { type: String, noedit: true, hidden: true, watch: true, value: function(callback){
 		callback(null, this.getValue('__t'));
 	}},
+	contentType: {
+		type: Types.Select,
+		options: [{
+			value: 'default',
+			label: '(Default)'
+		}, {
+			value: 'news',
+			label: 'News Page. Collects all news items and presents them on this page'
+		}, {
+			value: 'faq',
+			label: 'Frequently Asked Questions page, preents all questions and answers'
+		}],
+		default: 'default' 
+	},
 	layout: {
 		type: Types.Select,
 		options: [{
