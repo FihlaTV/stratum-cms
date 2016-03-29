@@ -7,10 +7,12 @@ var keystone = require('keystone'),
  */
 var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'],
 	EXTRA_IMAGE = {
-		type: Types.CloudinaryImage
+		type: Types.CloudinaryImage,
+		dependsOn: { contentType: 'default' }
 	},
 	EXTRA_IMAGE_CAPTION = {
-		type: Types.Textarea, collapse: true
+		type: Types.Textarea, collapse: true,
+		dependsOn: { contentType: 'default' }
 	};
 
 function extraImages(_names){
@@ -67,6 +69,7 @@ BasePage.add({
 	},
 	layout: {
 		type: Types.Select,
+		dependsOn: { contentType: 'default' },
 		options: [{
 			value: 'standard',
 			label: '(Default) Two columns on larger screens, menu to the right'
@@ -83,9 +86,11 @@ BasePage.add({
 		index: true
 	},
 	image: {
+		dependsOn: { contentType: 'default' },
 		type: Types.CloudinaryImage
 	},
 	imageDescription: {
+		dependsOn: { contentType: 'default' },
 		type: String
 	},
 	lead: {
@@ -95,6 +100,7 @@ BasePage.add({
 		note: 'This is text is used as a introductory text to the rest of the page content. Placed above the reqular content'	
 	},
 	content: {
+		dependsOn: { contentType: 'default' },
 		type: Types.Markdown,
 		height: 400,
 		toolbarOptions: {
@@ -102,6 +108,7 @@ BasePage.add({
 		}
 	},
 	widget: {
+		dependsOn: { contentType: 'default' },
 		type: Types.Relationship,
 		ref: 'Widget',
 		many: false
