@@ -8,7 +8,7 @@ exports = module.exports = function(req, res) {
 	
 	// Init locals
 	locals.section = locals.section || 'news';
-	locals.breadcrumbs = locals.breadcrumbs || [{label: 'Nyheter', path: '/news'}];
+	locals.breadcrumbs = locals.breadcrumbs || [{label: 'Nyheter'}];
 	locals.pageScripts = [{src: 'views/news.js'}];
 
 	// locals.filters = {

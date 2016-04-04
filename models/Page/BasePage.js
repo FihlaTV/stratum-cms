@@ -59,9 +59,6 @@ BasePage.add({
 			value: 'default',
 			label: '(Default)'
 		}, {
-			value: 'news',
-			label: 'News Page. Collects all news items and presents them on this page'
-		}, {
 			value: 'faq',
 			label: 'Frequently Asked Questions page, preents all questions and answers'
 		}],

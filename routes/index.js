@@ -75,8 +75,8 @@ exports = module.exports = function(app) {
 	// Views
 	app.get('/', routes.views.index);
 
-	app.get('/nyheter', routes.contentTypes.news);
-	app.get('/nyheter/:newsitem/', routes.views.newsitem);
+	app.get('/nyheter|news', routes.views.news);
+	app.get('/nyheter|news/:newsitem/', routes.views.newsitem);
 	app.get('/registrering', routes.views.registration);
 	app.get('/faq', routes.contentTypes.faq);
 	// app.get('/kontakt', routes.views.contact);
