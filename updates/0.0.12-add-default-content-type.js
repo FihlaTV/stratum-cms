@@ -11,7 +11,7 @@ exports = module.exports = function (done) {
 	async.series({
 		getAllPages: function (next) {
 			BasePage.model
-				.find({ layout: 'wide' })
+				.find()
 				.exec(function (err, pages) {
 					if (!err) {
 						context.pages = pages;
