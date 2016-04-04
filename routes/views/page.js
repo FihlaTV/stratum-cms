@@ -55,6 +55,10 @@ exports = module.exports = function(req, res) {
 			.exec(function(err, pages) {
 				if (!err) {
 					locals.data.pages = pages;
+                    if(pages.length <= 0){
+                        res.status(404).send('Not found');
+                        return;                        
+                    }
 				}
 				next(err);
 			});
