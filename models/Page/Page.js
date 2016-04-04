@@ -26,6 +26,9 @@ Page.add({
 	},
 	numberOfSubPages: {
 		type: Number,
+		dependsOn: {
+			contentType: 'default'
+		},
 		// hidden: true,
 		noedit: true,
 		default: 0

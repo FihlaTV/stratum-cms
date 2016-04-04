@@ -61,7 +61,11 @@ BasePage.add({
 		}, {
 			value: 'faq',
 			label: 'Frequently Asked Questions page, preents all questions and answers'
+		}, {
+			value: 'contact',
+			label: 'Contact listing page'
 		}],
+		emptyOptions: false,
 		default: 'default' 
 	},
 	layout: {
@@ -97,7 +101,7 @@ BasePage.add({
 		note: 'This is text is used as a introductory text to the rest of the page content. Placed above the reqular content'	
 	},
 	content: {
-		dependsOn: { contentType: 'default' },
+		dependsOn: { contentType: ['default', 'contact'] },
 		type: Types.Markdown,
 		height: 400,
 		toolbarOptions: {
