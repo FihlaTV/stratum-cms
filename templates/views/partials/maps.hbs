@@ -3,6 +3,7 @@
 	! function() {
 		window._mapsInit = function() {
 			var latlng = new google.maps.LatLng({{register.geo}}),
+                width = Math.max(document.documentElement["clientWidth"], document.body["scrollWidth"], document.documentElement["scrollWidth"], document.body["offsetWidth"], document.documentElement["offsetWidth"]),
 				mapOptions = {
 						scrollwheel: false,
 						navigationControl: false,
@@ -10,7 +11,7 @@
 						disableDefaultUI: true,
 						zoomControl: true,
 						zoom: 14,
-						draggable: $(document).width() > 480,
+						draggable: width > 480,
 						center: latlng
 					},
 					map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -24,7 +25,7 @@
 			google.maps.event.addDomListener(window, 'resize', function() {
 			    map.setOptions({
 			    	center: latlng,
-			    	draggable: $(document).width() > 480
+			    	draggable: width > 480
 			    });
 			});
 		}
