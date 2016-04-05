@@ -60,7 +60,7 @@ BasePage.add({
 			label: '(Default)'
 		}, {
 			value: 'faq',
-			label: 'Frequently Asked Questions page, preents all questions and answers'
+			label: 'Frequently Asked Questions page, presents all questions and answers'
 		}, {
 			value: 'contact',
 			label: 'Contact listing page'
