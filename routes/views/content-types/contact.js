@@ -6,9 +6,9 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 	
 	// Set locals
-	locals.section = 'contact';
-	locals.breadcrumbs = [{label: 'Kontakt', path: '/kontakt'}];
-	locals.googleApiKey = keystone.get('google api key');
+	locals.section = locals.section || 'contact';
+	locals.breadcrumbs = locals.breadcrumbs || [{label: 'Kontakt', path: '/kontakt'}];
+	locals.googleApiKey = keystone.get('google api key'); // Should probably be placed globally...
 
 	view.on('init', function(next){
 		view.query('contacts', keystone.list('Contact').model

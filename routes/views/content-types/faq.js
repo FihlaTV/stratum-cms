@@ -7,7 +7,7 @@ exports = module.exports = function (req, res) {
 	var view = new keystone.View(req, res),
 		locals = res.locals, navLink, label;
 	
-	locals.section = 'faq';
+	locals.section = locals.section || 'faq';
 	
 	// Find the nav link matching FAQ to look for a label
 	navLink = _.find(locals.navLinks, function (nav) {
@@ -15,11 +15,10 @@ exports = module.exports = function (req, res) {
 	});
 	label = navLink ? navLink.label : 'FAQ';
 
-	locals.breadcrumbs = [{ label: label, path: '/faq' }];
+	locals.breadcrumbs = locals.breadcrumbs || [{ label: label, path: '/faq' }];
 
-	locals.data = {
-		questionCategories: []
-	};
+	locals.data = locals.data || {};
+	locals.data.questionCategories = []
 	
 	// Load Questions
 	view.on('init', function (next) {

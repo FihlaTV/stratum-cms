@@ -19,6 +19,9 @@ SubPage.add({
 	page: {
 		type: Types.Relationship,
 		ref: 'Page',
+		filters: {
+			contentType: 'default'	
+		},
 		many: false,
 		initial: true,
 		label: 'Sub Page to',

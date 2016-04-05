@@ -26,6 +26,9 @@ Page.add({
 	},
 	numberOfSubPages: {
 		type: Number,
+		dependsOn: {
+			contentType: 'default'
+		},
 		// hidden: true,
 		noedit: true,
 		default: 0
@@ -45,4 +48,7 @@ Page.schema.virtual('increaseSubPages').set(function() {
 Page.schema.virtual('hasSubPages').get(function(){
 	return this.get('numberOfSubPages') > 0;
 });
+
+Page.defaultColumns = 'title, menu, numberOfSubPages, contentType';
+
 Page.register();

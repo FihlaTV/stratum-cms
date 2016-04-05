@@ -38,7 +38,8 @@ keystone.pre('render', middleware.flashMessages);
 var routes = {
 	api: importRoutes('./api'),
 	views: importRoutes('./views'),
-	proxies: importRoutes('./proxies')
+	proxies: importRoutes('./proxies'),
+	contentTypes: importRoutes('./views/content-types')
 };
 
 // Setup webpack compiler
@@ -77,7 +78,7 @@ exports = module.exports = function(app) {
 	app.get('/nyheter', routes.views.news);
 	app.get('/nyheter/:newsitem/', routes.views.newsitem);
 	app.get('/registrering', routes.views.registration);
-	app.get('/faq', routes.views.faq);
+	app.get('/faq', routes.contentTypes.faq);
 	// app.get('/kontakt', routes.views.contact);
 
 	// Logout
