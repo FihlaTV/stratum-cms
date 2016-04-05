@@ -1,5 +1,6 @@
 var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+	Types = keystone.Field.Types,
+    shortid = require('shortid');
 
 /**
  * Base Page Model
@@ -45,6 +46,13 @@ BasePage.add({
 		type: String,
 		required: true
 	},
+    shortId: {
+        type: String,
+        'default': shortid.generate,
+        index: true,
+        unique: true,
+        noedit: true
+    },
 	menuTitle: {
 		type: String,
 		collapse: true,
