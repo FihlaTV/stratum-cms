@@ -19,9 +19,46 @@ exports = module.exports = function(req, res) {
 	};
 	locals.filters = {
 		menu: req.params.menublock, //undefined bug
-		page: req.params.page
+		page: req.params.page,
+		shortid: req.params.shortid
 	};
-
+	
+	
+	//Lookup current page from unique id
+	view.on('init', function(next) {
+		if (!locals.filters.shortid){
+			
+		} 
+		keystone.list('BasePage').model
+			.findOne()
+			.where('shortId', locals.filters.shortid)
+			.populate('page', 'slug title numberOfSubPages contacts')
+			.populate('widget')
+			.exec(function(err, page) {
+				if (!err) {
+					if (!page) {
+						res.status(404).send('Not found');
+						return;
+					}
+					locals.data.widget = page.widget;
+					locals.data.page = page;
+					locals.data.menuPage = page.page || page;
+					context.contentType = page.contentType;
+					// if (page.page) {
+					// 	locals.breadcrumbs.push({
+					// 		label: page.page.title,
+					// 		path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
+					// 	});
+					// }
+					// locals.breadcrumbs.push({
+					// 	label: page.title,
+					// 	path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
+					// });
+				}
+				next(err);
+			});
+	});
+	
 	//Current menu block
 	view.on('init', function(next) {
 		keystone.list('MenuBlock').model
@@ -64,50 +101,53 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-	//Current page
-	view.on('init', function(next) {
-		var query = keystone.list('BasePage').model
-			.findOne();
-		if (locals.filters.page) {
-			query.where('slug', locals.filters.page)
-				.or([{
-					'menu': locals.data.currentMenuBlock._id
-				}, {
-					'page': { //check for sub pages
-						'$in': _.pluck(locals.data.pages, '_id')
-					}
-				}]);
-		} else {
-			query.where('menu', locals.data.currentMenuBlock._id)
-				.sort('sortOrder');
-		}
-		query
-			.populate('page', 'slug title numberOfSubPages contacts')
-			.populate('widget')
-			.exec(function(err, page) {
-				if (!err) {
-					if (!page) {
-						res.redirect('/' + locals.filters.menu);
-						return;
-					}
-					locals.data.widget = page.widget;
-					locals.data.page = page;
-					locals.data.menuPage = page.page || page;
-					context.contentType = page.contentType;
-					if (page.page) {
-						locals.breadcrumbs.push({
-							label: page.page.title,
-							path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
-						});
-					}
-					locals.breadcrumbs.push({
-						label: page.title,
-						path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
-					});
-				}
-				next(err);
-			});
-	});
+	// //Current page
+	// view.on('init', function(next) {
+	// 	var query = keystone.list('BasePage').model
+	// 		.findOne();
+	// 	if (locals.filters.shortid){
+	// 		query.where('shortId', locals.filters.shortid);
+	// 	}
+	// 	else if (locals.filters.page) {
+	// 		query.where('slug', locals.filters.page)
+	// 			.or([{
+	// 				'menu': locals.data.currentMenuBlock._id
+	// 			}, {
+	// 				'page': { //check for sub pages
+	// 					'$in': _.pluck(locals.data.pages, '_id')
+	// 				}
+	// 			}]);
+	// 	} else {
+	// 		query.where('menu', locals.data.currentMenuBlock._id)
+	// 			.sort('sortOrder');
+	// 	}
+	// 	query
+	// 		.populate('page', 'slug title numberOfSubPages contacts')
+	// 		.populate('widget')
+	// 		.exec(function(err, page) {
+	// 			if (!err) {
+	// 				if (!page) {
+	// 					res.redirect('/' + locals.filters.menu);
+	// 					return;
+	// 				}
+	// 				locals.data.widget = page.widget;
+	// 				locals.data.page = page;
+	// 				locals.data.menuPage = page.page || page;
+	// 				context.contentType = page.contentType;
+	// 				if (page.page) {
+	// 					locals.breadcrumbs.push({
+	// 						label: page.page.title,
+	// 						path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
+	// 					});
+	// 				}
+	// 				locals.breadcrumbs.push({
+	// 					label: page.title,
+	// 					path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
+	// 				});
+	// 			}
+	// 			next(err);
+	// 		});
+	// });
 
 	//Sub pages
 	view.on('init', function(next) {
