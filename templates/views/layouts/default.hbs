@@ -55,14 +55,14 @@
                                         {{#each ../data.pages}}
                                             {{#ifeq ../../data.menuPage.slug slug}}
                                             <li class="{{#ifeq ../../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
-                                                <a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+                                                <a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a>
                                             </li>
                                             {{#each ../../data.subPages}}
-                                                <li class="sub-sub-nav{{#ifeq ../../../data.page.slug slug}} active{{/ifeq}}"><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+                                                <li class="sub-sub-nav{{#ifeq ../../../data.page.slug slug}} active{{/ifeq}}"><a href="/{{../../../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a></li>
                                             {{/each}}
                                             {{else}}
                                             <li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
-                                                <a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+                                                <a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a>
                                             </li>
                                             {{/ifeq}}
                                         {{/each}}

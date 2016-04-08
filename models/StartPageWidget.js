@@ -33,8 +33,7 @@ StartPageWidget.add({
 		type: Types.Relationship,
 		ref: 'BasePage',
 		index: true,
-		dependsOn: { linkType: 'page' },
-		note: 'Do not use, Not yet implemented!'
+		dependsOn: { linkType: 'page' }
 	},
 	link: {
 		type: Types.Url,

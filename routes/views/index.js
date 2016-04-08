@@ -45,6 +45,7 @@ exports = module.exports = function(req, res) {
 			.sort('sortOrder')
 			.limit(8)
 			.populate('widget')
+			.populate('page', 'slug shortId')
 			.exec(function(err, widgets) {
 				if (!err) {
 					locals.data.startPageWidgets = widgets;
@@ -60,6 +61,9 @@ exports = module.exports = function(req, res) {
 			// Only works with KeystoneWidget for now
 			if (widget.useWidget && 
 				widget.widget && widget.widget.type === 'keystone') {
+				if(widget.linkType === 'page' && widget.page){
+					widget.link = widget.page.directPath;
+				}
 				keystone.list('KeystoneWidget').model
 					.findOne()
 					.where('_id', widget.widget.keystoneWidget)
