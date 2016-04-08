@@ -29,12 +29,12 @@
 				{{#each data.pages}}
 				{{#ifeq ../data.menuPage.slug slug}}
 					<li class="{{#ifeq ../data.page.slug slug}}active {{/ifeq}}{{#if this.hasSubPages}}has-sub-pages expanded{{/if}}">
-						<a href="/{{../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+						<a href="/{{../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a>
 						{{#each ../data.subPages}}
 						{{#if @first}}
 						<ul class="nav nav-pills nav-stacked nav-page-second">
 						{{/if}}
-							<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a></li>
+							<li{{#ifeq ../../data.page.slug slug}} class="active"{{/ifeq}}><a href="/{{../../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a></li>
 						{{#if @last}}
 						</ul>
 						{{/if}}
@@ -42,7 +42,7 @@
 					</li>
 				{{else}}
 					<li {{#if hasSubPages}}class="has-sub-pages"{{/if}}>
-						<a href="/{{../data.currentMenuBlock.slug}}/{{slug}}">{{titleForMenu}}</a>
+						<a href="/{{../data.currentMenuBlock.slug}}/{{slug}}/p/{{shortId}}">{{titleForMenu}}</a>
 					</li>
 				{{/ifeq}}
 				{{/each}}

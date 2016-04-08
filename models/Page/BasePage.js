@@ -150,4 +150,8 @@ BasePage.schema.virtual('extraImages').get(function(){
 	return extraImages;
 });
 
+BasePage.schema.virtual('directPath').get(function(){
+	return '/' + this.slug + '/p/' + this.shortId;
+});
+
 BasePage.register();

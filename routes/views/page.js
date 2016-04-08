@@ -18,21 +18,17 @@ exports = module.exports = function(req, res) {
 		subPages: []
 	};
 	locals.filters = {
-		menu: req.params.menublock, //undefined bug
-		page: req.params.page,
 		shortid: req.params.shortid
 	};
 	
-	
-	//Lookup current page from unique id
+	/**
+	 * Lookup current page from unique id 
+	 */
 	view.on('init', function(next) {
-		if (!locals.filters.shortid){
-			
-		} 
 		keystone.list('BasePage').model
 			.findOne()
 			.where('shortId', locals.filters.shortid)
-			.populate('page', 'slug title numberOfSubPages contacts')
+			.populate('page', 'slug title menuTitle numberOfSubPages contacts menu shortId')
 			.populate('widget')
 			.exec(function(err, page) {
 				if (!err) {
@@ -44,27 +40,21 @@ exports = module.exports = function(req, res) {
 					locals.data.page = page;
 					locals.data.menuPage = page.page || page;
 					context.contentType = page.contentType;
-					// if (page.page) {
-					// 	locals.breadcrumbs.push({
-					// 		label: page.page.title,
-					// 		path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
-					// 	});
-					// }
-					// locals.breadcrumbs.push({
-					// 	label: page.title,
-					// 	path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
-					// });
+					context.menuId = page.menu || page.page && page.page.menu;
 				}
 				next(err);
 			});
 	});
 	
-	//Current menu block
+	/**	
+	 * Current MenuBlock
+	 * 
+	 * Lookup the current menu block related to the page found from short id
+	 */
 	view.on('init', function(next) {
 		keystone.list('MenuBlock').model
 			.findOne()
-			.where('slug', locals.filters.menu)
-			.where('static', false)
+			.where('_id', context.menuId)
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -73,22 +63,23 @@ exports = module.exports = function(req, res) {
 				} else {
 					locals.data.currentMenuBlock = menu;
 					locals.section = menu.slug;
-					locals.breadcrumbs.push({
-						label: menu.name,
-						path: '/' + menu.slug
-					});
 					next();
 				}
 			});
 	});
 
-	//Pages in menu block
+	/**
+	 * Pages in MenuBlocks
+	 * 
+	 * Lookup all pages which have a relation to the current menu block
+	 * Store them in locals
+	 */
 	view.on('init', function(next) {
 		keystone.list('Page').model
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.sort('sortOrder')
-			.select('slug title menuTitle numberOfSubPages')
+			.select('slug title menuTitle shortId numberOfSubPages')
 			.exec(function(err, pages) {
 				if (!err) {
 					locals.data.pages = pages;
@@ -101,55 +92,35 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-	// //Current page
-	// view.on('init', function(next) {
-	// 	var query = keystone.list('BasePage').model
-	// 		.findOne();
-	// 	if (locals.filters.shortid){
-	// 		query.where('shortId', locals.filters.shortid);
-	// 	}
-	// 	else if (locals.filters.page) {
-	// 		query.where('slug', locals.filters.page)
-	// 			.or([{
-	// 				'menu': locals.data.currentMenuBlock._id
-	// 			}, {
-	// 				'page': { //check for sub pages
-	// 					'$in': _.pluck(locals.data.pages, '_id')
-	// 				}
-	// 			}]);
-	// 	} else {
-	// 		query.where('menu', locals.data.currentMenuBlock._id)
-	// 			.sort('sortOrder');
-	// 	}
-	// 	query
-	// 		.populate('page', 'slug title numberOfSubPages contacts')
-	// 		.populate('widget')
-	// 		.exec(function(err, page) {
-	// 			if (!err) {
-	// 				if (!page) {
-	// 					res.redirect('/' + locals.filters.menu);
-	// 					return;
-	// 				}
-	// 				locals.data.widget = page.widget;
-	// 				locals.data.page = page;
-	// 				locals.data.menuPage = page.page || page;
-	// 				context.contentType = page.contentType;
-	// 				if (page.page) {
-	// 					locals.breadcrumbs.push({
-	// 						label: page.page.title,
-	// 						path: '/' + locals.data.currentMenuBlock.slug + '/' + page.page.slug
-	// 					});
-	// 				}
-	// 				locals.breadcrumbs.push({
-	// 					label: page.title,
-	// 					path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug
-	// 				});
-	// 			}
-	// 			next(err);
-	// 		});
-	// });
+	/**
+	 * Breadcrumbs
+	 * 
+	 * Push all breadcrumbs to locals
+	 */
+	view.on('init', function(next){
+		var menu = locals.data.currentMenuBlock;
+		var menuPage = locals.data.menuPage;
+		var page = locals.data.page;
+		locals.breadcrumbs.push({
+			label: menu.name,
+			path: '/' + menu.slug
+		});
+		locals.breadcrumbs.push({
+			label: menuPage.titleForMenu,
+			path: '/' + locals.data.currentMenuBlock.slug + '/' + menuPage.slug + '/p/' + menuPage.shortId
+		});
+		if(page !== menuPage && page){
+			locals.breadcrumbs.push({
+				label: page.titleForMenu,
+				path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug + '/p/' + page.shortId
+			});
+		}
+		next();
+	});
 
-	//Sub pages
+	/**
+	 * SubPages
+	 */
 	view.on('init', function(next) {
 		if (!locals.data.page) {
 			next();
@@ -168,8 +139,8 @@ exports = module.exports = function(req, res) {
 	});
 
 	/**
-	 * Content type
-	 * If the type is other than page select a different view
+	 * ContentType
+	 * If the type is other than default select a different view
 	 */
 	view.on('init', function(next){
 		if(context.contentType && context.contentType !== 'default'){
@@ -186,8 +157,9 @@ exports = module.exports = function(req, res) {
 		}
 	});
 		
-
-	//Contacts
+	/**
+	 * Contacts
+	 */
 	view.on('init', function(next) {
 		if (!locals.data.page || !locals.data.page.contacts) {
 			next();
@@ -206,7 +178,9 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-	//Load widget settings
+	/**
+	 * Widget Settings
+	 */
 	view.on('init', function(next) {
 		var widget = locals.data.widget;
 		switch (widget && widget.getValue('type')) {

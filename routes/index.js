@@ -85,7 +85,6 @@ exports = module.exports = function(app) {
 	app.get('/logout', routes.views.logout);
 	
 	// Views for dynamic routes
-	app.get('/:menublock?', routes.views.page);
-	app.get('/:menublock/*/p/:shortid', routes.views.page);
-	app.get('/:menublock?/:page', routes.views.page);
+	app.get('/:menublock/', routes.views.menublock);
+	app.get('*/p/:shortid', routes.views.page);
 };
