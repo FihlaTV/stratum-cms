@@ -33,7 +33,7 @@ exports = module.exports = function(req, res) {
 			.exec(function(err, page) {
 				if (!err) {
 					if (!page) {
-						res.status(404).send('Not found');
+						res.notFound();
 						return;
 					}
 					locals.data.widget = page.widget;
@@ -59,7 +59,7 @@ exports = module.exports = function(req, res) {
 				if (err) {
 					next(err);
 				} else if (!menu) {
-					res.status(404).send('Not found');
+					res.notFound();
 				} else {
 					locals.data.currentMenuBlock = menu;
 					locals.section = menu.slug;
@@ -84,7 +84,7 @@ exports = module.exports = function(req, res) {
 				if (!err) {
 					locals.data.pages = pages;
                     if(pages.length <= 0){
-                        res.status(404).send('Not found');
+						res.notFound();
                         return;                        
                     }
 				}

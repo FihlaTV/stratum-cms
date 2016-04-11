@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fel...</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	{{#ifeq env "production"}}
+	<link href="{{styleEntry}}" rel="stylesheet">
+	{{/ifeq}}
+</head>
+<body>
+	<div class="container error-page">
+		<h1>
+			{{#if errorTitle}}
+			{{errorTitle}}
+			{{else}}
+			Serverfel...
+			{{/if}}
+		</h1>
+		<p class="error-page-message">
+			{{errorMsg}}
+		</p>
+		<p class="back-link">
+			<a href="/">Gå till startsidan</a>
+		</p>
+	</div>
+	{{!-- React scripts --}}
+	{{#ifeq env "development"}}
+	<script type="text/javascript" src="/js/bundle.js"></script>
+	{{else}}
+	<script type="text/javascript" src="/dist/vendors.js"></script>
+	<script type="text/javascript" src="/dist/app.bundle.js"></script>
+	{{/ifeq}}
+</body>
+</html>

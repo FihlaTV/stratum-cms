@@ -26,13 +26,29 @@ var keystone = require('keystone'),
 	webpackDevMiddleware = require('webpack-dev-middleware'),
 	webpackHotMiddleware = require('webpack-hot-middleware'),
 	webpackConfig = require('../webpack.config');
-	
+
 
 
 // Common Middleware
 keystone.pre('routes', middleware.mapContextId);
 keystone.pre('routes', middleware.initLocals);
+keystone.pre('routes', middleware.initErrorHandlers);
 keystone.pre('render', middleware.flashMessages);
+
+// Handle 404 errors
+keystone.set('404', function(req, res, next) {
+    res.notFound();
+});
+
+// Handle other errors
+keystone.set('500', function(err, req, res, next) {
+    var title, message;
+    if (err instanceof Error) {
+        message = err.message;
+        err = err.stack;
+    }
+    res.err(err, title, message);
+});
 
 // Import Route Controllers
 var routes = {
@@ -50,7 +66,7 @@ exports = module.exports = function(app) {
 	app.all('/stratum/*', routes.proxies.stratum);
 
 	//Activate webpack hot reload middleware
-	if(keystone.get('env') === 'development'){
+	if (keystone.get('env') === 'development') {
         var compiler = webpack(webpackConfig);
 		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
 		app.use(webpackHotMiddleware(compiler));
@@ -61,7 +77,7 @@ exports = module.exports = function(app) {
 	app.all('/api/pages', routes.api.pages);
 	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
-	
+
 	// API calls for refreshing metadata
 	app.all('/api/refresh/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/refresh/stratum-registers', routes.api['stratum-registers']);
@@ -83,7 +99,7 @@ exports = module.exports = function(app) {
 
 	// Logout
 	app.get('/logout', routes.views.logout);
-	
+
 	// Views for dynamic routes
 	app.get('/:menublock/', routes.views.menublock);
 	app.get('*/p/:shortid', routes.views.page);

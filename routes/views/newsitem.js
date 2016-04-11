@@ -12,9 +12,6 @@ exports = module.exports = function(req, res) {
 		newsItem: req.params.newsitem
 	};
 	locals.data = {};
-	// locals.data = {
-	// 	newsItems: []
-	// };
 	
 	// Load the current newsItem
 	view.on('init', function(next) {
@@ -24,27 +21,19 @@ exports = module.exports = function(req, res) {
 			slug: locals.filters.newsItem
 		}).populate('author categories');
 		
-		q.exec(function(err, result) {
+		q.exec(function(err, newsItem) {
 			if(!err){
-				locals.data.newsItem = result;
-				locals.breadcrumbs.push({label: result.title, path: '/nyheter/' + result.slug});
+				if(!newsItem){
+					res.notFound(null, 'Det gick inte att hitta någon nyhet som matchade den adress du angav...');
+					return;
+				}
+				locals.data.newsItem = newsItem;
+				locals.breadcrumbs.push({label: newsItem.title, path: '/nyheter/' + newsItem.slug});
 			}
 			next(err);
 		});
 		
 	});
-	
-	// // Load other newsItems
-	// view.on('init', function(next) {
-		
-	// 	var q = keystone.list('NewsItem').model.find().where('state', 'published').sort('-publishedDate').populate('author').limit('4');
-		
-	// 	q.exec(function(err, results) {
-	// 		locals.data.newsItems = results;
-	// 		next(err);
-	// 	});
-		
-	// });
 	
 	// Render the view
 	view.render('newsitem');
