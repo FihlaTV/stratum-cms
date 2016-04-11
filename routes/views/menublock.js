@@ -38,7 +38,7 @@ exports = module.exports = function(req, res) {
 			.exec(function(err, page) {
 				if (!err) {
                     if(!page){
-                        res.status(404).send('Not found');
+						res.notFound();
                     } else {
 						res.redirect('/' + context.menu.slug + '/' + page.slug + '/p/' + page.shortId);
 					}

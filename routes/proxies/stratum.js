@@ -10,8 +10,7 @@ exports = module.exports = function(req, res) {
 		uri;
 
 	if (!(/^\/stratum\/[^\/]/).test(req.url)) {
-		res.status(404)
-			.send('Not found');
+		res.notFound();
 		return;
 	}
 	uri = req.url.replace(/^\/stratum\//, stratumUrl);
