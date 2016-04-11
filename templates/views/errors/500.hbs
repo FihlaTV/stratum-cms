@@ -4,37 +4,9 @@
     <meta charset="UTF-8">
     <title>Fel...</title>
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	{{#ifeq env "production"}}
 	<link href="{{styleEntry}}" rel="stylesheet">
-	<style>
-		.error-page {
-			padding-top: 60px;
-			position: relative;
-			font-size: 25px;
-			max-width: 550px;
-			font-weight: 300;
-		}
-		.error-page::after {
-			position: absolute;
-			color: #d3d3d3;
-			z-index: -1;
-			top: -10px;
-			right: 0;
-			font-weight: 400;
-			line-height: 1;
-			font-size: 300px;
-			font-family: 'Roboto Slab';
-			content: '?!';
-		}
-		.error-page h1 {
-			font-size: 50px;
-			text-transform: unset;
-		}
-		.error-page .back-link{
-			margin-top: 40px;
-			float: right;
-			font-weight: 400;
-		}
-	</style>
+	{{/ifeq}}
 </head>
 <body>
 	<div class="container error-page">
@@ -45,12 +17,19 @@
 			Serverfel...
 			{{/if}}
 		</h1>
-		<p>
+		<p class="error-page-message">
 			{{errorMsg}}
 		</p>
 		<p class="back-link">
 			<a href="/">Gå till startsidan</a>
 		</p>
 	</div>
+	{{!-- React scripts --}}
+	{{#ifeq env "development"}}
+	<script type="text/javascript" src="/js/bundle.js"></script>
+	{{else}}
+	<script type="text/javascript" src="/dist/vendors.js"></script>
+	<script type="text/javascript" src="/dist/app.bundle.js"></script>
+	{{/ifeq}}
 </body>
 </html>
