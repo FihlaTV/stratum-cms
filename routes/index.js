@@ -32,7 +32,14 @@ var keystone = require('keystone'),
 // Common Middleware
 keystone.pre('routes', middleware.mapContextId);
 keystone.pre('routes', middleware.initLocals);
+keystone.pre('routes', middleware.initErrorHandlers);
 keystone.pre('render', middleware.flashMessages);
+
+// Handle 404 errors
+keystone.set('404', function(req, res, next) {
+    res.notFound();
+});
+ 
 
 // Import Route Controllers
 var routes = {

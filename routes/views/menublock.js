@@ -18,7 +18,7 @@ exports = module.exports = function(req, res) {
 				if (err) {
 					next(err);
 				} else if (!menu) {
-					res.status(404).send('Not found');
+					res.notFound();
 					return;
 				} else {
 					context.menu = menu;
