@@ -28,7 +28,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('BasePage').model
 			.findOne()
 			.where('shortId', locals.filters.shortid)
-			.populate('page', 'slug title menuTitle numberOfSubPages contacts menu shortId')
+			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories')
 			.populate('widget')
 			.exec(function(err, page) {
 				if (!err) {

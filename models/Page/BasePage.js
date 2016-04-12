@@ -76,6 +76,14 @@ BasePage.add({
 		emptyOptions: false,
 		default: 'default' 
 	},
+	questionCategories:{
+		dependsOn: {
+			contentType: 'faq'
+		},
+		type: Types.Relationship,
+		ref: 'QuestionCategory',
+		many: true
+	},
 	layout: {
 		type: Types.Select,
 		dependsOn: { contentType: 'default' },
