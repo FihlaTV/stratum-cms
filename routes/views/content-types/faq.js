@@ -20,7 +20,7 @@ exports = module.exports = function(req, res) {
 	locals.data = locals.data || {};
 	locals.data.questionCategories = []
 	locals.filters = locals.filters || {};
-	locals.filters.questionCategories = locals.data && locals.data.page && locals.data.page.questionCategories;
+	locals.filters.questionCategories = locals.data.page && locals.data.page.questionCategories;
 
 	// Load Questions
 	view.on('init', function(next) {
