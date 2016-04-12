@@ -48,9 +48,9 @@ class Login extends Component {
 					<LoginModal onHide={close} show={showModal} title="Logga in" titleSmall="Välj metod">
                         <LoginModal.Body>
                             <LoginSelectorList onClick={loginSelect} loginSelectors={[
+                                {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'},
                                 {cssClass: 'bankid', 
-                                    loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'},
-                                {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'}
+                                    loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'}
                             ]}/>
                         </LoginModal.Body>
                         <LoginModal.Footer>
