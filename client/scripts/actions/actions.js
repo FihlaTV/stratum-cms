@@ -20,6 +20,9 @@ export function initLoginModal(){
 	return (dispatch) => {
 		dispatch(setCurrentProtocol(window.location.protocol === 'https:'));
 		dispatch(resetState(true));
+		if(process.env.NODE_ENV !== 'development'){
+			dispatch(loginError(new Error('Det går inte att logga in pga att du inte besöker webbplatsen över https. Var god försök igen under https.')));
+		}
 		return dispatch(showLoginModal(true));
 	}
 }
