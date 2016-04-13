@@ -7,6 +7,7 @@ import {
 	RESET_STATE, 
 	HAS_NEXT_STATE,
 	SHOW_LOGIN_MODAL, 
+	SET_HTTPS_FLAG
 	} from '../actions/actions';
 
 const initialState = {
@@ -24,7 +25,7 @@ export default (state = initialState, action) => {
 			});
 		case RESET_STATE:
 			return Object.assign({}, initialState, {
-				showLoginModal: true
+				showLoginModal: !action.close
 			});
 		case SET_SITHS_STATUS:
 			return Object.assign({}, state, {
@@ -41,6 +42,10 @@ export default (state = initialState, action) => {
 		case SHOW_LOGIN_MODAL:
 			return Object.assign({}, state, {
 				showLoginModal: action.showLoginModal
+			});
+		case SET_HTTPS_FLAG:
+			return Object.assign({}, state, {
+				https: action.https
 			});
 		default:
 			return state;

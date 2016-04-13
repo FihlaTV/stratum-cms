@@ -8,12 +8,28 @@ export const RESET_STATE = 'RESET_STATE';
 export const HAS_NEXT_STATE = 'HAS_NEXT_STATE';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const SHOW_LOGIN_MODAL = 'SHOW_LOGIN_MODAL';
+export const SET_HTTPS_FLAG = 'SET_HTTPS_FLAG';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
     SITHS_CARD: 'SITHS_CARD',
 
 };
+
+export function initLoginModal(){
+	return (dispatch) => {
+		dispatch(setCurrentProtocol(window.location.protocol === 'https:'));
+		dispatch(resetState(true));
+		return dispatch(showLoginModal(true));
+	}
+}
+
+export function setCurrentProtocol(isHTTPS){
+	return {
+		type: SET_HTTPS_FLAG,
+		https: isHTTPS
+	};
+}
 
 export function showLoginModal(show){
 	return {
@@ -29,9 +45,10 @@ export function setLoginMethod(loginMethod) {
     };
 }
 
-export function resetState() {
+export function resetState(closeModal) {
 	return {
-		type: RESET_STATE
+		type: RESET_STATE,
+		close: closeModal
 	};
 }
 

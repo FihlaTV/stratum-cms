@@ -26,18 +26,19 @@ class Login extends Component {
 			nextState,
 			hasNextState,
 			sithsStatus,
-			showModal
+			showModal,
+			https
 		} = this.props;
 		if(error){
 			return (
-                <LoginModal show={showModal} title="Inloggningen Misslyckades">
+                <LoginModal onHide={close} show={showModal} title="Inloggningen Misslyckades">
 					<LoginModal.Body>
                         <Alert alertType="danger" faIcon="fa-exclamation-triangle">
                             {error.message}
                         </Alert>
 					</LoginModal.Body>
 					<LoginModal.Footer>
-                        <ResetState onClick={resetState}>Tillbaka</ResetState>
+                        <ResetState onClick={close}>Stäng</ResetState>
                     </LoginModal.Footer>
 				</LoginModal>
 			);
@@ -52,6 +53,11 @@ class Login extends Component {
                                 {cssClass: 'bankid', 
                                     loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'}
                             ]}/>
+							{ https ? null :
+							<Alert alertType="danger" faIcon="fa-exclamation-triangle">
+								Du är inte under https, inloggningen kommer inte fungera som förväntat
+							</Alert>
+							 }
                         </LoginModal.Body>
                         <LoginModal.Footer>
                             <ResetState onClick={close} />
@@ -60,7 +66,7 @@ class Login extends Component {
 				);
 			case LoginMethod.BANK_ID:
 				return (
-					<LoginModal show={showModal} title="Mobilt BankID">
+					<LoginModal onHide={close} show={showModal} title="Mobilt BankID">
                         <LoginModal.Body>
                             <BankID onSubmit={nextState}/>
                         </LoginModal.Body>
@@ -72,7 +78,7 @@ class Login extends Component {
 				);
 			case LoginMethod.SITHS_CARD:
 				return (
-					<LoginModal show={showModal} title="SITHS-kort">
+					<LoginModal onHide={close} show={showModal} title="SITHS-kort">
                         <LoginModal.Body>
                             <SITHSLogin status={sithsStatus} />
                         </LoginModal.Body>
@@ -118,7 +124,8 @@ function mapStateToProps(state){
 		validPNr: state.bankId.personalNumberValidity,
 		sithsStatus: state.login.sithsStatus,
 		hasNextState: state.login.hasNextState,
-		showModal: state.login.showLoginModal
+		showModal: state.login.showLoginModal,
+		https: state.login.https
 	};
 }
 
