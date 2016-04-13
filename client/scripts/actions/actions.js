@@ -85,14 +85,18 @@ export function setSITHSStatus(sithsStatus){
 	};
 }
 
-function stratumErrorMessages(errorCode){
+function sithsErrorMessages(errorCode){
 	switch(errorCode) {
-		case 1:
-			return 'Kontextfel';
 		case 9: 
-			return 'Autentiserad session saknas';
+            return `Ditt SITHS-kort kunde identifieras, 
+                men du har inte behörighet att gå in i registret. 
+                Kontakta registrets support.`;
+		case 1:
+			// return 'Kontextfel';
 		default:
-			return 'Oväntat fel i stratum';
+			return `Ditt SITHS-kort kunde inte identifieras. 
+                Pröva att stänga browsern. Sätt i SITHS-kortet. 
+                Öppna browsern igen och gå till registrets webbplats.`;
 	}
 }
 
@@ -110,7 +114,7 @@ export function initiateSITHSLogin(){
 				if(json.success){
 					return dispatch(loginToStratum());
 				} else {
-					const error = new Error(json.code ? stratumErrorMessages(json.code) : json.message);
+					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
 				}
 			})
@@ -249,6 +253,26 @@ export function getToken(personalNumber) {
     };
 }
 
+
+function getStratumProxyLoginError(errorCode){
+    switch (errorCode){
+        case 'CONTEXT_ERROR':
+            return `Din inloggning kunde identifieras, 
+                men du har inte behörighet att gå in i registret. 
+                Kontakta registrets support.`;
+        case 'PARSE_ERROR':
+        case 'UNKOWN_STRATUM_ERROR':
+            // TODO: Better explanation
+            return `Oväntat fel under identifiering.`;
+        default:
+            return;
+    }
+}
+
+/**
+ * Does the actual login to stratum once the cookie has been received 
+ * from stratum. 
+ */
 export function loginToStratum(){
 	return dispatch => {
 		return fetch('/api/authentication/login', { credentials: 'include' })
@@ -259,7 +283,7 @@ export function loginToStratum(){
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(json.code ? getStratumProxyLoginError(json.code) : json.message);
 					throw (error);
 				}
 			})
