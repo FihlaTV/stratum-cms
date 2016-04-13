@@ -46,7 +46,7 @@ class Login extends Component {
 		switch(loginMethod){
 			case LoginMethod.NOT_SELECTED:
 				return (
-					<LoginModal onHide={close} show={showModal} title="Logga in" titleSmall="Välj metod">
+					<LoginModal onHide={close} show={showModal} title="Välj metod för att logga in">
                         <LoginModal.Body>
                             <LoginSelectorList onClick={loginSelect} loginSelectors={[
                                 {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'},

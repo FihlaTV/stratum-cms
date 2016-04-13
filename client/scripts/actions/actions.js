@@ -85,6 +85,21 @@ export function setSITHSStatus(sithsStatus){
 	};
 }
 
+function stratumErrorMessages(errorCode){
+	switch(errorCode) {
+		case 1:
+			return 'Kontextfel';
+		case 9: 
+			return 'Autentiserad session saknas';
+		default:
+			return 'Oväntat fel i stratum';
+	}
+}
+
+/**	
+ * Does a call directly to stratum from the client in order to be able to send 
+ * client certificates and retreive a stratum cookie
+ */
 export function initiateSITHSLogin(){
 	return (dispatch) => {
 		dispatch(setHasNextState(false));
@@ -95,7 +110,7 @@ export function initiateSITHSLogin(){
 				if(json.success){
 					return dispatch(loginToStratum());
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(json.code ? stratumErrorMessages(json.code) : json.message);
 					throw (error);
 				}
 			})
