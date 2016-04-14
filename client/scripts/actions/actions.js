@@ -261,7 +261,7 @@ function getStratumProxyLoginError(errorCode){
                 men du har inte behörighet att gå in i registret. 
                 Kontakta registrets support.`;
         case 'PARSE_ERROR':
-        case 'UNKOWN_STRATUM_ERROR':
+        case 'UNKNOWN_STRATUM_ERROR':
             // TODO: Better explanation
             return `Oväntat fel under identifiering.`;
         default:
