@@ -242,7 +242,7 @@ export function getToken(personalNumber) {
 					dispatch(setBIDStage(LoginStages.BID_COLLECT));
 					return dispatch(collectBIDLogin(json.data.orderRef));
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(getBIDErrorMessage(json.message));
 					throw (error);
 				}
 			})
@@ -253,7 +253,24 @@ export function getToken(personalNumber) {
     };
 }
 
+function getBIDErrorMessage(errorCode){
+    switch (errorCode){
+        case '': 
+            return;
+        case 'EXPIRED_TRANSACTION': 
+            return 'För lång tid hann passera innan synkronisering med Mobilt BankID genomfördes, var god försök igen';
+        case 'ALREADY_IN_PROGRESS': 
+            return 'En synkronisering mot Mobilt BankID med ditt personnummer är redan initierad försök igen om ett par minuter';
+        case 'INVALID_PARAMETERS':
+        default:
+            return 'Oväntat fel uppstod, var god försök igen';
+    }
+}
 
+/**
+ * Returns explainatory texts for the errorcodes returned by the 
+ * proxied login call. 
+ */
 function getStratumProxyLoginError(errorCode){
     switch (errorCode){
         case 'CONTEXT_ERROR':
@@ -271,7 +288,8 @@ function getStratumProxyLoginError(errorCode){
 
 /**
  * Does the actual login to stratum once the cookie has been received 
- * from stratum. 
+ * from stratum. This call is handled by a proxy in Keystone and not by 
+ * stratum directly, in order to read the cookie.
  */
 export function loginToStratum(){
 	return dispatch => {
@@ -317,7 +335,7 @@ export function collectBIDLogin(orderRef) {
 						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
 					}
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(getBIDErrorMessage(json.message));
 					throw (error);
 				}
 			})
