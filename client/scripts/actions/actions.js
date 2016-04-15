@@ -12,8 +12,7 @@ export const SET_HTTPS_FLAG = 'SET_HTTPS_FLAG';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
-    SITHS_CARD: 'SITHS_CARD',
-
+    SITHS_CARD: 'SITHS_CARD'
 };
 
 export function initLoginModal(){
@@ -87,12 +86,13 @@ export function setSITHSStatus(sithsStatus){
 
 function sithsErrorMessages(errorCode){
 	switch(errorCode) {
-		case 9: 
+		case 3: // TODO: Look further into these error codes and see if they match
+		case 4:
             return `Ditt SITHS-kort kunde identifieras, 
                 men du har inte behörighet att gå in i registret. 
                 Kontakta registrets support.`;
+		case 9: //Kontextfel?
 		case 1:
-			// return 'Kontextfel';
 		default:
 			return `Ditt SITHS-kort kunde inte identifieras. 
                 Pröva att stänga browsern. Sätt i SITHS-kortet. 
@@ -215,12 +215,6 @@ export function validatePersonalNumber(personalNumber){
 	};
 }
 
-function bidLoginError(error){
-	return dispatch => {
-		dispatch(loginError(error));
-	};
-}
-
 export function initiateBID() {
 	return (dispatch, getState) => {
 		const state = getState();
@@ -248,22 +242,20 @@ export function getToken(personalNumber) {
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 			});
     };
 }
 
 function getBIDErrorMessage(errorCode){
     switch (errorCode){
-        case '': 
-            return;
         case 'EXPIRED_TRANSACTION': 
-            return 'För lång tid hann passera innan synkronisering med Mobilt BankID genomfördes, var god försök igen';
+            return 'Du tog för lång tid på dig. Börja om från början.';
         case 'ALREADY_IN_PROGRESS': 
             return 'En synkronisering mot Mobilt BankID med ditt personnummer är redan initierad försök igen om ett par minuter';
         case 'INVALID_PARAMETERS':
         default:
-            return 'Oväntat fel uppstod, var god försök igen';
+            return 'Det har uppstått något problem med tjänsten Mobilt BankID. Försök igen.';
     }
 }
 
@@ -277,12 +269,8 @@ function getStratumProxyLoginError(errorCode){
             return `Din inloggning kunde identifieras, 
                 men du har inte behörighet att gå in i registret. 
                 Kontakta registrets support.`;
-        case 'PARSE_ERROR':
-        case 'UNKNOWN_STRATUM_ERROR':
-            // TODO: Better explanation
-            return `Oväntat fel under identifiering.`;
         default:
-            return;
+            return `Oväntat fel under identifiering.`;
     }
 }
 
@@ -307,7 +295,7 @@ export function loginToStratum(){
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 			});
 	};
 }
@@ -340,7 +328,7 @@ export function collectBIDLogin(orderRef) {
 				}
 			})
 			.catch(error => { 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 				console.log('request failed', error); 
 			});
 	}
