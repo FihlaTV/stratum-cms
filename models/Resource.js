@@ -19,8 +19,7 @@ Resource.add({
 	file: {
 		type: Types.AzureFile,
 		containerFormatter: function (item, filename) {
-			return 'registercentrum';
-			// return keystone.get('brand');
+			return keystone.get('brand safe');
 		},
 		filenameFormatter: function (item, filename) {
 			return item._id + require('path').extname(filename);
