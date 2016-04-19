@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
  
 const ResetState = ({
 	onClick,
+	disabled,
 	children = 'Avbryt'
 }) => {
 	return (
@@ -10,7 +11,7 @@ const ResetState = ({
 			e => {
 				e.preventDefault();
 				onClick();
-			}}>{children}</button>
+			}} disabled={disabled}>{children}</button>
 	);
 }
 

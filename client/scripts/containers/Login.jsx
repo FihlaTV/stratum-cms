@@ -71,7 +71,7 @@ class Login extends Component {
                             <BankID onSubmit={nextState}/>
                         </LoginModal.Body>
                         <LoginModal.Footer>
-							<ResetState onClick={resetState}>Tillbaka</ResetState>
+							<ResetState onClick={resetState} disabled={validPNr && !hasNextState}>Tillbaka</ResetState>
                             <NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
                         </LoginModal.Footer>
 					</LoginModal>
