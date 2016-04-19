@@ -8,12 +8,30 @@ export const RESET_STATE = 'RESET_STATE';
 export const HAS_NEXT_STATE = 'HAS_NEXT_STATE';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const SHOW_LOGIN_MODAL = 'SHOW_LOGIN_MODAL';
+export const SET_HTTPS_FLAG = 'SET_HTTPS_FLAG';
 
 export const LoginMethod = {
     BANK_ID: 'BANK_ID',
-    SITHS_CARD: 'SITHS_CARD',
-
+    SITHS_CARD: 'SITHS_CARD'
 };
+
+export function initLoginModal(){
+	return (dispatch) => {
+		dispatch(setCurrentProtocol(window.location.protocol === 'https:'));
+		dispatch(resetState(true));
+		if(process.env.NODE_ENV !== 'development'){
+			dispatch(loginError(new Error('Det går inte att logga in pga att du inte besöker webbplatsen över https. Var god försök igen under https.')));
+		}
+		return dispatch(showLoginModal(true));
+	}
+}
+
+export function setCurrentProtocol(isHTTPS){
+	return {
+		type: SET_HTTPS_FLAG,
+		https: isHTTPS
+	};
+}
 
 export function showLoginModal(show){
 	return {
@@ -29,9 +47,10 @@ export function setLoginMethod(loginMethod) {
     };
 }
 
-export function resetState() {
+export function resetState(closeModal) {
 	return {
-		type: RESET_STATE
+		type: RESET_STATE,
+		close: closeModal
 	};
 }
 
@@ -65,6 +84,26 @@ export function setSITHSStatus(sithsStatus){
 	};
 }
 
+function sithsErrorMessages(errorCode){
+	switch(errorCode) {
+		case 3: // TODO: Look further into these error codes and see if they match
+		case 4:
+            return `Ditt SITHS-kort kunde identifieras, 
+                men du har inte behörighet att gå in i registret. 
+                Kontakta registrets support.`;
+		case 9: //Kontextfel?
+		case 1:
+		default:
+			return `Ditt SITHS-kort kunde inte identifieras. 
+                Pröva att stänga browsern. Sätt i SITHS-kortet. 
+                Öppna browsern igen och gå till registrets webbplats.`;
+	}
+}
+
+/**	
+ * Does a call directly to stratum from the client in order to be able to send 
+ * client certificates and retreive a stratum cookie
+ */
 export function initiateSITHSLogin(){
 	return (dispatch) => {
 		dispatch(setHasNextState(false));
@@ -75,7 +114,7 @@ export function initiateSITHSLogin(){
 				if(json.success){
 					return dispatch(loginToStratum());
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
 				}
 			})
@@ -176,12 +215,6 @@ export function validatePersonalNumber(personalNumber){
 	};
 }
 
-function bidLoginError(error){
-	return dispatch => {
-		dispatch(loginError(error));
-	};
-}
-
 export function initiateBID() {
 	return (dispatch, getState) => {
 		const state = getState();
@@ -203,17 +236,49 @@ export function getToken(personalNumber) {
 					dispatch(setBIDStage(LoginStages.BID_COLLECT));
 					return dispatch(collectBIDLogin(json.data.orderRef));
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(getBIDErrorMessage(json.message));
 					throw (error);
 				}
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 			});
     };
 }
 
+function getBIDErrorMessage(errorCode){
+    switch (errorCode){
+        case 'EXPIRED_TRANSACTION': 
+            return 'Du tog för lång tid på dig. Börja om från början.';
+        case 'ALREADY_IN_PROGRESS': 
+            return 'En synkronisering mot Mobilt BankID med ditt personnummer är redan initierad försök igen om ett par minuter';
+        case 'INVALID_PARAMETERS':
+        default:
+            return 'Det har uppstått något problem med tjänsten Mobilt BankID. Försök igen.';
+    }
+}
+
+/**
+ * Returns explainatory texts for the errorcodes returned by the 
+ * proxied login call. 
+ */
+function getStratumProxyLoginError(errorCode){
+    switch (errorCode){
+        case 'CONTEXT_ERROR':
+            return `Din inloggning kunde identifieras, 
+                men du har inte behörighet att gå in i registret. 
+                Kontakta registrets support.`;
+        default:
+            return `Oväntat fel under identifiering.`;
+    }
+}
+
+/**
+ * Does the actual login to stratum once the cookie has been received 
+ * from stratum. This call is handled by a proxy in Keystone and not by 
+ * stratum directly, in order to read the cookie.
+ */
 export function loginToStratum(){
 	return dispatch => {
 		return fetch('/api/authentication/login', { credentials: 'include' })
@@ -224,13 +289,13 @@ export function loginToStratum(){
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(json.code ? getStratumProxyLoginError(json.code) : json.message);
 					throw (error);
 				}
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 			});
 	};
 }
@@ -258,12 +323,12 @@ export function collectBIDLogin(orderRef) {
 						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
 					}
 				} else {
-					const error = new Error(json.message);
+					const error = new Error(getBIDErrorMessage(json.message));
 					throw (error);
 				}
 			})
 			.catch(error => { 
-				dispatch(bidLoginError(error));
+				dispatch(loginError(error));
 				console.log('request failed', error); 
 			});
 	}

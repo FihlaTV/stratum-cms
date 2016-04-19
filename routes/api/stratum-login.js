@@ -33,6 +33,7 @@ exports = module.exports = function(req, res) {
 				jsonBody = {};
 				return res.apiResponse({
 					success: false,
+					code: 'PARSE_ERROR',
 					message: 'Error handling authentication request'
 				});
 				// delete req.session.contextId;
@@ -45,12 +46,14 @@ exports = module.exports = function(req, res) {
 				delete req.session.stratumUser;
 				jsonBody = {
 					success: false,
+					code: 'CONTEXT_ERROR',
 					message: 'Could not find user data, most likely error with login synchronization'
 				};
 			}
 		} else {
 			jsonBody = {
 				success: false,
+				code: 'UNKNOWN_STRATUM_ERROR',
 				message: 'Server error'
 			};
 		}

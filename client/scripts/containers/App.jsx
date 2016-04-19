@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/actions';
+import { setLoginMethod, initLoginModal, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/actions';
 import Login from './Login.jsx';
 
 class App extends Component {
@@ -24,7 +24,7 @@ class App extends Component {
 function mapDispatchToProps(dispatch){
 	return {
 		showLoginModal: () => {
-			dispatch(showLoginModal(true));
+			dispatch(initLoginModal(true));
 		}
 	};
 }

@@ -25,7 +25,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': Object.keys(process.env).reduce(function (o, k) {
                 //Whitelist to variables only prefixed with CLIENT_
-                if (k.indexOf('CLIENT_') === 0) {
+                if (k.indexOf('CLIENT_') === 0 || k === 'NODE_ENV') {
                     o[k] = JSON.stringify(process.env[k]);
                 }
                 return o;

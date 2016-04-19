@@ -13,13 +13,13 @@ function getStatus(status){
 		case StatusCodes.NO_CLIENT:
 		case StatusCodes.OUTSTANDING_TRANSACTION:
 			return {
-				message: 'Var god starta "Mobilt BankID"-appen i din smart phone', 
+				message: 'Starta appen för Mobilt BankID i din telefon.', 
 				alert: 'warning',
 				icon: 'fa-exclamation-triangle'
 			};
 		case StatusCodes.USER_SIGN:
 			return {
-				message: 'Skriv in din personliga kod i din smart phone', 
+				message: 'Skriv in din personliga kod i appen för Mobilt BankID.', 
 				alert: 'info',
 				icon: 'fa-info'
 			};
