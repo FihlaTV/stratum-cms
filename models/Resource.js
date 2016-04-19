@@ -9,13 +9,13 @@ var keystone = require('keystone'),
 
 var Resource = new keystone.List('Resource', {
 	map: { name: 'title' },
-	autokey: { path: 'slug', from: 'title', unique: true },
+	// autokey: { path: 'slug', from: 'title', unique: true },
 	defaultSort: '-createdAt'
 });
 
 Resource.add({
 	title: { type: String, required: true },
-	description: { type: Types.Textarea },
+	description: { type: Types.Textarea, initial: true },
 	file: {
 		type: Types.AzureFile,
 		containerFormatter: function (item, filename) {
@@ -26,7 +26,7 @@ Resource.add({
 			return item._id + require('path').extname(filename);
 		}
 	},
-	createdAt: { type: Types.Date, default: Date.now }
+	createdAt: { type: Types.Date, default: Date.now, noedit: true }
 });
 
 Resource.register();
