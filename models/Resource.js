@@ -25,6 +25,15 @@ Resource.add({
 			return item._id + require('path').extname(filename);
 		}
 	},
+	fileUrl: {
+		type: Types.Url,
+		noedit: true,
+		watch: 'file',
+		value: function () {
+			return this.file.exists ? this.file.url : '';
+		},
+		note: 'Use this link if you must reference this resource directly'
+	},
 	createdAt: { type: Types.Date, default: Date.now, noedit: true }
 });
 
