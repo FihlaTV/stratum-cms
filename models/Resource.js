@@ -9,13 +9,12 @@ var keystone = require('keystone'),
 
 var Resource = new keystone.List('Resource', {
 	map: { name: 'title' },
-	// autokey: { path: 'slug', from: 'title', unique: true },
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	defaultSort: '-createdAt'
 });
 
 Resource.add({
 	title: { type: String, required: true },
-	description: { type: Types.Textarea, initial: true },
 	file: {
 		type: Types.AzureFile,
 		containerFormatter: function (item, filename) {
@@ -34,7 +33,9 @@ Resource.add({
 		},
 		note: 'Use this link if you must reference this resource directly'
 	},
-	createdAt: { type: Types.Date, default: Date.now, noedit: true }
+	description: { type: Types.Textarea, initial: true },
 });
+
+Resource.defaultColumns = 'title, description, createdAt';
 
 Resource.register();
