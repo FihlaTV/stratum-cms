@@ -36,10 +36,19 @@ Resource.add({
 		hidden: true,
         noedit: true
     },
+	// Only used for hiding file url when not needed
+	hasFile: {
+		type: Boolean,
+		hidden: true,
+		noedit: true,
+		watch: 'file',
+		value: function(){
+			return this.file && this.file.exists;
 		}
 	},
 	fileUrl: {
 		type: Types.Url,
+		dependsOn: { hasFile: true },
 		noedit: true,
 		watch: 'file',
 		value: function () {
