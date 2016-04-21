@@ -1,5 +1,7 @@
 var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+	Types = keystone.Field.Types,
+	shortid = require('shortid'),
+	path = require('path');
 
 
 /**
@@ -17,11 +19,23 @@ Resource.add({
 	title: { type: String, required: true },
 	file: {
 		type: Types.AzureFile,
+		// TODO: Would be nice if this could be stored globally but there seems to be a bug
+		//       in the azurefile config concerning container name, so remember to add this for all 
+		//       AzureFile fields 
 		containerFormatter: function (item, filename) {
 			return keystone.get('brand safe');
 		},
 		filenameFormatter: function (item, filename) {
-			return item._id + require('path').extname(filename);
+			return 'r/' + item.title.substr(0,65).replace(/\W+/g, '-') + '-' + item.shortId + path.extname(filename).toLowerCase();
+		}
+	},
+	shortId: {
+        type: String,
+        'default': shortid.generate,
+        unique: true,
+		hidden: true,
+        noedit: true
+    },
 		}
 	},
 	fileUrl: {
