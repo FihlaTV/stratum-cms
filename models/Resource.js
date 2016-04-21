@@ -26,7 +26,7 @@ Resource.add({
 			return keystone.get('brand safe');
 		},
 		filenameFormatter: function (item, filename) {
-			return 'r/' + item.title.substr(0,65).replace(/\W+/g, '-') + '-' + item.shortId + path.extname(filename).toLowerCase();
+			return 'r/' + item.title.substr(0, 65).replace(/\W+/g, '-') + '-' + item.shortId + path.extname(filename).toLowerCase();
 		}
 	},
 	shortId: {
@@ -42,7 +42,7 @@ Resource.add({
 		hidden: true,
 		noedit: true,
 		watch: 'file',
-		value: function(){
+		value: function () {
 			return this.file && this.file.exists;
 		}
 	},
@@ -57,6 +57,35 @@ Resource.add({
 		note: 'Use this link if you must reference this resource directly'
 	},
 	description: { type: Types.Textarea, initial: true },
+});
+
+Resource.schema.virtual('fileType').get(function () {
+	var fileType = this.file && this.file.exists && this.file.filetype;
+	if (typeof fileType !== 'string') {
+		return;
+	}
+	if (fileType.indexOf('image') === 0) {
+		return 'image';
+	}
+	if (fileType.indexOf('audio') === 0) {
+		return 'audio';
+	}
+	if (fileType.indexOf('video') === 0) {
+		return 'video';
+	}
+	if (fileType === 'application/pdf') {
+		return 'pdf';
+	}
+	if (fileType === 'application/pdf') {
+		return 'pdf';
+	}
+	if (fileType.indexOf('msword') >= 0) {
+		return 'word';
+	}
+	if (fileType.indexOf('presentation') >= 0) {
+		return 'presentation';
+	}
+	return 'other';
 });
 
 Resource.defaultColumns = 'title, description, createdAt';
