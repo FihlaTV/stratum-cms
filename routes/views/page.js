@@ -29,7 +29,7 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('shortId', locals.filters.shortid)
 			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories')
-			.populate('widget')
+			.populate('widget resources')
 			.exec(function(err, page) {
 				if (!err) {
 					if (!page) {
