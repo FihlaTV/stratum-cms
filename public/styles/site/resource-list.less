@@ -13,17 +13,17 @@
 		}
 	}
 	.resource-icon{
-		// .pull-right();
+		.fa-icon();
 		position: absolute;
-		right: 10px;
-		top: 10px;
+		right: @gutter-large;
+		top: @gutter-large;
 		font-size: 32px;
-		// margin-left: 8px;
 		color: @primary-light;
-	}
-	.news-roll-title{
-		display: block;
-		.h3;
-		margin-bottom: @gutter-large;
+		&.resource-pdf:before{
+			content: @fa-var-file-pdf-o;
+		}
+		&.resource-presentation:before{
+			content: @fa-var-file-powerpoint-o;
+		}
 	}
 }
