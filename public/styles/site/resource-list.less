@@ -1,0 +1,29 @@
+.resource-list {
+	ul{
+		list-style: none;
+		padding-left: 0;
+		li{
+			min-height: 64px;
+			.clearfix();
+			position: relative;
+			.base-column;
+			padding-right: @gutter-large + 40px;
+			overflow: hidden; 
+			text-overflow: ellipsis;
+		}
+	}
+	.resource-icon{
+		// .pull-right();
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		font-size: 32px;
+		// margin-left: 8px;
+		color: @primary-light;
+	}
+	.news-roll-title{
+		display: block;
+		.h3;
+		margin-bottom: @gutter-large;
+	}
+}

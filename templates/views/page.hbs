@@ -17,6 +17,7 @@
 					<p class="lead">{{lead}}</p>
 					{{/if}}
 					{{{content.html}}}
+					{{!-- Resources --}}
 				</div>
 			</article>
 		</div>
@@ -62,6 +63,9 @@
 			{{#with keystoneWidget}}
 			<div class="keystone-widget stratum-widget" data-keystone-widget="{{name}}" data-widget-description="{{../data.widget.description}}"></div>
 			{{/with}}
+			{{/if}}
+			{{#if data.page.resources}}
+			{{>resourcelist data.page.resources}}
 			{{/if}}
 			{{#if data.contacts}}
 			<h2>Kontaktpersoner</h2>
