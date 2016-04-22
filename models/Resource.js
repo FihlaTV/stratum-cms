@@ -19,6 +19,7 @@ Resource.add({
 	title: { type: String, required: true },
 	file: {
 		type: Types.AzureFile,
+		note: 'File size cannot be above 30 MB',
 		// TODO: Would be nice if this could be stored globally but there seems to be a bug
 		//       in the azurefile config concerning container name, so remember to add this for all 
 		//       AzureFile fields 
