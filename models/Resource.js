@@ -73,17 +73,20 @@ Resource.schema.virtual('fileType').get(function () {
 	if (fileType.indexOf('video') === 0) {
 		return 'video';
 	}
-	if (fileType === 'application/pdf') {
-		return 'pdf';
+	if (fileType.indexOf('text') === 0) {
+		return 'text';
 	}
 	if (fileType === 'application/pdf') {
 		return 'pdf';
 	}
-	if (fileType.indexOf('msword') >= 0) {
+	if (fileType.indexOf('msword') >= 0 || fileType.indexOf('wordprocessingml') >= 0) {
 		return 'word';
 	}
-	if (fileType.indexOf('presentation') >= 0) {
-		return 'presentation';
+	if (fileType.indexOf('ms-excel') >= 0 || fileType.indexOf('spreadsheetml') >= 0) {
+		return 'excel';
+	}
+	if (fileType.indexOf('powerpoint') >= 0 || fileType.indexOf('presentationml') >= 0) {
+		return 'powerpoint';
 	}
 	return 'other';
 });
