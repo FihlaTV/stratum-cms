@@ -1,0 +1,16 @@
+<h2>Relaterade filer</h2>
+<div class="resource-list">
+	<ul>
+	{{#each this}}
+		<li>
+			<i class="resource-icon resource-{{fileType}}"> </i>
+			<a href="{{file.secureUrl}}" target="_blank">
+				{{title}}
+			</a>
+			{{#if description}}
+			<p>{{description}}</p>
+			{{/if}}
+		</li>
+	{{/each}}
+	</ul>
+</div>

@@ -130,6 +130,11 @@ BasePage.add({
 		ref: 'Widget',
 		many: false
 	},
+	resources: {
+		type: Types.Relationship,
+		ref: 'Resource',
+		many: true
+	},
 	contacts: {
 		type: Types.Relationship,
 		ref: 'Contact',

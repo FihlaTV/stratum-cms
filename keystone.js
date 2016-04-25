@@ -23,6 +23,7 @@ keystone.init({
 
 	'name': process.env.BRAND || 'Stratum',
 	'brand': process.env.BRAND || 'Stratum',
+	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(), 
 	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
@@ -99,6 +100,7 @@ keystone.set('nav', {
 	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
+	'resources': 'resources',
 	'questions': ['questions', 'question-categories'],
 	
 	// Hide users from menu for now

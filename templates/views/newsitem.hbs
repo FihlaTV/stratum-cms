@@ -2,10 +2,10 @@
 	<div class="news-item-full">
 		<div class="row">
 			{{#with data.newsItem}}
-			<div class="col-md-9">
+			<div class="col-md-8">
 				<article class="base-page clearfix">
 					<header>
-						<span class="published-at pull-right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{date publishedDate format="Do MMM, YYYY"}}</span>
+						<span class="published-at pull-right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{date publishedDate format="YYYY-DD-MM"}}</span>
 						<h1>{{title}}{{#if subtitle}} <small>{{subtitle}}</small>{{/if}}</h1>
 					</header>
 					{{#if image.exists}}
@@ -30,6 +30,11 @@
 					</div>
 				</article>
 			</div>
+			{{#if resources}}
+			<div class="col-md-4">
+				{{>resourcelist resources}}
+			</div>
+			{{/if}}
 			{{/with}}
 		</div>
 	</div>
