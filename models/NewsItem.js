@@ -37,7 +37,7 @@ NewsItem.add({
 	content: {
 		brief: { type: Types.Textarea, height: 150, note: 'Briefly summarize the news item in a few lines. Used to present outside context' },
 		lead: { type: Types.Textarea, height: 150, dependsOn: { newsType: 'extended' } },
-		extended: { type: Types.Markdown, height: 400, dependsOn: { newsType: 'extended' }, toolbarOptions: { hiddenButtons: 'Image,Quote,Code' } }
+		extended: { type: Types.Markdown, height: 400, dependsOn: { newsType: 'extended' }, toolbarOptions: { hiddenButtons: 'Image,Code' } }
 	},
 	resources: {
 		type: Types.Relationship,
