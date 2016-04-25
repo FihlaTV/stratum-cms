@@ -53,7 +53,7 @@ Resource.add({
 		noedit: true,
 		watch: 'file',
 		value: function () {
-			return this.file.exists ? this.file.url : '';
+			return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
 		},
 		note: 'Use this link if you must reference this resource directly'
 	},

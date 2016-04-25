@@ -100,6 +100,7 @@ keystone.set('nav', {
 	'start-pages': ['start-pages', 'start-page-widgets'],
 	'register-information': 'register-information',
 	'news': 'news-items',
+	'resources': 'resources',
 	'questions': ['questions', 'question-categories'],
 	
 	// Hide users from menu for now
