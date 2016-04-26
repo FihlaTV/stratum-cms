@@ -20,36 +20,17 @@ NewsItem.add({
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	subtitle: { type: String },
 	image: { type: Types.CloudinaryImage },
-	newsType: { type: Types.Select,
-				default: 'brief',
-				required: true,
-				note: 'Select which type of news this contains' + 
-				'\n- **Brief**: Only a few lines' +
-				'\n- **Extended**: Longer news article with possibility of writing a lead and extended text',
-				emptyOption: false,
-				options: [{
-					value: 'brief',
-					label: 'Brief'
-				}, {
-					value: 'extended',
-					label: 'Extended'
-				}]},
 	content: {
-		brief: { type: Types.Textarea, height: 150, note: 'Briefly summarize the news item in a few lines. Used to present outside context' },
-		lead: { type: Types.Textarea, height: 150, dependsOn: { newsType: 'extended' } },
-		extended: { type: Types.Markdown, height: 400, dependsOn: { newsType: 'extended' }, toolbarOptions: { hiddenButtons: 'Image,Code' } }
+		lead: { type: Types.Textarea, height: 150, note: 'Introduction to the news item. Keep this below ~300 characters' },
+		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'Image,Code' } }
 	},
 	resources: {
 		type: Types.Relationship,
 		ref: 'Resource',
 		many: true
 	}
-	// categories: { type: Types.Relationship, ref: 'NewsItemCategory', many: true }
 });
 
-NewsItem.schema.virtual('content.full').get(function() {
-	return this.get('content.extended.html') || this.content.brief;
-});
 
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
 NewsItem.register();
