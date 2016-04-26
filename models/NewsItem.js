@@ -18,8 +18,19 @@ NewsItem.add({
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
 	author: { type: Types.Relationship, ref: 'User', index: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-	subtitle: { type: String },
+	subtitle: { type: String, hidden: true }, // Hide this for future use
 	image: { type: Types.CloudinaryImage },
+	imageDescription: {
+		collapse: true,
+		type: String
+	},
+	imageLayout: {
+		type: Types.Select, 
+		options: 'portrait, landscape',
+		default: 'portrait',
+		emptyOption: false,
+		note: 'Determines the position and layout of the news item\'s image. Portrait places is to the right of the text and Landscape above the text'
+	},
 	content: {
 		lead: { type: Types.Textarea, height: 150, note: 'Introduction to the news item. Keep this below ~300 characters' },
 		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'Image,Code' } }
