@@ -31,6 +31,13 @@ NewsItem.add({
 	}
 });
 
+/**
+ * Bug in keystone currently prevents error messages to be displayed
+ * so this is commented out for now. 
+ */
+// NewsItem.schema.path('content.lead').validate(function(value){
+// 	return !value || value.length <= 300; 
+// }, 'Your text cannot be longer than 300 characters. Please try to shorten your text');
 
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
 NewsItem.register();
