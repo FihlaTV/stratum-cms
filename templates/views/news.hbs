@@ -1,31 +1,27 @@
 <div class="container">
 	<h1>Nyheter</h1>
+	<p>Antal artiklar: {{data.news.results.length}}</p>
 </div>
 <div class="container">
-    <div class="news-list">
-        <div class="news-list-sizer"></div>
-        <div class="news-list-gutter"></div>
-        {{# each data.news.results}}
-        <a href="{{newsUrl slug}}">
-            <div class="news-list-item">
-                {{#if image.exists}}
-                <div class="news-list-item-image">
-                    {{{cloudinaryImage image width=500 height=350 html_width="" html_height="" crop='fill'}}}
-                </div>
-                {{/if}}
-                <div class="news-list-item-content">
-                    <p class="published-at">
-                        {{date publishedDate format="Do MMM, YYYY"}}
-                    </p>
-                    <h2>{{{title}}}</h2>
-                    <p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
-                        {{#if author.name.first}}by {{author.name.first}}{{/if}}
-                    </p>
-                    <p>{{{content.lead}}}</p>
-                </div>
-            </div>
-        </a>
-        {{/each}}
-    </div>
+	<div class="row">
+		<div class="col-md-8">
+			{{# each data.news.results}}
+			<div class="news-list-item">
+				<a href="{{newsUrl slug}}">
+					<div class="news-list-item-content">
+						<h2>{{{title}}}</h2>
+						<p class="published-at">
+							{{date publishedDate format="YYYY-MM-DD"}}
+						</p>
+						<p class="lead">{{{content.lead}}}</p>
+					</div>
+				</a>
+			</div>
+			{{/each}}
+		</div>
+		<div class="col-md-4">
+			<!-- Filter -->
+		</div>
+	</div>
 	{{>pagination}}
 </div>
