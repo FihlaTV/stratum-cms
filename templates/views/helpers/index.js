@@ -240,8 +240,8 @@ module.exports = function() {
 	
 	// might be a ghost helper
 	// used for pagination urls on blog
-	_helpers.pageUrl = function(pageNumber, options) {
-		return '/nyheter?page=' + pageNumber;
+	_helpers.pageUrl = function(pageNumber, year, options) {
+		return '/nyheter?page=' + pageNumber + (year ? '&year=' + year : '');
 	};
 	
 	// create the category url for a blog-category page
@@ -269,7 +269,7 @@ module.exports = function() {
 		return options.inverse(this);
 	};
 	
-	_helpers.paginationNavigation = function(pages, currentPage, totalPages, options){
+	_helpers.paginationNavigation = function(pages, currentPage, totalPages, year, options){
 		var html = '';
 		
 		// pages should be an array ex.  [1,2,3,4,5,6,7,8,9,10, '....']
@@ -289,7 +289,7 @@ module.exports = function() {
 			}
 
 			// get the pageUrl using the integer value
-			var pageUrl = _helpers.pageUrl(page);
+			var pageUrl = _helpers.pageUrl(page, year);
 			// wrapup the html
 			html += '<li'+liClass+'>'+ linkTemplate({url:pageUrl,text:pageText})+'</li>\n';
 		});
@@ -298,20 +298,20 @@ module.exports = function() {
 
         // special helper to ensure that we always have a valid page url set even if
         // the link is disabled, will default to page 1
-        _helpers.paginationPreviousUrl = function(previousPage, totalPages){
+        _helpers.paginationPreviousUrl = function(previousPage, totalPages, year){
             if(previousPage === false){
                 previousPage = 1;
             }
-            return _helpers.pageUrl(previousPage);
+            return _helpers.pageUrl(previousPage, year);
         };
 
         // special helper to ensure that we always have a valid next page url set
         // even if the link is disabled, will default to totalPages
-        _helpers.paginationNextUrl = function(nextPage, totalPages){
+        _helpers.paginationNextUrl = function(nextPage, totalPages, year){
             if(nextPage === false){
                 nextPage = totalPages;
             }
-            return _helpers.pageUrl(nextPage);
+            return _helpers.pageUrl(nextPage, year);
         };
 
 
