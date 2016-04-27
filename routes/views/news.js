@@ -70,10 +70,17 @@ exports = module.exports = function (req, res) {
 			})
 			.exec(function (err, results) {
 				if (!err) {
+					var currentYear = doYearFilter ? parseInt(req.query.year) : null;
 					locals.data.newsYears = results;
 					locals.data.totalNews = _.reduce(results, function (mem, el) {
+						if(el._id.year === currentYear){
+							locals.data.currentTotal = el.total;
+						}
 						return mem + el.total;
 					}, 0);
+					if(!currentYear){
+						locals.data.currentTotal = locals.data.totalNews;
+					}
 				}
 				next(err);
 			});
