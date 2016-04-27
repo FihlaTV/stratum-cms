@@ -20,7 +20,30 @@
 			{{/each}}
 		</div>
 		<div class="col-md-4">
-			<!-- Filter -->
+			<div class="news-filter">
+				<h2>Filtrera nyheter</h2>
+				<span class="news-filter-header">År</span>
+				<ul class="news-filter-list">
+					<li>
+						{{#if filters.year}}
+						<a href="/nyheter">
+						{{/if}}
+						Alla ({{data.totalNews}})
+						{{#if filters.year}}
+						</a>
+						{{/if}}
+					</li>
+				{{#each data.newsYears}}
+					<li>
+						{{#ifeq ../filters.year _id.year}}
+							{{_id.year}} ({{total}})
+						{{else}}
+							<a href="/nyheter?year={{_id.year}}">{{_id.year}} ({{total}})</a>
+						{{/ifeq}}
+					</li>
+				{{/each}}
+				</ul>
+			</div>
 		</div>
 	</div>
 	{{>pagination}}
