@@ -57,9 +57,9 @@ StartPage.add({
 				type: Types.Select,
 				note: 'Select which type of information that should be shown in the "blurb" on the top right' + 
 				'\n- **Image**: Displays the selected image and text if any'+
-				'\n- **News Item**: Displays the latest news item with corresponding picture'+
-				'\n- **News Roll**: Displays the 3 latest news items in a compressed format'+
-				'\n- **Meeting**: Select important meetings which should be shown',
+				'\n- **News Item**: Displays one specific news item with corresponding picture'+
+				'\n- **News Roll**: Displays the 3 latest news items in a compressed format',
+				// '\n- **Meeting**: Select important meetings which should be shown',
 				options: [{
 					value: 'image',
 					label: 'Image'
@@ -69,10 +69,22 @@ StartPage.add({
 				}, {
 					value: 'newsItem',
 					label: 'News Item'
-				}, {
-					value: 'meeting',
-					label: 'Meeting'
+				// }, {
+				// 	value: 'meeting',
+				// 	label: 'Meeting'
 				}]
+			},
+			newsItem: {
+				label: 'News Item',
+				type: Types.Relationship,
+				ref: 'NewsItem',
+				many: false,
+				filters: { state: 'published' },
+				dependsOn: {
+					'informationBlurb.type': 'newsItem'
+				},
+				note: 'Select which news item that should be shown on the start page. If no news item is selected ' +
+					'the latest available will be selected'
 			},
 			image: {
 				label: 'Image',

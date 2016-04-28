@@ -36,7 +36,7 @@
 		{{#with data.startPage}}
 		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
 			<h2>{{header}}</h2>
-			<p class="lead">{{{description.html}}}</p>
+			{{{description.html}}}
 		</div>
 		{{/with}}
 	</div>
@@ -56,7 +56,11 @@
 		{{>newsroll ../data.news}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'newsItem'}}
+		{{#if informationBlurb.newsItem}}
+		{{>newswidget informationBlurb.newsItem}}
+		{{else}}
 		{{>newswidget ../data.firstNews}}
+		{{/if}}
 	{{/ifeq}}
 	{{#ifeq informationBlurb.type 'meeting'}}
 		<h2>Kommande möte</h2>

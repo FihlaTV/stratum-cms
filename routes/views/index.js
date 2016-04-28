@@ -17,7 +17,9 @@ exports = module.exports = function(req, res) {
 	//Load Start Page settings
 	view.on('init', function(next) {
 		keystone.list('StartPage').model
-			.findOne(function(err, startPage) {
+			.findOne()
+			.populate('informationBlurb.newsItem')
+			.exec(function(err, startPage) {
 				if (!err && startPage) {
 					locals.data.startPage = startPage;
 				}
