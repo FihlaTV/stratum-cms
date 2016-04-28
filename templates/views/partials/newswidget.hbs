@@ -1,4 +1,5 @@
 {{#with this}}
+{{!--
 <div class="caption-ct news-widget">
 	<a href="{{newsUrl slug}}">
 	{{#if image}}
@@ -9,5 +10,17 @@
 		<p class="news-widget-caption-lead">{{content.lead}}</p>
 	</div>
 	</a>
+</div>
+--}}
+<div class="news-widget-simple">
+	<h2>{{title}}</h2>
+	{{#ifeq imageLayout 'landscape'}}
+	{{{cloudinaryImage image width="428" height="270" crop="fill" class="img-landscape"}}}
+	{{else}}
+	{{{cloudinaryImage image width="150" class="img-portrait"}}}	
+	{{!--{{{cloudinaryImage image width="150" height="150" radius="max" gravity="face" crop="fill" class="img-portrait"}}}--}}
+	{{/ifeq}}
+	<p>{{content.lead}}</p>
+	<a href="{{newsUrl slug}}">Läs mer</a>
 </div>
 {{/with}}

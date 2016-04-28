@@ -31,3 +31,31 @@
 		}
 	}
 }
+.news-widget-simple{
+	.white-well();
+	.clearfix();
+	padding: @gutter-large;
+	p{
+		font-size: @jumbotron-font-size;
+		font-weight: 200;
+	}
+	a{
+		font-size: @jumbotron-font-size;
+	}
+	img{
+		&.img-portrait{
+			margin: 0 auto 10px auto;
+			display: block;
+			@media (min-width: @screen-sm-min) {
+				display: inline;
+				float: right;
+				margin: 0 0 @gutter @gutter;
+			}
+		}
+		&.img-landscape{
+			margin-bottom: @gutter;
+			width: 100%;
+			.img-responsive();
+		}
+	}
+}
