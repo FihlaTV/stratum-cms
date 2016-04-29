@@ -3,7 +3,10 @@ var keystone = require('keystone'),
     shortid = require('shortid'),
 	NewsItem = keystone.list('NewsItem');
 
-
+/**
+ * Removes all instances of content.brief on news and also removes 
+ * the property newsType
+ */
 exports = module.exports = function (done) {
 	var context = {
 		newsItems: []
