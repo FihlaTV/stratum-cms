@@ -1,4 +1,4 @@
-<h2>Nyheter</h2>
+{{!--<h2>Nyheter</h2>
 <div class="news-roll">
 	<ul>
 	{{#each this}}
@@ -7,11 +7,25 @@
 			<span class="news-roll-title"><a href="{{newsUrl slug}}">
 				{{title}}
 			</a></span>
-			<p>{{content.brief}}</p>
+			<p>{{content.lead}}</p>
 			<a href="{{newsUrl slug}}">
 				<span class="news-roll-readmore">Läs mer</span>
 			</a>
 		</li>
 	{{/each}}
 	</ul>
+</div>--}}
+<div class="news-roll-simple">
+	<h2>Senaste nytt</h2>
+	<ul>
+		{{#each this}}
+		<li>
+			<span class="news-roll-date">{{date publishedDate format="YYYY-MM-DD"}}</span>
+			<a class="news-roll-title" href="{{newsUrl slug}}">
+				{{title}}
+			</a>
+		</li>
+		{{/each}}
+	</ul>
+	<a href="/nyheter">Se fler nyheter</a>
 </div>

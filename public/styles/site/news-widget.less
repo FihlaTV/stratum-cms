@@ -1,33 +1,81 @@
-.news-widget {
-	border-radius: 3px;
-	overflow: hidden;
-	margin-bottom: @gutter;
-	.news-widget-caption{
-		padding: @gutter;
-		width: 100%;
-		transition: padding-top 0.12s ease-in, background-color 0.12s ease;
-	}
-	img+.news-widget-caption{
-		position: absolute;
-		bottom: 0px;
+// .news-widget {
+// 	border-radius: 3px;
+// 	overflow: hidden;
+// 	margin-bottom: @gutter;
+// 	.news-widget-caption{
+// 		padding: @gutter;
+// 		width: 100%;
+// 		transition: padding-top 0.12s ease-in, background-color 0.12s ease;
+// 	}
+// 	img+.news-widget-caption{
+// 		position: absolute;
+// 		bottom: 0px;
+// 	}
+// 	a{
+// 		color: #ccc;
+// 		&:hover{
+// 			text-decoration: none;
+// 		}
+// 	}
+// 	&:hover{
+// 		.news-widget-caption{
+// 			h2,h3,h4,h5,h6{
+// 				color: darken(@brand-primary, 10%);
+// 				transition: 0.12s ease-in;
+// 			}
+// 			background-color: lighten(@brand-primary, 2);
+// 			transition: 0.12s ease-in;
+// 		}
+// 		img+.news-widget-caption{
+// 			padding-top: 30px;
+// 		}
+// 	}
+// }
+.news-widget-simple{
+	.white-well();
+	.clearfix();
+	p{
+		font-size: @jumbotron-font-size;
+		font-weight: 200;
 	}
 	a{
-		color: #ccc;
-		&:hover{
-			text-decoration: none;
+		font-size: @jumbotron-font-size;
+	}
+	img{
+		&.img-portrait{
+			margin: 0 auto 10px auto;
+			display: block;
+			@media (min-width: @screen-sm-min) {
+				display: inline;
+				float: right;
+				margin: 0 0 @gutter @gutter;
+			}
+		}
+		&.img-landscape{
+			width: 100%;
+			.img-responsive();
 		}
 	}
-	&:hover{
-		.news-widget-caption{
-			h2,h3,h4,h5,h6{
-				color: darken(@brand-primary, 10%);
-				transition: 0.12s ease-in;
+	&.news-widget-portrait{
+		padding: @gutter-large;
+	}
+	&.news-widget-landscape{
+		overflow: hidden;
+		background-color: @brand-primary; 
+		&:hover {
+			img{
+				transform: scale(1.1);
 			}
-			background-color: lighten(@brand-primary, 2);
-			transition: 0.12s ease-in;
 		}
-		img+.news-widget-caption{
-			padding-top: 30px;
+		img{
+			transition: all .2s ease-in-out;
+		}
+		.img-landscape-ct{
+			overflow: hidden;
+		}
+		h1,h2,h3,h4,h5,h6{
+			color: @gray-lighter;
+			margin: @gutter-large;
 		}
 	}
 }

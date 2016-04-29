@@ -35,3 +35,28 @@
 		// margin-bottom: (@line-height-computed / 2);
 	}
 }
+.news-roll-simple{
+	.white-well();
+	padding: @gutter-large;
+	font-size: @jumbotron-font-size;
+	ul{
+		border-style: solid;
+		border-color: @primary-light;
+		border-width: 1px 0;
+		list-style: none;
+		padding: @gutter 0 @gutter*2;
+		display: table;
+		width: 100%;
+		li{
+			margin-bottom: @gutter;
+		}
+		.news-roll-date, .news-roll-title{
+			display: table-cell;	
+		}
+		.news-roll-date{
+			color: @gray;
+			white-space: nowrap;
+			padding-right: @gutter;
+		}
+	}
+}
