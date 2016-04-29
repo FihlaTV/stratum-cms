@@ -12,15 +12,22 @@
 	</a>
 </div>
 --}}
-<div class="news-widget-simple">
+{{#ifeq imageLayout 'landscape'}}
+<div class="news-widget-simple news-widget-landscape">
+	<a href="{{newsUrl slug}}">
+		<h2>{{title}}</h2>
+		<div class="img-landscape-ct">
+			{{{cloudinaryImage image width="428" height="270" crop="fill" class="img-landscape"}}}
+		</div>
+	</a>
+</div>
+{{else}}
+<div class="news-widget-simple news-widget-portrait">
 	<h2>{{title}}</h2>
-	{{#ifeq imageLayout 'landscape'}}
-	{{{cloudinaryImage image width="428" height="270" crop="fill" class="img-landscape"}}}
-	{{else}}
-	{{{cloudinaryImage image width="150" class="img-portrait"}}}	
+	{{{cloudinaryImage image width="150" height="185" crop="fit" class="img-portrait"}}}	
 	{{!--{{{cloudinaryImage image width="150" height="150" radius="max" gravity="face" crop="fill" class="img-portrait"}}}--}}
-	{{/ifeq}}
 	<p>{{content.lead}}</p>
 	<a href="{{newsUrl slug}}">Läs mer</a>
 </div>
+{{/ifeq}}
 {{/with}}
