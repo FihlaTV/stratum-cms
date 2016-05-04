@@ -333,15 +333,3 @@ export function collectBIDLogin(orderRef) {
 			});
 	}
 }
-
-/**	
- * Context modal
- */
-export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
-
-export function showContextModal(target){
-	return {
-		type: SHOW_CONTEXT_MODAL,
-		target: target
-	};
-}

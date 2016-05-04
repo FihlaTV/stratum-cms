@@ -1,4 +1,4 @@
-import { SHOW_CONTEXT_MODAL } from '../actions/actions';
+import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS, SET_ROLES } from '../actions/context';
 
 const initialState = {
 	showModal: false
@@ -11,7 +11,19 @@ export default (state = initialState, action) => {
                 showModal: !state.showModal,
 				modalTarget: action.target
             });
+		case CONTEXT_ERROR: 
+			return Object.assign({}, state, {
+				error: action.error
+			});
+		case SET_CONTEXTS:
+			return Object.assign({}, state, {
+				contexts: action.contexts
+			});
+		case SET_ROLES: 
+			return Object.assign({}, state, {
+				roles: action.roles
+			});
       	default:
 			return state;
 	}
-}
+};
