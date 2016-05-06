@@ -4,6 +4,10 @@ import { LoginMethod, setLoginMethod } from '../actions/actions';
 import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const UnitList = ({
+	currentRole,
+	currentUnit,
+	roleChange,
+	unitChange,
     units,
 	roles
 }) => {
@@ -15,7 +19,13 @@ const UnitList = ({
 			>
 				<ControlLabel>Välj roll:</ControlLabel>
 				<FormControl
-					componentClass="select" >
+					componentClass="select" 
+					value={currentRole}
+					onChange={(e) => {
+						roleChange(parseInt(e.target.value));
+					}}
+					>
+					<option disabled value=""></option>
 					{roles.map((x) => 
 						<option key={x.id} value={x.id}>{x.name}</option>
 					)}
@@ -23,7 +33,13 @@ const UnitList = ({
 				<HelpBlock>Help text here....</HelpBlock>
 				<ControlLabel>Välj enhet:</ControlLabel>
 				<FormControl
-					componentClass="select" >
+					disabled={units.length <= 0}
+					componentClass="select" 
+					value={currentUnit}
+					onChange={(e) => {
+						unitChange(parseInt(e.target.value));
+					}}>
+					<option disabled value=""></option>
 					{units.map((x) => 
 						<option key={x.id} value={x.id}>{x.name}</option>
 					)}
@@ -32,6 +48,13 @@ const UnitList = ({
 			</FormGroup>
 		</form>
 	);
+};
+
+UnitList.propTypes = {
+	roleChange: PropTypes.func,
+	unitChange: PropTypes.func,
+	units: PropTypes.array,
+	roles: PropTypes.array
 };
 
 export default UnitList;

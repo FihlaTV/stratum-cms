@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchContexts } from '../actions/context';
+import { fetchContexts, changeRole, setUnit } from '../actions/context';
 import { Overlay, Popover, Button } from 'react-bootstrap';
 import UnitList from '../components/UnitList.jsx';
 
@@ -18,6 +18,9 @@ class Context extends Component {
 			show,
 			roles = [],
 			target,
+			currentRole,
+			currentUnit,
+			units,
 			error
 		} = this.props;
 		return (
@@ -27,17 +30,15 @@ class Context extends Component {
 				placement="bottom" >
 				<Popover title="Byt enhet och/eller roll" id="context-popover">
 					<UnitList 
-						units={
-							[{
-								name: 'Unit 1', 
-								id: 1
-							},{
-								name: 'Unit 2', 
-								id: 2
-							}]}
-						roles={roles.map(r => { return {name: r.RoleName, id: r.RoleId};})}
+						units={units.map(u => ({name: u.UnitName, id: u.UnitID}))}
+						roles={roles.map(r => ({name: r.RoleName, id: r.RoleID}))}
+						roleChange={x => dispatch(changeRole(x))}
+						unitChange={x => dispatch(setUnit(x))}
+						currentRole={currentRole}
+						currentUnit={currentUnit}
 					/>
-					<Button bsStyle="primary" block>Logga ut</Button>
+					<Button bsStyle="primary" block>Genomför</Button>
+					<Button block>Logga ut</Button>
 				</Popover>
 			</Overlay>
 		);
@@ -56,7 +57,10 @@ function mapStateToProps(state){
 	return {
 		show: state.context.showModal,
 		target: state.context.modalTarget,
-		roles: state.context.roles
+		roles: state.context.roles,
+		units: state.context.units,
+		currentRole: state.context.currentRole,
+		currentUnit: state.context.currentUnit
 	};
 }
 

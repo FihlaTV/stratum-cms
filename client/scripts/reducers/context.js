@@ -1,7 +1,12 @@
-import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS, SET_ROLES } from '../actions/context';
+import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS, SET_ROLES, SET_ROLE, SET_UNITS, SET_UNIT } from '../actions/context';
 
 const initialState = {
-	showModal: false
+	showModal: false,
+	units: [],
+	roles: [],
+	contexts: [],
+	currentRole: '',
+	currentUnit: ''
 };
 
 export default (state = initialState, action) => {
@@ -22,6 +27,18 @@ export default (state = initialState, action) => {
 		case SET_ROLES: 
 			return Object.assign({}, state, {
 				roles: action.roles
+			});
+		case SET_ROLE: 
+			return Object.assign({}, state, {
+				currentRole: action.roleId
+			});
+		case SET_UNIT: 
+			return Object.assign({}, state, {
+				currentUnit: action.unitId
+			});
+		case SET_UNITS:
+			return Object.assign({}, state, {
+				units: action.units
 			});
       	default:
 			return state;
