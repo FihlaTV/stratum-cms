@@ -45,7 +45,7 @@ export function fetchContexts() {
 function receiveContexts(json) {
 	//Remove all contexts not matching current register
 	const registerContexts = json.filter(c => c.Unit.Register.RegisterID === REGISTER_ID);
-	
+
 	//Find all unique roles for current contexts
 	const roles = registerContexts.reduce((roles, context) => {
 		if (roles.every(x => x.RoleID !== context.Role.RoleID)) {
@@ -53,28 +53,28 @@ function receiveContexts(json) {
 		}
 		return roles;
 	}, []);
-	
+
 
 	let ret = {
 		type: RECEIVE_CONTEXTS,
 		contexts: registerContexts,
 		roles: roles,
 	};
-	
-	if(roles.length === 1){
+
+	if (roles.length === 1) {
 		ret.currentRole = roles[0].RoleID;
 		ret.units = getUnits(registerContexts, ret.currentRole);
 	}
-	
+
 	return ret;
 }
 
-function getUnits(contexts, roleId){
+function getUnits(contexts, roleId) {
 	return contexts.reduce((units, context) => {
-			if (context.Role.RoleID === roleId) {
-				units.push(context.Unit);
-			}
-			return units;
+		if (context.Role.RoleID === roleId) {
+			units.push(context.Unit);
+		}
+		return units;
 	}, []);
 }
 
@@ -82,13 +82,13 @@ export function changeRole(roleId) {
 	return (dispatch, getState) => {
 		dispatch(setRole(roleId, getState()));
 		const state = getState();
-		if(shouldSetUnit(state)){
+		if (shouldSetUnit(state)) {
 			dispatch(setUnit(state.context.units[0].UnitID, state));
 		}
 	};
 }
 
-function shouldSetUnit(state){
+function shouldSetUnit(state) {
 	const { currentUnit, currentRole, units } = state.context;
 	return !currentUnit && currentRole && units && units.length === 1;
 }
@@ -126,5 +126,57 @@ export function contextError(error) {
 	return {
 		type: CONTEXT_ERROR,
 		error: error
+	};
+}
+
+export const STRATUM_CONTEXT = 'STRATUM_CONTEXT';
+
+function setStratumContext(json) {
+	return {
+		type: STRATUM_CONTEXT,
+		context: json,
+		syncingStratum: false
+	};
+}
+
+export const SYNC_FLAG = 'SYNC_FLAG';
+
+function setStratumSyncFlag(flag) {
+	return {
+		type: SYNC_FLAG,
+		isSyncing: flag
+	};
+}
+
+export function syncContext(contextId) {
+	return (dispatch, getState) => {
+		dispatch(setStratumSyncFlag(true));
+		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/context`, {
+			credentials: 'include',
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				Context: {
+					ContextID: contextId
+				}
+			})
+		})
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(setStratumSyncFlag(false));
+					dispatch(setStratumContext(json.data));
+				} else {
+					const error = new Error(json.message);
+					throw (error);
+				}
+			})
+			.catch(error => {
+				dispatch(setStratumSyncFlag(false));
+				dispatch(contextError(error));
+				console.log('request failed', error);
+			});
 	};
 }
