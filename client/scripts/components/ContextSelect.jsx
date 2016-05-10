@@ -4,11 +4,12 @@ import { LoginMethod, setLoginMethod } from '../actions/actions';
 import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const ContextSelect = ({
-	current,
+	current = '',
 	helpText,
 	label,
 	onChange,
     items,
+	format = (x) => `${x.name} (${x.id})`,
 	...other
 }) => {
 	
@@ -23,9 +24,9 @@ const ContextSelect = ({
 				}}
 				{...other}
 				>
-				<option disabled value=""></option>
+				<option disabled value="" style={{display: 'none'}}></option>
 				{items.map((x) => 
-					<option key={x.id} value={x.id}>{x.name}</option>
+					<option key={x.id} value={x.id}>{format(x)}</option>
 				)}
 			</FormControl>
 			<HelpBlock>{helpText}</HelpBlock>
@@ -37,7 +38,8 @@ ContextSelect.propTypes = {
 	roleChange: PropTypes.func,
 	unitChange: PropTypes.func,
 	items: PropTypes.array,
-	roles: PropTypes.array
+	roles: PropTypes.array,
+	format: PropTypes.func
 };
 
 export default ContextSelect;

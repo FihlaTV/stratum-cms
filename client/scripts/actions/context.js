@@ -5,15 +5,15 @@ import fetch from 'isomorphic-fetch';
 /**	
  * Context modal
  */
+const REGISTER_ID = 100;
+
 export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
 export const CONTEXT_ERROR = 'CONTEXT_ERROR';
-export const SET_CONTEXTS = 'SET_CONTEXTS';
-export const SET_ROLES = 'SET_ROLES';
 export const SET_ROLE = 'SET_ROLE';
-export const SET_UNITS = 'SET_UNITS';
 export const SET_UNIT = 'SET_UNIT';
+export const RECEIVE_CONTEXTS = 'RECEIVE_CONTEXTS';
 
-export function showContextModal(target){
+export function showContextModal(target) {
 	return {
 		type: SHOW_CONTEXT_MODAL,
 		target: target
@@ -21,14 +21,16 @@ export function showContextModal(target){
 }
 
 export function fetchContexts() {
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/contexts`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
-					const contexts = json.data && json.data.filter(c => c.Unit.Register.RegisterID === REGISTER_ID);
-					dispatch(setContexts(contexts));
-					dispatch(setRoles(contexts));
+					dispatch(receiveContexts(json.data));
+					const state = getState();
+					if(shouldSetUnit(state)){
+						dispatch(setUnit(state.context.units[0].UnitID, state));
+					}
 				} else {
 					const error = new Error(json.message);
 					throw (error);
@@ -40,64 +42,89 @@ export function fetchContexts() {
 			});
 	};
 }
+function receiveContexts(json) {
+	//Remove all contexts not matching current register
+	const registerContexts = json.filter(c => c.Unit.Register.RegisterID === REGISTER_ID);
+	
+	//Find all unique roles for current contexts
+	const roles = registerContexts.reduce((roles, context) => {
+		if (roles.every(x => x.RoleID !== context.Role.RoleID)) {
+			roles.push(context.Role);
+		}
+		return roles;
+	}, []);
+	
 
-function setRoles(json){
-	return {
-		type: SET_ROLES,
-		roles: json.reduce((roles, context) => {
-			if(roles.every(x => x.RoleID !== context.Role.RoleID)){
-				roles.push(context.Role);
+	let ret = {
+		type: RECEIVE_CONTEXTS,
+		contexts: registerContexts,
+		roles: roles,
+	};
+	
+	if(roles.length === 1){
+		ret.currentRole = roles[0].RoleID;
+		ret.units = getUnits(registerContexts, ret.currentRole);
+	}
+	
+	return ret;
+}
+
+function getUnits(contexts, roleId){
+	return contexts.reduce((units, context) => {
+			if (context.Role.RoleID === roleId) {
+				units.push(context.Unit);
 			}
-			return roles;
-		}, [])
+			return units;
+	}, []);
+}
+
+export function changeRole(roleId) {
+	return (dispatch, getState) => {
+		dispatch(setRole(roleId, getState()));
+		const state = getState();
+		if(shouldSetUnit(state)){
+			dispatch(setUnit(state.context.units[0].UnitID, state));
+		}
 	};
 }
 
-function setUnits(state, roleId){
+function shouldSetUnit(state){
+	const { currentUnit, currentRole, units } = state.context;
+	return !currentUnit && currentRole && units && units.length === 1;
+}
+
+function setRole(roleId, state) {
+	const { contexts } = state.context;
 	return {
-		type: SET_UNITS,
-		units: state.context.contexts.reduce((units, context) => {
-			if(context.Role.RoleID === roleId){
+		type: SET_ROLE,
+		roleId,
+		units: contexts.reduce((units, context) => {
+			if (context.Role.RoleID === roleId) {
 				units.push(context.Unit);
 			}
 			return units;
 		}, [])
-	}
+	};
 }
 
-export function changeRole(roleId){
-	return (dispatch, getState) => {
-		dispatch(setRole(roleId));
-		dispatch(setUnits(getState(), roleId));
-	}
-}
-
-function setRole(roleId){
-	return {
-		type: SET_ROLE,
-		roleId
-	}
-}
-
-export function setUnit(unitId){
+function setUnit(unitId, state) {
+	const { currentRole, contexts } = state.context;
 	return {
 		type: SET_UNIT,
-		unitId: unitId
+		unitId: unitId,
+		context: contexts.find(c => c.Role.RoleID === currentRole && c.Unit.UnitID === unitId)
 	};
 }
 
-const REGISTER_ID = 100;
-
-function setContexts(contexts){
-	return {
-		type: SET_CONTEXTS,
-		contexts: contexts
+export function unitChange(unitId) {
+	return (dispatch, getState) => {
+		dispatch(setUnit(unitId, getState()));
 	};
 }
 
-export function contextError(error){
+export function contextError(error) {
 	return {
 		type: CONTEXT_ERROR,
-		error: error 
+		error: error
 	};
 }

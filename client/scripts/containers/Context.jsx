@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchContexts, changeRole, setUnit } from '../actions/context';
+import { fetchContexts, changeRole, unitChange } from '../actions/context';
 import { Overlay, Popover, Button } from 'react-bootstrap';
 import UnitList from '../components/UnitList.jsx';
 
@@ -20,6 +20,7 @@ class Context extends Component {
 			target,
 			currentRole,
 			currentUnit,
+			currentContext,
 			units,
 			error
 		} = this.props;
@@ -30,12 +31,13 @@ class Context extends Component {
 				placement="bottom" >
 				<Popover title="Byt enhet och/eller roll" id="context-popover">
 					<UnitList 
-						units={units.map(u => ({name: u.UnitName, id: u.UnitID}))}
+						units={units.map(u => ({name: u.UnitName, id: u.UnitID, code: u.UnitCode}))}
 						roles={roles.map(r => ({name: r.RoleName, id: r.RoleID}))}
 						roleChange={x => dispatch(changeRole(x))}
-						unitChange={x => dispatch(setUnit(x))}
+						unitChange={x => dispatch(unitChange(x))}
 						currentRole={currentRole}
 						currentUnit={currentUnit}
+						contextId={currentContext && currentContext.ContextID}
 					/>
 					<Button bsStyle="primary" block>Genomför</Button>
 					<Button block>Logga ut</Button>
@@ -60,7 +62,8 @@ function mapStateToProps(state){
 		roles: state.context.roles,
 		units: state.context.units,
 		currentRole: state.context.currentRole,
-		currentUnit: state.context.currentUnit
+		currentUnit: state.context.currentUnit,
+		currentContext: state.context.currentContext
 	};
 }
 

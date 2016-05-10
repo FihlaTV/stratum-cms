@@ -1,12 +1,10 @@
-import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS, SET_ROLES, SET_ROLE, SET_UNITS, SET_UNIT } from '../actions/context';
+import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS, SET_ROLES, SET_ROLE, SET_UNITS, SET_UNIT, SET_CURRENT_CONTEXT, RECEIVE_CONTEXTS } from '../actions/context';
 
 const initialState = {
 	showModal: false,
 	units: [],
 	roles: [],
-	contexts: [],
-	currentRole: '',
-	currentUnit: ''
+	contexts: []
 };
 
 export default (state = initialState, action) => {
@@ -20,25 +18,24 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.error
 			});
-		case SET_CONTEXTS:
+		case RECEIVE_CONTEXTS: 
 			return Object.assign({}, state, {
-				contexts: action.contexts
-			});
-		case SET_ROLES: 
-			return Object.assign({}, state, {
-				roles: action.roles
+				contexts: action.contexts,
+				roles: action.roles || [],
+				currentRole: action.currentRole,
+				units: action.units || []
 			});
 		case SET_ROLE: 
 			return Object.assign({}, state, {
-				currentRole: action.roleId
+				currentRole: action.roleId,
+				units: action.units,
+				currentUnit: undefined,
+				currentContext: undefined
 			});
 		case SET_UNIT: 
 			return Object.assign({}, state, {
-				currentUnit: action.unitId
-			});
-		case SET_UNITS:
-			return Object.assign({}, state, {
-				units: action.units
+				currentUnit: action.unitId,
+				currentContext: action.context
 			});
       	default:
 			return state;

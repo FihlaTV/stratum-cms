@@ -6,12 +6,12 @@ import ContextSelect from './ContextSelect';
 const UnitList = ({
 	currentRole,
 	currentUnit,
+	contextId = 'N/A',
 	roleChange,
 	unitChange,
     units,
 	roles
 }) => {
-	
 	return (
 		<form>
 			<ContextSelect
@@ -25,8 +25,9 @@ const UnitList = ({
 				onChange={unitChange}
 				items={units}
 				label="Välj enhet:"
-				helpText="Help Text"
+				helpText={'ContextID: ' + contextId}
 				disabled={units.length <= 0}
+				format={x => `${x.name} (${x.code}) (${x.id})`}
 			/>
 		</form>
 	);
