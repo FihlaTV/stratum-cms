@@ -28,7 +28,7 @@ export function fetchContexts() {
 				if (json.success) {
 					dispatch(receiveContexts(json.data));
 					const state = getState();
-					if(shouldSetUnit(state)){
+					if (shouldSetUnit(state)) {
 						dispatch(setUnit(state.context.units[0].UnitID, state));
 					}
 				} else {
