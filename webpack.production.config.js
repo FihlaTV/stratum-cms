@@ -8,7 +8,7 @@ require('dotenv').load();
 
 var jsEntry = {
 	app: path.resolve(__dirname, 'client/scripts/index.jsx'),
-	vendors: ['react', 'jquery', 'react-bootstrap', 'react-dom', 'redux', 'masonry-layout', 'imagesloaded']
+	vendors: ['react', 'jquery', 'react-bootstrap', 'react-dom', 'redux']
 };
 
 function findRegisters() {
