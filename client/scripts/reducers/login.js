@@ -25,7 +25,8 @@ export default (state = initialState, action) => {
 			});
 		case RESET_STATE:
 			return Object.assign({}, initialState, {
-				showLoginModal: !action.close
+				showLoginModal: !action.close,
+				https: !!state.https
 			});
 		case SET_SITHS_STATUS:
 			return Object.assign({}, state, {
