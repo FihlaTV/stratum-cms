@@ -18,7 +18,7 @@ exports = module.exports = function(req, res) {
 	locals.breadcrumbs = locals.breadcrumbs || [{ label: label, path: '/faq' }];
 
 	locals.data = locals.data || {};
-	locals.data.questionCategories = []
+	locals.data.questionCategories = [];
 	locals.filters = locals.filters || {};
 	locals.filters.questionCategories = locals.data.page && locals.data.page.questionCategories;
 
@@ -41,10 +41,12 @@ exports = module.exports = function(req, res) {
 			if (!err && questions) {
 				questions.forEach(function(question) {
 					var categories = locals.data.questionCategories,
-						category = question.category,
+						category = question.category;
+					if(category){
 						id = Number.isInteger(category.sortOrder) ? category.sortOrder : 0;
-					categories[id] = categories[id] || [];
-					categories[id].push(question);
+						categories[id] = categories[id] || [];
+						categories[id].push(question);
+					}
 				});
 			}
 			next(err);
