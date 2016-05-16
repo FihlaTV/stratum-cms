@@ -17,13 +17,14 @@ export const LoginMethod = {
 
 export function initLoginModal(){
 	return (dispatch) => {
-		dispatch(setCurrentProtocol(window.location.protocol === 'https:'));
+		const protocol = window.location.protocol === 'https:';
+		dispatch(setCurrentProtocol(protocol));
 		dispatch(resetState(true));
-		if(process.env.NODE_ENV !== 'development'){
+		if(!protocol && process.env.NODE_ENV !== 'development'){
 			dispatch(loginError(new Error('Det går inte att logga in pga att du inte besöker webbplatsen över https. Var god försök igen under https.')));
 		}
 		return dispatch(showLoginModal(true));
-	}
+	};
 }
 
 export function setCurrentProtocol(isHTTPS){
