@@ -22,6 +22,7 @@ Question.add({
 	category: {
 		type: Types.Relationship,
 		ref: 'QuestionCategory',
+		required: true,
 		initial: true
 	},
 	isActive: { type: Boolean, default: true }
