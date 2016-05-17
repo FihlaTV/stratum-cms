@@ -9,7 +9,7 @@ import {
 	SHOW_LOGIN_MODAL, 
 	SET_USER_INFO,
 	SET_HTTPS_FLAG
-	} from '../actions/actions';
+	} from '../actions/login';
 
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED,

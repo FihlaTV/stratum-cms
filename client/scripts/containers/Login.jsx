@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/actions';
+import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/login';
 // import ChangeLogin from '../components/ChangeLogin';
 import SelectLogin from '../components/SelectLogin';
 import InputPersonalNr from '../components/InputPersonalNr';

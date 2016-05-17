@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { LoginMethod, setLoginMethod } from '../actions/actions';
 import SelectLogin from '../components/SelectLogin';
 
 const LoginSelectorList = ({

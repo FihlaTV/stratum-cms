@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, initLoginModal, inputPersonalNumber, 
-	resetState, LoginMethod, toggleNextState, showLoginModal,
-	getKeystoneContext } from '../actions/actions';
+import { initLoginModal, showLoginModal, getKeystoneContext } from '../actions/login';
 import { showContextModal } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
