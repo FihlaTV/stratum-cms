@@ -15,6 +15,6 @@ const LoginSelectorList = ({
             )}
 		</div>
 	);
-}
+};
 
 export default LoginSelectorList;

@@ -42,7 +42,7 @@ const BankID = ({
 				</div>
 			);
     }
-}
+};
 
 const mapStateToProps = (state) => {
 	return {
