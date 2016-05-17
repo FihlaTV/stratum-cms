@@ -133,11 +133,26 @@ img.navbar-brand-image-small{
 				}
 			}
 			.login-user-display{
-				padding: @gutter;
+				display: block;
+				padding: @gutter @gutter*2+10px @gutter @gutter;
+				text-align: right;
+				position: relative;
+				p{
+					margin-bottom: 0;
+				}
+				.username{
+					font-size: floor(@font-size-base * 1.1);
+				}
+				.unitname{
+					font-size: floor(@font-size-base * 0.9);
+				}
 				&:after{
 					.fa-icon();
 					content: @fa-var-chevron-down;
-					margin-left: 5px;
+					position: absolute;
+					right: @gutter;
+					top: 50%;
+					margin-top: -5px;
 				}
 			}
 			.container;

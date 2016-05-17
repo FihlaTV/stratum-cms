@@ -9,8 +9,8 @@ const User = ({
 	const lastNameLetter = user.LastName[0];
 	return (
 		<a className="login-user-display" href="#" onClick={onClick}>
-			<span className="username">{user.FirstName} ({role.RoleName})</span>
-			<span className="unitname">{unit.UnitName}</span>
+			<p className="username">{user.FirstName} {user.LastName}</p>
+			<p className="unitname">{unit.UnitName} ({role.RoleName})</p>
 		</a>
 	);
 };
