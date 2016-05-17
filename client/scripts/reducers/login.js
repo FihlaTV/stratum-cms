@@ -7,6 +7,7 @@ import {
 	RESET_STATE, 
 	HAS_NEXT_STATE,
 	SHOW_LOGIN_MODAL, 
+	SET_USER_INFO,
 	SET_HTTPS_FLAG
 	} from '../actions/actions';
 
@@ -48,9 +49,15 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				https: action.https
 			});
+		case SET_USER_INFO: 
+			return Object.assign({}, state, {
+				user: action.user,
+				role: action.role,
+				unit: action.unit
+			});
 		default:
 			return state;
 	}
-}
+};
 
 

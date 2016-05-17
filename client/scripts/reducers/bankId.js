@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
 		case SET_PERSONAL_NUMBER_VALIDITY:
 			return Object.assign({}, state, {
 				personalNumberValidity: action.validity
-			})
+			});
 		case SET_USER_NAME:
 			return Object.assign({}, state, {
 				userName: action.userName

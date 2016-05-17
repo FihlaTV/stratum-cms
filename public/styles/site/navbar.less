@@ -122,7 +122,7 @@ img.navbar-brand-image-small{
 			.navbar-nav{
 				> li {
 					&:last-child{
-						margin-right: @gutter-large + @navbar-main-padding-vertical;
+						// margin-right: @gutter-large + @navbar-main-padding-vertical;
 					}
 					> a {
 						.btn;
@@ -132,7 +132,16 @@ img.navbar-brand-image-small{
 					}
 				}
 			}
+			.login-user-display{
+				padding: @gutter;
+				&:after{
+					.fa-icon();
+					content: @fa-var-chevron-down;
+					margin-left: 5px;
+				}
+			}
 			.container;
+			padding-right: @gutter-large + @navbar-main-padding-vertical;
 			position: absolute;
 			left: 50%;
 			top: @gutter + 10px;

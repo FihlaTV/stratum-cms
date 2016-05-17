@@ -1,25 +1,37 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, initLoginModal, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/actions';
+import { setLoginMethod, initLoginModal, inputPersonalNumber, 
+	resetState, LoginMethod, toggleNextState, showLoginModal,
+	getKeystoneContext } from '../actions/actions';
 import { showContextModal } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
+import User from '../components/User.jsx';
 
 class App extends Component {
+	componentDidMount() {
+		const { initContext } = this.props;
+		// See if there is any current login
+		initContext();
+	}
 	render() {
 		const { 
 			showLoginModal,
-			showContextModal
+			showContextModal,
+			user,
+			role,
+			unit
 		} = this.props;
 		return (
 			<div>
 				<ul className="nav navbar-nav navbar-right">
-					<li>
-						<a href="#" onClick={showLoginModal}>Logga In</a>
-					</li>
-					<li>
-						<a href="#" onClick={showContextModal}>Byt enhet</a>
-					</li>
+					{user && role && unit ? 
+						<User user={user} role={role} unit={unit} onClick={showContextModal}/>
+						:
+						<li>
+							<a href="#" onClick={showLoginModal}>Logga In</a>
+						</li>
+					}
 				</ul>
 				<Login/>
 				<Context/>
@@ -30,6 +42,9 @@ class App extends Component {
 
 function mapDispatchToProps(dispatch){
 	return {
+		initContext: () => {
+			dispatch(getKeystoneContext());
+		},
 		showLoginModal: () => {
 			dispatch(initLoginModal(true));
 		},
@@ -40,13 +55,9 @@ function mapDispatchToProps(dispatch){
 }
 function mapStateToProps(state){
 	return {
-		// error: state.login.error,
-		// loginMethod: state.login.loginMethod,
-		// personalNumber: state.login.personalNumber,
-		// validPNr: state.bankId.personalNumberValidity,
-		// sithsStatus: state.login.sithsStatus,
-		// hasNextState: state.login.hasNextState,
-		// showModal: state.login.showLoginModal
+		user: state.login.user,
+		role: state.login.role,
+		unit: state.login.unit
 	};
 }
 

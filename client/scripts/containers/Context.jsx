@@ -11,6 +11,8 @@ class Context extends Component {
 		// Do fetch of units...
 		dispatch(fetchContexts());
 	}
+	componentWillReceiveProps(nextProps){
+	}
 	render() {
 		const { 
 			dispatch,
@@ -43,7 +45,7 @@ class Context extends Component {
 					<ContextSyncButton bsStyle="primary" block disabled={!currentContext || !isDirty} isSyncing={isSyncing} onClick={() => {
 						dispatch(syncContext(currentContext.ContextID));
 					}}>Genomför</ContextSyncButton>
-					<Button block>Logga ut</Button>
+					<Button block href="/logout">Logga ut</Button>
 				</Popover>
 			</Overlay>
 		);

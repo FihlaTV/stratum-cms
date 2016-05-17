@@ -15,6 +15,32 @@ export const LoginMethod = {
     SITHS_CARD: 'SITHS_CARD'
 };
 
+export function getKeystoneContext(){
+	return (dispatch) => {
+		fetch('/api/authentication/context', { credentials: 'include' })
+			.then(res => res.json())
+			.then(json => {
+				if(json.success){
+					debugger;
+					const { User, Unit } = json.data;
+					if(Unit.Register.RegisterID !== process.env.CLIENT_REGISTER_ID){
+						
+					}
+					// return dispatch(loginToStratum());
+					dispatch(setUserInfo(json.data));
+					
+				} else {
+					const error = new Error(json.message);
+					throw (error);
+				}
+			})
+			.catch(error => { 
+				console.log('request failed', error); 
+				// dispatch(loginError(error));
+			});
+	};
+}
+
 export function initLoginModal(){
 	return (dispatch) => {
 		const protocol = window.location.protocol === 'https:';
@@ -137,7 +163,7 @@ export function toggleNextState(){
 			state.bankId.personalNumberValidity) {
 			return dispatch(initiateBID());
 		}
-	}
+	};
 }
 
 //BankID actions
@@ -168,6 +194,18 @@ export function setUserName(userName){
 	return {
 		type: SET_USER_NAME,
 		userName
+	};
+}
+
+export const SET_USER_INFO = 'SET_USER_INFO';
+
+function setUserInfo(json){
+	const { User, Role, Unit } = json;
+	return {
+		type: SET_USER_INFO,
+		user: User,
+		role: Role,
+		unit: Unit
 	};
 }
 
