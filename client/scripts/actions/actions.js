@@ -21,7 +21,6 @@ export function getKeystoneContext(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					debugger;
 					const { User, Unit } = json.data;
 					if(Unit.Register.RegisterID !== process.env.CLIENT_REGISTER_ID){
 						
