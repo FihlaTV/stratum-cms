@@ -51,9 +51,9 @@ export default (state = initialState, action) => {
 			});
 		case SET_USER_INFO: 
 			return Object.assign({}, state, {
-				user: action.user,
-				role: action.role,
-				unit: action.unit
+				context: action.context,
+				wrongRegister: action.wrongRegister,
+				initial: action.initial
 			});
 		default:
 			return state;

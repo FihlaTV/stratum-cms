@@ -23,6 +23,7 @@ class Context extends Component {
 			currentUnit,
 			currentContext,
 			isDirty,
+			onLogout,
 			units,
 			isSyncing,
 			error
@@ -45,7 +46,7 @@ class Context extends Component {
 					<ContextSyncButton bsStyle="primary" block disabled={!currentContext || !isDirty} isSyncing={isSyncing} onClick={() => {
 						dispatch(syncContext(currentContext.ContextID));
 					}}>Genomför</ContextSyncButton>
-					<Button block href="/logout">Logga ut</Button>
+					<Button block href="/logout" onClick={onLogout}>Logga ut</Button>
 				</Popover>
 			</Overlay>
 		);

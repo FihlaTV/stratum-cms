@@ -1,19 +1,19 @@
 import React, { Component, PropTypes } from 'react';
  
-const User = ({
-	user,
-	unit,
-	role,
-	onClick
-}) => {
-	const lastNameLetter = user.LastName[0];
-	return (
-		<a className="login-user-display" href="#" onClick={onClick}>
-			<p className="username">{user.FirstName} {user.LastName}</p>
-			<p className="unitname">{unit.UnitName} ({role.RoleName})</p>
-		</a>
-	);
-};
+class User extends Component {
+	render(){
+		const {context,wrongRegister,onClick} = this.props;
+		const { User, Unit, Role } = context;
+		const lastNameLetter = User.LastName[0];
+		return (
+			<a className="login-user-display" href="#" onClick={onClick}>
+				<p className="username">{User.FirstName} {User.LastName}</p>
+				<p className="unitname">{wrongRegister ? 'Byt enhet' : `${Unit.UnitName} (${Role.RoleName})`}</p>
+			</a>
+		);
+		
+	}
+}
 
 User.propTypes = {};
 

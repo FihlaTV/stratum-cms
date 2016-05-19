@@ -18,6 +18,8 @@ export const LoginMethod = {
     SITHS_CARD: 'SITHS_CARD'
 };
 
+const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
+
 export function getKeystoneContext(){
 	return (dispatch) => {
 		fetch('/api/authentication/context', { credentials: 'include' })
@@ -25,9 +27,10 @@ export function getKeystoneContext(){
 			.then(json => {
 				if(json.success){
 					const { User, Unit } = json.data;
-					if(Unit.Register.RegisterID !== process.env.CLIENT_REGISTER_ID){
+					// if(Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID)){
 						
-					}
+						// throw new Error('Ogiltlig kontext för registret');
+					// }
 					// return dispatch(loginToStratum());
 					dispatch(setUserInfo(json.data));
 					
@@ -48,7 +51,7 @@ export function initLoginModal(){
 		const protocol = window.location.protocol === 'https:';
 		dispatch(setCurrentProtocol(protocol));
 		dispatch(resetState(true));
-		if(!protocol && process.env.NODE_ENV !== 'development'){
+		if(!protocol && NODE_ENV !== 'development'){
 			dispatch(loginError(new Error('Det går inte att logga in pga att du inte besöker webbplatsen över https. Var god försök igen under https.')));
 		}
 		return dispatch(showLoginModal(true));
@@ -137,7 +140,7 @@ export function initiateSITHSLogin(){
 	return (dispatch) => {
 		dispatch(setHasNextState(false));
 		dispatch(setSITHSStatus('SITHS_DO_LOGIN'));
-		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/login`, { credentials: 'include' })
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -179,13 +182,12 @@ export const LoginStages = {
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 
-function setUserInfo(json){
-	const { User, Role, Unit } = json;
+function setUserInfo(context, initial){
 	return {
 		type: SET_USER_INFO,
-		user: User,
-		role: Role,
-		unit: Unit
+		wrongRegister: context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID),
+		context: context,
+		initial: !!initial
 	};
 }
 
@@ -215,7 +217,8 @@ export function loginToStratum(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					window.location.reload(); // For now...
+					dispatch(checkForMatchingContexts(json.data));
+					// window.location.reload(); // For now...
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
@@ -225,6 +228,50 @@ export function loginToStratum(){
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
+				dispatch(loginError(error));
+			});
+	};
+}
+
+
+export function logoutFromStratum(){
+	return dispatch => {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/logout`, { credentials: 'include' })
+			.then(res => res.json())
+			.then(json =>{
+				if(json.success){
+					console.log('Logout successfull!');
+				} else {
+					throw new Error('Utloggning misslyckades...');
+				}			
+			})
+			.catch(error => {
+				dispatch(loginError(error));
+			});
+	};
+}
+
+function checkForMatchingContexts(context){
+	return dispatch => {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/contexts`, {credentials: 'include'})
+			.then(res => res.json())
+			.then(json => {
+				if(json.success){
+					const contexts = json.data.filter(c => c.Unit.Register.RegisterID === parseInt(CLIENT_REGISTER_ID));
+					if(contexts.length <= 0){
+						//No matching contexts for this register counts as a failed login
+						dispatch(logoutFromStratum());
+						throw new Error('Du har tyvärr inte tillgång till det här registret');
+					} else {
+						//Successful login
+						dispatch(showLoginModal(false));
+						dispatch(setUserInfo(context, true));
+						// window.location.reload(); // For now...			
+					}
+				}
+			})
+			.catch(error => {
+				console.log('missing contexts', error);
 				dispatch(loginError(error));
 			});
 	};
