@@ -26,7 +26,7 @@ const UnitList = ({
 				items={units}
 				label="Välj enhet:"
 				disabled={units.length <= 0}
-				format={x => `${x.name} (${x.code}) (${x.id})`}
+				format={x => `${x.name} (${x.code})`}
 			/>
 		</form>
 	);
