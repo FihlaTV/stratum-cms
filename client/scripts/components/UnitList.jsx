@@ -5,12 +5,13 @@ import ContextSelect from './ContextSelect';
 const UnitList = ({
 	currentRole,
 	currentUnit,
-	contextId = 'N/A',
+	context,
 	roleChange,
 	unitChange,
     units,
 	roles
 }) => {
+	const contextId = context ? context.ContextID : 'N/A';
 	return (
 		<form>
 			<ContextSelect
@@ -24,7 +25,6 @@ const UnitList = ({
 				onChange={unitChange}
 				items={units}
 				label="Välj enhet:"
-				helpText={'ContextID: ' + contextId}
 				disabled={units.length <= 0}
 				format={x => `${x.name} (${x.code}) (${x.id})`}
 			/>
@@ -33,6 +33,9 @@ const UnitList = ({
 };
 
 UnitList.propTypes = {
+	context: PropTypes.shape({
+		ContextID: PropTypes.number
+	}),
 	roleChange: PropTypes.func,
 	unitChange: PropTypes.func,
 	units: PropTypes.array,

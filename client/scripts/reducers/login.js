@@ -6,6 +6,7 @@ import {
 	SET_SITHS_STATUS, 
 	RESET_STATE, 
 	HAS_NEXT_STATE,
+	SET_CONTEXT,
 	SHOW_LOGIN_MODAL, 
 	SET_USER_INFO,
 	SET_HTTPS_FLAG
@@ -53,7 +54,13 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				context: action.context,
 				wrongRegister: action.wrongRegister,
+				contexts: action.contexts,
 				initial: action.initial
+			});
+		case SET_CONTEXT: 
+			return Object.assign({}, state, {
+				context: action.context,
+				wrongRegister: false
 			});
 		default:
 			return state;

@@ -32,7 +32,8 @@ export function getKeystoneContext(){
 						// throw new Error('Ogiltlig kontext för registret');
 					// }
 					// return dispatch(loginToStratum());
-					dispatch(setUserInfo(json.data));
+					// dispatch(setUserInfo(json.data));
+					dispatch(getAvailableContexts(json.data));
 					
 				} else {
 					const error = new Error(json.message);
@@ -182,11 +183,12 @@ export const LoginStages = {
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 
-function setUserInfo(context, initial){
+function setUserInfo(context, contexts, initial){
 	return {
 		type: SET_USER_INFO,
 		wrongRegister: context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID),
 		context: context,
+		contexts: contexts,
 		initial: !!initial
 	};
 }
@@ -217,7 +219,7 @@ export function loginToStratum(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					dispatch(checkForMatchingContexts(json.data));
+					dispatch(getAvailableContexts(json.data, true));
 					// window.location.reload(); // For now...
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
@@ -251,7 +253,7 @@ export function logoutFromStratum(){
 	};
 }
 
-function checkForMatchingContexts(context){
+function getAvailableContexts(context, initial){
 	return dispatch => {
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/contexts`, {credentials: 'include'})
 			.then(res => res.json())
@@ -265,7 +267,7 @@ function checkForMatchingContexts(context){
 					} else {
 						//Successful login
 						dispatch(showLoginModal(false));
-						dispatch(setUserInfo(context, true));
+						dispatch(setUserInfo(context, contexts, initial));
 						// window.location.reload(); // For now...			
 					}
 				}
@@ -273,6 +275,45 @@ function checkForMatchingContexts(context){
 			.catch(error => {
 				console.log('missing contexts', error);
 				dispatch(loginError(error));
+			});
+	};
+}
+
+export const SET_CONTEXT = 'SET_CONTEXT';
+
+function setContext(context){
+	return {
+		type: SET_CONTEXT,
+		context: context
+	};
+}
+
+export function changeContext(context) {
+	const { ContextID } = context;
+	return (dispatch, getState) => {
+		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/context`, {
+			credentials: 'include',
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				Context: {
+					ContextID: ContextID
+				}
+			})
+		})
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(setContext(context));					
+				} else {
+					const error = new Error(json.message);
+					throw (error);
+				}
+			})
+			.catch(error => {
+				console.log('request failed', error);
 			});
 	};
 }
