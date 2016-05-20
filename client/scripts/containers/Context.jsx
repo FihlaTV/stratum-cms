@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchContexts, changeRole, unitChange, syncContext } from '../actions/context';
+import { initContextSelector, fetchContexts, unitChange, roleChange, syncContext } from '../actions/context';
 import { Overlay, Popover, Button } from 'react-bootstrap';
 import UnitList from '../components/UnitList';
 import ContextSyncButton from '../components/ContextSyncButton';
@@ -9,9 +9,13 @@ class Context extends Component {
 	componentDidMount() {
 		const { dispatch } = this.props;
 		// Do fetch of units...
-		dispatch(fetchContexts());
+		// dispatch(fetchContexts());
 	}
 	componentWillReceiveProps(nextProps){
+		const { contexts, inRole, inUnit, dispatch, firstTime } = nextProps;
+		if(this.props.contexts !== contexts){
+			dispatch(initContextSelector(contexts, inRole, inUnit, firstTime && !this.props.firstTime));
+		}
 	}
 	render() {
 		const { 
@@ -21,6 +25,12 @@ class Context extends Component {
 			target,
 			currentRole,
 			currentUnit,
+			onCancel,
+			inRole,
+			inUnit,
+			requireChange,
+			onSubmit,
+			initial,
 			currentContext,
 			isDirty,
 			onLogout,
@@ -37,15 +47,18 @@ class Context extends Component {
 					<UnitList 
 						units={units.map(u => ({name: u.UnitName, id: u.UnitID, code: u.UnitCode}))}
 						roles={roles.map(r => ({name: r.RoleName, id: r.RoleID}))}
-						roleChange={x => dispatch(changeRole(x))}
-						unitChange={x => dispatch(unitChange(x))}
+						roleChange={role => dispatch(roleChange(role))}
+						unitChange={unit => dispatch(unitChange(unit))}
 						currentRole={currentRole}
 						currentUnit={currentUnit}
-						contextId={currentContext && currentContext.ContextID}
+						context={currentContext}
 					/>
-					<ContextSyncButton bsStyle="primary" block disabled={!currentContext || !isDirty} isSyncing={isSyncing} onClick={() => {
-						dispatch(syncContext(currentContext.ContextID));
-					}}>Genomför</ContextSyncButton>
+					{!(initial && inUnit === currentUnit && inRole === currentRole) && 
+					<ContextSyncButton bsStyle="primary" block disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} isSyncing={isSyncing} onClick={() => {
+						onSubmit(currentContext);
+					}}>Genomför byte</ContextSyncButton>}
+					{initial && inUnit === currentUnit && inRole === currentRole && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
+					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
 					<Button block href="/logout" onClick={onLogout}>Logga ut</Button>
 				</Popover>
 			</Overlay>
@@ -54,7 +67,9 @@ class Context extends Component {
 }
 
 Context.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+	onChange: PropTypes.func,
+	onCancel: PropTypes.func
 };
 
 function mapDispatchToProps(dispatch){
@@ -64,14 +79,15 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
 	const { context } = state;
 	return {
-		show: context.showModal,
-		target: context.modalTarget,
+		show: context.show,
+		target: context.target,
 		roles: context.roles,
 		units: context.units,
 		currentRole: context.currentRole,
 		currentUnit: context.currentUnit,
 		currentContext: context.currentContext,
 		isDirty: context.isDirty,
+		initial: context.initial,
 		isSyncing: context.isSyncing
 	};
 }
