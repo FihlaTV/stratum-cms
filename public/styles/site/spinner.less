@@ -1,20 +1,36 @@
+@spinner-width: 7px;
+@spinner-margin: 3px;
+@spinner-small-width: 2px;
+@spinner-small-margin: 1px;
+
 .spinner {
   margin: 50px auto;
-  width: 50px;
+  width: 5*(@spinner-margin+@spinner-width);
   height: 60px;
   text-align: center;
   font-size: 10px;
+  &.spinner-small{
+	  margin: 5px auto;
+	  height: 15px;
+	  width: 5*(@spinner-small-margin+@spinner-small-width);
+  }
 }
 
-.spinner > div {
-  background-color: @brand-primary;
-  height: 100%;
-  margin: 0 3px 0 0;
-  width: 7px;
-  display: inline-block;
-  
-  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+.spinner { 
+	> div {
+		background-color: @brand-primary;
+		height: 100%;
+		margin: 0 @spinner-margin 0 0;
+		width: @spinner-width;
+		display: inline-block;
+		
+		-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+		animation: sk-stretchdelay 1.2s infinite ease-in-out;
+	}
+	&.spinner-small > div {
+		margin: 0 @spinner-small-margin 0 0;
+		width: @spinner-small-width;
+	}
 }
 
 .spinner .rect2 {
