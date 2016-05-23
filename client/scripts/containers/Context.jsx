@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { initContextSelector, fetchContexts, unitChange, roleChange, syncContext } from '../actions/context';
+import { initContextSelector, unitChange, roleChange } from '../actions/context';
 import { Overlay, Popover, Button } from 'react-bootstrap';
 import UnitList from '../components/UnitList';
 import ContextSyncButton from '../components/ContextSyncButton';

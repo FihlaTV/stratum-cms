@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, changeContext } from '../actions/login';
-import { showContextModal, syncContext, setTarget } from '../actions/context';
+import { showContextModal, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
 import User from '../components/User.jsx';
@@ -75,8 +75,8 @@ class App extends Component {
 
 function mapDispatchToProps(dispatch){
 	return {
-		initContext: () => {
-			dispatch(getKeystoneContext());
+		initContext: (initial) => {
+			dispatch(getKeystoneContext(initial));
 		},
 		showLoginModal: () => {
 			dispatch(initLoginModal(true));

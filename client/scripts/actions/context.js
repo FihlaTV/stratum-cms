@@ -1,17 +1,12 @@
 import es6Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 
-
-/**	
- * Context modal
- */
-const REGISTER_ID = 100;
-
 export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
 export const CONTEXT_ERROR = 'CONTEXT_ERROR';
 export const SET_ROLE = 'SET_ROLE';
 export const SET_UNIT = 'SET_UNIT';
 export const RECEIVE_CONTEXTS = 'RECEIVE_CONTEXTS';
+export const SET_TARGET = 'SET_TARGET';
 
 export function showContextModal(show) {
 	return {
@@ -19,8 +14,6 @@ export function showContextModal(show) {
 		show: show
 	};
 }
-
-export const SET_TARGET = 'SET_TARGET';
 
 export function setTarget(target){
 	return {
@@ -30,9 +23,6 @@ export function setTarget(target){
 }
 
 export function initContextSelector(contexts, roleId, unitId, initial) {
-	//Remove all contexts not matching current register
-	// const registerContexts = json.filter(c => c.Unit.Register.RegisterID === REGISTER_ID);
-
 	//Find all unique roles for current contexts
 	const roles = contexts.reduce((roles, context) => {
 		if (roles.every(x => x.RoleID !== context.Role.RoleID)) {
