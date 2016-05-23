@@ -8,8 +8,6 @@ import ContextSyncButton from '../components/ContextSyncButton';
 class Context extends Component {
 	componentDidMount() {
 		const { dispatch } = this.props;
-		// Do fetch of units...
-		// dispatch(fetchContexts());
 	}
 	componentWillReceiveProps(nextProps){
 		const { contexts, inRole, inUnit, dispatch, firstTime } = nextProps;

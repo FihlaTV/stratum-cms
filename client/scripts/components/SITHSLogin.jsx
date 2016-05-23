@@ -21,6 +21,6 @@ const SITHSLogin = ({
 		default :
 			return <h1>SITHS</h1>
 	}
-}
+};
 
 export default SITHSLogin;

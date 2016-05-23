@@ -63,7 +63,6 @@ class App extends Component {
 					target={contextTarget}
 					inUnit={context && context.Unit.UnitID}
 					inRole={context && context.Role.RoleID}
-					roleChange={x => console.log(x)}
 					firstTime={initial}
 					onLogout={logout} 
 					onSubmit={setContext}
