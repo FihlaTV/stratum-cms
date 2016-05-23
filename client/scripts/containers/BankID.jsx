@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { LoginStages, inputPersonalNumber, validatePersonalNumber, initiateBID } from '../actions/actions';
+import { inputPersonalNumber, validatePersonalNumber, initiateBID } from '../actions/bankid';
+import { LoginStages } from '../actions/login';
 import InputPersonalNr from '../components/InputPersonalNr';
 import SelectLogin from '../components/SelectLogin';
 import BIDStatusMessage from '../components/BIDStatusMessage';
@@ -41,7 +42,7 @@ const BankID = ({
 				</div>
 			);
     }
-}
+};
 
 const mapStateToProps = (state) => {
 	return {

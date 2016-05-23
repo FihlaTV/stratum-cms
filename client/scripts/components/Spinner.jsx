@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const Spinner = () => 
+const Spinner = ({small, style}) => 
     (
-		<div className="spinner">
+		<div className={small ? 'spinner spinner-small' : 'spinner'} style={style}>
 			<div className="rect1"></div>
 			<div className="rect2"></div>
 			<div className="rect3"></div>
@@ -10,5 +10,9 @@ const Spinner = () =>
 			<div className="rect5"></div>
       </div>
 	);
+
+Spinner.propTypes = {
+	small: PropTypes.bool	
+};
 
 export default Spinner;

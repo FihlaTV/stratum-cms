@@ -43,6 +43,6 @@ const BIDStatusMessage = ({
 			{status.message}
 		</Alert>
 	);
-}
+};
 
 export default BIDStatusMessage;

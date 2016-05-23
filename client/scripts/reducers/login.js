@@ -6,9 +6,12 @@ import {
 	SET_SITHS_STATUS, 
 	RESET_STATE, 
 	HAS_NEXT_STATE,
+	SET_CONTEXT,
 	SHOW_LOGIN_MODAL, 
+	SET_USER_INFO,
+	CONTEXT_IS_LOADING,
 	SET_HTTPS_FLAG
-	} from '../actions/actions';
+	} from '../actions/login';
 
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED,
@@ -48,9 +51,26 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				https: action.https
 			});
+		case SET_USER_INFO: 
+			return Object.assign({}, state, {
+				context: action.context,
+				wrongRegister: action.wrongRegister,
+				contexts: action.contexts,
+				contextIsLoading: false,
+				initial: action.initial
+			});
+		case SET_CONTEXT: 
+			return Object.assign({}, state, {
+				context: action.context,
+				wrongRegister: false
+			});
+		case CONTEXT_IS_LOADING: 
+			return Object.assign({}, state, {
+				contextIsLoading: action.isLoading
+			});
 		default:
 			return state;
 	}
-}
+};
 
 

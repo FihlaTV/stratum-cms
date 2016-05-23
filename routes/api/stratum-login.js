@@ -17,7 +17,9 @@ exports = module.exports = function(req, res) {
 			message: 'Stratum URI lookup error'
 		});
 	}
-	apiUrl = url.resolve(stratumServer, '/api/authentication/login');
+	// req.url shoul be either /api/authentication/context or /api/authentication/login
+	// might be better to hard code these
+	apiUrl = url.resolve(stratumServer, req.url);
 	req.headers['accept-encoding'] = 'gzip;q=0,deflate,sdch';
 
 	req.pipe(request({
@@ -39,11 +41,15 @@ exports = module.exports = function(req, res) {
 				// delete req.session.contextId;
 			}
 			if (req.session && jsonBody.success && jsonBody.data && jsonBody.data.ContextID) {
+				req.session.context = jsonBody.data;
 				req.session.contextId = jsonBody.data.ContextID;
 				req.session.stratumUser = jsonBody.data.User;
+				req.session.contextUpdated = Date.now();
 			} else {
 				delete req.session.contextId;
 				delete req.session.stratumUser;
+				delete req.session.context;
+				delete req.session.contextUpdated;
 				jsonBody = {
 					success: false,
 					code: 'CONTEXT_ERROR',
