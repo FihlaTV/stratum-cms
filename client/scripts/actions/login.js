@@ -20,28 +20,25 @@ export const LoginMethod = {
 
 const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
 
-export function getKeystoneContext(){
+export function getKeystoneContext(isInitial){
 	return (dispatch) => {
+		dispatch(setContextLoadFlag(true));
 		fetch('/api/authentication/context', { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
 					const { User, Unit } = json.data;
-					// if(Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID)){
-						
-						// throw new Error('Ogiltlig kontext för registret');
-					// }
-					// return dispatch(loginToStratum());
-					// dispatch(setUserInfo(json.data));
 					dispatch(getAvailableContexts(json.data));
-					
 				} else {
 					const error = new Error(json.message);
 					throw (error);
 				}
 			})
 			.catch(error => { 
-				console.log('request failed', error); 
+				dispatch(setContextLoadFlag(false));
+				if(!isInitial){
+					console.log('request failed', error); 
+				}
 				// dispatch(loginError(error));
 			});
 	};
@@ -235,6 +232,14 @@ export function loginToStratum(){
 	};
 }
 
+export const CONTEXT_IS_LOADING = 'CONTEXT_IS_LOADING';
+
+function setContextLoadFlag(isLoading){
+	return {
+		type: CONTEXT_IS_LOADING,
+		isLoading: isLoading
+	};
+}
 
 export function logoutFromStratum(){
 	return dispatch => {

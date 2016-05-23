@@ -9,6 +9,7 @@ import {
 	SET_CONTEXT,
 	SHOW_LOGIN_MODAL, 
 	SET_USER_INFO,
+	CONTEXT_IS_LOADING,
 	SET_HTTPS_FLAG
 	} from '../actions/login';
 
@@ -55,12 +56,17 @@ export default (state = initialState, action) => {
 				context: action.context,
 				wrongRegister: action.wrongRegister,
 				contexts: action.contexts,
+				contextIsLoading: false,
 				initial: action.initial
 			});
 		case SET_CONTEXT: 
 			return Object.assign({}, state, {
 				context: action.context,
 				wrongRegister: false
+			});
+		case CONTEXT_IS_LOADING: 
+			return Object.assign({}, state, {
+				contextIsLoading: action.isLoading
 			});
 		default:
 			return state;

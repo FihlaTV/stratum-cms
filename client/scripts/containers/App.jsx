@@ -6,17 +6,18 @@ import { showContextModal, syncContext, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
 import User from '../components/User.jsx';
+import Spinner from '../components/Spinner';
 
 class App extends Component {
 	componentDidMount() {
 		const { initContext } = this.props;
 		// See if there is any current login
-		initContext();
+		initContext(true);
 	}
 	componentWillReceiveProps(nextProps){
-		const { startContext, initial } = this.props;
+		const { context, initial } = this.props;
 		const { showContextModal, wrongRegister } = nextProps;
-		if(startContext && nextProps.startContext !== startContext){
+		if(context && nextProps.context !== context){
 			showContextModal && showContextModal(false);
 		}
 		if(!initial && nextProps.initial || wrongRegister){
@@ -27,28 +28,32 @@ class App extends Component {
 		const { 
 			showLoginModal,
 			showContextModal,
-			startContext,
+			context,
 			wrongRegister,
 			setContext,
 			setContextTarget,
 			initial,
 			contextTarget,
+			contextIsLoading,
 			contexts,
 			logout
 		} = this.props;
 		return (
 			<div>
 				<ul className="nav navbar-nav navbar-right">
-					{startContext ? 
-						<User ref={setContextTarget}
-							context={startContext} 
-							wrongRegister={wrongRegister} 
-							onClick={(e) => showContextModal(true)}
-						/>
-						:
-						<li>
-							<a href="#" onClick={showLoginModal}>Logga In</a>
-						</li>
+					{contextIsLoading ? 
+						<Spinner small style={{margin: 14}}/> :
+						(context ? 
+							<User ref={setContextTarget}
+								context={context} 
+								wrongRegister={wrongRegister} 
+								onClick={(e) => showContextModal(true)}
+							/>
+							:
+							<li>
+								<a href="#" onClick={showLoginModal}>Logga in</a>
+							</li>
+						)
 					}
 				</ul>
 				<Login/>
@@ -56,8 +61,8 @@ class App extends Component {
 					contexts={contexts}
 					requireChange={wrongRegister}
 					target={contextTarget}
-					inUnit={startContext && startContext.Unit.UnitID}
-					inRole={startContext && startContext.Role.RoleID}
+					inUnit={context && context.Unit.UnitID}
+					inRole={context && context.Role.RoleID}
 					roleChange={x => console.log(x)}
 					firstTime={initial}
 					onLogout={logout} 
@@ -93,8 +98,8 @@ function mapDispatchToProps(dispatch){
 }
 function mapStateToProps(state){
 	return {
-		startContext: state.login.context,
-		context: state.context.stratumContext,
+		context: state.login.context,
+		contextIsLoading: state.login.contextIsLoading,
 		initial: state.login.initial,
 		contexts: state.login.contexts,
 		wrongRegister: state.login.wrongRegister,

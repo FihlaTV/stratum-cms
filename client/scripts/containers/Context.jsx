@@ -32,12 +32,12 @@ class Context extends Component {
 			onSubmit,
 			initial,
 			currentContext,
-			isDirty,
 			onLogout,
 			units,
 			isSyncing,
 			error
 		} = this.props;
+		const allowAccept = initial && inUnit === currentUnit && inRole === currentRole;
 		return (
 			<Overlay 
 				show={show} 
@@ -53,11 +53,11 @@ class Context extends Component {
 						currentUnit={currentUnit}
 						context={currentContext}
 					/>
-					{!(initial && inUnit === currentUnit && inRole === currentRole) && 
+					{!allowAccept && 
 					<ContextSyncButton bsStyle="primary" block disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} isSyncing={isSyncing} onClick={() => {
 						onSubmit(currentContext);
 					}}>Genomför byte</ContextSyncButton>}
-					{initial && inUnit === currentUnit && inRole === currentRole && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
+					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
 					<Button block href="/logout" onClick={onLogout}>Logga ut</Button>
 				</Popover>
@@ -86,7 +86,6 @@ function mapStateToProps(state){
 		currentRole: context.currentRole,
 		currentUnit: context.currentUnit,
 		currentContext: context.currentContext,
-		isDirty: context.isDirty,
 		initial: context.initial,
 		isSyncing: context.isSyncing
 	};
