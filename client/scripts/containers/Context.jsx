@@ -56,7 +56,7 @@ class Context extends Component {
 					{!allowAccept && 
 					<ContextSyncButton bsStyle="primary" block disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} isSyncing={isSyncing} onClick={() => {
 						onSubmit(currentContext);
-					}}>Genomför byte</ContextSyncButton>}
+					}}>Byt</ContextSyncButton>}
 					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
 					<Button block href="/logout" onClick={onLogout}>Logga ut</Button>

@@ -8,7 +8,7 @@ const SITHSLogin = ({
 	switch (status){
 		case 'SITHS_INTRO':
 			return (
-				<Alert alertType="info" faIcon="fa-info">
+				<Alert alertType="info">
 					<p><strong>Först!</strong> Se till att ditt SITHS-kort sitter i datorn. Klicka sen på Nästa</p>
 				</Alert>
 			);
