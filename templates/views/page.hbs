@@ -62,7 +62,7 @@
 			{{>resourcelist data.page.resources}}
 			{{/if}}
 			{{#if data.contacts}}
-			<h2>Kontaktpersoner</h2>
+			<h2>{{pluralTitle data.contacts "Kontaktperson" "Kontaktpersoner"}}</h2>
 			<div class="content-page-contacts">
 				{{#each data.contacts}}
 				<div class="contact-person">
