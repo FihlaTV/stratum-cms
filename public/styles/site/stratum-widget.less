@@ -1,8 +1,13 @@
 .stratum-widget{
-    .white-well();
-    padding: @gutter-large;
-	iframe{
-		display: block;
+	&.stratum-widget-small{
+		.white-well();
+		padding: @gutter-large;
+		iframe{
+			display: block;
+		}
+	}
+	&.stratum-widget-large{
+		margin-bottom: @gutter-large;
 	}
 	.stratum-widget-content{
 		min-height: 100px;
