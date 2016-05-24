@@ -61,18 +61,9 @@ Widget.add({
 	},
 	size: {
 		type: Types.Select,
-		hidden: true,
-		numeric: true,
-		options: [{
-			value: 0,
-			label: 'Small'
-		}, {
-			value: 1,
-			label: 'Medium'
-		}, {
-			value: 2,
-			label: 'Large'
-		}]
+		default: 'small',
+		options: ['small', 'large'],
+		emptyOption: false
 	},
 	advancedSettings: {
 		type: Types.Textarea,
