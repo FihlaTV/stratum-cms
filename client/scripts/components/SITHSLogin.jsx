@@ -9,7 +9,7 @@ const SITHSLogin = ({
 		case 'SITHS_INTRO':
 			return (
 				<Alert alertType="info">
-					<p><strong>Först!</strong> Se till att ditt SITHS-kort sitter i datorn. Klicka sen på Nästa</p>
+					<p><strong>Först!</strong> Se till att ditt SITHS-kort sitter i datorn. Klicka sen på Nästa.</p>
 				</Alert>
 			);
 		case 'SITHS_DO_LOGIN':

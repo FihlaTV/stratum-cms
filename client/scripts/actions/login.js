@@ -268,7 +268,7 @@ function getAvailableContexts(context, initial){
 					if(contexts.length <= 0){
 						//No matching contexts for this register counts as a failed login
 						dispatch(logoutFromStratum());
-						throw new Error('Du har tyvärr inte tillgång till det här registret');
+						throw new Error('Du har tyvärr inte tillgång till det här registret.');
 					} else {
 						//Successful login
 						dispatch(showLoginModal(false));
