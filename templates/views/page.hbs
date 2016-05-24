@@ -11,7 +11,12 @@
 					{{{cloudinaryImage image width="750" crop="fill" class="img-responsive"}}}
 					{{#if imageDescription}}<div class="caption-text">{{imageDescription}}</div>{{/if}}
 				</div>
-				{{/if}}              
+				{{/if}}
+
+				{{#ifeq ../data.widget.size "large"}}
+				{{> widget widget=../data.widget stratumWidget=../stratumWidget keystoneWidget=../keystoneWidget}}
+				{{/ifeq}}
+				
 				<div class="post">
 					{{#if lead}}
 					<p class="lead">{{lead}}</p>
@@ -50,20 +55,9 @@
 				</ul>
 			</div>
 			{{/ifeq}}
-			{{!-- Stratum Widget --}}
-			{{#if stratumWidget}}
-			<h2>{{data.widget.name}}</h2>
-			{{#with stratumWidget}}
-			<div class="stratum-widget" id="sw-{{slug}}"></div>
-			{{/with}}
-			{{/if}}
-			{{!-- Keystone Widget --}}
-			{{#if keystoneWidget}}
-			<h2>{{data.widget.name}}</h2>
-			{{#with keystoneWidget}}
-			<div class="keystone-widget stratum-widget" data-keystone-widget="{{name}}" data-widget-description="{{../data.widget.description}}"></div>
-			{{/with}}
-			{{/if}}
+			{{#ifeq data.widget.size "small"}}
+				{{> widget widget=data.widget stratumWidget=stratumWidget keystoneWidget=keystoneWidget}}
+			{{/ifeq}}
 			{{#if data.page.resources}}
 			{{>resourcelist data.page.resources}}
 			{{/if}}

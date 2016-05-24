@@ -1,0 +1,11 @@
+{{!-- Stratum Widget --}}
+{{#ifeq widget.size 'small'}}
+<h2>{{widget.name}}</h2>
+{{/ifeq}}
+{{#if stratumWidget}}
+<div class="stratum-widget stratum-widget-{{widget.size}}" id="sw-{{stratumWidget.slug}}"></div>
+{{/if}}
+{{!-- Keystone Widget --}}
+{{#if keystoneWidget}}
+<div class="keystone-widget stratum-widget stratum-widget-{{widget.size}}" data-keystone-widget="{{keystoneWidget.name}}" data-widget-description="{{widget.description}}"></div>
+{{/if}}
