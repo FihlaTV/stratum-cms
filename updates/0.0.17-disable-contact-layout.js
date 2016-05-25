@@ -3,7 +3,9 @@ var keystone = require('keystone'),
 	BasePage = keystone.list('BasePage');
 
 /**
- * Changes all size attributes on widget to default 'small'
+ * Since contact has been removed this will set all instances
+ * where contentType is contact to a default page instead in 
+ * order to be a valid page.
  */
 exports = module.exports = function (done) {
 	var context = {
