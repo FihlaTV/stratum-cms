@@ -124,6 +124,10 @@ BasePage.add({
 			hiddenButtons: 'H1,H4,Image,Quote,Code'
 		}
 	},
+	displayPrintButton: {
+		type: Boolean,
+		note: 'Check this to display a print button in the lower right corner'
+	},
 	widget: {
 		dependsOn: { contentType: 'default' },
 		type: Types.Relationship,
