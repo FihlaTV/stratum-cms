@@ -376,5 +376,13 @@ module.exports = function() {
 		return new hbs.SafeString(output);
 	};
 
+	_helpers.displayMenu = function(pages, subPages, options) {
+		if (pages && pages.length > 1 || subPages && subPages.length > 0) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
+	};
+
 	return _helpers;
 };

@@ -33,6 +33,7 @@
 		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-4{{/ifeq}}">
 			{{#ifeq data.page.layout "full"}}
 			{{else}}
+			{{#displayMenu data.pages data.subPages}}
 			<div class="sub-menu">
 				<ul class="nav nav-pills nav-stacked nav-page">
 				{{#each data.pages}}
@@ -57,6 +58,7 @@
 				{{/each}}
 				</ul>
 			</div>
+			{{/displayMenu}}
 			{{/ifeq}}
 			{{#ifeq data.widget.size "small"}}
 				{{> widget widget=data.widget stratumWidget=stratumWidget keystoneWidget=keystoneWidget}}
