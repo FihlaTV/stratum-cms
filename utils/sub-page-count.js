@@ -16,6 +16,7 @@ exports.updateCount = function (cb) {
 					context.pagesUpdated++;
 					SubPage.model
 						.where('page', page._id)
+						.where('state', 'published')						
 						.count(function (err, count) {
 							if(!err){
 								page.set('numberOfSubPages', count);

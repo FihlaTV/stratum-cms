@@ -24,12 +24,16 @@
 					{{{content.html}}}
 					{{!-- Resources --}}
 				</div>
+				{{#if displayPrintButton}}
+				{{>printbutton}}
+				{{/if}}
 			</article>
 		</div>
 		{{/with}}
 		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-4{{/ifeq}}">
 			{{#ifeq data.page.layout "full"}}
 			{{else}}
+			{{#displayMenu data.pages data.subPages}}
 			<div class="sub-menu">
 				<ul class="nav nav-pills nav-stacked nav-page">
 				{{#each data.pages}}
@@ -54,6 +58,7 @@
 				{{/each}}
 				</ul>
 			</div>
+			{{/displayMenu}}
 			{{/ifeq}}
 			{{#ifeq data.widget.size "small"}}
 				{{> widget widget=data.widget stratumWidget=stratumWidget keystoneWidget=keystoneWidget}}
@@ -62,7 +67,7 @@
 			{{>resourcelist data.page.resources}}
 			{{/if}}
 			{{#if data.contacts}}
-			<h2>Kontaktpersoner</h2>
+			<h2>{{pluralTitle data.contacts "Kontaktperson" "Kontaktpersoner"}}</h2>
 			<div class="content-page-contacts">
 				{{#each data.contacts}}
 				<div class="contact-person">

@@ -357,6 +357,13 @@ module.exports = function() {
 		var output = string + '';
 		return new hbs.SafeString(output.substring(0, length || 10));
 	};
+	
+	_helpers.pluralTitle = function(items, singleTitle, manyTitle){
+		if(items && items.length > 1){
+			return new hbs.SafeString(manyTitle);
+		}
+		return new hbs.SafeString(singleTitle || '');
+	};
 
 	_helpers.getTitle = function(breadcrumbs, inBrand, inSeparator){
 		// console.log(inSeparator);
@@ -367,6 +374,14 @@ module.exports = function() {
 			output += _.isEmpty(output) ? brand : (separator + brand);
 		}
 		return new hbs.SafeString(output);
+	};
+
+	_helpers.displayMenu = function(pages, subPages, options) {
+		if (pages && pages.length > 1 || subPages && subPages.length > 0) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
 	};
 
 	return _helpers;

@@ -34,6 +34,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('Page').model
 			.findOne()
 			.where('menu', context.menu._id)
+			.where('state', 'published')
 			.sort('sortOrder')
 			.exec(function(err, page) {
 				if (!err) {

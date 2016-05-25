@@ -7,6 +7,13 @@ body{
 	margin-bottom: 100px;
 	.clearfix();
 }
+.print-button{
+	display: block;
+	font-size: 25px;
+	@media print{
+		display: none;
+	}
+}
 #header{
 	border-top: 4px solid @brand-primary;
 }
