@@ -38,7 +38,7 @@ SubPage.schema.pre('remove', function (done) {
 			// Decrease subpage
 			if(subPage && subPage.page){	
 				subPage.page.set('decreaseSubPages');
-				subPage.page.save(done)
+				subPage.page.save(done);
 			} else{
 				done();
 			}

@@ -98,7 +98,7 @@ BasePage.add({
 	},
 	state: {
 		type: Types.Select,
-		options: 'draft, published, archived',
+		options: 'draft, published',
 		default: 'draft',
 		index: true
 	},

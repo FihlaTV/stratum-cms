@@ -28,6 +28,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('BasePage').model
 			.findOne()
 			.where('shortId', locals.filters.shortid)
+			.where('state', 'published')
 			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories')
 			.populate('widget resources')
 			.exec(function(err, page) {
@@ -78,6 +79,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('Page').model
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
+			.where('state', 'published')
 			.sort('sortOrder')
 			.select('slug title menuTitle shortId numberOfSubPages')
 			.exec(function(err, pages) {
@@ -129,6 +131,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('SubPage').model
 			.find()
 			.where('page', locals.data.menuPage._id)
+			.where('state', 'published')			
 			.sort('sortOrder')
 			.exec(function(err, subPages) {
 				if (!err) {
