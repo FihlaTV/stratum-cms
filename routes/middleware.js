@@ -47,6 +47,7 @@ exports.initLocals = function(req, res, next) {
 	locals.contextId = req.contextId;
 	locals.stratumUser = req.stratumUser;
 	locals.styleEntry = keystone.get('style entry');
+	locals.isPortal = keystone.get('is portal');
 	locals.env = keystone.get('env');
 	async.series({
 		loadMenuBlocks: function(cb) {
@@ -137,7 +138,6 @@ exports.initLocals = function(req, res, next) {
 			keystone.list('RegisterInformation').model
 				.findOne(function(err, register) {
 					if (register) {
-						locals.isPortal = register.isPortal;
 						locals.brandName = register.name;
 						locals.address = register.contactString;
 						locals.email = register.email;
