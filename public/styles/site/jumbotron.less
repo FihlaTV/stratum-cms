@@ -1,4 +1,13 @@
 .jumbotron{
+	&.jumbotron-portal{
+		padding: @gutter-large;
+		@media screen and (min-width: @screen-md-min) {
+			padding: @gutter-large*2.5;
+		}
+		h1,.h1{
+			font-size: @font-size-base*3.2;
+		}
+	}
 	margin-bottom: @gutter-xlarge;
 	h1,
 	.h1 {

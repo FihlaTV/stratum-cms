@@ -18,23 +18,10 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		keystone.list('StartPage').model
 			.findOne()
-			.populate('informationBlurb.newsItem')
+			.populate('informationBlurb.newsItem subRegisters quickLink.page')
 			.exec(function(err, startPage) {
 				if (!err && startPage) {
 					locals.data.startPage = startPage;
-				}
-				next(err);
-			});
-	});
-
-	//Load Register Information
-	view.on('init', function(next) {
-		keystone.list('RegisterInformation').model
-			.findOne()
-			.populate('subRegisters')
-			.exec(function(err, register) {
-				if (!err && register) {
-					locals.data.register = register;
 				}
 				next(err);
 			});
