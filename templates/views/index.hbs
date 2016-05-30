@@ -18,13 +18,6 @@
 			{{{description.html}}}
 		</div>
 		{{/with}}
-		{{#if isPortal}}
-		{{#with data.startPage.quickLink}}
-		{{#if page}}
-		<a href="{{page.directPath}}" class="startpage-portal-link">{{text}}</a>
-		{{/if}}
-		{{/with}}
-		{{/if}}
 	</div>
 	<div class="col-md-5">
 		{{#if isPortal}}
@@ -42,5 +35,12 @@
 		<div class="information-blurb">
 			{{>informationblurb blurb=data.startPage.informationBlurb news=data.news firstNews=data.firstNews}}
 		</div>
+		{{#if isPortal}}
+		{{#with data.startPage.quickLink}}
+		{{#if page}}
+		<a href="{{page.directPath}}" class="startpage-portal-link">{{text}}</a>
+		{{/if}}
+		{{/with}}
+		{{/if}}
 	</div>
 </div>
