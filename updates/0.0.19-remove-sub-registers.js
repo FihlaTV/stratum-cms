@@ -7,7 +7,7 @@ var keystone = require('keystone'),
  */
 exports = module.exports = function (done) {
 	var context = {
-		RegisterInformations: []
+		ri: []
 	};
 
 	async.series({
