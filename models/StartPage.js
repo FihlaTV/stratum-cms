@@ -105,12 +105,6 @@ StartPage.add({
 	// Portal specific settings
 	keystone.get('is portal') ? 'Portal settings' : '',
 	{
-		subRegisters: { 
-			type: Types.Relationship, 
-			hidden: !keystone.get('is portal'), 
-			ref: 'StratumRegister', 
-			many: true 
-		},
 		quickLink: {
 			text: {
 				type: Types.Text,

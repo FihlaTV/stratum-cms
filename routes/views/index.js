@@ -18,7 +18,7 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		keystone.list('StartPage').model
 			.findOne()
-			.populate('informationBlurb.newsItem subRegisters quickLink.page')
+			.populate('informationBlurb.newsItem quickLink.page')
 			.exec(function(err, startPage) {
 				if (!err && startPage) {
 					locals.data.startPage = startPage;
@@ -81,6 +81,23 @@ exports = module.exports = function(req, res) {
 				if (!err) {
 					locals.data.news = news;
 					locals.data.firstNews = news && news.length > 0 && locals.data.news[0];
+				}
+				next(err);
+			});
+	});
+	
+	// Load Sub Registers 
+	view.on('init', function(next){
+		if(!keystone.get('is portal')){
+			next();
+			return;
+		}
+		keystone.list('SubRegister').model
+			.find()
+			.sort('sortOrder')
+			.exec(function(err, registers){
+				if(!err){
+					locals.data.subRegisters = registers;
 				}
 				next(err);
 			});

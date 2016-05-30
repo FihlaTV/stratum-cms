@@ -94,8 +94,8 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
 // default email templates, you may remove them if you're using your own.
 
 // Configure the navigation bar in Keystone's Admin UI
- 
-keystone.set('nav', {
+
+var nav = {
 	'pages': ['pages', 'sub-pages', 'menu-blocks'],
 	'contacts': 'contacts',
 	'start-pages': ['start-pages', 'start-page-widgets'],
@@ -108,7 +108,14 @@ keystone.set('nav', {
 	// 'users': 'users',
 	
 	'widgets': 'widgets'
-});
+}; 
+
+// Portal specific menu items
+if(keystone.get('is portal')){
+	nav['start-pages'].push('sub-registers');
+}
+
+keystone.set('nav', nav);
 
 // Output environment variable
 console.log('Currently running in ' + keystone.get('env'));
