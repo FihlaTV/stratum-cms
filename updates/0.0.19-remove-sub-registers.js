@@ -26,7 +26,7 @@ exports = module.exports = function (done) {
 				if(ri.get('subRegisters')){
 					ri.set('subRegisters', undefined, { strict: false });
 				}
-				if(ri.get('isPortal')){
+				if(typeof ri.get('isPortal') !== 'undefined'){
 					ri.set('isPortal', undefined, { strict: false });
 				}
 				ri.save(cb);
