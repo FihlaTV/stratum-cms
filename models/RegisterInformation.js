@@ -3,8 +3,10 @@ var keystone = require('keystone'),
 	longLatRegEx = /^($|(\-?\d+(\.\d+)?)$)/;
 
 /**
- * Start Page Model
+ * Register Information Model
  * ==========
+ * Meant as a singleton for storing information representing
+ * the register such as address and email. 
  */
 
 var RegisterInformation = new keystone.List('RegisterInformation', {
@@ -13,10 +15,9 @@ var RegisterInformation = new keystone.List('RegisterInformation', {
 });
 
 RegisterInformation.add({
-	name: { type: String, required: true },
-	description: { type: Types.Markdown, height: 300, toolbarOptions: { hiddenButtons: 'Image,Quote,Code' } },
+	name: { type: String, required: true, note: 'This is displayed as the register name. Used in e.g. footers and title' },
+	description: { type: Types.Markdown, height: 300, toolbarOptions: { hiddenButtons: 'Image,Quote,Code' }, hidden: true },
 	email: { type: Types.Email },
-	// location: { type: Types.Location },
 	phone: { type: String }
 	}, 'Location', {
 	location: {
@@ -25,10 +26,10 @@ RegisterInformation.add({
 		zipCode: { type: String, label: 'Zip Code' },
 		city: { type: String, label: 'City' }
 	},
-	showMap: { type: Boolean, note: 'Shows a map on the contact page' },
+	showMap: { type: Boolean, note: 'Shows a map on the contact page', hidden: true },
 	// Required currently disable since it doesn't regard the value of showMap
-	latitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
-	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } }
+	latitude: { type: String, /*required: true,*/ dependsOn: { showMap: true }, hidden: true },
+	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true }, hidden: true }
 });
  
 RegisterInformation.schema.path('latitude').validate(function(value){

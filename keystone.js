@@ -96,12 +96,11 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
 // Configure the navigation bar in Keystone's Admin UI
 
 var nav = {
+	'global-settings': ['start-pages', 'start-page-widgets', 'register-information'],
 	'pages': ['pages', 'sub-pages', 'menu-blocks'],
-	'contacts': 'contacts',
-	'start-pages': ['start-pages', 'start-page-widgets'],
-	'register-information': 'register-information',
 	'news': 'news-items',
 	'resources': 'resources',
+	'contacts': 'contacts',
 	'questions': ['questions', 'question-categories'],
 	
 	// Hide users from menu for now
@@ -112,7 +111,7 @@ var nav = {
 
 // Portal specific menu items
 if(keystone.get('is portal')){
-	nav['start-pages'].push('sub-registers');
+	nav['global-settings'].push('sub-registers');
 }
 
 keystone.set('nav', nav);
