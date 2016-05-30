@@ -48,6 +48,7 @@ exports.initLocals = function(req, res, next) {
 	locals.stratumUser = req.stratumUser;
 	locals.styleEntry = keystone.get('style entry');
 	locals.isPortal = keystone.get('is portal');
+	locals.hasLogin = keystone.get('has login');
 	locals.env = keystone.get('env');
 	async.series({
 		loadMenuBlocks: function(cb) {
@@ -106,15 +107,14 @@ exports.initLocals = function(req, res, next) {
 		// },
 		addCategoriesToNav: function(cb) {
 			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
-			locals.navLinks.push({
-				label: 'Registrering m.m.',
-				key: 'registration',
-				href: '/registrering'
-			// },{
-			// 	label: 'Kontakt',
-			// 	key: 'contact',
-			// 	href: '/kontakt'
-			});
+			
+			if(keystone.get('has login')){
+				locals.navLinks.push({
+					label: 'Registrering m.m.',
+					key: 'registration',
+					href: '/registrering'
+				});
+			}
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,

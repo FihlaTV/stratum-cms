@@ -81,7 +81,9 @@
 						</div>
 					</div>
 					<div class="navbar-upper">
+						{{#if hasLogin}}
 						<div id="login-button-react"></div>
+						{{/if}}
 					</div>
 				</div>
 			</div>
@@ -173,6 +175,5 @@
         {{/if}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
 		<!--{{{isAdminEditorJS user}}}-->
-		{{#if register.showMap}}{{>maps}}{{/if}}
 	</body>
 </html>

@@ -23,11 +23,11 @@ keystone.init({
 
 	'name': process.env.BRAND || 'Stratum',
 	'brand': process.env.BRAND || 'Stratum',
-	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(), 
+	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(),
 	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
-	
+
 	//Gets the name of the currently active directory
 	'app name': appName,
 	'style entry': '/dist/' + (process.env.OVERRIDES_STYLES ? appName : 'app') + '.styles.css',
@@ -41,8 +41,8 @@ keystone.init({
 	}).engine,
 	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
-	'cloudinary config': {secure: true},
-	
+	'cloudinary config': { secure: true },
+
 	'updates': path.join(root, 'updates'),
 	'auto update': true,
 	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
@@ -55,7 +55,8 @@ keystone.init({
 	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
 	'stratum api key': process.env.STRATUM_API_KEY,
 	'stratum server': process.env.STRATUM_SERVER || 'stratum.registercentrum.se',
-	'is portal': process.env.IS_PORTAL === 'true', 
+	'is portal': process.env.IS_PORTAL === 'true',
+	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
 
 	// Redirect to regular page if whole site is access restricted
@@ -79,10 +80,10 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
-if(keystone.get('show version') && fs.existsSync('last_commit.json')){
-	try{
+if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
+	try {
 		keystone.set('last commit', JSON.parse(fs.readFileSync('last_commit.json', 'utf8')));
-	} catch(e){
+	} catch (e) {
 		console.log(e);
 	}
 }
@@ -96,21 +97,21 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
 // Configure the navigation bar in Keystone's Admin UI
 
 var nav = {
-	'global-settings': ['start-pages', 'start-page-widgets', 'register-information'],
+	'global-settings': ['start-pages', 'register-information'],
 	'pages': ['pages', 'sub-pages', 'menu-blocks'],
 	'news': 'news-items',
 	'resources': 'resources',
 	'contacts': 'contacts',
 	'questions': ['questions', 'question-categories'],
-	
+
 	// Hide users from menu for now
 	// 'users': 'users',
-	
-	'widgets': 'widgets'
-}; 
+
+	'widgets': ['widgets', 'start-page-widgets']
+};
 
 // Portal specific menu items
-if(keystone.get('is portal')){
+if (keystone.get('is portal')) {
 	nav['global-settings'].push('sub-registers');
 }
 
@@ -119,9 +120,11 @@ keystone.set('nav', nav);
 // Output environment variable
 console.log('Currently running in ' + keystone.get('env'));
 
-keystone.post('updates', function(){
-	stratum.loadWidgets(); 
-	stratum.loadRegisters();
+keystone.post('updates', function () {
+	stratum.loadWidgets();
+
+	// Not used at the present..
+	// stratum.loadRegisters();
 
 	keystoneWidgets.loadWidgets();
 	// Update Sub Page counter on Pages
