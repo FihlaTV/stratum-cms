@@ -2,22 +2,21 @@
 	ul{
 		.list-unstyled();
 		a {
+			display: block;
 			font-size: 18px;
 			color: @text-color;
 			&:hover{
 				text-decoration: none;
 			}
-		}
-		li{
 			padding: @gutter;
 			margin-bottom: @gutter;
-			transition: background-color 0.25s ease;
-			.white-well();
+			// .white-well();
 			&:hover{
 				background-color: @gray-lighter;
 				transition: background-color 0.25s ease;
 			}
-			.glyphicon-link();
+			transition: background-color 0.25s ease;
+			.glyphicon-home();
 			&:before {
 				font-family: 'Glyphicons Halflings';
 				color: lighten(@gray, 40%);
@@ -25,5 +24,24 @@
 			}
 		}
 	}
-	margin-bottom: @gutter-large;
+	&.sub-registers-simple{
+		overflow: hidden;
+		.white-well();
+		ul{
+			margin-bottom: 0;
+			li{
+				a{
+					margin-bottom: 0;
+					padding: @gutter @gutter-large;
+					border-radius: 0;
+					font-size: 14px;
+				}
+				border-bottom: 1px dotted #dedede;
+				&:last-child{
+					border-bottom: 0;
+				}
+			}
+		}
+	}
+	margin-bottom: @gutter-xlarge;
 }

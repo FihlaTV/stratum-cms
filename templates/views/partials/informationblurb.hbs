@@ -1,0 +1,13 @@
+{{#ifeq blurb.type 'newsRoll'}}
+	{{>newsroll news}}
+{{/ifeq}}
+{{#ifeq blurb.type 'newsItem'}}
+	{{#if blurb.newsItem}}
+	{{>newswidget blurb.newsItem}}
+	{{else}}
+	{{>newswidget firstNews}}
+	{{/if}}
+{{/ifeq}}
+{{#ifeq blurb.type 'image'}}
+	{{{cloudinaryImage blurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
+{{/ifeq}}

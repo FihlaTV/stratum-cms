@@ -1,38 +1,17 @@
 {{!< default}}
 <div class="container">
+	{{#unless isPortal}}
 	{{#if data.startPage.jumbotron.isVisible}}
-	<div class="jumbotron">
-		{{#with data.startPage.jumbotron}}
-		<h1>{{header}}</h1>
-		<div class="lead">
-			{{{description.html}}}
-		</div>
-		{{/with}}
-		<div class="row">
-		{{#each data.startPageWidgets}}
-			<div class="startpage-widget col-md-15 col-sm-4 col-xs-6">
-				<div class="">
-					{{#if keystoneWidget}}
-					{{#with keystoneWidget}}
-					<div class="keystone-widget" data-keystone-widget="{{name}}" data-widget-description="{{../description}}"></div>
-					{{/with}}
-					{{else}}
-					<span class="startpage-widget-digit">
-						{{digit}}
-					</span>
-					<span class="startpage-widget-text">{{description}}</span>
-					{{/if}}
-					{{#if link}}
-                    <a href="{{link}}">{{linkText}}</a>
-                    {{/if}}
-				</div>
-			</div>
-		{{/each}}
-		</div>
-	</div>
+	{{>jumbotron jumbotron=data.startPage.jumbotron widgets=data.startPageWidgets isPortal=isPortal}}
 	{{/if}}
+	{{/unless}}
 	<div class="row">
 	<div class="col-md-7">
+		{{#if isPortal}}
+		{{#if data.startPage.jumbotron.isVisible}}
+		{{>jumbotron jumbotron=data.startPage.jumbotron widgets=data.startPageWidgets}}
+		{{/if}}
+		{{/if}}
 		{{#with data.startPage}}
 		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
 			<h2>{{header}}</h2>
@@ -41,36 +20,27 @@
 		{{/with}}
 	</div>
 	<div class="col-md-5">
-	{{#if isPortal}}
+		{{#if isPortal}}
 		<h2>Delregister</h2>
-		<div class="sub-registers">
+		<div class="sub-registers sub-registers-simple">
 			<ul>
-			{{#each data.register.subRegisters}}
-				<a href="//{{shortName}}.{{../topHost}}"><li>{{name}}</li></a>
+			{{#each data.subRegisters}}
+				<li>
+					<a href="{{url}}">{{name}}</a>
+				</li>
 			{{/each}}
 			</ul>
 		</div>
-	{{/if}}
-	{{#with data.startPage}}
-	{{#ifeq informationBlurb.type 'newsRoll'}}
-		{{>newsroll ../data.news}}
-	{{/ifeq}}
-	{{#ifeq informationBlurb.type 'newsItem'}}
-		{{#if informationBlurb.newsItem}}
-		{{>newswidget informationBlurb.newsItem}}
-		{{else}}
-		{{>newswidget ../data.firstNews}}
 		{{/if}}
-	{{/ifeq}}
-	{{#ifeq informationBlurb.type 'meeting'}}
-		<h2>Kommande möte</h2>
-		Meeting
-	{{/ifeq}}
-	{{#ifeq informationBlurb.type 'image'}}
-		{{{cloudinaryImage informationBlurb.image width=720 height=540 crop='fill' class="img-responsive base-column"}}}
-	</div>
-	{{/ifeq}}
-	</div>
-	{{/with}}
+		<div class="information-blurb">
+			{{>informationblurb blurb=data.startPage.informationBlurb news=data.news firstNews=data.firstNews}}
+		</div>
+		{{#if isPortal}}
+		{{#with data.startPage.quickLink}}
+		{{#if page}}
+		<a href="{{page.directPath}}" class="startpage-portal-link">{{text}}</a>
+		{{/if}}
+		{{/with}}
+		{{/if}}
 	</div>
 </div>

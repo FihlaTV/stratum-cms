@@ -101,14 +101,24 @@ StartPage.add({
 				}
 			}
 		}
-	// }, 'Widgets', {
-	// 	widgets: {
-	// 		'1': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-	// 		'2': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-	// 		'3': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-	// 		'4': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true },
-	// 		'5': { type: Types.Relationship, label: 'Widget', ref: 'Widget', collapse: true }
-	// }
-});
+	},
+	// Portal specific settings
+	keystone.get('is portal') ? 'Portal settings' : '',
+	{
+		quickLink: {
+			text: {
+				type: Types.Text,
+				hidden: !keystone.get('is portal'), 
+				note: 'The text which is placed on the link button'
+			},
+			page: {
+				type: Types.Relationship,
+				hidden: !keystone.get('is portal'), 
+				ref: 'BasePage',
+				note: 'The page which should be linked to'
+			}
+		}
+	}
+);
  
 StartPage.register();
