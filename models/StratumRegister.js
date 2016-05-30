@@ -12,6 +12,7 @@ var StratumRegister = new keystone.List('StratumRegister', {
 	nocreate: true,
 	noedit: true,
 	nodelete: true,
+	hidden: true,
 	map: {
 		name: 'shortName'
 	},

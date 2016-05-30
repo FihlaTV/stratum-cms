@@ -28,9 +28,7 @@ RegisterInformation.add({
 	showMap: { type: Boolean, note: 'Shows a map on the contact page' },
 	// Required currently disable since it doesn't regard the value of showMap
 	latitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
-	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } },
-	isPortal: { type: Boolean, note: 'Check here if the register is a portal of several registers' },
-	subRegisters: { type: Types.Relationship, ref: 'StratumRegister', many: true, dependsOn: {isPortal: true} }
+	longitude: { type: String, /*required: true,*/ dependsOn: { showMap: true } }
 });
  
 RegisterInformation.schema.path('latitude').validate(function(value){
