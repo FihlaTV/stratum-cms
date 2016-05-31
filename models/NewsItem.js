@@ -16,8 +16,13 @@ var NewsItem = new keystone.List('NewsItem', {
 NewsItem.add({
 	title: { type: String, required: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
-	author: { type: Types.Relationship, ref: 'User', index: true },
-	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
+	author: { type: Types.Relationship, ref: 'User', index: true, collapse: true },
+	publishedDate: {
+		type: Types.Date,
+		index: true,
+		dependsOn: { state: 'published' },
+		note: 'News items without a published date will not be displayed in the news listing'
+	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
 	image: { type: Types.CloudinaryImage },
 	imageDescription: {

@@ -34,6 +34,7 @@ exports = module.exports = function (req, res) {
 			perPage: 5,
 			maxPages: 10
 		})
+			.where('publishedDate', {$exists: true})
 			.where('state', 'published');
 
 		if (doYearFilter) {
@@ -49,11 +50,17 @@ exports = module.exports = function (req, res) {
 
 	});
 
+	/**
+	 * Calculates the total number of news items grouped by year
+	 */
 	view.on('init', function (next) {
 		var q = keystone.list('NewsItem').model
 			.aggregate()
 			.match({
-				state: 'published'
+				state: 'published',
+				publishedDate: {
+					$exists: true
+				}
 			})
 			.group({
 				_id: {

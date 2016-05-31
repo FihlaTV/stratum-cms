@@ -71,8 +71,10 @@ exports = module.exports = function(req, res) {
 	// Load the 3 latest news items
 	view.on('init', function(next) {
 		keystone.list('NewsItem').model
-			.find({
-				state: 'published'
+			.find()
+			.where('state', 'published')
+			.where('publishedDate', {
+				$exists: true
 			})
 			.sort('-publishedDate')
 			.limit(3)
