@@ -30,7 +30,7 @@ NewsItem.add({
 		type: String
 	},
 	imageLayout: {
-		type: Types.Select, 
+		type: Types.Select,
 		options: 'portrait, landscape',
 		default: 'portrait',
 		emptyOption: false,
@@ -43,7 +43,8 @@ NewsItem.add({
 	resources: {
 		type: Types.Relationship,
 		ref: 'Resource',
-		many: true
+		many: true,
+		collapse: true
 	}
 });
 
