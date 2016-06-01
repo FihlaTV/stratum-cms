@@ -65,7 +65,7 @@ exports = module.exports = function (req, res) {
 				parseResponse(req, res, body);
 			}
 		} else {
-			res.apiResponse({
+			return res.status(500).apiResponse({
 				success: false,
 				code: 'UNKNOWN_STRATUM_ERROR',
 				message: 'Server error'
