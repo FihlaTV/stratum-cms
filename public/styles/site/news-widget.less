@@ -58,7 +58,16 @@
 		}
 	}
 	&.news-widget-portrait{
-		padding: @gutter-large;
+		overflow: hidden;
+		h1,h2,h3,h4,h5,h6{
+			color: @gray-lighter;
+			margin: @gutter-large;
+		}
+		background-color: @brand-primary; 
+		.news-widget-portrait-inner{
+			padding: @gutter-large;
+			background-color: #fff;
+		}
 	}
 	&.news-widget-landscape{
 		overflow: hidden;

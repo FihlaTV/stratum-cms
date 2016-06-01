@@ -3,9 +3,9 @@
 {{/ifeq}}
 {{#ifeq blurb.type 'newsItem'}}
 	{{#if blurb.newsItem}}
-	{{>newswidget blurb.newsItem}}
+	{{>newswidget newsItem=blurb.newsItem layout=blurb.newsItemLayout}}
 	{{else}}
-	{{>newswidget firstNews}}
+	{{>newswidget newsItem=firstNews layout=blurb.newsItemLayout}}
 	{{/if}}
 {{/ifeq}}
 {{#ifeq blurb.type 'image'}}
