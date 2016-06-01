@@ -20,19 +20,6 @@ var _ = require('underscore'),
 	or replace it with your own templates / logic.
 */
 
-exports.mapContextId = function(req, res, next){
-	if (req.session && req.session.contextId) {
-		req.contextId = req.session.contextId;
-		if(req.session.stratumUser){
-			req.stratumUser = req.session.stratumUser;
-		}
-	} else{
-		req.stratumUser = null;
-		req.contextId = null;
-	}
-	next();
-};
-
 exports.initLocals = function(req, res, next) {
 
 	var locals = res.locals,
@@ -44,12 +31,13 @@ exports.initLocals = function(req, res, next) {
 	locals.user = req.user;
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
-	locals.contextId = req.contextId;
-	locals.stratumUser = req.stratumUser;
 	locals.styleEntry = keystone.get('style entry');
 	locals.isPortal = keystone.get('is portal');
 	locals.hasLogin = keystone.get('has login');
 	locals.env = keystone.get('env');
+	if (req.session && req.session.context && req.session.context.ContextID) {
+		locals.context = req.session.context;
+	}
 	async.series({
 		loadMenuBlocks: function(cb) {
 			keystone.list('MenuBlock').model
@@ -134,7 +122,7 @@ exports.initLocals = function(req, res, next) {
 		// 			cb(err);
 		// 		});
 		// },
-		isPortalRegister: function(cb) {
+		getRegisterInformation: function(cb) {
 			keystone.list('RegisterInformation').model
 				.findOne(function(err, register) {
 					if (register) {
