@@ -75,7 +75,6 @@ StartPage.add({
 				}]
 			},
 			newsItem: {
-				label: 'News Item',
 				type: Types.Relationship,
 				ref: 'NewsItem',
 				many: false,
@@ -85,6 +84,15 @@ StartPage.add({
 				},
 				note: 'Select which news item that should be shown on the start page. If no news item is selected ' +
 					'the latest available will be selected'
+			},
+			newsItemLayout: {
+				type: Types.Select,
+				options: ['bigImage', 'smallImage'],
+				default: 'smallImage',
+				emptyOption: false, 
+				dependsOn: {
+					'informationBlurb.type': 'newsItem'
+				}
 			},
 			image: {
 				label: 'Image',

@@ -1,4 +1,4 @@
-{{#with this}}
+{{#with newsItem}}
 {{!--
 <div class="caption-ct news-widget">
 	<a href="{{newsUrl slug}}">
@@ -12,7 +12,7 @@
 	</a>
 </div>
 --}}
-{{#ifeq imageLayout 'landscape'}}
+{{#ifeq ../layout 'bigImage'}}
 <div class="news-widget-simple news-widget-landscape">
 	<a href="{{newsUrl slug}}">
 		<h2>{{title}}</h2>
