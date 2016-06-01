@@ -10,6 +10,7 @@ function parseResponse(req, res, body) {
 		jsonBody = JSON.parse(body);
 	} catch (e) {
 		console.log(e);
+		res.status(500);
 		return res.apiResponse({
 			success: false,
 			code: 'PARSE_ERROR',
@@ -21,6 +22,7 @@ function parseResponse(req, res, body) {
 		req.session.context.contextUpdated = Date.now();
 	} else {
 		delete req.session.context;
+		res.status(400);
 		jsonBody = {
 			success: false,
 			code: 'CONTEXT_ERROR',
