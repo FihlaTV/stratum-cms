@@ -42,7 +42,6 @@ keystone.init({
 	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
 	'cloudinary config': { secure: true },
-
 	'updates': path.join(root, 'updates'),
 	'auto update': true,
 	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
@@ -79,6 +78,8 @@ keystone.set('locals', {
 	utils: keystone.utils,
 	editable: keystone.content.editable
 });
+
+keystone.set('cloudinary prefix', keystone.get('brand safe'));
 
 if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
 	try {
