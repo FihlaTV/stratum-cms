@@ -24,7 +24,7 @@ NewsItem.add({
 		note: 'News items without a published date will not be displayed in the news listing'
 	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
-	image: { type: Types.CloudinaryImage },
+	image: { type: Types.CloudinaryImage, autoCleanup: true },
 	imageDescription: {
 		collapse: true,
 		type: String

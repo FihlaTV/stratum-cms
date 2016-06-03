@@ -97,6 +97,7 @@ StartPage.add({
 			image: {
 				label: 'Image',
 				type: Types.CloudinaryImage,
+				autoCleanup: true,
 				dependsOn: {
 					'informationBlurb.type': 'image'
 				}

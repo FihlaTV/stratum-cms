@@ -12,7 +12,7 @@ User.add({
 	name: { type: Types.Name, required: true, index: true },
 	email: { type: Types.Email, initial: true, required: true, index: true },
 	password: { type: Types.Password, initial: true, required: true },
-	image: { type: Types.CloudinaryImage },
+	image: { type: Types.CloudinaryImage, autoCleanup: true },
 	phone: { type: String },
 	title: { type: String, label: 'Work Title'}
 }, 'Permissions', {
