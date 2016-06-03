@@ -79,6 +79,7 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
+keystone.set('cloudinary folders', true);
 keystone.set('cloudinary prefix', keystone.get('brand safe'));
 
 if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
