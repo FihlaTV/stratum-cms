@@ -1,17 +1,4 @@
 {{#with newsItem}}
-{{!--
-<div class="caption-ct news-widget">
-	<a href="{{newsUrl slug}}">
-	{{#if image}}
-	{{{cloudinaryImage image width="500" height="500" crop="fill" class="img-responsive"}}}
-	{{/if}}
-	<div class="caption-text news-widget-caption">
-		<h2>{{title}}</h2>
-		<p class="news-widget-caption-lead">{{content.lead}}</p>
-	</div>
-	</a>
-</div>
---}}
 {{#ifeq ../layout 'bigImage'}}
 <div class="news-widget-simple news-widget-landscape">
 	<a href="{{newsUrl slug}}">
