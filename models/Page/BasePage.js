@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'],
 	EXTRA_IMAGE = {
 		type: Types.CloudinaryImage,
+		autoCleanup: true,
 		dependsOn: { contentType: 'default' }
 	},
 	EXTRA_IMAGE_CAPTION = {
@@ -104,7 +105,8 @@ BasePage.add({
 	},
 	image: {
 		dependsOn: { contentType: 'default' },
-		type: Types.CloudinaryImage
+		type: Types.CloudinaryImage,
+		autoCleanup: true
 	},
 	imageDescription: {
 		dependsOn: { contentType: 'default' },

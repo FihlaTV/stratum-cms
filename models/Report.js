@@ -18,7 +18,7 @@ Report.add({
 	title: { type: String, required: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	year: { type: Number },
-	pdf: { type: Types.CloudinaryImage }
+	pdf: { type: Types.CloudinaryImage, autoCleanup: true }
 });
 
 // Report.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
