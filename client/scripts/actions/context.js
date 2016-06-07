@@ -42,7 +42,7 @@ export function initContextSelector(contexts, roleId, unitId, initial) {
 		ret.units = getUnits(contexts, ret.currentRole);
 	}
 	if(ret.units){
-		ret.currentUnit = ret.units.length === 1 ? ret.units[0] : unitId;
+		ret.currentUnit = ret.units.length === 1 ? ret.units[0].UnitID : unitId;
 	}
 	
 	return ret;

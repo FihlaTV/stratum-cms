@@ -65,7 +65,7 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout} 
-					onSubmit={setContext}
+					onSubmit={(role, unit) => setContext(role, unit, contexts)}
 					onCancel={() => showContextModal(false)}
 				/>
 			</div>
@@ -87,8 +87,8 @@ function mapDispatchToProps(dispatch){
 		logout: () => {
 			dispatch(logoutFromStratum());
 		},
-		setContext: (context) => {
-			dispatch(changeContext(context));
+		setContext: (role, unit, contexts) => {
+			dispatch(changeContext(role, unit, contexts));
 		},
 		setContextTarget: (target) => {
 			dispatch(setTarget(ReactDOM.findDOMNode(target)));

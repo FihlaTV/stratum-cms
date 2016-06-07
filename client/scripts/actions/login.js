@@ -293,9 +293,14 @@ function setContext(context){
 	};
 }
 
-export function changeContext(context) {
-	const { ContextID } = context;
+export function changeContext(roleId, unitId, contexts) {
+	
 	return (dispatch, getState) => {
+		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
+		if(!context){
+			console.log('Byte av roll misslyckades...');
+			return;
+		}
 		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/context`, {
 			credentials: 'include',
 			method: 'PUT',
@@ -304,7 +309,7 @@ export function changeContext(context) {
 			},
 			body: JSON.stringify({
 				Context: {
-					ContextID: ContextID
+					ContextID: context.ContextID
 				}
 			})
 		})
