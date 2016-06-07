@@ -39,6 +39,8 @@ class Context extends Component {
 		return (
 			<Overlay 
 				show={show} 
+				rootClose={!initial && !requireChange && !!onCancel}
+				onHide={onCancel}
 				target={() => target}
 				placement="bottom" >
 				<Popover title="Byt enhet och/eller roll" id="context-popover">

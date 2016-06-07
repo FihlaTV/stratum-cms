@@ -301,7 +301,7 @@ export function changeContext(roleId, unitId, contexts) {
 			console.log('Byte av roll misslyckades...');
 			return;
 		}
-		return fetch(`${process.env.CLIENT_STRATUM_SERVER}/api/authentication/context`, {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
 			credentials: 'include',
 			method: 'PUT',
 			headers: {
