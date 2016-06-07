@@ -62,7 +62,7 @@ export function roleChange(roleId) {
 		dispatch(setRole(roleId, getState().context.contexts));
 		const state = getState();
 		if (shouldSetUnit(state)) {
-			dispatch(setUnit(state.context.units[0].UnitID, state));
+			dispatch(unitChange(state.context.units[0].UnitID, state));
 		}
 	};
 }
@@ -85,18 +85,10 @@ function setRole(roleId, contexts) {
 	};
 }
 
-function setUnit(unitId, state) {
-	const { currentRole, contexts } = state.context;
+export function unitChange(unitId) {
 	return {
 		type: SET_UNIT,
-		unitId: unitId,
-		context: contexts.find(c => c.Role.RoleID === currentRole && c.Unit.UnitID === unitId)
-	};
-}
-
-export function unitChange(unitId) {
-	return (dispatch, getState) => {
-		dispatch(setUnit(unitId, getState()));
+		unitId: unitId
 	};
 }
 
