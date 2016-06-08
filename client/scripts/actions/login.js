@@ -4,6 +4,8 @@ import { isValidPersonalNumber } from '../utils/personalNumber';
 
 import { initiateBID } from './bankid';
 
+import { contextError } from './context';
+
 es6Promise.polyfill();
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
@@ -39,10 +41,57 @@ export function getKeystoneContext(isInitial){
 				if(!isInitial){
 					console.log('request failed', error); 
 				}
-				// dispatch(loginError(error));
+				dispatch(contextError(error));
 			});
 	};
 }
+
+export const SET_CONTEXT = 'SET_CONTEXT';
+
+function setContext(context){
+	return {
+		type: SET_CONTEXT,
+		context: context
+	};
+}
+
+export function changeContext(roleId, unitId, contexts) {
+	
+	return (dispatch, getState) => {
+		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
+		if(!context){
+			const err = new Error('Byte av roll misslyckades...');
+			console.log(err);
+			return dispatch(contextError(err));
+		}
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
+			credentials: 'include',
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				Context: {
+					ContextID: context.ContextID
+				}
+			})
+		})
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(setContext(context));					
+				} else {
+					const error = new Error(json.message);
+					throw (error);
+				}
+			})
+			.catch(error => {
+				console.log('request failed', error);
+				contextError(error);
+			});
+	};
+}
+
 
 export function initLoginModal(){
 	return (dispatch) => {
@@ -280,50 +329,6 @@ function getAvailableContexts(context, initial){
 			.catch(error => {
 				console.log('missing contexts', error);
 				dispatch(loginError(error));
-			});
-	};
-}
-
-export const SET_CONTEXT = 'SET_CONTEXT';
-
-function setContext(context){
-	return {
-		type: SET_CONTEXT,
-		context: context
-	};
-}
-
-export function changeContext(roleId, unitId, contexts) {
-	
-	return (dispatch, getState) => {
-		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
-		if(!context){
-			console.log('Byte av roll misslyckades...');
-			return;
-		}
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
-			credentials: 'include',
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				Context: {
-					ContextID: context.ContextID
-				}
-			})
-		})
-			.then(res => res.json())
-			.then(json => {
-				if (json.success) {
-					dispatch(setContext(context));					
-				} else {
-					const error = new Error(json.message);
-					throw (error);
-				}
-			})
-			.catch(error => {
-				console.log('request failed', error);
 			});
 	};
 }
