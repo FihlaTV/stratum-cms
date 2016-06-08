@@ -98,3 +98,12 @@ export function contextError(error) {
 		error: error
 	};
 }
+
+export const SET_ENTERING = 'SET_ENTERING';
+
+export function setEntering(isEntering){
+	return {
+		type: SET_ENTERING,
+		isEntering: isEntering
+	};
+}

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { initContextSelector, unitChange, roleChange } from '../actions/context';
+import { initContextSelector, unitChange, roleChange, setEntering } from '../actions/context';
 import { Overlay, Popover, Button } from 'react-bootstrap';
 import UnitList from '../components/UnitList';
 import ContextSyncButton from '../components/ContextSyncButton';
@@ -31,6 +31,7 @@ class Context extends Component {
 			initial,
 			currentContext,
 			onLogout,
+			entering,
 			units,
 			isSyncing,
 			error
@@ -40,7 +41,9 @@ class Context extends Component {
 			<Overlay 
 				show={show} 
 				rootClose={!initial && !requireChange && !!onCancel}
-				onHide={onCancel}
+				onHide={() => !entering && onCancel()}
+				onEntering={() => dispatch(setEntering(true))}
+				onEntered={() => dispatch(setEntering(false))}
 				target={() => target}
 				placement="bottom" >
 				<Popover title="Byt enhet och/eller roll" id="context-popover">
@@ -54,12 +57,24 @@ class Context extends Component {
 						context={currentContext}
 					/>
 					{!allowAccept && 
-					<ContextSyncButton bsStyle="primary" block disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} isSyncing={isSyncing} onClick={() => {
+					<ContextSyncButton 
+						bsStyle="primary" 
+						block 
+						disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} 
+						isSyncing={isSyncing} onClick={() => {
 						onSubmit(currentRole, currentUnit);
-					}}>Byt</ContextSyncButton>}
+					}}>
+						Byt
+					</ContextSyncButton>}
 					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
-					<Button block href="/logout" onClick={onLogout}>Logga ut</Button>
+					<Button 
+						block 
+						href="/logout" 
+						onClick={onLogout}
+					>
+						Logga ut
+					</Button>
 				</Popover>
 			</Overlay>
 		);
@@ -87,6 +102,7 @@ function mapStateToProps(state){
 		currentUnit: context.currentUnit,
 		currentContext: context.currentContext,
 		initial: context.initial,
+		entering: context.entering,
 		isSyncing: context.isSyncing
 	};
 }

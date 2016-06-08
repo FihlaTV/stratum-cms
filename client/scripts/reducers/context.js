@@ -1,6 +1,6 @@
 import { SHOW_CONTEXT_MODAL, CONTEXT_ERROR, SET_CONTEXTS,
 	SET_ROLES, SET_ROLE, SET_UNITS, SET_UNIT, SET_TARGET,
-	SET_CURRENT_CONTEXT, RECEIVE_CONTEXTS,
+	SET_CURRENT_CONTEXT, RECEIVE_CONTEXTS, SET_ENTERING,
 	STRATUM_CONTEXT, SYNC_FLAG } from '../actions/context';
 
 const initialState = {
@@ -51,6 +51,10 @@ export default (state = initialState, action) => {
 				initial: false,
 				currentUnit: action.unitId,
 				currentContext: action.context,
+			});
+		case SET_ENTERING:
+			return Object.assign({}, state, {
+				entering: action.isEntering
 			});
 		default:
 			return state;
