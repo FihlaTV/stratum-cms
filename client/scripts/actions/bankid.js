@@ -1,8 +1,6 @@
-import es6Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 import { isValidPersonalNumber } from '../utils/personalNumber';
 import { LoginStages, loginToStratum, setHasNextState, loginError } from './login';
-es6Promise.polyfill();
 
 //BankID actions
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';

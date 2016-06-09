@@ -1,4 +1,3 @@
-import es6Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 
 export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
