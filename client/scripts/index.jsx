@@ -4,13 +4,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Application from './containers/App';
-import WidgetWrapper from './components/WidgetWrapper'
+import WidgetWrapper from './components/WidgetWrapper';
 import loginApp from './reducers/reducers';
+import es6Promise from 'es6-promise';
+import find from 'array.prototype.find';
 
 // Webpack dependencies
 // import 'jquery'; // not needed, bundled with bootstrap
 import 'bootstrap';
 import '../../public/styles/site.less';
+
+//Polyfills
+find.shim();
+es6Promise.polyfill();
 
 const mainContainer = document.getElementById('login-button-react');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');

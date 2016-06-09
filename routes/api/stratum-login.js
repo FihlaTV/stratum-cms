@@ -2,7 +2,6 @@ var keystone = require('keystone'),
 	url = require('url'),
 	request = require('request'),
 	zlib = require('zlib');
-// var zlib = require('zlib');
 
 function parseResponse(req, res, body) {
 	var jsonBody;
@@ -22,7 +21,7 @@ function parseResponse(req, res, body) {
 		req.session.context.contextUpdated = Date.now();
 	} else {
 		delete req.session.context;
-		res.status(400);
+		// res.status(400);
 		jsonBody = {
 			success: false,
 			code: 'CONTEXT_ERROR',

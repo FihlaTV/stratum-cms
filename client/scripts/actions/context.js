@@ -1,4 +1,3 @@
-import es6Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 
 export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
@@ -42,7 +41,7 @@ export function initContextSelector(contexts, roleId, unitId, initial) {
 		ret.units = getUnits(contexts, ret.currentRole);
 	}
 	if(ret.units){
-		ret.currentUnit = ret.units.length === 1 ? ret.units[0] : unitId;
+		ret.currentUnit = ret.units.length === 1 ? ret.units[0].UnitID : unitId;
 	}
 	
 	return ret;
@@ -62,7 +61,7 @@ export function roleChange(roleId) {
 		dispatch(setRole(roleId, getState().context.contexts));
 		const state = getState();
 		if (shouldSetUnit(state)) {
-			dispatch(setUnit(state.context.units[0].UnitID, state));
+			dispatch(unitChange(state.context.units[0].UnitID, state));
 		}
 	};
 }
@@ -85,18 +84,10 @@ function setRole(roleId, contexts) {
 	};
 }
 
-function setUnit(unitId, state) {
-	const { currentRole, contexts } = state.context;
+export function unitChange(unitId) {
 	return {
 		type: SET_UNIT,
-		unitId: unitId,
-		context: contexts.find(c => c.Role.RoleID === currentRole && c.Unit.UnitID === unitId)
-	};
-}
-
-export function unitChange(unitId) {
-	return (dispatch, getState) => {
-		dispatch(setUnit(unitId, getState()));
+		unitId: unitId
 	};
 }
 
@@ -104,5 +95,14 @@ export function contextError(error) {
 	return {
 		type: CONTEXT_ERROR,
 		error: error
+	};
+}
+
+export const SET_ENTERING = 'SET_ENTERING';
+
+export function setEntering(isEntering){
+	return {
+		type: SET_ENTERING,
+		isEntering: isEntering
 	};
 }
