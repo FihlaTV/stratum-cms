@@ -32,6 +32,9 @@ registers.forEach(function(el){
 	gulp.task('build-register-' + el.name, function (done) {
 		webpack(webpackConf.initConfig(el.path),
 			function (err, stats) {
+				if(err){
+					console.log(err);
+				}
 				done();
 			});
 	});
