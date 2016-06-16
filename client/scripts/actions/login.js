@@ -294,7 +294,6 @@ export function logoutFromStratum(){
 			.then(json =>{
 				if(json.success){
 					console.log('Logout successfull!');
-					dispatch(resetState(true));
 				} else {
 					throw new Error('Utloggning misslyckades...');
 				}			
@@ -314,7 +313,8 @@ function getAvailableContexts(context, initial, isLogin){
 					const contexts = json.data.filter(c => c.Unit.Register.RegisterID === parseInt(CLIENT_REGISTER_ID));
 					if(contexts.length <= 0){
 						//No matching contexts for this register counts as a failed login
-						if(!isLogin){
+						dispatch(setContextLoadFlag(false));
+						if(isLogin){
 							dispatch(logoutFromStratum());
 						}
 						throw new Error('Du har tyvärr inte tillgång till det här registret.');
