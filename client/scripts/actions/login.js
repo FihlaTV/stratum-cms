@@ -332,3 +332,28 @@ function getAvailableContexts(context, initial, isLogin){
 			});
 	};
 }
+
+export const SET_TIMELEFT = 'SET_TIMELEFT';
+
+function setTimeleft(timeleft){
+	return {
+		type: SET_TIMELEFT,
+		timeleft: timeleft
+	};
+}
+
+export function checkTimeleft(repeatAfter) {
+	return dispatch => {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/timeleft`, {credentials: 'include'})
+			.then(res => res.json())
+			.then(json => {
+				if(json.success){
+					const timeleft = json.data;
+					dispatch(setTimeleft(timeleft));
+				}
+				if(typeof repeatAfter === 'number'){
+					setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
+				}
+			});
+	};
+}
