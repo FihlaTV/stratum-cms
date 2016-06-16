@@ -262,7 +262,7 @@ export function loginToStratum(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					dispatch(getAvailableContexts(json.data, true));
+					dispatch(getAvailableContexts(json.data, true, true));
 					// window.location.reload(); // For now...
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
@@ -294,6 +294,7 @@ export function logoutFromStratum(){
 			.then(json =>{
 				if(json.success){
 					console.log('Logout successfull!');
+					dispatch(resetState(true));
 				} else {
 					throw new Error('Utloggning misslyckades...');
 				}			
@@ -304,7 +305,7 @@ export function logoutFromStratum(){
 	};
 }
 
-function getAvailableContexts(context, initial){
+function getAvailableContexts(context, initial, isLogin){
 	return dispatch => {
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/contexts`, {credentials: 'include'})
 			.then(res => res.json())
@@ -313,7 +314,9 @@ function getAvailableContexts(context, initial){
 					const contexts = json.data.filter(c => c.Unit.Register.RegisterID === parseInt(CLIENT_REGISTER_ID));
 					if(contexts.length <= 0){
 						//No matching contexts for this register counts as a failed login
-						dispatch(logoutFromStratum());
+						if(!isLogin){
+							dispatch(logoutFromStratum());
+						}
 						throw new Error('Du har tyvärr inte tillgång till det här registret.');
 					} else {
 						//Successful login
