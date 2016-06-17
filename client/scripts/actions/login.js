@@ -256,13 +256,16 @@ function getStratumProxyLoginError(errorCode){
  * from stratum. This call is handled by a proxy in Keystone and not by 
  * stratum directly, in order to read the cookie.
  */
-export function loginToStratum(){
+export function loginToStratum(refresh){
 	return dispatch => {
 		return fetch('/api/authentication/login', { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					dispatch(getAvailableContexts(json.data, true, true));
+					if(!refresh){
+						dispatch(getAvailableContexts(json.data, true, true));
+					}
+					dispatch(setTimeleft(30 * 60));
 					// window.location.reload(); // For now...
 					// dispatch(setUserName(`${json.data.User.FirstName} ${json.data.User.LastName}`));
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
@@ -320,6 +323,7 @@ function getAvailableContexts(context, initial, isLogin){
 						throw new Error('Du har tyvärr inte tillgång till det här registret.');
 					} else {
 						//Successful login
+						dispatch(checkTimeleft(60 * 1000));
 						dispatch(showLoginModal(false));
 						dispatch(setUserInfo(context, contexts, initial));
 						// window.location.reload(); // For now...			
@@ -335,10 +339,22 @@ function getAvailableContexts(context, initial, isLogin){
 
 export const SET_TIMELEFT = 'SET_TIMELEFT';
 
-function setTimeleft(timeleft){
+function setTimeleft(timeleft, show){
 	return {
 		type: SET_TIMELEFT,
-		timeleft: timeleft
+		timeleft: timeleft,
+		showTimeleft: typeof show !== 'undefined' ? show : (timeleft <  3 * 60)
+	};
+}
+
+export function dismissTimeleft(timeleft){
+	return dispatch => {
+		if(timeleft > 0){
+			dispatch(loginToStratum(true));
+		} else {
+			dispatch(setTimeleft(timeleft, false));
+			window.location.replace('/logout');
+		}
 	};
 }
 
@@ -350,9 +366,10 @@ export function checkTimeleft(repeatAfter) {
 				if(json.success){
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
-				}
-				if(typeof repeatAfter === 'number'){
-					setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
+					// Less than 3 minutes left
+					if(timeleft > 0 && typeof repeatAfter === 'number'){
+						setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
+					}
 				}
 			});
 	};
