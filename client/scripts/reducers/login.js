@@ -10,7 +10,8 @@ import {
 	SHOW_LOGIN_MODAL, 
 	SET_USER_INFO,
 	CONTEXT_IS_LOADING,
-	SET_HTTPS_FLAG
+	SET_HTTPS_FLAG,
+	SET_TIMELEFT
 	} from '../actions/login';
 
 const initialState = {
@@ -67,6 +68,11 @@ export default (state = initialState, action) => {
 		case CONTEXT_IS_LOADING: 
 			return Object.assign({}, state, {
 				contextIsLoading: action.isLoading
+			});
+		case SET_TIMELEFT: 
+			return Object.assign({}, state, {
+				timeleft: action.timeleft,
+				showTimeleft: action.showTimeleft
 			});
 		default:
 			return state;
