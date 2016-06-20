@@ -17,7 +17,7 @@ export function showContextModal(show) {
 export function setTarget(target){
 	return {
 		type: SET_TARGET,
-		target
+		target: process.env.NODE_ENV === 'development' ? null : target
 	};
 }
 
