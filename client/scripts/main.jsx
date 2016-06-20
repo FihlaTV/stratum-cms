@@ -27,7 +27,7 @@ let store = compose(
 
 if(module.hot){
 	module.hot.accept('./reducers/reducers.js', () => {
-      const nextReducer = require('./reducers/reducers.js');
+      const nextReducer = require('./reducers/reducers.js').default;
       store.replaceReducer(nextReducer);
     });
 }
