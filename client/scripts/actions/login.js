@@ -352,6 +352,7 @@ export function dismissTimeleft(timeleft){
 		if(timeleft > 0){
 			dispatch(loginToStratum(true));
 		} else {
+			//Force logout if time has run out
 			dispatch(setTimeleft(timeleft, false));
 			window.location.replace('/logout');
 		}

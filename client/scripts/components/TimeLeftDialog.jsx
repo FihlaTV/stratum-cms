@@ -7,14 +7,13 @@ const TimeLeftDialog = ({
 	onDismiss
 }) => {
 	const body = timeleft > 0 ? 
-		'Du har nu mindre än tre minuter kvar innan du blir automatiskt utloggad. Klicka på Avbryt (eller tryck Esc) om du vill fortsätta vara inloggad.'
+		'Du har nu mindre än tre minuter kvar innan du blir automatiskt utloggad. Klicka på Avbryt om du vill fortsätta vara inloggad.'
 		: 'Du är nu utloggad. För säkerhets skull bör du också stänga din webbläsare.';  
-	// const minutes = parseInt(Math.ceil(timeleft/60));
 	return (
 		<div>
-			<Modal show={show} onExit={() => console.log('exit')} keyboard={true}>
+			<Modal show={show}>
 				<Modal.Header>
-					<Modal.Title>Modal title</Modal.Title>
+					<Modal.Title>Automatisk utloggning</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					{body} 
