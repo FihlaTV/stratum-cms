@@ -57,6 +57,7 @@ keystone.init({
 	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
 
+	'register id': process.env.CLIENT_REGISTER_ID,
 	// Redirect to regular page if whole site is access restricted
 	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
 	'signout redirect': '/',
