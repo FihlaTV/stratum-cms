@@ -118,9 +118,26 @@ img.navbar-brand-image-small{
 	// }
 	.navbar-upper {
 		.clearfix();
+		.navbar-nav{
+			> li {
+				.username, .unitname{
+					display: inline-block;
+				}
+				.username{
+					&:after{
+						content: '\00A0 \2014 \00A0';	
+					}
+				}
+			}
+		}
 		@media (min-width: @grid-float-breakpoint) {
 			.navbar-nav{
 				> li {
+					&.active{
+						> a.registration-link{
+							.btn-default;
+						}
+					}
 					&:last-child{
 						// margin-right: @gutter-large + @navbar-main-padding-vertical;
 					}
@@ -130,29 +147,43 @@ img.navbar-brand-image-small{
 						margin-left: @gutter;
 						
 					}
-				}
-			}
-			.login-user-display{
-				display: block;
-				padding: @gutter @gutter*2+10px @gutter @gutter;
-				text-align: right;
-				position: relative;
-				p{
-					margin-bottom: 0;
-				}
-				.username{
-					font-size: floor(@font-size-base * 1.1);
-				}
-				.unitname{
-					font-size: floor(@font-size-base * 0.9);
-				}
-				&:after{
-					.fa-icon();
-					content: @fa-var-chevron-down;
-					position: absolute;
-					right: @gutter;
-					top: 50%;
-					margin-top: -5px;
+					a.registration-link{
+						height: 45px;
+						display: table-cell;
+						padding: 0 15px;
+						.btn-primary;
+					}
+					a.login-user-display{
+						height: 45px;
+						display: block;
+						padding: 6px 30px 6px 10px;
+						// padding: @gutter @gutter*2+10px @gutter @gutter;
+						// text-align: right;
+						position: relative;
+						p{
+							margin-bottom: 0;
+						}
+						.username, .unitname{
+							display: block;
+						}
+						.username{
+							&:after{
+								content: none;
+							}
+							font-size: 12px; //floor(@font-size-base * 1.1);
+						}
+						.unitname{
+							font-size: 10px; //floor(@font-size-base * 0.9);
+						}
+						&:after{
+							.fa-icon();
+							content: @fa-var-chevron-down;
+							position: absolute;
+							right: @gutter;
+							top: 50%;
+							margin-top: -5px;
+						}
+					}
 				}
 			}
 			.container;

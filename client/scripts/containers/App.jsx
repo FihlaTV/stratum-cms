@@ -8,6 +8,7 @@ import Context from './Context.jsx';
 import User from '../components/User.jsx';
 import Spinner from '../components/Spinner';
 import TimeLeftDialog from '../components/TimeLeftDialog';
+import TopNav from '../components/TopNav';
 
 class App extends Component {
 	componentDidMount() {
@@ -44,22 +45,14 @@ class App extends Component {
 		} = this.props;
 		return (
 			<div>
-				<ul className="nav navbar-nav navbar-right">
-					{contextIsLoading ? 
-						<Spinner small style={{margin: 14}}/> :
-						(context ? 
-							<User ref={setContextTarget}
-								context={context} 
-								wrongRegister={wrongRegister} 
-								onClick={(e) => showContextModal(true)}
-							/>
-							:
-							<li>
-								<a href="#" onClick={showLoginModal}>Logga in</a>
-							</li>
-						)
-					}
-				</ul>
+				<TopNav 
+					loading={contextIsLoading}
+					context={context}
+					wrongRegister={wrongRegister}
+					showContextModal={showContextModal}
+					showLoginModal={showLoginModal}
+					setContextTarget={setContextTarget}
+				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
 				<Context 

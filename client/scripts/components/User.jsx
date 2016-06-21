@@ -3,13 +3,24 @@ import React, { Component, PropTypes } from 'react';
 class User extends Component {
 	render(){
 		const {context,wrongRegister,onClick} = this.props;
-		const { User, Unit, Role } = context;
-		return (
-			<a className="login-user-display" href="#" onClick={onClick}>
-				<p className="username">{User.FirstName} {User.LastName}</p>
-				<p className="unitname">{wrongRegister ? 'Byt enhet' : `${Unit.UnitName} (${Role.RoleName})`}</p>
-			</a>
-		);
+		if(context){
+			const { User, Unit, Role } = context;
+
+			return (
+				<a className="login-user-display" href="#" onClick={onClick}>
+					<p className="username">{User.FirstName} {User.LastName}</p>
+					<p className="unitname">{Unit.UnitName} ({Role.RoleName})</p>
+				</a>
+			);
+		} else {
+				return (
+					<a className="login-user-display" href="#" onClick={onClick}>
+						<p className="username" style={{color: '#d00'}}>Fel register</p>
+						<p className="unitname">Byt enhet</p>
+					</a>
+				);
+		}
+	
 	}
 }
 
@@ -27,7 +38,7 @@ User.propTypes = {
 			FirstName: PropTypes.string.isRequired,
 			LastName: PropTypes.string.isRequired
 		}).isRequired
-	}).isRequired,
+	}),
 };
 
 export default User;

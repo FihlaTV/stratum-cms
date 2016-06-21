@@ -96,13 +96,13 @@ exports.initLocals = function(req, res, next) {
 		addCategoriesToNav: function(cb) {
 			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
 			
-			if(keystone.get('has login')){
-				locals.navLinks.push({
-					label: 'Registrering m.m.',
-					key: 'registration',
-					href: '/registrering'
-				});
-			}
+			// if(keystone.get('has login')){
+				// locals.navLinks.push({
+				// 	label: 'Registrering m.m.',
+				// 	key: 'registration',
+				// 	href: '/registrering'
+				// });
+			// }
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,

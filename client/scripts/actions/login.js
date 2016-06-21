@@ -227,10 +227,11 @@ export const LoginStages = {
 export const SET_USER_INFO = 'SET_USER_INFO';
 
 function setUserInfo(context, contexts, initial){
+	const wrongRegister = context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID);
 	return {
 		type: SET_USER_INFO,
-		wrongRegister: context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID),
-		context: context,
+		wrongRegister: wrongRegister,
+		context: wrongRegister ? undefined : context,
 		contexts: contexts,
 		initial: !!initial
 	};
