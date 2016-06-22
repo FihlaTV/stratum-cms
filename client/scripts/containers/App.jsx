@@ -63,7 +63,10 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout} 
-					onSubmit={(role, unit) => setContext(role, unit, contexts)}
+					onSubmit={(role, unit) => {
+						setContext(role, unit, contexts);
+					}
+					}
 					onCancel={() => showContextModal(false)}
 				/>
 			</div>

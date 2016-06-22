@@ -9,14 +9,14 @@ class Context extends Component {
 	componentDidMount() {
 		const { dispatch } = this.props;
 	}
-	componentWillReceiveProps(nextProps){
+	componentWillReceiveProps(nextProps) {
 		const { contexts, inRole, inUnit, dispatch, firstTime } = nextProps;
-		if(this.props.contexts !== contexts){
+		if (this.props.contexts !== contexts) {
 			dispatch(initContextSelector(contexts, inRole, inUnit, firstTime && !this.props.firstTime));
 		}
 	}
 	render() {
-		const { 
+		const {
 			dispatch,
 			show,
 			roles = [],
@@ -38,41 +38,42 @@ class Context extends Component {
 		} = this.props;
 		const allowAccept = initial && inUnit === currentUnit && inRole === currentRole;
 		return (
-			<Overlay 
-				show={show} 
+			<Overlay
+				show={show}
 				rootClose={!initial && !requireChange && !!onCancel}
-				onHide={() => !entering && onCancel()}
-				onEntering={() => dispatch(setEntering(true))}
-				onEntered={() => dispatch(setEntering(false))}
+				onHide={() => !entering && onCancel() }
+				onEntering={() => dispatch(setEntering(true)) }
+				onEntered={() => dispatch(setEntering(false)) }
 				target={() => target}
 				placement="bottom" >
 				<Popover title="Byt enhet och/eller roll" id="context-popover">
-					<UnitList 
-						units={units.map(u => ({name: u.UnitName, id: u.UnitID, code: u.UnitCode}))}
-						roles={roles.map(r => ({name: r.RoleName, id: r.RoleID}))}
-						roleChange={role => dispatch(roleChange(role))}
-						unitChange={unit => dispatch(unitChange(unit))}
+					<UnitList
+						units={units.map(u => ({ name: u.UnitName, id: u.UnitID, code: u.UnitCode })) }
+						roles={roles.map(r => ({ name: r.RoleName, id: r.RoleID })) }
+						roleChange={role => dispatch(roleChange(role)) }
+						unitChange={unit => dispatch(unitChange(unit)) }
 						currentRole={currentRole}
 						currentUnit={currentUnit}
 						context={currentContext}
-					/>
-					{!allowAccept && 
-					<ContextSyncButton 
-						bsStyle="primary" 
-						block 
-						disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole} 
-						isSyncing={isSyncing} onClick={() => {
-						onSubmit(currentRole, currentUnit);
-					}}>
-						Byt
-					</ContextSyncButton>}
+						/>
+					{!allowAccept &&
+						<ContextSyncButton
+							bsStyle="primary"
+							block
+							disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole}
+							isSyncing={isSyncing}
+							onClick={() => {
+								onSubmit(currentRole, currentUnit);
+							} }>
+							Byt
+						</ContextSyncButton>}
 					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
-					<Button 
-						block 
-						href="/logout" 
+					<Button
+						block
+						href="/logout"
 						onClick={onLogout}
-					>
+						>
 						Logga ut
 					</Button>
 				</Popover>
@@ -87,11 +88,11 @@ Context.propTypes = {
 	onCancel: PropTypes.func
 };
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
 	return {
 	};
 }
-function mapStateToProps(state){
+function mapStateToProps(state) {
 	const { context } = state;
 	return {
 		show: context.show,
