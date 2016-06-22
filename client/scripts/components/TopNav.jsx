@@ -11,17 +11,18 @@ const TopNav = ({
 	showLoginModal
 }) => {
 	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
-	if(loading){
+	const spinnerStyle = {
+		display: loading ? 'block' : 'none', 
+		margin: 14, 
+		position: 'absolute', 
+		right: '10px'
+	};
+	const visibility = loading ? {visibility: 'hidden'} : {};
+	if(loading || context || wrongRegister){
 		return (
 			<ul className="nav navbar-nav navbar-right">
-				<Spinner small style={{margin: 14}}/>
-			</ul>
-		);
-	}
-	if(context || wrongRegister){
-		return (
-			<ul className="nav navbar-nav navbar-right">
-				<li className={isRegistration}>
+				<Spinner small style={spinnerStyle}/>
+				<li style={visibility} className={isRegistration}>
 					<a href="/registrering" className="nav-button-text registration-link" disabled={wrongRegister} onClick={(e) => {
 						if(wrongRegister){
 							e.preventDefault();
@@ -31,7 +32,7 @@ const TopNav = ({
 						<p className="nav-button-text-small">med mera</p>
 					</a>
 				</li>
-				<li>
+				<li style={visibility}>
 					<User ref={setContextTarget}
 						context={context} 
 						wrongRegister={wrongRegister} 
