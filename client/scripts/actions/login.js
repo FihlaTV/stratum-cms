@@ -383,3 +383,12 @@ export function checkTimeleft(repeatAfter) {
 			});
 	};
 }
+
+export const SET_SHRINK_UNIT_NAME = 'SET_SHRINK_UNIT_NAME';
+
+export function setShrinkUnitName(shrink){
+	return {
+		type: SET_SHRINK_UNIT_NAME,
+		shrink: shrink
+	};
+}

@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, changeContext, dismissTimeleft } from '../actions/login';
+import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, 
+	changeContext, dismissTimeleft, setShrinkUnitName } from '../actions/login';
 import { showContextModal, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
@@ -39,7 +40,9 @@ class App extends Component {
 			onTimeleftDismiss,
 			showTimeleft,
 			contextTarget,
+			shrinkUnitName,
 			contextIsLoading,
+			setShrinkUnitName,
 			contexts,
 			logout
 		} = this.props;
@@ -51,6 +54,8 @@ class App extends Component {
 					wrongRegister={wrongRegister}
 					showContextModal={showContextModal}
 					showLoginModal={showLoginModal}
+					onUserHover={(hover) => setShrinkUnitName(!hover)}
+					shrinkUnitName={shrinkUnitName}
 					setContextTarget={setContextTarget}
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
@@ -94,6 +99,9 @@ function mapDispatchToProps(dispatch){
 		onTimeleftDismiss: (timeleft) => {
 			dispatch(dismissTimeleft(timeleft));
 		},
+		setShrinkUnitName: (shrink) => {
+			dispatch(setShrinkUnitName(shrink));
+		},
 		setContextTarget: (target) => {
 			dispatch(setTarget(ReactDOM.findDOMNode(target)));
 		}
@@ -108,6 +116,7 @@ function mapStateToProps(state){
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
 		showTimeleft: state.login.showTimeleft,
+		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target
 	};
 }

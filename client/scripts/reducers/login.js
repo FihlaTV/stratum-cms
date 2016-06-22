@@ -11,7 +11,8 @@ import {
 	SET_USER_INFO,
 	CONTEXT_IS_LOADING,
 	SET_HTTPS_FLAG,
-	SET_TIMELEFT
+	SET_TIMELEFT,
+	SET_SHRINK_UNIT_NAME
 	} from '../actions/login';
 
 const initialState = {
@@ -73,6 +74,10 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				timeleft: action.timeleft,
 				showTimeleft: action.showTimeleft
+			});
+		case SET_SHRINK_UNIT_NAME:
+			return Object.assign({}, state, {
+				shrinkUnitName: action.shrink
 			});
 		default:
 			return state;

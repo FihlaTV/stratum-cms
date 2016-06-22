@@ -8,6 +8,8 @@ const TopNav = ({
 	wrongRegister,
 	showContextModal,
 	setContextTarget,
+	onUserHover,
+	shrinkUnitName,
 	showLoginModal
 }) => {
 	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
@@ -35,7 +37,9 @@ const TopNav = ({
 				<li style={visibility}>
 					<User ref={setContextTarget}
 						context={context} 
-						wrongRegister={wrongRegister} 
+						wrongRegister={wrongRegister}
+						onUserHover={onUserHover} 
+						shrinkName={shrinkUnitName}
 						onClick={(e) => {
 							e.preventDefault();
 							showContextModal(true);
