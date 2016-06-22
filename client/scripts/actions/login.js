@@ -61,6 +61,7 @@ export function changeContext(roleId, unitId, contexts) {
 			console.log(err);
 			return dispatch(contextError(err));
 		}
+		dispatch(setContextLoadFlag(true));
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
 			credentials: 'include',
 			method: 'PUT',
@@ -76,13 +77,15 @@ export function changeContext(roleId, unitId, contexts) {
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
-					dispatch(setContext(context));					
+					dispatch(setContext(context));
+					dispatch(setContextLoadFlag(false));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
 				}
 			})
 			.catch(error => {
+				dispatch(setContextLoadFlag(false));
 				console.log('request failed', error);
 				contextError(error);
 			});
