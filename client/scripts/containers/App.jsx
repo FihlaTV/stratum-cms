@@ -19,7 +19,7 @@ class App extends Component {
 	componentWillReceiveProps(nextProps){
 		const { context, initial } = this.props;
 		const { showContextModal, wrongRegister } = nextProps;
-		if(context && nextProps.context !== context){
+		if(nextProps.context && nextProps.context !== context){
 			showContextModal && showContextModal(false);
 		}
 		if(!initial && nextProps.initial || wrongRegister){
