@@ -120,10 +120,11 @@ img.navbar-brand-image-small{
 		.clearfix();
 		.navbar-nav{
 			> li {
-				.username, .unitname{
+				.nav-button-text-big, .nav-button-text-small{
 					display: inline-block;
+					margin-bottom: 0;
 				}
-				.username{
+				.nav-button-text-big{
 					&:after{
 						content: '\00A0 \2014 \00A0';	
 					}
@@ -148,33 +149,33 @@ img.navbar-brand-image-small{
 						
 					}
 					a.registration-link{
-						height: 45px;
-						display: table-cell;
-						padding: 0 15px;
+					// 	height: 45px;
+					// 	display: table-cell;
+					// 	padding: 0 15px;
 						.btn-primary;
 					}
-					a.login-user-display{
+					a.nav-button-text{
 						height: 45px;
 						display: block;
-						padding: 6px 30px 6px 10px;
-						// padding: @gutter @gutter*2+10px @gutter @gutter;
-						// text-align: right;
+						padding: 6px 10px;
 						position: relative;
-						p{
-							margin-bottom: 0;
-						}
-						.username, .unitname{
+						.nav-button-text-big, .nav-button-text-small{
 							display: block;
 						}
-						.username{
+						.nav-button-text-big{
 							&:after{
 								content: none;
 							}
 							font-size: 12px; //floor(@font-size-base * 1.1);
 						}
-						.unitname{
+						.nav-button-text-small{
 							font-size: 10px; //floor(@font-size-base * 0.9);
 						}
+					}
+					a.login-user-display{
+						// padding: @gutter @gutter*2+10px @gutter @gutter;
+						// text-align: right;
+						padding-right: 30px;
 						&:after{
 							.fa-icon();
 							content: @fa-var-chevron-down;

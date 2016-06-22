@@ -7,16 +7,16 @@ class User extends Component {
 			const { User, Unit, Role } = context;
 
 			return (
-				<a className="login-user-display" href="#" onClick={onClick}>
-					<p className="username">{User.FirstName} {User.LastName}</p>
-					<p className="unitname">{Unit.UnitName} ({Role.RoleName})</p>
+				<a className="nav-button-text login-user-display" href="#" onClick={onClick}>
+					<p className="nav-button-text-big username">{User.FirstName} {User.LastName}</p>
+					<p className="nav-button-text-small unitname">{Unit.UnitName} ({Role.RoleName})</p>
 				</a>
 			);
 		} else {
 				return (
-					<a className="login-user-display" href="#" onClick={onClick}>
-						<p className="username" style={{color: '#d00'}}>Fel register</p>
-						<p className="unitname">Byt enhet</p>
+					<a className="nav-button-text login-user-display" href="#" onClick={onClick}>
+						<p className="nav-button-text-big username" style={{color: '#d00'}}>Fel register</p>
+						<p className="nav-button-text-small unitname">Byt enhet</p>
 					</a>
 				);
 		}

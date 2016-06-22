@@ -10,7 +10,7 @@ const TopNav = ({
 	setContextTarget,
 	showLoginModal
 }) => {
-	const isRegistration = wrongRegister || location.pathname === '/registrering' ? 'active' : '';
+	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
 	if(loading){
 		return (
 			<ul className="nav navbar-nav navbar-right">
@@ -22,19 +22,23 @@ const TopNav = ({
 		return (
 			<ul className="nav navbar-nav navbar-right">
 				<li className={isRegistration}>
-					<a className="registration-link" disabled={wrongRegister} onClick={(e) => {
-						e.preventDefault();
-						if(!wrongRegister){
-							location.replace('/registrering');
-						}
-												
-					}}>Registrera</a>
+					<a href="/registrering" className="nav-button-text registration-link" disabled={wrongRegister} onClick={(e) => {
+						if(wrongRegister){
+							e.preventDefault();
+						}					
+					}}>
+						<p className="nav-button-text-big">Registrering</p>
+						<p className="nav-button-text-small">med mera</p>
+					</a>
 				</li>
 				<li>
 					<User ref={setContextTarget}
 						context={context} 
 						wrongRegister={wrongRegister} 
-						onClick={(e) => showContextModal(true)}
+						onClick={(e) => {
+							e.preventDefault();
+							showContextModal(true);
+						}}
 					/>
 				</li>
 			</ul>
