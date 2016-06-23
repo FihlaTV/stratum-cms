@@ -20,9 +20,8 @@ class User extends Component {
 			);
 		} else {
 				return (
-					<a className="nav-button-text login-user-display" href="#" onClick={onClick}>
-						<p className="nav-button-text-big username" style={{color: '#d00'}}>Fel register</p>
-						<p className="nav-button-text-small unitname">Byt enhet</p>
+					<a className="nav-button-text login-user-display login-user-display-wrong" href="#" onClick={onClick}>
+						Välj nedan
 					</a>
 				);
 		}
