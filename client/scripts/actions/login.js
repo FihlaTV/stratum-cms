@@ -21,10 +21,6 @@ const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
 
 export function getKeystoneContext(isInitial){
 	return (dispatch) => {
-		if(!document.cookie || !(document.cookie.indexOf('STRATUMID') >= 0)){
-			// No cookie equals no possible previous login available
-			return;
-		}
 		dispatch(setContextLoadFlag(true));
 		fetch('/api/authentication/context', { credentials: 'include' })
 			.then(res => res.json())
