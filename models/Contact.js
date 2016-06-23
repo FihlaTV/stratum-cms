@@ -6,7 +6,9 @@ var keystone = require('keystone'),
  * ==========
  */
 
-var Contact = new keystone.List('Contact');
+var Contact = new keystone.List('Contact', {
+	track: { createdAt: true, updatedAt: true, updatedBy: true }
+});
 
 Contact.add({
 	name: { type: Types.Name, required: true, index: true },

@@ -11,6 +11,7 @@ var keystone = require('keystone'),
 
 var RegisterInformation = new keystone.List('RegisterInformation', {
 	nocreate: true,
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	nodelete: true
 });
 

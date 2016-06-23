@@ -15,6 +15,7 @@ var Widget = new keystone.List('Widget', {
 		from: 'name',
 		path: 'key'
 	},
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	sortable: true
 });
 

@@ -8,6 +8,7 @@ var keystone = require('keystone'),
 
 var Question = new keystone.List('Question', {
 	map: { name: 'question' },
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	sortable: true
 });
 

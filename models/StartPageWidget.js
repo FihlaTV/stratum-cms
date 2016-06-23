@@ -8,6 +8,7 @@ var keystone = require('keystone'),
 
 var StartPageWidget = new keystone.List('StartPageWidget', {
 	sortable: true,
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	autokey: { path: 'slug', from: 'name', unique: true }
 });
 
