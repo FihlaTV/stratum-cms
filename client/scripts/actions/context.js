@@ -34,6 +34,7 @@ export function initContextSelector(contexts, roleId, unitId, initial) {
 		type: RECEIVE_CONTEXTS,
 		contexts: contexts,
 		roles: roles,
+		units: [],
 		initial: !!(initial && roleId && unitId)
 	};
 	ret.currentRole = roles.length === 1 ? roles[0].RoleID : roleId;

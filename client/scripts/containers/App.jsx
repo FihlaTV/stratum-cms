@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, changeContext, dismissTimeleft } from '../actions/login';
+import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, 
+	changeContext, dismissTimeleft, setShrinkUnitName } from '../actions/login';
 import { showContextModal, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
 import User from '../components/User.jsx';
 import Spinner from '../components/Spinner';
 import TimeLeftDialog from '../components/TimeLeftDialog';
+import TopNav from '../components/TopNav';
 
 class App extends Component {
 	componentDidMount() {
@@ -18,7 +20,7 @@ class App extends Component {
 	componentWillReceiveProps(nextProps){
 		const { context, initial } = this.props;
 		const { showContextModal, wrongRegister } = nextProps;
-		if(context && nextProps.context !== context){
+		if(nextProps.context && nextProps.context !== context){
 			showContextModal && showContextModal(false);
 		}
 		if(!initial && nextProps.initial || wrongRegister){
@@ -38,28 +40,24 @@ class App extends Component {
 			onTimeleftDismiss,
 			showTimeleft,
 			contextTarget,
+			shrinkUnitName,
 			contextIsLoading,
+			setShrinkUnitName,
 			contexts,
 			logout
 		} = this.props;
 		return (
 			<div>
-				<ul className="nav navbar-nav navbar-right">
-					{contextIsLoading ? 
-						<Spinner small style={{margin: 14}}/> :
-						(context ? 
-							<User ref={setContextTarget}
-								context={context} 
-								wrongRegister={wrongRegister} 
-								onClick={(e) => showContextModal(true)}
-							/>
-							:
-							<li>
-								<a href="#" onClick={showLoginModal}>Logga in</a>
-							</li>
-						)
-					}
-				</ul>
+				<TopNav 
+					loading={contextIsLoading}
+					context={context}
+					wrongRegister={wrongRegister}
+					showContextModal={showContextModal}
+					showLoginModal={showLoginModal}
+					onUserHover={(hover) => setShrinkUnitName(!hover)}
+					shrinkUnitName={shrinkUnitName}
+					setContextTarget={setContextTarget}
+				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
 				<Context 
@@ -70,7 +68,10 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout} 
-					onSubmit={(role, unit) => setContext(role, unit, contexts)}
+					onSubmit={(role, unit) => {
+						setContext(role, unit, contexts);
+					}
+					}
 					onCancel={() => showContextModal(false)}
 				/>
 			</div>
@@ -98,6 +99,9 @@ function mapDispatchToProps(dispatch){
 		onTimeleftDismiss: (timeleft) => {
 			dispatch(dismissTimeleft(timeleft));
 		},
+		setShrinkUnitName: (shrink) => {
+			dispatch(setShrinkUnitName(shrink));
+		},
 		setContextTarget: (target) => {
 			dispatch(setTarget(ReactDOM.findDOMNode(target)));
 		}
@@ -112,6 +116,7 @@ function mapStateToProps(state){
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
 		showTimeleft: state.login.showTimeleft,
+		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target
 	};
 }

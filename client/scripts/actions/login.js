@@ -21,6 +21,10 @@ const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
 
 export function getKeystoneContext(isInitial){
 	return (dispatch) => {
+		if(!document.cookie || !(document.cookie.indexOf('STRATUMID') >= 0)){
+			// No cookie equals no possible previous login available
+			return;
+		}
 		dispatch(setContextLoadFlag(true));
 		fetch('/api/authentication/context', { credentials: 'include' })
 			.then(res => res.json())
@@ -61,6 +65,7 @@ export function changeContext(roleId, unitId, contexts) {
 			console.log(err);
 			return dispatch(contextError(err));
 		}
+		dispatch(setContextLoadFlag(true));
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
 			credentials: 'include',
 			method: 'PUT',
@@ -76,13 +81,15 @@ export function changeContext(roleId, unitId, contexts) {
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
-					dispatch(setContext(context));					
+					dispatch(setContext(context));
+					dispatch(setContextLoadFlag(false));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
 				}
 			})
 			.catch(error => {
+				dispatch(setContextLoadFlag(false));
 				console.log('request failed', error);
 				contextError(error);
 			});
@@ -227,10 +234,11 @@ export const LoginStages = {
 export const SET_USER_INFO = 'SET_USER_INFO';
 
 function setUserInfo(context, contexts, initial){
+	const wrongRegister = context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID);
 	return {
 		type: SET_USER_INFO,
-		wrongRegister: context.Unit.Register.RegisterID !== parseInt(CLIENT_REGISTER_ID),
-		context: context,
+		wrongRegister: wrongRegister,
+		context: wrongRegister ? undefined : context,
 		contexts: contexts,
 		initial: !!initial
 	};
@@ -373,5 +381,14 @@ export function checkTimeleft(repeatAfter) {
 					}
 				}
 			});
+	};
+}
+
+export const SET_SHRINK_UNIT_NAME = 'SET_SHRINK_UNIT_NAME';
+
+export function setShrinkUnitName(shrink){
+	return {
+		type: SET_SHRINK_UNIT_NAME,
+		shrink: shrink
 	};
 }

@@ -34,6 +34,7 @@ exports.initLocals = function(req, res, next) {
 	locals.brandSafe = keystone.get('brand safe');
 	locals.isPortal = keystone.get('is portal');
 	locals.hasLogin = keystone.get('has login');
+	locals.registerId = keystone.get('register id');
 	locals.env = keystone.get('env');
 	if (req.session && req.session.context && req.session.context.ContextID) {
 		locals.context = req.session.context;
@@ -96,13 +97,13 @@ exports.initLocals = function(req, res, next) {
 		addCategoriesToNav: function(cb) {
 			// locals.navLinks = locals.navLinks.concat(_.sortBy(context.pages, 'sortOrder'));
 			
-			if(keystone.get('has login')){
-				locals.navLinks.push({
-					label: 'Registrering m.m.',
-					key: 'registration',
-					href: '/registrering'
-				});
-			}
+			// if(keystone.get('has login')){
+				// locals.navLinks.push({
+				// 	label: 'Registrering m.m.',
+				// 	key: 'registration',
+				// 	href: '/registrering'
+				// });
+			// }
 			context.menu.forEach(function(menuBlock){
 				locals.navLinks.push({
 					label: menuBlock.name,
