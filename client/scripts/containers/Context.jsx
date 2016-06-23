@@ -65,7 +65,7 @@ class Context extends Component {
 							onClick={() => {
 								onSubmit(currentRole, currentUnit);
 							} }>
-							Byt
+							{requireChange ? 'Genomför' : 'Byt'}
 						</ContextSyncButton>}
 					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
