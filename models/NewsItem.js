@@ -8,6 +8,7 @@ var keystone = require('keystone'),
 
 var NewsItem = new keystone.List('NewsItem', {
 	map: { name: 'title' },
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	autokey: { path: 'slug', from: 'title', unique: true },
 	plural: 'News',
 	defaultSort: '-publishedDate'

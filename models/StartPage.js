@@ -9,6 +9,7 @@ var keystone = require('keystone'),
 var StartPage = new keystone.List('StartPage', {
 	nocreate: true,
 	nodelete: true,
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	map: { name: 'header' },
 	plural: 'Start Page'
 	// autokey: { path: 'slug', from: 'title', unique: true }

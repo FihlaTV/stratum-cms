@@ -31,6 +31,7 @@ var BasePage = new keystone.List('BasePage', {
 	map: {
 		name: 'title'
 	},
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	autokey: {
 		path: 'slug',
 		from: 'title',

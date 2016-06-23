@@ -8,6 +8,7 @@ var keystone = require('keystone'),
 
 var QuestionCategory = new keystone.List('QuestionCategory', {
 	map: { name: 'category' },
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	sortable: true
 });
 

@@ -8,6 +8,7 @@ var keystone = require('keystone'),
 
 var MenuBlock = new keystone.List('MenuBlock', {
 	sortable: true,
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	autokey: {
 		from: 'name',
 		path: 'slug',
