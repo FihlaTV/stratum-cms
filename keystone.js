@@ -56,6 +56,7 @@ keystone.init({
 	'is portal': process.env.IS_PORTAL === 'true',
 	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
+	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),
 
 	'register id': process.env.CLIENT_REGISTER_ID,
 	// Redirect to regular page if whole site is access restricted
