@@ -22,7 +22,9 @@ const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
 export function getKeystoneContext(isInitial){
 	return (dispatch) => {
 		dispatch(setContextLoadFlag(true));
-		fetch('/api/authentication/context', { credentials: 'include' })
+		fetch(`/api/authentication/context?_=${(new Date()).getTime()}`, { 
+				credentials: 'include' 
+			})
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -62,18 +64,18 @@ export function changeContext(roleId, unitId, contexts) {
 			return dispatch(contextError(err));
 		}
 		dispatch(setContextLoadFlag(true));
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
-			credentials: 'include',
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				Context: {
-					ContextID: context.ContextID
-				}
+		return fetch(`/stratum/api/authentication/context?_=${(new Date()).getTime()}`, {
+				credentials: 'include',
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					Context: {
+						ContextID: context.ContextID
+					}
+				})
 			})
-		})
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
@@ -187,7 +189,9 @@ export function initiateSITHSLogin(){
 	return (dispatch) => {
 		dispatch(setHasNextState(false));
 		dispatch(setSITHSStatus('SITHS_DO_LOGIN'));
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login`, { credentials: 'include' })
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login?_=${(new Date()).getTime()}`, { 
+				credentials: 'include'
+			})
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -262,7 +266,9 @@ function getStratumProxyLoginError(errorCode){
  */
 export function loginToStratum(refresh){
 	return dispatch => {
-		return fetch('/api/authentication/login', { credentials: 'include' })
+		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, { 
+				credentials: 'include' 
+			})
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -296,7 +302,9 @@ function setContextLoadFlag(isLoading){
 
 export function logoutFromStratum(){
 	return dispatch => {
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/logout`, { credentials: 'include' })
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/logout?_=${(new Date()).getTime()}`, { 			
+			credentials: 'include' 
+		})
 			.then(res => res.json())
 			.then(json =>{
 				if(json.success){
@@ -313,7 +321,9 @@ export function logoutFromStratum(){
 
 function getAvailableContexts(context, initial, isLogin){
 	return dispatch => {
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/contexts`, {credentials: 'include'})
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/contexts?_=${(new Date()).getTime()}`, {
+				credentials: 'include'
+			})
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -365,7 +375,9 @@ export function dismissTimeleft(timeleft){
 
 export function checkTimeleft(repeatAfter) {
 	return dispatch => {
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/timeleft`, {credentials: 'include'})
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/timeleft?_=${(new Date()).getTime()}`, {
+				credentials: 'include'
+			})
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
