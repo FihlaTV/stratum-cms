@@ -6,7 +6,7 @@ const MYRPostTotal = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/myr/myrosspost/total/count?APIKey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/myr/myrosspost/total/count?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
 	/>

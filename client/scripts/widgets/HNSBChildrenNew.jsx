@@ -6,7 +6,7 @@ const HNSBChildrenNew = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
 	/>

@@ -19,7 +19,7 @@ class BOAAndel extends Component {
 		return (
 			<div>
 				<StratumSimpleData
-					url="//stratum.registercentrum.se/api/aggregate/BOA/FirstVisitPatient/Total/count?APIKey=bK3H9bwaG4o%3D"
+					url="/stratum/api/aggregate/BOA/FirstVisitPatient/Total/count?APIKey=bK3H9bwaG4o%3D"
 					onLoadComplete={this.onComplete.bind(this)}
 					unstyled
 					/>

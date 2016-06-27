@@ -6,7 +6,7 @@ const HNSVPirs = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/HNSV/HNSVBasePirs/total/mean(hnsv_basepirs_scale)?apikey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/HNSV/HNSVBasePirs/total/mean(hnsv_basepirs_scale)?apikey=bK3H9bwaG4o="
 			description={description}
 			format="0"
 	/>
