@@ -14,5 +14,29 @@
 	"HNSVPirs": {
 		"id": "HNSVPirs",
 		"description": "En beskrivning som förklarar den här widgeten..."
-	}
+	},
+  "HNSBChildrenNew": {
+    "id": "HNSBChildrenNew",
+    "description": "Antalet registrerade barn i registrets nyregistreringsdel."
+	},
+  "HNSBCI": {
+    "id": "HNSBCI",
+    "description": "Antalet individer i registret som blivit CI-opererade."
+	},
+  "MYRPostTotal": {
+    "id": "MYRPostTotal",
+    "description": "Antal registreringar totalt i registret."
+	},
+  "RORHearingTest": {
+    "id": "RORHearingTest",
+    "description": "Andel patienter med SOM som hörselprovats före rörinsättning."
+	},
+  "RORSatInfo": {
+    "id": "RORSatInfo",
+    "description": "Andel anhöriga som är nöjda med information före rörinsättning."
+	},
+  "SEPOps": {
+    "id": "SEPOps",
+    "description": "Antal registrerade septumoperationer totalt i registret."
+  }
 }
