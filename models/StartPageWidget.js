@@ -25,7 +25,7 @@ StartPageWidget.add({
 		dependsOn: { useWidget: true },
 		many: false
 	},
-	description: { type: Types.Textarea, dependsOn: { useWidget: false } },
+	description: { type: Types.Textarea },
 	linkType: { type: Types.Select, options: ['static', 'page'] },
 	linkText: { type: String, default: 'Se mer statistik', dependsOn: {
 		linkType: ['static', 'page']

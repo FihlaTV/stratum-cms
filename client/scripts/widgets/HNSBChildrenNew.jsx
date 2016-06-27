@@ -1,0 +1,18 @@
+import React, { Component, PropTypes } from 'react';
+import StartPageWidget from './StartPageWidget';
+
+const HNSBChildrenNew = ({
+	description
+}) => {
+	return (
+		<StartPageWidget
+			url="//stratum.registercentrum.se/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o="
+			description={description}
+			format="0"
+	/>
+	);
+};
+
+HNSBChildrenNew.defaultProps = {};
+
+export default HNSBChildrenNew;
