@@ -62,18 +62,18 @@ export function changeContext(roleId, unitId, contexts) {
 			return dispatch(contextError(err));
 		}
 		dispatch(setContextLoadFlag(true));
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/context`, {
-			credentials: 'include',
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				Context: {
-					ContextID: context.ContextID
-				}
+		return fetch('/stratum/api/authentication/context', {
+				credentials: 'include',
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					Context: {
+						ContextID: context.ContextID
+					}
+				})
 			})
-		})
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
