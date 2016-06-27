@@ -6,7 +6,7 @@ const SEPOps = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/sep/seppost/total/count?APIKey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/sep/seppost/total/count?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
 	/>

@@ -6,7 +6,7 @@ const HNSBCI = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/hnsb/hnsbci/total/subjectcount?APIKey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/hnsb/hnsbci/total/subjectcount?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
 	/>

@@ -6,7 +6,7 @@ const RORHearingTest = ({
 }) => {
 	return (
 		<StartPageWidget
-			url="//stratum.registercentrum.se/api/aggregate/ror/rorpre/total/share(PreHearingTest(1))?PreOpIndic=1&APIKey=bK3H9bwaG4o="
+			url="/stratum/api/aggregate/ror/rorpre/total/share(PreHearingTest(1))?PreOpIndic=1&APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0.0 %"
 	/>
