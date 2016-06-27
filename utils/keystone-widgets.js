@@ -9,7 +9,7 @@ exports.loadWidgets = function(callback) {
 
 	async.series({
 		readWidgetMetadata: function(next) {
-			fs.readFile('./client/scripts/widgets/widgets.json', function(err, data) {
+			fs.readFile(keystone.get('keystone widgets index'), function(err, data) {
 				if (err) {
 					next(err);
 				} else {
