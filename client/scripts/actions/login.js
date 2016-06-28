@@ -79,6 +79,10 @@ export function changeContext(roleId, unitId, contexts) {
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
+					// Stratum Update
+					if(typeof window.assignProfileContext !== 'undefined'){
+						assignProfileContext(context);
+					}
 					dispatch(setContext(context));
 					dispatch(setContextLoadFlag(false));
 				} else {

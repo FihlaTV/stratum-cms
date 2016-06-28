@@ -59,6 +59,7 @@ class Context extends Component {
 					{!allowAccept &&
 						<ContextSyncButton
 							bsStyle="primary"
+							href="#!"
 							block
 							disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole}
 							isSyncing={isSyncing}
