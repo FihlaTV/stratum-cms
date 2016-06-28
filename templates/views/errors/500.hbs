@@ -28,7 +28,7 @@
 	{{#ifeq env "development"}}
 	<script type="text/javascript" src="/js/bundle.js"></script>
 	{{else}}
-	<script type="text/javascript" src="/dist/vendors.js"></script>
+	<script type="text/javascript" src="/dist/{{brandSafe}}.vendors.js"></script>
 	<script type="text/javascript" src="/dist/{{brandSafe}}.bundle.js"></script>
 	{{/ifeq}}
 </body>
