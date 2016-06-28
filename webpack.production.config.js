@@ -34,7 +34,7 @@ function generateConfig(indexPath, brand, envVars){
 			}),
 			new webpack.optimize.UglifyJsPlugin(),
 			new ExtractTextPlugin(brand + '.styles.css'),
-			new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+			new webpack.optimize.CommonsChunkPlugin('vendors', brand + '.vendors.js')
 		],
 		module: {
 			loaders: [{
