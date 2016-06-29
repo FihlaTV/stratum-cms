@@ -41,7 +41,7 @@ const InputPersonalNr = ({
 		</form>
 	);
 	
-}
+};
 
 InputPersonalNr.propTypes = {
 	onSubmit: PropTypes.func.isRequired

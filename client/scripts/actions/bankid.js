@@ -65,7 +65,8 @@ export function validatePersonalNumber(personalNumber){
 		
 		dispatch(setPersonalNumberValidity(valid));
 		if(valid){
-			dispatch(inputPersonalNumber(personalNumber));
+			//Strip dash
+			dispatch(inputPersonalNumber(personalNumber.replace('-','')));
 		}	
 	};
 }
