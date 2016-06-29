@@ -1,3 +1,5 @@
+const CURRENT_YEAR = (new Date()).getFullYear();
+
 function isValidSwedishPIN(pin) {
 	pin = pin
 		.replace(/\D/g, '') // strip out all but digits
@@ -34,10 +36,12 @@ function isValidSwedishPIN(pin) {
 
 export function isValidPersonalNumber(personalNumber) {
 	let matches = personalNumber
-		.replace('-', '')
-		.trim()
-		.match(/^(\d\d){0,1}((\d{2})(\d{2})(\d{2})\d{4})$/);
-	// var century = matches && matches[1] || '19';
-
-	return !!(matches && isValidSwedishPIN(matches[2]));
+		.match(/^(19|20)((\d{2})(\d{2})(\d{2})-{0,1}\d{4})$/);
+		
+		if(matches){
+			let year = parseInt(matches[1] + matches[3], 10);
+			return !!(year < CURRENT_YEAR && isValidSwedishPIN(matches[2]));
+		} else {
+			return false;
+		}
 }
