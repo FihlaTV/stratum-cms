@@ -15,7 +15,7 @@ class Messages extends Component {
 		} = this.props;
 
 		return (<div>{
-			messages.map(({id, title, message, dismissible}) => <Message id={id} title={title} text={message} dismissible={dismissible}/>)
+			messages.map(({_id, title, message, dismissible, status}) => <Message key={_id} title={title} text={message} status={status} dismissible={dismissible}/>)
 		}</div>);
 	}
 }
