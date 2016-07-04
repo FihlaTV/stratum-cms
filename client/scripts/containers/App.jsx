@@ -49,7 +49,6 @@ class App extends Component {
 		} = this.props;
 		return (
 			<div>
-				<Messages />
 				<TopNav 
 					loading={contextIsLoading}
 					context={context}

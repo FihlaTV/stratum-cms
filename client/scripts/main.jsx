@@ -8,6 +8,7 @@ import WidgetWrapper from './components/WidgetWrapper';
 import loginApp from './reducers/reducers';
 import es6Promise from 'es6-promise';
 import find from 'array.prototype.find';
+import Messages from './containers/Messages';
 
 // Webpack dependencies
 // import 'jquery'; // not needed, bundled with bootstrap
@@ -18,6 +19,7 @@ find.shim();
 es6Promise.polyfill();
 
 const mainContainer = document.getElementById('login-button-react');
+const messageContainer = document.getElementById('message-container');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
 
 let store = compose(
@@ -38,6 +40,14 @@ if(mainContainer){
 			<Application />
 		</Provider>, 
 		mainContainer
+	);
+}
+if(messageContainer){
+	render(
+		<Provider store={store}>
+			<Messages />
+		</Provider>,
+		messageContainer
 	);
 }
 if(keystoneWidgets){
