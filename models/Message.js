@@ -12,7 +12,7 @@ var Message = new keystone.List('Message', {
 	sortable: true
 });
 
-var dateFormat = 'YYYY-DD-MM HH:mm:ss';
+var dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
 Message.add({
 	title: { type: String, required: true },
