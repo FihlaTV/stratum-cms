@@ -10,6 +10,7 @@ import User from '../components/User.jsx';
 import Spinner from '../components/Spinner';
 import TimeLeftDialog from '../components/TimeLeftDialog';
 import TopNav from '../components/TopNav';
+import Messages from './Messages';
 
 class App extends Component {
 	componentDidMount() {
@@ -48,6 +49,7 @@ class App extends Component {
 		} = this.props;
 		return (
 			<div>
+				<Messages />
 				<TopNav 
 					loading={contextIsLoading}
 					context={context}
