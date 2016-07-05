@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
+import cookies from 'js-cookie';
 
+const COOKIE_NAME = 'stratum-cms.hidden-messages';
 // export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
 
 // export function showContextModal(show) {
@@ -8,6 +10,17 @@ import fetch from 'isomorphic-fetch';
 // 		show: show
 // 	};
 // }
+
+function addToCookie(id){
+	const arr = cookies.getJSON(COOKIE_NAME) || [];
+	if(arr.indexOf(id) === -1){
+		cookies.set(COOKIE_NAME, [...arr, id]);
+	}
+}
+
+function getHiddenIds(){
+	return cookies.getJSON(COOKIE_NAME) || [];
+}
 
 export const MESSAGE_ERROR = 'MESSAGE_ERROR';
 
@@ -30,6 +43,7 @@ function receiveMessages(messages){
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 
 export function showMessage(id, show){
+	addToCookie(id);
 	return {
 		type: SHOW_MESSAGE,
 		id: id,
@@ -47,7 +61,7 @@ export function fetchMessages(){
 			.then(json => {
 				if(json.success){
 					// const messages = json.data.messages;
-					dispatch(receiveMessages(json.data.messages.map(m => {m.visible = true; return m;})));
+					dispatch(receiveMessages(json.data.messages.map(m => {m.visible = getHiddenIds().indexOf(m._id) === -1; return m;})));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
