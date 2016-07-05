@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchMessages } from '../actions/messages';
+import { fetchMessages, showMessage } from '../actions/messages';
 import Spinner from '../components/Spinner';
 import Message from '../components/Message';
 
@@ -11,17 +11,23 @@ class Messages extends Component {
 	}
 	render() {
 		const {
-			messages = []
+			messages = [],
+			dispatch
 		} = this.props;
 
 		return (<div>{
-			messages.map(({_id, title, message, dismissible, status}) => <Message key={_id} title={title} text={message} status={status} dismissible={dismissible}/>)
+			messages.map((
+				{_id, title, message, dismissible, status, visible}) => 
+				<Message key={_id} id={_id} title={title} text={message} status={status} onDismiss={
+					dismissible ? (id) => dispatch(showMessage(id, false)) : null 
+				} visible={visible}/>
+				)
 		}</div>);
 	}
 }
 const mapStateToProps = (state) => {
 	return {
-		messages: state.messages.messages
+		messages: state.messages.items
 	};
 };
 // const mapDispatchToProps = (dispatch) => {

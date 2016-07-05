@@ -18,12 +18,22 @@ function messageError(error) {
 	};
 }
 
-export const SET_MESSAGES = 'SET_MESSAGES';
+export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 
-function setMessages(messages){
+function receiveMessages(messages){
 	return {
-		type: SET_MESSAGES,
+		type: RECEIVE_MESSAGES,
 		messages: messages
+	};
+}
+
+export const SHOW_MESSAGE = 'SHOW_MESSAGE';
+
+export function showMessage(id, show){
+	return {
+		type: SHOW_MESSAGE,
+		id: id,
+		show: show
 	};
 }
 
@@ -37,7 +47,7 @@ export function fetchMessages(){
 			.then(json => {
 				if(json.success){
 					// const messages = json.data.messages;
-					dispatch(setMessages(json.data.messages));
+					dispatch(receiveMessages(json.data.messages.map(m => {m.visible = true; return m;})));
 				} else {
 					const error = new Error(json.message);
 					throw (error);

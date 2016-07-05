@@ -7,15 +7,19 @@ class Message extends Component {
 			id,
 			title,
 			text,
-			dismissible,
+			onDismiss,
+			visible,
 			status
 		} = this.props;
-		return (
-			<Alert bsStyle={status} onDismiss={dismissible ? () => console.log('hide') : null}>
-				<h4>{title}</h4>
-				<p>{text}</p>
-			</Alert>
-		);
+		if(visible){
+			return (
+				<Alert bsStyle={status} onDismiss={onDismiss ? () => onDismiss(id) : null}>
+					<h4>{title}</h4>
+					<p>{text}</p>
+				</Alert>
+			);
+		}
+		return null;
 	}
 }
 
