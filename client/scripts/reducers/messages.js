@@ -1,6 +1,6 @@
 const initialState = { items: [] };
 
-import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE, COOKIE_ACCEPTED } from '../actions/messages';
+import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE, COOKIE_ACCEPTED, REMOVE_MESSAGE } from '../actions/messages';
 
 const message = (state, action) => {
 	switch (action.type) {
@@ -33,6 +33,10 @@ export default (state = initialState, action) => {
 		case COOKIE_ACCEPTED: 
 			return Object.assign({}, state, {
 				cookiesAccepted: action.accepted
+			});
+		case REMOVE_MESSAGE:
+			return Object.assign({}, state, {
+				items: state.items.filter((i) => i._id !== action.message)
 			});
 		default:
 			return state;

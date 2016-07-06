@@ -73,6 +73,15 @@ export function initMessages(){
 	};
 }
 
+export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
+
+function removeMessage(id){
+	return {
+		type: REMOVE_MESSAGE,
+		message: id
+	};
+}
+
 export function fetchMessages(){
 	return (dispatch) => {
 		// dispatch(setContextLoadFlag(true));
@@ -82,15 +91,23 @@ export function fetchMessages(){
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
-					// const messages = json.data.messages;
-					dispatch(receiveMessages(json.data.messages.map(m => {m.visible = getHiddenIds().indexOf(m._id) === -1; return m;})));
+					dispatch(receiveMessages(json.data.messages.map(m => {
+						// Time in miliseconds til endTime
+						const msToEnd = (new Date(m.endTime)).getTime() - (new Date()).getTime(); 
+						m.visible = getHiddenIds().indexOf(m._id) === -1; 
+						// Automatically remove the ones within 4 hours when time runs out
+						if(msToEnd < 4 * 60 * 60 * 1000){
+							setTimeout(() => dispatch(removeMessage(m._id)), msToEnd);
+
+						}
+						return m;
+					})));
 				} else {
 					const error = new Error(json.message);
 					throw (error);
 				}
 			})
 			.catch(error => { 
-				// dispatch(setContextLoadFlag(false));
 				console.log('request failed', error); 
 				dispatch(contextError(error));
 			});
