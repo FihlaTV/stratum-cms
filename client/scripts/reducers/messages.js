@@ -1,4 +1,4 @@
-const initialState = { items: [] };
+const initialState = { items: [], cookiesAccepted: true };
 
 import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE, COOKIE_ACCEPTED, REMOVE_MESSAGE } from '../actions/messages';
 
