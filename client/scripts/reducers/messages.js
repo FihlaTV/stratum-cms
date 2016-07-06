@@ -1,6 +1,6 @@
 const initialState = { items: [] };
 
-import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE } from '../actions/messages';
+import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE, COOKIE_ACCEPTED } from '../actions/messages';
 
 const message = (state, action) => {
 	switch (action.type) {
@@ -29,6 +29,10 @@ export default (state = initialState, action) => {
 		case SHOW_MESSAGE:
 			return Object.assign({}, state, {
 				items: state.items.map((m) => message(m, action))
+			});
+		case COOKIE_ACCEPTED: 
+			return Object.assign({}, state, {
+				cookiesAccepted: action.accepted
 			});
 		default:
 			return state;

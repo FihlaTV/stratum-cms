@@ -9,13 +9,16 @@ class Message extends Component {
 			text,
 			onDismiss,
 			visible,
+			children,
+			className,
 			status
 		} = this.props;
 		if(visible){
 			return (
-				<Alert bsStyle={status} onDismiss={onDismiss ? () => onDismiss(id) : null}>
-					<h4>{title}</h4>
-					<p>{text}</p>
+				<Alert className={className} bsStyle={status} onDismiss={onDismiss ? () => onDismiss(id) : null}>
+					{title && <h4>{title}</h4>}
+					{text && <p>{text}</p>}
+					{children}
 				</Alert>
 			);
 		}

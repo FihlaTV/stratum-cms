@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch';
 import cookies from 'js-cookie';
 
 const COOKIE_NAME = 'stratum-cms.hidden-messages';
+const COOKIE_CONSENT = 'stratum-cms.cc';
 // export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
 
 // export function showContextModal(show) {
@@ -14,7 +15,7 @@ const COOKIE_NAME = 'stratum-cms.hidden-messages';
 function addToCookie(id){
 	const arr = cookies.getJSON(COOKIE_NAME) || [];
 	if(arr.indexOf(id) === -1){
-		cookies.set(COOKIE_NAME, [...arr, id]);
+		cookies.set(COOKIE_NAME, [...arr, id], { expires: 1 });
 	}
 }
 
@@ -48,6 +49,27 @@ export function showMessage(id, show){
 		type: SHOW_MESSAGE,
 		id: id,
 		show: show
+	};
+}
+
+export const COOKIE_ACCEPTED = 'COOKIE_ACCEPTED';
+
+export function acceptCookie(){
+	cookies.set(COOKIE_CONSENT, 1);
+	return cookieAccepted(true);
+}
+
+function cookieAccepted(accepted){
+	return {
+		type: COOKIE_ACCEPTED,
+		accepted: accepted
+	};
+}
+
+export function initMessages(){
+	return (dispatch) => {
+		dispatch(cookieAccepted(cookies.get(COOKIE_CONSENT) === '1'));
+		dispatch(fetchMessages());
 	};
 }
 
