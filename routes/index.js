@@ -78,6 +78,8 @@ exports = module.exports = function(app) {
 	app.all('/api/authentication/context', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
 
+	// Allow cross domain calls for messages
+	app.get('/api/messages', keystone.middleware.cors);
 	app.get('/api/messages', routes.api.messages);
 
 	// API calls for refreshing metadata
