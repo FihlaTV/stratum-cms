@@ -15,8 +15,8 @@ exports = module.exports = function(req, res) {
 	}
 	uri = req.url.replace(/^\/stratum\//, stratumUrl);
 
-	if (req.url.toLowerCase().indexOf('/stratum/directs/handlers/requestmanager') === 0 ||
-	 (req.method === 'PUT' && req.url.toLowerCase().indexOf('/stratum/api/authentication/context') ===0)) {
+	// Special handling for REST verbs and Direct calls
+	if (['POST', 'PUT', 'DELETE'].indexOf(req.method) !== -1) {
 		// body-parser prevents the simple proxy to work. 
 		// https://github.com/request/request/issues/1664 
 		// http://stackoverflow.com/questions/26121830/proxy-json-requests-with-node-express. 
@@ -25,7 +25,7 @@ exports = module.exports = function(req, res) {
 		request({ 
 			uri: uri, 
 			rejectUnauthorized: false,
-			method: req.method === 'PUT' ? 'PUT' : 'POST',
+			method: req.method,
 			encoding: null,
 			form: req.headers['content-type'].indexOf('application/json') === 0 ? JSON.stringify(req.body) : req.body, 
 			headers: {
