@@ -84,7 +84,7 @@ export function initiateBID() {
 
 export function getToken(personalNumber) {
     return dispatch => {
-        return fetch(`/stratum/api/authentication/bid/order/${personalNumber}`, { credentials: 'include' })
+        return fetch(`/stratum/api/authentication/bid/order/${personalNumber}?_=${(new Date()).getTime()}`, { credentials: 'include' })
 			.then(res => res.json())
             .then(json => {
 				if(json.success){
@@ -124,7 +124,7 @@ function isBIDCompleted(state){
 
 export function collectBIDLogin(orderRef) {
 	return (dispatch, getState) => {
-		return fetch(`/stratum/api/authentication/bid/collect/${orderRef}`, { credentials: 'include' })
+		return fetch(`/stratum/api/authentication/bid/collect/${orderRef}?_=${(new Date()).getTime()}`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
