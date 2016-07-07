@@ -20,7 +20,12 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case RECEIVE_MESSAGES:
 			return Object.assign({}, state, {
-				items: action.messages
+				// Don't add duplicates to items
+				items: state.items.concat(
+					action.messages.filter(msg => {
+						return !state.items.find(newMsg => newMsg._id === msg._id);
+					})
+				)
 			});
 		case MESSAGE_ERROR:
 			return Object.assign({}, state, {

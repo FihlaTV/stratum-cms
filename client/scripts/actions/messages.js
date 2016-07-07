@@ -3,6 +3,7 @@ import cookies from 'js-cookie';
 
 const COOKIE_NAME = 'stratum-cms.hidden-messages';
 const COOKIE_CONSENT = 'stratum-cms.cc';
+const { CLIENT_MASTER_MESSAGE_URL } = process.env;
 // export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
 
 // export function showContextModal(show) {
@@ -69,7 +70,10 @@ function cookieAccepted(accepted){
 export function initMessages(){
 	return (dispatch) => {
 		dispatch(cookieAccepted(cookies.get(COOKIE_CONSENT) === '1'));
-		dispatch(fetchMessages());
+		dispatch(fetchMessages('/api/messages'));
+		if(CLIENT_MASTER_MESSAGE_URL){
+			dispatch(fetchMessages(CLIENT_MASTER_MESSAGE_URL));
+		}
 	};
 }
 
@@ -82,12 +86,10 @@ function removeMessage(id){
 	};
 }
 
-export function fetchMessages(){
+export function fetchMessages(uri){
 	return (dispatch) => {
 		// dispatch(setContextLoadFlag(true));
-		fetch(`/api/messages?_=${(new Date()).getTime()}`, { 
-				credentials: 'include' 
-			})
+		fetch(`${uri}?_=${(new Date()).getTime()}`)
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){
@@ -109,7 +111,7 @@ export function fetchMessages(){
 			})
 			.catch(error => { 
 				console.log('request failed', error); 
-				dispatch(contextError(error));
+				dispatch(messageError(error));
 			});
 	};
 }
