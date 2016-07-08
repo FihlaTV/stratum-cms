@@ -4,14 +4,6 @@ import cookies from 'js-cookie';
 const COOKIE_NAME = 'stratum-cms.hidden-messages';
 const COOKIE_CONSENT = 'stratum-cms.cc';
 const { CLIENT_MASTER_MESSAGE_URL } = process.env;
-// export const SHOW_CONTEXT_MODAL = 'SHOW_CONTEXT_MODAL';
-
-// export function showContextModal(show) {
-// 	return {
-// 		type: SHOW_CONTEXT_MODAL,
-// 		show: show
-// 	};
-// }
 
 function addToCookie(id){
 	const arr = cookies.getJSON(COOKIE_NAME) || [];
@@ -88,7 +80,6 @@ function removeMessage(id){
 
 export function fetchMessages(uri){
 	return (dispatch) => {
-		// dispatch(setContextLoadFlag(true));
 		fetch(`${uri}?_=${(new Date()).getTime()}`)
 			.then(res => res.json())
 			.then(json => {
@@ -110,7 +101,7 @@ export function fetchMessages(uri){
 				}
 			})
 			.catch(error => { 
-				console.log('request failed', error); 
+				console.log('Failed to load messages', error); 
 				dispatch(messageError(error));
 			});
 	};

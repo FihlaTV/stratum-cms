@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchMessages, showMessage, initMessages, acceptCookie } from '../actions/messages';
-import Spinner from '../components/Spinner';
+import { showMessage, initMessages, acceptCookie } from '../actions/messages';
 import Message from '../components/Message';
 import CookieMessage from '../components/CookieMessage';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
