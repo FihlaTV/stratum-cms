@@ -2,17 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { Button } from 'react-bootstrap';
 import Message from './Message';
 
-class CookieMessage extends Component {
-	render() {
-		const {
-			onDismiss,
-			status = 'info',
-			visible = true,
-		} = this.props;
-		if (!visible) {
-			return null;
-		}
-		return (
+const CookieMessage =
+	({
+		onDismiss,
+		status = 'info',
+		visible = true,
+	}) => 
+		visible ? (
 			<Message className="clearfix" status={status} visible={visible}>
 				<p>
 					Vi använder kakor (cookies) för att förbättra din upplevelse.
@@ -22,9 +18,7 @@ class CookieMessage extends Component {
 				</p>
 				<Button className="pull-right" bsStyle={status} onClick={onDismiss}>Acceptera</Button>
 			</Message>
-		);
-	}
-}
+		) : null;
 
 CookieMessage.propTypes = {
 	onDismiss: PropTypes.func,
