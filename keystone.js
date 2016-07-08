@@ -63,6 +63,7 @@ keystone.init({
 	// Redirect to regular page if whole site is access restricted
 	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
 	'signout redirect': '/',
+	'cors allow origin': true,
 	'default region': 'SE'
 });
 

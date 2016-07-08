@@ -23,6 +23,7 @@
 
 	</head>
 	<body>
+		<div id="message-container"></div>
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
 				<div class="navbar-header-container">
@@ -89,7 +90,7 @@
 			</div>
 		</div>
 		<div id="body">
-		{{#if breadcrumbs}}
+			{{#if breadcrumbs}}
 			<div class="container">
 				<ol class="breadcrumb">
 					<li><a href="/">Start</a></li>
@@ -101,34 +102,6 @@
 					{{/if}}
 					{{/each}}
 				</ol>
-			</div>
-		{{/if}}
-			<!--
-				Flash messages allow you to display once-off status messages to users, e.g. form
-				validation errors, success messages, etc
-			-->
-			{{#if messages}}
-			<div id="flash-messages" class="container">
-				{{#if messages.info}}
-				<div class="alert alert-info">
-						{{{flashMessages messages.info}}}
-				</div>
-				{{/if}}
-				{{#if messages.success}}
-				<div class="alert alert-success">
-						{{{flashMessages messages.success}}}
-				</div>
-				{{/if}}
-				{{#if messages.warning}}
-				<div class="alert alert-warning">
-						{{{flashMessages messages.warning}}}
-				</div>
-				{{/if}}
-				{{#if messages.error}}
-				<div class="alert alert-danger">
-						{{{flashMessages messages.error}}}
-				</div>
-				{{/if}}
 			</div>
 			{{/if}}
 			<!-- Content BODY    -->
