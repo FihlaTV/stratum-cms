@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner';
 import Message from '../components/Message';
 import CookieMessage from '../components/CookieMessage';
 import { Button } from 'react-bootstrap';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Messages extends Component {
 	componentDidMount() {
@@ -20,18 +21,22 @@ class Messages extends Component {
 
 		return (
 			<div>
-				<CookieMessage visible={showCookieMessage} onDismiss={
-						() => dispatch(acceptCookie())
+				<ReactCSSTransitionGroup transitionName="alert-transition" transitionAppear transitionAppearTimeout={300} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+					{showCookieMessage && <CookieMessage key="cookie-message" onDismiss={
+							() => dispatch(acceptCookie())
+						}
+					/>}
+					{
+						messages
+							.filter(m => m.visible)
+							.map(
+								({_id, title, message, dismissible, status}) => 
+								<Message key={_id} id={_id} title={title} text={message} status={status} onDismiss={
+									dismissible ? (id) => dispatch(showMessage(id, false)) : null 
+								}/>
+							)
 					}
-				/>
-				{
-					messages.map(
-						({_id, title, message, dismissible, status, visible}) => 
-						<Message key={_id} id={_id} title={title} text={message} status={status} onDismiss={
-							dismissible ? (id) => dispatch(showMessage(id, false)) : null 
-						} visible={visible}/>
-					)
-				}
+				</ReactCSSTransitionGroup>
 			</div>
 		);
 	}

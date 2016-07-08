@@ -7,7 +7,7 @@ class CookieMessage extends Component {
 		const {
 			onDismiss,
 			status = 'info',
-			visible
+			visible = true,
 		} = this.props;
 		if (!visible) {
 			return null;

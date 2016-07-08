@@ -8,7 +8,7 @@ class Message extends Component {
 			title,
 			text,
 			onDismiss,
-			visible,
+			visible = true,
 			children,
 			className,
 			status
