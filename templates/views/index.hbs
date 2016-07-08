@@ -6,41 +6,42 @@
 	{{/if}}
 	{{/unless}}
 	<div class="row">
-	<div class="col-md-7">
-		{{#if isPortal}}
-		{{#if data.startPage.jumbotron.isVisible}}
-		{{>jumbotron jumbotron=data.startPage.jumbotron widgets=data.startPageWidgets}}
-		{{/if}}
-		{{/if}}
-		{{#with data.startPage}}
-		<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
-			<h2>{{header}}</h2>
-			{{{description.html}}}
+		<div class="col-md-7">
+			{{#if isPortal}}
+			{{#if data.startPage.jumbotron.isVisible}}
+			{{>jumbotron jumbotron=data.startPage.jumbotron widgets=data.startPageWidgets}}
+			{{/if}}
+			{{/if}}
+			{{#with data.startPage}}
+			<div class="base-column brief-info-column{{#ifeq informationBlurb.type 'image'}} startpage-description-height{{/ifeq}}">
+				<h2>{{header}}</h2>
+				{{{description.html}}}
+			</div>
+			{{/with}}
 		</div>
-		{{/with}}
-	</div>
-	<div class="col-md-5">
-		{{#if isPortal}}
-		<h2>Delregister</h2>
-		<div class="sub-registers sub-registers-simple">
-			<ul>
-			{{#each data.subRegisters}}
-				<li>
-					<a href="{{url}}">{{name}}</a>
-				</li>
-			{{/each}}
-			</ul>
+		<div class="col-md-5">
+			{{#if isPortal}}
+			<h2>Delregister</h2>
+			<div class="sub-registers sub-registers-simple">
+				<ul>
+				{{#each data.subRegisters}}
+					<li>
+						<a href="{{url}}">{{name}}</a>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
+			{{/if}}
+			<div class="information-blurb">
+				{{>informationblurb blurb=data.startPage.informationBlurb news=data.news firstNews=data.firstNews}}
+			</div>
+			{{#if isPortal}}
+			{{#with data.startPage.quickLink}}
+			{{#if page}}
+			<a href="{{page.directPath}}" class="startpage-portal-link">{{text}}</a>
+			{{/if}}
+			{{/with}}
+			{{/if}}
 		</div>
-		{{/if}}
-		<div class="information-blurb">
-			{{>informationblurb blurb=data.startPage.informationBlurb news=data.news firstNews=data.firstNews}}
-		</div>
-		{{#if isPortal}}
-		{{#with data.startPage.quickLink}}
-		{{#if page}}
-		<a href="{{page.directPath}}" class="startpage-portal-link">{{text}}</a>
-		{{/if}}
-		{{/with}}
-		{{/if}}
 	</div>
 </div>
