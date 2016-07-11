@@ -65,7 +65,8 @@ exports = module.exports = function (req, res) {
 			.match({
 				state: 'published',
 				publishedDate: {
-					$exists: true
+					$exists: true,
+					$not: { $type: 10 } // removes null
 				}
 			})
 			.group({
