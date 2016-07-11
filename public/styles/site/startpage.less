@@ -8,6 +8,8 @@
 		font-size: @font-size-base*2.5;
 		font-weight: 700;
 		color: #9d1975;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 	.startpage-widget-text{
 		display: block;
@@ -15,12 +17,10 @@
 	}
 	margin-bottom: @gutter-large;
 	@media (max-width: @screen-xs-max) {
-		&:nth-child(2n+1){
-			border-left: 0;
-		}
+		border-left: 0;
 	}
 	@media screen and (min-width: @screen-md-min) {
-		&:nth-child(5n+1){
+		&:nth-child(4n+1){
 			border-left: 0;
 		}
 	}
