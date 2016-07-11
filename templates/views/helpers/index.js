@@ -384,5 +384,13 @@ module.exports = function() {
 		}
 	};
 
+	_helpers.ifGreaterThan = function(a, b, options) {
+		if (a > b) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
+	};
+
 	return _helpers;
 };
