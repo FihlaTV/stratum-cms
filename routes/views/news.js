@@ -34,7 +34,7 @@ exports = module.exports = function (req, res) {
 			perPage: 5,
 			maxPages: 10
 		})
-			.where('publishedDate', {$exists: true})
+			.where('publishedDate', { $exists: true })
 			.where('state', 'published');
 
 		if (doYearFilter) {
@@ -55,11 +55,18 @@ exports = module.exports = function (req, res) {
 	 */
 	view.on('init', function (next) {
 		var q = keystone.list('NewsItem').model
-			.aggregate()
+			.aggregate([
+				{
+					$sort: {
+						publishedDate: 1
+					}
+				}
+			])
 			.match({
 				state: 'published',
 				publishedDate: {
-					$exists: true
+					$exists: true,
+					$not: { $type: 10 } // removes null
 				}
 			})
 			.group({
@@ -79,12 +86,12 @@ exports = module.exports = function (req, res) {
 					var currentYear = doYearFilter ? parseInt(req.query.year) : null;
 					locals.data.newsYears = results;
 					locals.data.totalNews = _.reduce(results, function (mem, el) {
-						if(el._id.year === currentYear){
+						if (el._id.year === currentYear) {
 							locals.data.currentTotal = el.total;
 						}
 						return mem + el.total;
 					}, 0);
-					if(!currentYear){
+					if (!currentYear) {
 						locals.data.currentTotal = locals.data.totalNews;
 					}
 				}
