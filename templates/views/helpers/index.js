@@ -366,10 +366,9 @@ module.exports = function() {
 	};
 
 	_helpers.getTitle = function(breadcrumbs, inBrand, inSeparator){
-		// console.log(inSeparator);
 		var separator = arguments.length > 3 ? inSeparator : ' | ',
 		brand = arguments.length > 2 ? inBrand : '',
-		output = _.isEmpty(breadcrumbs) ? '' : _.pluck(breadcrumbs, 'label').reverse().join(separator);
+		output = _.isEmpty(breadcrumbs) ? '' : _.last(breadcrumbs).label; 
 		if(!_.isEmpty(brand)){
 			output += _.isEmpty(output) ? brand : (separator + brand);
 		}
