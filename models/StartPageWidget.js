@@ -14,6 +14,10 @@ var StartPageWidget = new keystone.List('StartPageWidget', {
 
 StartPageWidget.add({
 	name: { type: String, required: true },
+	showOnStartPage: {
+		type: Boolean,
+		note: 'Check here if this widget should be visible on the start page'
+	},
 	useWidget: { type: Boolean },
 	digit: { type: String, dependsOn: { useWidget: false } },
 	widget: {
@@ -42,6 +46,6 @@ StartPageWidget.add({
 	}
 });
 
-StartPageWidget.defaultColumns = 'title, useWidget';
+StartPageWidget.defaultColumns = 'title, useWidget, showOnStartPage';
 StartPageWidget.register();
 

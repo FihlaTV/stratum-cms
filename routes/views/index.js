@@ -31,6 +31,7 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		keystone.list('StartPageWidget').model
 			.find()
+			.where('showOnStartPage', true)
 			.sort('sortOrder')
 			.limit(8)
 			.populate('widget')
