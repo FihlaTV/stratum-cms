@@ -82,6 +82,8 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
+keystone.set('brand long', process.env.BRAND_LONG || keystone.get('brand'));
+
 keystone.set('cloudinary folders', true);
 keystone.set('cloudinary prefix', keystone.get('brand safe'));
 

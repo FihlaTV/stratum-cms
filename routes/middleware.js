@@ -32,6 +32,7 @@ exports.initLocals = function(req, res, next) {
 	locals.lastCommit = keystone.get('last commit');
 	locals.brand = keystone.get('brand');
 	locals.brandSafe = keystone.get('brand safe');
+	locals.brandLong = keystone.get('brand long');
 	locals.isPortal = keystone.get('is portal');
 	locals.hasLogin = keystone.get('has login');
 	locals.registerId = keystone.get('register id');
