@@ -6,7 +6,7 @@ class User extends Component {
 			context,
 			wrongRegister,
 			onUserHover,
-			shrinkName = true,
+			shrinkName,
 			onClick
 		} = this.props;
 		if(context){

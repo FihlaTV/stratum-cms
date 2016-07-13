@@ -45,7 +45,8 @@ class App extends Component {
 			contextIsLoading,
 			setShrinkUnitName,
 			contexts,
-			logout
+			logout,
+			contextIsVisible
 		} = this.props;
 		return (
 			<div>
@@ -56,7 +57,7 @@ class App extends Component {
 					showContextModal={showContextModal}
 					showLoginModal={showLoginModal}
 					onUserHover={(hover) => setShrinkUnitName(!hover)}
-					shrinkUnitName={shrinkUnitName}
+					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
@@ -118,7 +119,8 @@ function mapStateToProps(state){
 		timeleft: state.login.timeleft,
 		showTimeleft: state.login.showTimeleft,
 		shrinkUnitName: state.login.shrinkUnitName,
-		contextTarget: state.context.target
+		contextTarget: state.context.target,
+		contextIsVisible: state.context.show
 	};
 }
 

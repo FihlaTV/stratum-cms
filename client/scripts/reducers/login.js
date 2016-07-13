@@ -19,6 +19,7 @@ const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED,
 	hasNextState: true,
 	showLoginModal: false,
+	shrinkUnitName: true,	
 	sithsStatus: 'SITHS_INTRO'
 };
 
