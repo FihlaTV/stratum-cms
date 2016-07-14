@@ -23,7 +23,7 @@
     "mongodb": "^2.1.4",
     "numeral": "^1.5.3",
     "react": "15.0.2",
-    "react-addons-css-transition-group": "15.2.0",
+    "react-addons-css-transition-group": "15.0.2",
     "react-bootstrap": "0.29.3",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
