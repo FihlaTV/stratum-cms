@@ -6,12 +6,14 @@ class User extends Component {
 			context,
 			wrongRegister,
 			onUserHover,
-			shrinkName = true,
-			onClick
+			shrinkName,
+			onClick,
+			unitMaxLength = 20
 		} = this.props;
 		if(context){
 			const { User, Unit, Role } = context;
-			const unitName = Unit.UnitName.length > 20 && shrinkName ? Unit.UnitName.replace(/(.{0,17}).*/, '$1...') : Unit.UnitName;
+			const unitRegEx = new RegExp(`(.{0,${unitMaxLength-3}}).*`);
+			const unitName = Unit.UnitName.length > unitMaxLength && shrinkName ? Unit.UnitName.replace(unitRegEx, '$1...') : Unit.UnitName;
 			return (
 				<a className="nav-button-text login-user-display" href="#" onMouseEnter={() => onUserHover(true)} onMouseLeave={() => onUserHover(false)} onClick={onClick}>
 					<p className="nav-button-text-big username">{User.FirstName} {User.LastName}</p>
@@ -45,7 +47,8 @@ User.propTypes = {
 		}).isRequired
 	}),
 	onUserHover: PropTypes.func,
-	shrinkName: PropTypes.bool
+	shrinkName: PropTypes.bool,
+	unitMaxLength: PropTypes.number
 };
 
 export default User;
