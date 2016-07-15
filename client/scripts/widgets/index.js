@@ -10,6 +10,7 @@ import RORSatInfo from './RORSatInfo';
 import SEPOps from './SEPOps';
 import HNSVRehabTotal from './HNSVRehabTotal';
 import HNSVCI from './HNSVCI';
+import HNSVSat from './HNSVSat';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -23,6 +24,7 @@ export { RORSatInfo };
 export { SEPOps };
 export { HNSVRehabTotal };
 export { HNSVCI };
+export { HNSVSat };
 
 export default {
 	BOAArtrosSkola,
@@ -36,5 +38,6 @@ export default {
 	RORSatInfo,
 	SEPOps,
 	HNSVRehabTotal,
-	HNSVCI
+	HNSVCI,
+	HNSVSat
 };

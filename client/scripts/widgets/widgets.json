@@ -41,10 +41,14 @@
 	},
   "HNSVRehabTotal": {
     "id": "HNSVRehabTotal",
-    "description": "Andel med utförd rehab i HNSV"
+    "description": "Andel som fått utvidgad rehabilitering."
   },
   "HNSVCI": {
     "id": "HNSVCI",
     "description": "Andel som har kokleaimplantat."
+  },
+  "HNSVSat": {
+    "id": "HNSVSat",
+    "description": "Upplever god nytta av hörselvårdens insatser."
   }
 }
