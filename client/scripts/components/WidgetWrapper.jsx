@@ -8,9 +8,9 @@ class WidgetWrapper extends Component {
 	}
 	render() {
 		const Widget = widgets[this.props.id];
-		return (
+		return Widget ? (
 			<Widget {...this.props}>{this.props.children}</Widget>
-		);
+		) : null;
 	}
 }
 
@@ -18,4 +18,4 @@ WidgetWrapper.propTypes = {
 	id: PropTypes.oneOf(Object.keys(widgets)).isRequired
 };
 
-export default WidgetWrapper
+export default WidgetWrapper;
