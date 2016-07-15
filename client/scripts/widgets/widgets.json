@@ -38,5 +38,9 @@
   "SEPOps": {
     "id": "SEPOps",
     "description": "Antal registrerade septumoperationer totalt i registret."
+	},
+  "HNSVRehabTotal": {
+    "id": "HNSVRehabTotal",
+    "description": "Andel med utförd rehab i HNSV"
   }
 }

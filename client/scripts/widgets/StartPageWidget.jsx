@@ -30,4 +30,4 @@ class StartPageWidget extends Component {
 	}
 }
 
-export default StartPageWidget
+export default StartPageWidget;
