@@ -42,5 +42,9 @@
   "HNSVRehabTotal": {
     "id": "HNSVRehabTotal",
     "description": "Andel med utförd rehab i HNSV"
+  },
+  "HNSVCI": {
+    "id": "HNSVCI",
+    "description": "Andel som har kokleaimplantat."
   }
 }
