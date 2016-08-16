@@ -26,7 +26,7 @@ Message.propTypes = {
 	text: PropTypes.string,
 	visible: PropTypes.bool,
 	className: PropTypes.string,
-	status: PropTypes.oneOf(['status', 'info', 'warning', 'danger'])
+	status: PropTypes.oneOf(['success', 'info', 'warning', 'danger'])
 };
 
 export default Message;
