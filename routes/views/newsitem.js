@@ -18,7 +18,8 @@ exports = module.exports = function(req, res) {
 		
 		var q = keystone.list('NewsItem').model.findOne({
 			state: 'published',
-			slug: locals.filters.newsItem
+			slug: locals.filters.newsItem,
+			publishedDate: { $lte: new Date() }
 		}).populate('author categories resources');
 		
 		q.exec(function(err, newsItem) {

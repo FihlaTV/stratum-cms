@@ -6,6 +6,7 @@ exports = module.exports = function (req, res) {
 
 	var view = new keystone.View(req, res),
 		doYearFilter = req.query.year && /^[12]\d{3}$/.test(req.query.year),
+		currentDate = new Date(),
 		locals = res.locals, startDate, endDate;
 
 	// Init locals
@@ -21,9 +22,10 @@ exports = module.exports = function (req, res) {
 	locals.data.news = [];
 
 	if (doYearFilter) {
+		endDate = new Date(parseInt(req.query.year) + 1, 0, 1);
 		locals.filters.year = req.query.year;
 		locals.filters.startDate = new Date(req.query.year, 0, 1);
-		locals.filters.endDate = new Date(parseInt(req.query.year) + 1, 0, 1);
+		locals.filters.endDate = endDate < currentDate ? endDate : currentDate;
 	}
 
 	// Load news
@@ -35,6 +37,7 @@ exports = module.exports = function (req, res) {
 			maxPages: 10
 		})
 			.where('publishedDate', { $exists: true })
+			.where('publishedDate', { $lte: currentDate })
 			.where('state', 'published');
 
 		if (doYearFilter) {
@@ -66,7 +69,8 @@ exports = module.exports = function (req, res) {
 				state: 'published',
 				publishedDate: {
 					$exists: true,
-					$not: { $type: 10 } // removes null
+					$not: { $type: 10 }, // removes null
+					$lte: currentDate
 				}
 			})
 			.group({
