@@ -23,7 +23,7 @@ NewsItem.add({
 		index: true,
 		dependsOn: { state: 'published' },
 		note: 'News items without a published date will not be displayed in the news listing.\n\n' +
-			'If the date is in the future, the news item will apear at the following date.'
+			'If the date is in the future, the news item will appear at the following date.'
 	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
 	image: { type: Types.CloudinaryImage, autoCleanup: true },
