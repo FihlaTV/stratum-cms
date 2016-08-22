@@ -29,19 +29,26 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('shortId', locals.filters.shortid)
 			.where('state', 'published')
-			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories')
+			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories state registerSpecific')
 			.populate('widget resources')
 			.exec(function(err, page) {
 				if (!err) {
+					var parentPage = page ? page.page : null;
 					if (!page) {
+						res.notFound();
+						return;
+					}
+					// Check if there is a parent page and then check its state and permission
+					if(parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn))	{
 						res.notFound();
 						return;
 					}
 					locals.data.widget = page.widget;
 					locals.data.page = page;
-					locals.data.menuPage = page.page || page;
+					locals.data.menuPage = parentPage || page;
 					context.contentType = page.contentType;
-					context.menuId = page.menu || page.page && page.page.menu;
+					context.menuId = locals.data.menuPage.menu;
 				}
 				next(err);
 			});
@@ -55,7 +62,8 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		keystone.list('MenuBlock').model
 			.findOne()
-			.where('_id', context.menuId)
+			.where('_id', context.menuId)	
+			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -80,6 +88,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.where('state', 'published')
+			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
 			.sort('sortOrder')
 			.select('slug title menuTitle shortId numberOfSubPages')
 			.exec(function(err, pages) {
@@ -132,6 +141,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('page', locals.data.menuPage._id)
 			.where('state', 'published')			
+			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
 			.sort('sortOrder')
 			.exec(function(err, subPages) {
 				if (!err) {
