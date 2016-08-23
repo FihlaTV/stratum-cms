@@ -43,7 +43,10 @@ exports.initLocals = function(req, res, next) {
 		locals.context = req.session.context;
 		try{
 			locals.registerLoggedIn = locals.context.Unit.Register.RegisterID.toString() === locals.registerId;
-		} catch(e){		}
+		} catch(e){	
+			console.log('Could not parse RegisterID for locals.registerLoggedIn');
+		}
+
 	}
 	async.series({
 		loadMenuBlocks: function(cb) {
