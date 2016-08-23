@@ -37,7 +37,8 @@ exports = module.exports = function(req, res) {
 					var parentPage = page ? page.page : null;
 					// Make sure the page exists and if there is a parent page then check its state and permission
 					if (!page ||
-						(parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn)))	{
+						(parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn))
+					)	{
 						res.notFound();
 						return;
 					}
