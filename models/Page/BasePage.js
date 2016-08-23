@@ -148,7 +148,12 @@ BasePage.add({
 		many: true,
 		note: 'Add contact persons to this page, shown in the right margin'
 	},
-	extraImage: extraImages()
+	extraImage: extraImages(),
+	registerSpecific: {
+		type: Boolean,
+		note: 'If this is check this page will only be visible to logged in users'
+	},
+
 });
 BasePage.defaultColumns = 'title, pageType|20%';
 

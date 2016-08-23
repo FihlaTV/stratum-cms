@@ -38,14 +38,22 @@ exports.initLocals = function(req, res, next) {
 	locals.registerId = keystone.get('register id');
 	locals.gaProperty = keystone.get('ga property front');
 	locals.env = keystone.get('env');
+	locals.registerLoggedIn = false;
 	if (req.session && req.session.context && req.session.context.ContextID) {
 		locals.context = req.session.context;
+		try{
+			locals.registerLoggedIn = locals.context.Unit.Register.RegisterID.toString() === locals.registerId;
+		} catch(e){	
+			console.log('Could not parse RegisterID for locals.registerLoggedIn');
+		}
+
 	}
 	async.series({
 		loadMenuBlocks: function(cb) {
 			keystone.list('MenuBlock').model
 				.find()
 				// .populate('pages')
+				.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 				.sort('sortOrder')
 				.exec(function(err, menu) {
 					if(!err){

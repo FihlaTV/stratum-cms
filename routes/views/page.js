@@ -29,19 +29,24 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('shortId', locals.filters.shortid)
 			.where('state', 'published')
-			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories')
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
+			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories state registerSpecific')
 			.populate('widget resources')
 			.exec(function(err, page) {
 				if (!err) {
-					if (!page) {
+					var parentPage = page ? page.page : null;
+					// Make sure the page exists and if there is a parent page then check its state and permission
+					if (!page ||
+						(parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn))
+					)	{
 						res.notFound();
 						return;
 					}
 					locals.data.widget = page.widget;
 					locals.data.page = page;
-					locals.data.menuPage = page.page || page;
+					locals.data.menuPage = parentPage || page;
 					context.contentType = page.contentType;
-					context.menuId = page.menu || page.page && page.page.menu;
+					context.menuId = locals.data.menuPage.menu;
 				}
 				next(err);
 			});
@@ -55,7 +60,8 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		keystone.list('MenuBlock').model
 			.findOne()
-			.where('_id', context.menuId)
+			.where('_id', context.menuId)	
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -80,6 +86,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.where('state', 'published')
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.sort('sortOrder')
 			.select('slug title menuTitle shortId numberOfSubPages')
 			.exec(function(err, pages) {
@@ -132,6 +139,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('page', locals.data.menuPage._id)
 			.where('state', 'published')			
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.sort('sortOrder')
 			.exec(function(err, subPages) {
 				if (!err) {
