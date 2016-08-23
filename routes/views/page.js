@@ -29,7 +29,7 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('shortId', locals.filters.shortid)
 			.where('state', 'published')
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories state registerSpecific')
 			.populate('widget resources')
 			.exec(function(err, page) {
@@ -61,7 +61,7 @@ exports = module.exports = function(req, res) {
 		keystone.list('MenuBlock').model
 			.findOne()
 			.where('_id', context.menuId)	
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -86,7 +86,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.where('state', 'published')
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.sort('sortOrder')
 			.select('slug title menuTitle shortId numberOfSubPages')
 			.exec(function(err, pages) {
@@ -139,7 +139,7 @@ exports = module.exports = function(req, res) {
 			.find()
 			.where('page', locals.data.menuPage._id)
 			.where('state', 'published')			
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.sort('sortOrder')
 			.exec(function(err, subPages) {
 				if (!err) {

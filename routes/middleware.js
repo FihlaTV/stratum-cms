@@ -50,7 +50,7 @@ exports.initLocals = function(req, res, next) {
 			keystone.list('MenuBlock').model
 				.find()
 				// .populate('pages')
-				.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+				.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 				.sort('sortOrder')
 				.exec(function(err, menu) {
 					if(!err){

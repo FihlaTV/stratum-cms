@@ -14,7 +14,7 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('slug', req.params.menublock)
 			.where('static', false)
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.exec(function(err, menu) {
 				if (err) {
 					next(err);
@@ -36,7 +36,7 @@ exports = module.exports = function(req, res) {
 			.findOne()
 			.where('menu', context.menu._id)
 			.where('state', 'published')
-			.where('registerSpecific').in([locals.registerLoggedIn, false, null])
+			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
 			.sort('sortOrder')
 			.exec(function(err, page) {
 				if (!err) {
