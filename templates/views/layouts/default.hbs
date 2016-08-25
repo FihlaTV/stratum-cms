@@ -144,7 +144,7 @@
 		</script>
 		{{/if}}
         {{#with stratumWidget}}
-        <script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget={{widgetSlug}}&target=sw-{{slug}}"></script>
+        <script type="text/javascript" src="/stratum/api/widgets/RC/Loader?widget={{widgetSlug}}&target=sw-{{slug}}&{{../data.widget.queryString}}"></script>
         {{/with}}
         {{/if}}
 		{{!-- // <script type="text/javascript" src="/js/react/application.js"></script> --}}
