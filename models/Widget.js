@@ -73,6 +73,14 @@ Widget.add({
 			type: ['stratum', 'keystone']
 		}
 	},
+	queryString: {
+		type: String,
+		note: 'Add query parameters here, if necessary, on the format one=1&two=abc',
+		dependsOn: {
+			type: 'stratum'
+		},
+		collapse: true
+	},
 	showOnStartPage: {
 		type: Boolean,
 		hidden: true,
