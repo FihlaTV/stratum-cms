@@ -9,6 +9,7 @@ import loginApp from './reducers/reducers';
 import es6Promise from 'es6-promise';
 import find from 'array.prototype.find';
 import Messages from './containers/Messages';
+import cookies from 'js-cookie';
 
 // Webpack dependencies
 // import 'jquery'; // not needed, bundled with bootstrap
@@ -18,6 +19,9 @@ import 'bootstrap';
 find.shim();
 es6Promise.polyfill();
 
+const stratumSessionCookie = 'stratum-session';
+const cookieDomain = process.env.CLIENT_COOKIE_DOMAIN;
+const cookieConf = cookieDomain ? { domain: cookieDomain } : {};
 const mainContainer = document.getElementById('login-button-react');
 const messageContainer = document.getElementById('message-container');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
@@ -33,6 +37,15 @@ if(module.hot){
       store.replaceReducer(nextReducer);
     });
 }
+
+// Set a unique window name for stratum session cookie
+if (!window.name) {
+	window.name = 'T' + (new Date()).getTime(); 
+	cookies.set(stratumSessionCookie, window.name, cookieConf);
+}
+window.addEventListener('focus', () => {
+	cookies.set(stratumSessionCookie, window.name, cookieConf);
+});
 
 if(mainContainer){
 	render(
