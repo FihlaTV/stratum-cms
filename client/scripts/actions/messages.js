@@ -3,12 +3,12 @@ import cookies from 'js-cookie';
 
 const COOKIE_NAME = 'stratum-cms.hidden-messages';
 const COOKIE_CONSENT = 'stratum-cms.cc';
-const { CLIENT_MASTER_MESSAGE_URL } = process.env;
+const { CLIENT_MASTER_MESSAGE_URL, CLIENT_COOKIE_DOMAIN } = process.env;
 
 function addToCookie(id){
 	const arr = cookies.getJSON(COOKIE_NAME) || [];
 	if(arr.indexOf(id) === -1){
-		cookies.set(COOKIE_NAME, [...arr, id], { expires: 1 });
+		cookies.set(COOKIE_NAME, [...arr, id], { expires: 1, domain: CLIENT_COOKIE_DOMAIN });
 	}
 }
 
@@ -48,7 +48,7 @@ export function showMessage(id, show){
 export const COOKIE_ACCEPTED = 'COOKIE_ACCEPTED';
 
 export function acceptCookie(){
-	cookies.set(COOKIE_CONSENT, 1);
+	cookies.set(COOKIE_CONSENT, 1, { domain: CLIENT_COOKIE_DOMAIN });
 	return cookieAccepted(true);
 }
 
