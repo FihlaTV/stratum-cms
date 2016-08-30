@@ -20,8 +20,8 @@ find.shim();
 es6Promise.polyfill();
 
 const stratumSessionCookie = 'stratum-session';
-const cookieDomain = process.env.CLIENT_COOKIE_DOMAIN;
-const cookieConf = cookieDomain ? { domain: cookieDomain } : {};
+const { CLIENT_COOKIE_DOMAIN } = process.env;
+const cookieConf = { domain: CLIENT_COOKIE_DOMAIN };
 const mainContainer = document.getElementById('login-button-react');
 const messageContainer = document.getElementById('message-container');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
