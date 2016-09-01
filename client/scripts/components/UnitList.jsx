@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ContextSelect from './ContextSelect';
+import { FormControl, ControlLabel, FormGroup } from 'react-bootstrap';
 
 const UnitList = ({
 	currentRole,
@@ -9,7 +10,8 @@ const UnitList = ({
 	roleChange,
 	unitChange,
     units,
-	roles
+	roles,
+	register
 }) => {
 	const contextId = context ? context.ContextID : 'N/A';
 	return (
@@ -28,6 +30,10 @@ const UnitList = ({
 				disabled={units.length <= 0}
 				format={x => `${x.name} (${x.code})`}
 			/>
+			<FormGroup>
+				<ControlLabel>Register: </ControlLabel>
+				<FormControl componentClass="input" value={register} disabled/>
+			</FormGroup>
 		</form>
 	);
 };

@@ -34,9 +34,11 @@ class Context extends Component {
 			entering,
 			units,
 			isSyncing,
+			contexts,
 			error
 		} = this.props;
 		const allowAccept = initial && inUnit === currentUnit && inRole === currentRole;
+		const register = contexts && contexts.length > 0 ? contexts[0].Unit.Register.RegisterName : null;
 		return (
 			<Overlay
 				show={show}
@@ -55,6 +57,7 @@ class Context extends Component {
 						currentRole={currentRole}
 						currentUnit={currentUnit}
 						context={currentContext}
+						register={register}
 						/>
 					{!allowAccept &&
 						<ContextSyncButton
