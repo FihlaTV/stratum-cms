@@ -32,7 +32,7 @@ const UnitList = ({
 			/>
 			<FormGroup>
 				<ControlLabel>Register: </ControlLabel>
-				<FormControl componentClass="input" value={register} disabled/>
+				<FormControl rows="2" style={{resize: 'none', overflow: 'hidden'}} componentClass="textarea" value={register} disabled/>
 			</FormGroup>
 		</form>
 	);
