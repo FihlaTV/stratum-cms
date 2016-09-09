@@ -9,6 +9,7 @@ const TimeLeftDialog = ({
 	const body = timeleft > 0 ? 
 		'Du har nu mindre än tre minuter kvar innan du blir automatiskt utloggad. Klicka på Avbryt om du vill fortsätta vara inloggad.'
 		: 'Du är nu utloggad. För säkerhets skull bör du också stänga din webbläsare.';  
+	const buttonText = timeleft > 0 ? 'Avbryt' : 'Stäng';
 	return (
 		<div>
 			<Modal show={show}>
@@ -19,7 +20,7 @@ const TimeLeftDialog = ({
 					{body} 
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={() => onDismiss(timeleft)}>Avbryt</Button>
+					<Button onClick={() => onDismiss(timeleft)}>{buttonText}</Button>
 				</Modal.Footer>
 			</Modal>
 		</div>
