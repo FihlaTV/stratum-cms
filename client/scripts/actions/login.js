@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import cookies from 'js-cookie';
 import { isValidPersonalNumber } from '../utils/personalNumber';
 
 import { initiateBID } from './bankid';
@@ -377,8 +378,26 @@ export function dismissTimeleft(timeleft){
 	};
 }
 
+export const SET_ACTIVE_STATUS = 'SET_ACTIVE_STATUS';
+
+function setActiveStatus(active){
+	return {
+		type: SET_ACTIVE_STATUS,
+		activeStatus: active	
+	};
+}
+
+const stratumSessionCookie = 'stratum-session';
+
 export function checkTimeleft(repeatAfter) {
 	return dispatch => {
+		const isActive = window.name && window.name === cookies.get(stratumSessionCookie);
+		dispatch(setActiveStatus(isActive));
+		if(!isActive){
+			//Not current session
+			setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
+			return;
+		}
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/timeleft?_=${(new Date()).getTime()}`, {
 				credentials: 'include'
 			})
