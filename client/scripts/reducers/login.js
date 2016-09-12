@@ -12,7 +12,8 @@ import {
 	CONTEXT_IS_LOADING,
 	SET_HTTPS_FLAG,
 	SET_TIMELEFT,
-	SET_SHRINK_UNIT_NAME
+	SET_SHRINK_UNIT_NAME,
+	SET_ACTIVE_STATUS
 	} from '../actions/login';
 
 const initialState = {
@@ -79,6 +80,10 @@ export default (state = initialState, action) => {
 		case SET_SHRINK_UNIT_NAME:
 			return Object.assign({}, state, {
 				shrinkUnitName: action.shrink
+			});
+		case SET_ACTIVE_STATUS: 
+			return Object.assign({}, state, {
+				sessionIsActive: action.activeStatus
 			});
 		default:
 			return state;
