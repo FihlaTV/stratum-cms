@@ -29,6 +29,7 @@ const InputPersonalNr = ({
 						className="form-control check-validation next-to-icon" 
 						placeholder="19xxxxxx-xxxx" 
 						autoComplete="off" 
+						autoFocus
 						id="bankIDPersonalNr" 
 						ref={(node) => {
 								input = node;
