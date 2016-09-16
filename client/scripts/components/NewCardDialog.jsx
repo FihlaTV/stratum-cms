@@ -15,8 +15,6 @@ function FieldGroup({ id, label, help, refInput, style, inputStyle, ...props }) 
 const NewCardDialog = ({
         onChange,
 		onSubmit,
-		onUserChange = () => {},
-		onPasswordChange = () => {},
 		valid
 	}) => {
 	
@@ -34,7 +32,11 @@ const NewCardDialog = ({
 				label="Användarnamn:"
 				autoComplete="off" 
 				id="assignUsername"
-				onChange={(e) => onUserChange(e.target.value)} 
+				onChange={
+					(e) => {
+						const passwordVal = ReactDOM.findDOMNode(password).value;
+						return onChange({username: e.target.value, password: passwordVal});
+					}} 
 				refInput={(node) => username = node}
 				autoFocus
 			/>
@@ -43,7 +45,11 @@ const NewCardDialog = ({
 				type="password" 
 				autoComplete="off" 
 				id="assignPassword" 
-				onChange={(e) => onPasswordChange(e.target.value)} 
+				onChange={
+					(e) => {
+						const usernameVal = ReactDOM.findDOMNode(username).value;
+						return onChange({username: usernameVal, password: e.target.value});
+					}} 
 				refInput={(node) => password = node}
 			/>
 			<FieldGroup

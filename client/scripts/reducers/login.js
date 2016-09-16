@@ -13,7 +13,8 @@ import {
 	SET_HTTPS_FLAG,
 	SET_TIMELEFT,
 	SET_SHRINK_UNIT_NAME,
-	SET_ACTIVE_STATUS
+	SET_ACTIVE_STATUS,
+	UPDATE_SITHS_NEW_CARD
 	} from '../actions/login';
 
 const initialState = {
@@ -21,7 +22,12 @@ const initialState = {
 	hasNextState: true,
 	showLoginModal: false,
 	shrinkUnitName: true,	
-	sithsStatus: 'SITHS_INTRO'
+	sithsStatus: 'SITHS_INTRO',
+	sithsNewCard: {
+		valid: false,
+		username: '',
+		password: ''
+	}
 };
 
 export default (state = initialState, action) => {
@@ -84,6 +90,10 @@ export default (state = initialState, action) => {
 		case SET_ACTIVE_STATUS: 
 			return Object.assign({}, state, {
 				sessionIsActive: action.activeStatus
+			});
+		case UPDATE_SITHS_NEW_CARD:
+			return Object.assign({}, state, {
+				sithsNewCard: Object.assign({}, state.sithsNewCard, action.newCard)
 			});
 		default:
 			return state;

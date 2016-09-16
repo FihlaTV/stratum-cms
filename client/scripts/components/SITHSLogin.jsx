@@ -5,8 +5,8 @@ import NewCardDialog from './NewCardDialog';
 
 const SITHSLogin = ({
     status,
-	onPasswordChange,
-	onUserChange
+	onNewCardSubmit = () => {},
+	onNewCardChange = () => {}
 }) => {
 	switch (status){
 		case 'SITHS_INTRO':
@@ -24,9 +24,8 @@ const SITHSLogin = ({
 		case 'SITHS_NEW_CARD':
 			return (
 				<NewCardDialog 
-					onSubmit={(username, password) => console.log('username: %s, password: %s', username, password)}
-					onUserChange={onUserChange}	
-					onPasswordChange={onPasswordChange}
+					onSubmit={onNewCardSubmit}
+					onChange={onNewCardChange}
 				/>
 			);
 		default :

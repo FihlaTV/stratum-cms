@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/login';
+import { setLoginMethod, inputPersonalNumber, resetState,
+	LoginMethod, toggleNextState, showLoginModal,
+	updateSithsNewCard } from '../actions/login';
 // import ChangeLogin from '../components/ChangeLogin';
 import SelectLogin from '../components/SelectLogin';
 import InputPersonalNr from '../components/InputPersonalNr';
@@ -27,7 +29,9 @@ class Login extends Component {
 			hasNextState,
 			sithsStatus,
 			showModal,
-			https
+			https,
+			sithsNewCardChange,
+			validNewCard
 		} = this.props;
 		if(error){
 			return (
@@ -80,11 +84,15 @@ class Login extends Component {
 				return (
 					<LoginModal onHide={close} show={showModal} title="SITHS-kort">
                         <LoginModal.Body>
-                            <SITHSLogin status={sithsStatus} />
+                            <SITHSLogin status={sithsStatus} 
+								onNewCardSubmit={nextState}
+								validNewCard={validNewCard}
+								onNewCardChange={sithsNewCardChange}
+							/>
                         </LoginModal.Body>
                         <LoginModal.Footer>
 							<ResetState onClick={resetState}>Tillbaka</ResetState>
-                            <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
+                            <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState || sithsStatus === 'SITHS_NEW_CARD' && !validNewCard}/>
                         </LoginModal.Footer>
 					</LoginModal>
 				);
@@ -113,6 +121,9 @@ function mapDispatchToProps(dispatch){
 		},
 		close: () => {
 			dispatch(showLoginModal(false));
+		},
+		sithsNewCardChange: ({username, password}) => {
+			dispatch(updateSithsNewCard(username, password));
 		}
 	};
 }
@@ -125,7 +136,8 @@ function mapStateToProps(state){
 		sithsStatus: state.login.sithsStatus,
 		hasNextState: state.login.hasNextState,
 		showModal: state.login.showLoginModal,
-		https: state.login.https
+		https: state.login.https,
+		validNewCard: state.login.sithsNewCard.valid
 	};
 }
 

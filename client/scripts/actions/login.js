@@ -213,12 +213,46 @@ export function initiateSITHSLogin(){
 	};
 }
 
+function assignSithsCard({username, password}){
+	let formData = new FormData();
+	formData.append('username', username);
+	formData.append('password', password); 
+	return (dispatch) => {
+		fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login?_=${(new Date()).getTime()}`, { 
+			credentials: 'include',
+			method: 'POST', 
+			body: formData
+		})
+		.then(res => res.json())
+		.then(json => {
+			if(json.success){
+				//dispatch final login
+				return;
+			} else{
+				const error = new Error(json.code);
+				throw (error);
+			}
+		})
+		.catch(error => {
+			dispatch(loginError(error));
+		});
+	};
+}
+
 export function toggleNextState(){
 	return (dispatch, getState) => {
 		const state = getState();
 		const loginMethod = state.login.loginMethod;
 		if (loginMethod === LoginMethod.SITHS_CARD) {
-			return dispatch(initiateSITHSLogin());
+			if(state.login.sithsStatus === 'SITHS_NEW_CARD'){
+				// Dispatch assign card call
+				if(state.login.sithsNewCard.valid){
+					// console.log('valid');
+					dispatch(assignSithsCard(state.login.sithsNewCard));
+				}
+			} else{
+				return dispatch(initiateSITHSLogin());
+			}
 		} else if (loginMethod === LoginMethod.BANK_ID &&
 			state.bankId.bidStage === LoginStages.INPUT_PERSONAL_NUMBER &&
 			state.bankId.personalNumberValidity) {
@@ -421,5 +455,18 @@ export function setShrinkUnitName(shrink){
 	return {
 		type: SET_SHRINK_UNIT_NAME,
 		shrink: shrink
+	};
+}
+
+export const UPDATE_SITHS_NEW_CARD = 'UPDATE_SITHS_NEW_CARD';
+
+export function updateSithsNewCard(username, password){
+	return {
+		type: UPDATE_SITHS_NEW_CARD,
+		newCard: {
+			valid: username.length > 0 && password.length > 0,
+			username,
+			password
+		}
 	};
 }
