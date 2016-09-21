@@ -16,10 +16,10 @@ function doRequest(conf, res, req, post) {
 		if (!err && body) {
 			if (stratumRes.headers['content-encoding'] === 'gzip') {
 				zlib.gunzip(body, function (err, dezipped) {
-					parseResponse(req, res, dezipped.toString('utf-8'));					
+					parseResponse(req, res, dezipped.toString('utf-8'), post);	
 				});
 			} else {
-				parseResponse(req, res, body);
+				parseResponse(req, res, body, post);
 			}
 		} else {
 			return res.status(500).apiResponse({
@@ -31,7 +31,7 @@ function doRequest(conf, res, req, post) {
 	});
 }
 
-function parseResponse(req, res, body) {
+function parseResponse(req, res, body, post) {
 	var jsonBody;
 	try {
 		jsonBody = JSON.parse(body);
@@ -50,11 +50,19 @@ function parseResponse(req, res, body) {
 	} else {
 		delete req.session.context;
 		// res.status(400);
-		jsonBody = {
-			success: false,
-			code: 'CONTEXT_ERROR',
-			message: 'Could not find user data, most likely error with login synchronization'
-		};
+		if(post && jsonBody.code === 1) {
+			jsonBody = {
+				success: false,
+				code: 'ASSIGN_WRONG_CREDENTIALS',
+				message: 'Wrong username and/or password provided'
+			};
+		} else{
+			jsonBody = {
+				success: false,
+				code: 'CONTEXT_ERROR',
+				message: 'Could not find user data, most likely error with login synchronization'
+			};
+		}
 	}
 
 	return res.apiResponse(jsonBody);

@@ -299,6 +299,8 @@ function getStratumProxyLoginError(errorCode){
             return `Din inloggning kunde identifieras, 
                 men du har inte behörighet att gå in i registret. 
                 Kontakta registrets support.`;
+		case 'ASSIGN_WRONG_CREDENTIALS':
+			return 'Fel användarnamn och/eller lösenord, var god försök igen...';
         default:
             return 'Oväntat fel under identifiering.';
     }
