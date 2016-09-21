@@ -201,6 +201,10 @@ export function initiateSITHSLogin(){
 			.then(json => {
 				if(json.success){
 					return dispatch(loginToStratum());
+				} else if(json.code === 4){
+					// Ask if new card should be attached to User
+					return dispatch(setSITHSStatus('SITHS_NEW_CARD'));
+										
 				} else {
 					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
@@ -248,7 +252,9 @@ export function toggleNextState(){
 				// Dispatch assign card call
 				if(state.login.sithsNewCard.valid){
 					// console.log('valid');
-					dispatch(assignSithsCard(state.login.sithsNewCard));
+					dispatch(setHasNextState(false));
+					dispatch(setSITHSStatus('SITHS_DO_LOGIN')); // Set loading status
+					dispatch(loginToStratum(false, state.login.sithsNewCard));
 				}
 			} else{
 				return dispatch(initiateSITHSLogin());
@@ -303,11 +309,25 @@ function getStratumProxyLoginError(errorCode){
  * from stratum. This call is handled by a proxy in Keystone and not by 
  * stratum directly, in order to read the cookie.
  */
-export function loginToStratum(refresh){
+export function loginToStratum(refresh, { username, password } = {}) {
+	let conf = {
+		credentials: 'include'
+	};
+	
+	if(username && password){
+		const formData = new FormData();
+		formData.append('username', username);
+		formData.append('password', password); 
+		conf = { 
+			...conf,
+			method: 'POST',
+			body: formData
+		};
+	}
 	return dispatch => {
-		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, { 
-				credentials: 'include' 
-			})
+		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, 
+				conf
+			)
 			.then(res => res.json())
 			.then(json => {
 				if(json.success){

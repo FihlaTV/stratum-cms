@@ -91,7 +91,7 @@ class Login extends Component {
 							/>
                         </LoginModal.Body>
                         <LoginModal.Footer>
-							<ResetState onClick={resetState}>Tillbaka</ResetState>
+							<ResetState onClick={resetState} disabled={!hasNextState}>Tillbaka</ResetState>
                             <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState || sithsStatus === 'SITHS_NEW_CARD' && !validNewCard}/>
                         </LoginModal.Footer>
 					</LoginModal>
