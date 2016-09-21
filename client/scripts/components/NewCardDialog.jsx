@@ -65,9 +65,7 @@ const NewCardDialog = ({
 
 NewCardDialog.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
-	onChange: PropTypes.func,
-	onUserChange: PropTypes.func,
-	onPasswordChange: PropTypes.func
+	onChange: PropTypes.func
 };
 
  export default NewCardDialog;

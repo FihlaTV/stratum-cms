@@ -217,32 +217,6 @@ export function initiateSITHSLogin(){
 	};
 }
 
-function assignSithsCard({username, password}){
-	let formData = new FormData();
-	formData.append('username', username);
-	formData.append('password', password); 
-	return (dispatch) => {
-		fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login?_=${(new Date()).getTime()}`, { 
-			credentials: 'include',
-			method: 'POST', 
-			body: formData
-		})
-		.then(res => res.json())
-		.then(json => {
-			if(json.success){
-				//dispatch final login
-				return;
-			} else{
-				const error = new Error(json.code);
-				throw (error);
-			}
-		})
-		.catch(error => {
-			dispatch(loginError(error));
-		});
-	};
-}
-
 export function toggleNextState(){
 	return (dispatch, getState) => {
 		const state = getState();
