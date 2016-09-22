@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showMessage, initMessages, acceptCookie } from '../actions/messages';
 import Message from '../components/Message';

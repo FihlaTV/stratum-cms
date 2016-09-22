@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const SEPOps = ({
@@ -9,7 +9,7 @@ const SEPOps = ({
 			url="/stratum/api/aggregate/sep/seppost/total/count?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
-	/>
+		/>
 	);
 };
 

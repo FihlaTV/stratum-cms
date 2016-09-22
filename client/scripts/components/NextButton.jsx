@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 const NextButton = (props) => {
 	const { children = 'Nästa', onClick, isLoading, loadingText = 'Laddar...', ...other } = props;

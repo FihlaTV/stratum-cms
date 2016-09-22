@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const ContextSelect = ({

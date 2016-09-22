@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const LoginModal = ({

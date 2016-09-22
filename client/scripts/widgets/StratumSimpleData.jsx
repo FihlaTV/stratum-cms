@@ -22,10 +22,11 @@ const style = {
 class StratumSimpleData extends Component {
 	constructor (props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			loading: true,
+		};
 	}
 	componentDidMount () {
-		this.setState({ loading: true });
 		fetch(this.props.url)
 			.then(res => res.json())
 			.then(json => {

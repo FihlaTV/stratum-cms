@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { validatePersonalNumber } from '../actions/bankid';
 import { LoginStages } from '../actions/login';

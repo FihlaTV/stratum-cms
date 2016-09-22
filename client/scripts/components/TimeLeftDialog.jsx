@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const TimeLeftDialog = ({

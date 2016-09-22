@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSBChildrenNew = ({
@@ -9,7 +9,7 @@ const HNSBChildrenNew = ({
 			url="/stratum/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o="
 			description={description}
 			format="0"
-	/>
+		/>
 	);
 };
 

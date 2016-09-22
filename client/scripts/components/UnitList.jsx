@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import ContextSelect from './ContextSelect';
 import { FormControl, ControlLabel, FormGroup } from 'react-bootstrap';
 

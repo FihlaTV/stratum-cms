@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSVPirs = ({
@@ -9,7 +9,7 @@ const HNSVPirs = ({
 			url="/stratum/api/aggregate/HNSV/HNSVBasePirs/total/mean(hnsv_basepirs_scale)?apikey=bK3H9bwaG4o="
 			description={description}
 			format="0"
-	/>
+		/>
 	);
 };
 
