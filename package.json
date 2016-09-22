@@ -78,8 +78,8 @@
     "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
     "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
     "build_all": "set NODE_ENV=production&&gulp build-all",
-    "lint": "eslint .",
-    "lint_fix": "eslint . --fix"
+    "lint": "eslint . --ext=js --ext=jsx",
+    "lint_fix": "eslint . --fix --ext=js --ext=jsx"
   },
   "main": "keystone.js"
 }
