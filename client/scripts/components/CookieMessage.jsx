@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { Button } from 'react-bootstrap';
 import Message from './Message';
 
-const CookieMessage =
-	({
+const CookieMessage
+	= ({
 		onDismiss,
 		status = 'info',
 		visible = true,
-	}) => 
+	}) =>
 		visible ? (
 			<Message className="clearfix" status={status} visible={visible}>
 				<p>
@@ -23,7 +23,7 @@ const CookieMessage =
 CookieMessage.propTypes = {
 	onDismiss: PropTypes.func,
 	status: PropTypes.oneOf(['status', 'info', 'warning', 'danger']),
-	visible: PropTypes.bool
+	visible: PropTypes.bool,
 };
 
 export default CookieMessage;

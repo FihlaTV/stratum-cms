@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSBChildrenNew = ({
-	description
+	description,
 }) => {
 	return (
 		<StartPageWidget

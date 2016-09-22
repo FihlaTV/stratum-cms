@@ -11,9 +11,8 @@ const UnitList = ({
 	unitChange,
     units,
 	roles,
-	register
+	register,
 }) => {
-	const contextId = context ? context.ContextID : 'N/A';
 	return (
 		<form>
 			<ContextSelect
@@ -32,7 +31,7 @@ const UnitList = ({
 			/>
 			<FormGroup>
 				<ControlLabel>Register: </ControlLabel>
-				<FormControl rows="2" style={{resize: 'none', overflow: 'hidden'}} componentClass="textarea" value={register} disabled/>
+				<FormControl rows="2" style={{ resize: 'none', overflow: 'hidden' }} componentClass="textarea" value={register} disabled/>
 			</FormGroup>
 		</form>
 	);
@@ -40,12 +39,12 @@ const UnitList = ({
 
 UnitList.propTypes = {
 	context: PropTypes.shape({
-		ContextID: PropTypes.number
+		ContextID: PropTypes.number,
 	}),
 	roleChange: PropTypes.func,
+	roles: PropTypes.array,
 	unitChange: PropTypes.func,
 	units: PropTypes.array,
-	roles: PropTypes.array
 };
 
 export default UnitList;

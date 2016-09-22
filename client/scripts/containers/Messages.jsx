@@ -6,15 +6,15 @@ import CookieMessage from '../components/CookieMessage';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Messages extends Component {
-	componentDidMount() {
+	componentDidMount () {
 		const { dispatch } = this.props;
 		dispatch(initMessages());
 	}
-	render() {
+	render () {
 		const {
 			messages = [],
 			showCookieMessage,
-			dispatch
+			dispatch,
 		} = this.props;
 
 		return (
@@ -27,10 +27,10 @@ class Messages extends Component {
 					messages
 						.filter(m => m.visible)
 						.map(
-							({_id, title, message, dismissible, status}) => 
-							<Message key={_id} id={_id} title={title} text={message} status={status} onDismiss={
-								dismissible ? (id) => dispatch(showMessage(id, false)) : null 
-							}/>
+							({ _id, title, message, dismissible, status }) =>
+								<Message key={_id} id={_id} title={title} text={message} status={status} onDismiss={
+									dismissible ? (id) => dispatch(showMessage(id, false)) : null
+								}/>
 						)
 				}
 			</ReactCSSTransitionGroup>
@@ -40,7 +40,7 @@ class Messages extends Component {
 const mapStateToProps = (state) => {
 	return {
 		messages: state.messages.items,
-		showCookieMessage: !state.messages.cookiesAccepted
+		showCookieMessage: !state.messages.cookiesAccepted,
 	};
 };
 

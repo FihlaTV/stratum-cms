@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class SelectLogin extends Component {
-	render(){
+	changeLogin (e) {
+		this.props.onClick(this.props.loginMethod);
+	}
+	render () {
 		return (
 			<div className="col-sm-6">
 				<a href="#" onClick={(e) => this.changeLogin(e)}>
@@ -12,8 +15,5 @@ export default class SelectLogin extends Component {
 				</a>
 			</div>
 		);
-	}
-	changeLogin(e){
-		this.props.onClick(this.props.loginMethod);
 	}
 }

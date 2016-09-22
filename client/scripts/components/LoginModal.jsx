@@ -1,42 +1,42 @@
 import React, { Component, PropTypes } from 'react';
-import { Modal } from 'react-bootstrap'; 
+import { Modal } from 'react-bootstrap';
 
 const LoginModal = ({
 	children,
-    title,
+	title,
 	show,
-    titleSmall,
-	...other
+	titleSmall,
+	...other,
 }) => {
 	return (
 		<Modal {...other} show={show}>
 			<Modal.Header closeButton>
-				<Modal.Title>{title} <small>{titleSmall}</small></Modal.Title> 
+				<Modal.Title>{title} <small>{titleSmall}</small></Modal.Title>
 			</Modal.Header>
 			{children}
 		</Modal>
 	);
-}
+};
 
 LoginModal.Body = ({
-    children
+	children,
 }) => {
-    return (
-        <Modal.Body>
-            {children}
-        </Modal.Body>
-    );
-}
+	return (
+		<Modal.Body>
+			{children}
+		</Modal.Body>
+	);
+};
 
 LoginModal.Footer = ({
-    children
+	children,
 }) => {
-    return (
-        <Modal.Footer>
-            {children}
-        </Modal.Footer>
-    )
-}
+	return (
+		<Modal.Footer>
+			{children}
+		</Modal.Footer>
+	);
+};
 
 export default LoginModal;
 

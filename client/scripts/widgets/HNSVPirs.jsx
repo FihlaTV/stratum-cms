@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSVPirs = ({
-	description
+	description,
 }) => {
 	return (
 		<StartPageWidget
@@ -11,8 +11,8 @@ const HNSVPirs = ({
 			format="0"
 	/>
 	);
-}
+};
 
 HNSVPirs.defaultProps = {};
 
-export default HNSVPirs
+export default HNSVPirs;

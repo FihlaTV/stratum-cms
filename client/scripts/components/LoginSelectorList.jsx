@@ -4,15 +4,15 @@ import SelectLogin from '../components/SelectLogin';
 
 const LoginSelectorList = ({
 	onClick,
-    loginSelectors
+	loginSelectors,
 }) => {
 	return (
 		<div className="login-method-list row">
-            {loginSelectors.map(l => 
-                <SelectLogin key={l.loginMethod} logoClass={l.cssClass} onClick={onClick} loginMethod={l.loginMethod}>
-                    {l.title}
-                </SelectLogin>
-            )}
+			{loginSelectors.map(l =>
+				<SelectLogin key={l.loginMethod} logoClass={l.cssClass} onClick={onClick} loginMethod={l.loginMethod}>
+					{l.title}
+				</SelectLogin>
+			)}
 		</div>
 	);
 };

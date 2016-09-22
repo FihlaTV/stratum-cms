@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
 const BOAArtrosSkola = ({
-	description
+	description,
 }) => {
 	return (
 		<StratumSimpleData
@@ -11,8 +11,8 @@ const BOAArtrosSkola = ({
 			<p>{description}</p>
 		</StratumSimpleData>
 	);
-}
+};
 
 BOAArtrosSkola.defaultProps = {};
 
-export default BOAArtrosSkola
+export default BOAArtrosSkola;

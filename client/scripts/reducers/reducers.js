@@ -8,5 +8,5 @@ export default combineReducers({
 	login,
 	bankId,
 	context,
-	messages
+	messages,
 });

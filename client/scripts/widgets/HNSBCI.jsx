@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSBCI = ({
-	description
+	description,
 }) => {
 	return (
 		<StartPageWidget
