@@ -47,8 +47,9 @@
     "babel-preset-stage-2": "6.5.0",
     "browserify": "13.0.0",
     "css-loader": "0.23.1",
-    "eslint": "2.9.0",
-    "eslint-plugin-react": "5.0.1",
+    "eslint": "2.13.1",
+    "eslint-config-keystone": "2.4.0",
+    "eslint-plugin-react": "6.3.0",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.8.5",
     "gulp": "3.9.1",
@@ -76,7 +77,9 @@
     "start": "node keystone.js",
     "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
     "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
-    "build_all": "set NODE_ENV=production&&gulp build-all"
+    "build_all": "set NODE_ENV=production&&gulp build-all",
+    "lint": "eslint .",
+    "lint_fix": "eslint . --fix"
   },
   "main": "keystone.js"
 }
