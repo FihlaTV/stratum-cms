@@ -1,6 +1,6 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	StartPageWidget = keystone.list('StartPageWidget');
+var keystone = require('keystone');
+var	async = require('async');
+var	StartPageWidget = keystone.list('StartPageWidget');
 
 /**
  * Enable all Start Page Widgets by default. Since reintroducing `showOnStartPage` variable
@@ -8,7 +8,7 @@ var keystone = require('keystone'),
  */
 exports = module.exports = function (done) {
 	var context = {
-		widgets: []
+		widgets: [],
 	};
 
 	async.series({
@@ -27,6 +27,6 @@ exports = module.exports = function (done) {
 				widget.set('showOnStartPage', true);
 				widget.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

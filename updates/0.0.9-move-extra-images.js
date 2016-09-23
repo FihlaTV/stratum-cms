@@ -1,21 +1,21 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	async = require('async');
+var	BasePage = keystone.list('BasePage');
 
 var EXTRA_IMAGE_NAMES = ['one', 'two', 'three'];
 
-//TODO
+// TODO
 // Did not work as intended when run on dev server
 
 // Move all images from `images` to `extraImages`
 exports = module.exports = function (done) {
 	var context = {
-		pages: []
+		pages: [],
 	};
 
 	async.series({
 		getSubPages: function (next) {
-			//Find all pages with have images
+			// Find all pages with have images
 			BasePage.model
 				.find()
 				.exists('images')
@@ -29,9 +29,10 @@ exports = module.exports = function (done) {
 		},
 		updatePages: function (next) {
 			async.each(context.pages, function (page, cb) {
-				var tmpImgs = {}, i = 0;
+				var tmpImgs = {};
+				var i = 0;
 
-				if(!page || !page.images || !page.images.forEach){
+				if (!page || !page.images || !page.images.forEach) {
 					cb();
 				} else {
 					page.images.forEach(function (image) {
@@ -41,13 +42,13 @@ exports = module.exports = function (done) {
 							console.log('Skipped image on page ' + page.get('slug'));
 						}
 					});
-					
+
 					// Set new images
 					page.set('extraImage', tmpImgs);
-					
+
 					page.save(cb);
 				}
 			}, next);
-		}
+		},
 	}, done);
 };

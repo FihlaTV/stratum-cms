@@ -1,11 +1,11 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	async = require('async');
+var	BasePage = keystone.list('BasePage');
 
-//Set all instances of layout = wide and set to standard
+// Set all instances of layout = wide and set to standard
 exports = module.exports = function (done) {
 	var context = {
-		pages: []
+		pages: [],
 	};
 
 	async.series({
@@ -24,6 +24,6 @@ exports = module.exports = function (done) {
 				page.set('contentType', 'default');
 				page.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

@@ -1,16 +1,16 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	async = require('async');
+var	BasePage = keystone.list('BasePage');
 
-//Set all instances of layout = wide and set to standard
+// Set all instances of layout = wide and set to standard
 exports = module.exports = function (done) {
 	var context = {
-		pages: []
+		pages: [],
 	};
 
 	async.series({
 		getSubPages: function (next) {
-			//Find all pages
+			// Find all pages
 			BasePage.model
 				.find({ layout: 'wide' })
 				.exec(function (err, pages) {
@@ -25,6 +25,6 @@ exports = module.exports = function (done) {
 				page.set('layout', 'standard');
 				page.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

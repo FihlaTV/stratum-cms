@@ -1,6 +1,6 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	MenuBlock = keystone.list('MenuBlock');
+var keystone = require('keystone');
+var	async = require('async');
+var	MenuBlock = keystone.list('MenuBlock');
 
 // Makes sure that there are no null or undefined instances of static in order to make
 // dynamic menu items selectable in relationship to pages.

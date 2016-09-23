@@ -1,6 +1,6 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	MenuBlock = keystone.list('MenuBlock');
+var keystone = require('keystone');
+var	async = require('async');
+var	MenuBlock = keystone.list('MenuBlock');
 
 // Change section name from questions to faq
 
