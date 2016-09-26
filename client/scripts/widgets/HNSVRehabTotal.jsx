@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSVRehabTotal = ({
-	description
+	description,
 }) => {
 	return (
 		<StartPageWidget
