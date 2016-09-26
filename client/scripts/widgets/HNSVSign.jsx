@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const HNSVSign = ({
-	description
+	description,
 }) => {
 	return (
 		<StartPageWidget
@@ -11,8 +11,8 @@ const HNSVSign = ({
 			format="0.0 %"
 		/>
 	);
-}
+};
 
 HNSVSign.defaultProps = {};
 
-export default HNSVSign
+export default HNSVSign;

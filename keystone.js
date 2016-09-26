@@ -3,17 +3,17 @@
 require('dotenv').load();
 
 // Require keystone
-var keystone = require('keystone'),
-	path = require('path'),
-	root = process.env.ROOT || './',
-	handlebars = require('express-handlebars'),
-	fs = require('fs'),
-	stratum = require('./' + path.join(root, 'utils/stratum')),
-	keystoneWidgets = require('./' + path.join(root, 'utils/keystone-widgets')),
-	subPageCount = require('./' + path.join(root, 'utils/sub-page-count')),
-	Helpers = require('./' + path.join(root, 'templates/views/helpers')),
-	appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app',
-	pkg = require('./' + path.join(root, 'package.json'));
+var keystone = require('keystone');
+var path = require('path');
+var root = process.env.ROOT || './';
+var handlebars = require('express-handlebars');
+var fs = require('fs');
+var stratum = require('./' + path.join(root, 'utils/stratum'));
+var keystoneWidgets = require('./' + path.join(root, 'utils/keystone-widgets'));
+var subPageCount = require('./' + path.join(root, 'utils/sub-page-count'));
+var Helpers = require('./' + path.join(root, 'templates/views/helpers'));
+var appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app';
+var pkg = require('./' + path.join(root, 'package.json'));
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -28,7 +28,7 @@ keystone.init({
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
 
-	//Gets the name of the currently active directory
+	// Gets the name of the currently active directory
 	'app name': appName,
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
@@ -36,7 +36,7 @@ keystone.init({
 		partialsDir: [path.join(root, 'templates/views/partials'), path.join(root, 'templates/views/widgets')],
 		defaultLayout: 'default',
 		helpers: new Helpers(),
-		extname: '.hbs'
+		extname: '.hbs',
 	}).engine,
 	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
@@ -64,7 +64,7 @@ keystone.init({
 	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
 	'signout redirect': '/',
 	'cors allow origin': true,
-	'default region': 'SE'
+	'default region': 'SE',
 });
 
 // Load your project's Models
@@ -79,7 +79,7 @@ keystone.set('locals', {
 	_: require('underscore'),
 	env: keystone.get('env'),
 	utils: keystone.utils,
-	editable: keystone.content.editable
+	editable: keystone.content.editable,
 });
 
 keystone.set('brand long', process.env.BRAND_LONG || keystone.get('brand'));
@@ -114,7 +114,7 @@ var nav = {
 	// Hide users from menu for now
 	// 'users': 'users',
 
-	'widgets': ['widgets', 'start-page-widgets']
+	'widgets': ['widgets', 'start-page-widgets'],
 };
 
 // Portal specific menu items

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import Spinner from './Spinner';
 import User from './User';
 
@@ -10,25 +10,25 @@ const TopNav = ({
 	setContextTarget,
 	onUserHover,
 	shrinkUnitName,
-	showLoginModal
+	showLoginModal,
 }) => {
 	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
 	const spinnerStyle = {
-		display: loading ? 'block' : 'none', 
-		margin: 14, 
-		position: 'absolute', 
-		right: '10px'
+		display: loading ? 'block' : 'none',
+		margin: 14,
+		position: 'absolute',
+		right: '10px',
 	};
-	const visibility = loading ? {visibility: 'hidden'} : {};
-	if(loading || context || wrongRegister){
+	const visibility = loading ? { visibility: 'hidden' } : {};
+	if (loading || context || wrongRegister) {
 		return (
 			<ul className="nav navbar-nav navbar-right">
 				<Spinner small style={spinnerStyle}/>
 				<li style={visibility} className={isRegistration}>
 					<a href="/registrering" className="nav-button-text registration-link" disabled={wrongRegister} onClick={(e) => {
-						if(wrongRegister){
+						if (wrongRegister) {
 							e.preventDefault();
-						}					
+						}
 					}}>
 						<p className="nav-button-text-big">Registrering</p>
 						<p className="nav-button-text-small">med mera</p>
@@ -36,9 +36,9 @@ const TopNav = ({
 				</li>
 				<li style={visibility}>
 					<User ref={setContextTarget}
-						context={context} 
+						context={context}
 						wrongRegister={wrongRegister}
-						onUserHover={onUserHover} 
+						onUserHover={onUserHover}
 						shrinkName={shrinkUnitName}
 						onClick={(e) => {
 							e.preventDefault();

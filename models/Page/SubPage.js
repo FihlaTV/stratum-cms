@@ -1,7 +1,7 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types,
-	BasePage = keystone.list('BasePage'),
-	async = require('async');
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
+var	BasePage = keystone.list('BasePage');
+var	async = require('async');
 
 /**
  * Sub Page Model
@@ -13,21 +13,21 @@ var SubPage = new keystone.List('SubPage', {
 	hidden: false,
 	nocreate: false,
 	defaultColumns: 'title, page',
-	nodelete: false
+	nodelete: false,
 });
 SubPage.add({
 	page: {
 		type: Types.Relationship,
 		ref: 'Page',
 		filters: {
-			contentType: 'default'	
+			contentType: 'default',
 		},
 		many: false,
 		initial: true,
 		label: 'Sub Page to',
 		note: 'Choose which page this page should be stored under',
-		required: true
-	}
+		required: true,
+	},
 });
 SubPage.schema.pre('remove', function (done) {
 	SubPage.model
@@ -36,18 +36,21 @@ SubPage.schema.pre('remove', function (done) {
 		.populate('page')
 		.exec(function (err, subPage) {
 			// Decrease subpage
-			if(subPage && subPage.page){	
+			if (subPage && subPage.page) {
 				subPage.page.set('decreaseSubPages');
 				subPage.page.save(done);
-			} else{
+			} else {
 				done();
 			}
 		});
 });
 SubPage.schema.pre('save', function (done) {
-	var postSubPage = this, Page = keystone.list('Page'), context = {};
+	var postSubPage = this;
+	var Page = keystone.list('Page');
+	var context = {};
+
 	async.series({
-		getPrePage: function(next){
+		getPrePage: function (next) {
 			SubPage.model
 				.findOne()
 				.where('_id', postSubPage._id)
@@ -57,33 +60,33 @@ SubPage.schema.pre('save', function (done) {
 					next(err);
 				});
 		},
-		getPostPage: function(next){
+		getPostPage: function (next) {
 			Page.model
 				.findOne()
 				.where('_id', postSubPage.page)
-				.exec(function(err, postPage){
+				.exec(function (err, postPage) {
 					context.postPage = postPage;
 					next(err);
 				});
 		},
-		checkIfPageDiffers: function(next){
-			if(context.postPage && context.prePage && context.postPage.equals(context.prePage)){
-				//Do nothing
+		checkIfPageDiffers: function (next) {
+			if (context.postPage && context.prePage && context.postPage.equals(context.prePage)) {
+				// Do nothing
 				next();
 				return;
-			} 
-			if(context.postPage){
-				//Increase postpage
+			}
+			if (context.postPage) {
+				// Increase postpage
 				context.postPage.set('increaseSubPages');
 				context.postPage.save();
 			}
-			if(context.prePage){
-				//Decrease pre page
+			if (context.prePage) {
+				// Decrease pre page
 				context.prePage.set('decreaseSubPages');
 				context.prePage.save();
 			}
 			next();
-		}
+		},
 	}, function (err) {
 		done(err);
 	});

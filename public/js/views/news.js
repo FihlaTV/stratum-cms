@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function () {
     imagesLoaded('.news-list', function () {
         new Masonry('.news-list', {

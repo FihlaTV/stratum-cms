@@ -1,5 +1,4 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
 
 /**
  * Stratum Register Model
@@ -14,31 +13,31 @@ var StratumRegister = new keystone.List('StratumRegister', {
 	nodelete: true,
 	hidden: true,
 	map: {
-		name: 'shortName'
+		name: 'shortName',
 	},
 	autokey: {
 		from: 'stratumId',
 		path: 'key',
-		unique: true
-	}
+		unique: true,
+	},
 });
 
 StratumRegister.add({
 	stratumId: {
-		type: Number
+		type: Number,
 	},
 	name: {
-		type: String
+		type: String,
 	},
 	nameEnglish: {
-		type: String
+		type: String,
 	},
 	shortName: {
-		type: String
+		type: String,
 	},
 	removed: {
-		type: Boolean
-	}
+		type: Boolean,
+	},
 });
 // StratumRegister.schema.virtual('register').get(function() {
 // 	//Parse out the first characters before the slash as a register short name

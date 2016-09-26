@@ -6,9 +6,9 @@ import NewCardDialog from './NewCardDialog';
 const SITHSLogin = ({
     status,
 	onNewCardSubmit = () => {},
-	onNewCardChange = () => {}
+	onNewCardChange = () => {},
 }) => {
-	switch (status){
+	switch (status) {
 		case 'SITHS_INTRO':
 			return (
 				<Alert alertType="info">
@@ -28,7 +28,7 @@ const SITHSLogin = ({
 						<p><strong>Håller du på att logga in första gången?</strong></p>
 						<p>Då ska du fylla i de uppgifter du fått för engångsbruk.</p>
 					</Alert>
-					<NewCardDialog 
+					<NewCardDialog
 						onSubmit={onNewCardSubmit}
 						onChange={onNewCardChange}
 					/>

@@ -1,20 +1,19 @@
-var keystone = require('keystone'),
-	async = require('async'),
-    shortid = require('shortid'),
-	NewsItem = keystone.list('NewsItem');
+var keystone = require('keystone');
+var	async = require('async');
+var	NewsItem = keystone.list('NewsItem');
 
 /**
  * Adds a default value to the imageLayout field on all NewsItems
  */
 exports = module.exports = function (done) {
 	var context = {
-		newsItems: []
+		newsItems: [],
 	};
 
 	async.series({
 		getNewsItems: function (next) {
 			NewsItem.model
-				.find({imageLayout: {$exists: false}})
+				.find({ imageLayout: { $exists: false } })
 				.exec(function (err, newsItems) {
 					if (!err) {
 						context.newsItems = newsItems;
@@ -27,6 +26,6 @@ exports = module.exports = function (done) {
 				newsItem.set('imageLayout', 'portrait');
 				newsItem.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

@@ -1,5 +1,4 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
 
 /**
  * QuestionCategory Model
@@ -9,17 +8,17 @@ var keystone = require('keystone'),
 var QuestionCategory = new keystone.List('QuestionCategory', {
 	map: { name: 'category' },
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
-	sortable: true
+	sortable: true,
 });
 
 QuestionCategory.add({
-	category: { type: String, required: true, index: true, initial: true }
+	category: { type: String, required: true, index: true, initial: true },
 });
 
 QuestionCategory.relationship({
 	path: 'questions',
 	ref: 'Question',
-	refPath: 'category'
+	refPath: 'category',
 });
 
 QuestionCategory.register();

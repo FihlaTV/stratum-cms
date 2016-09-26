@@ -1,5 +1,4 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
 
 /**
  * Keystone Widget Model
@@ -16,23 +15,23 @@ var KeystoneWidget = new keystone.List('KeystoneWidget', {
 	autokey: {
 		from: 'name',
 		path: 'slug',
-		unique: true
-	}
+		unique: true,
+	},
 });
 
 KeystoneWidget.add({
 	name: {
 		type: String,
-		required: true
+		required: true,
 	},
 	description: {
-		type: String
+		type: String,
 	},
 	removed: {
 		type: Boolean,
 		default: false,
-		noedit: true
-	}
+		noedit: true,
+	},
 });
 KeystoneWidget.defaultColumns = 'name, description, removed';
 KeystoneWidget.defaultSort = 'removed name';

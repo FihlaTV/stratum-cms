@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const ContextSelect = ({
@@ -9,22 +8,22 @@ const ContextSelect = ({
 	onChange,
     items,
 	format = (x) => `${x.name}`,
-	...other
+	...other,
 }) => {
-	
+
 	return (
 		<FormGroup>
 			<ControlLabel>{label}</ControlLabel>
 			<FormControl
-				componentClass="select" 
+				componentClass="select"
 				value={current}
 				onChange={(e) => {
 					onChange(parseInt(e.target.value));
 				}}
 				{...other}
 				>
-				<option disabled value="" style={{display: 'none'}}></option>
-				{items.map((x) => 
+				<option disabled value="" style={{ display: 'none' }} />
+				{items.map((x) =>
 					<option key={x.id} value={x.id}>{format(x)}</option>
 				)}
 			</FormControl>
@@ -34,11 +33,11 @@ const ContextSelect = ({
 };
 
 ContextSelect.propTypes = {
-	roleChange: PropTypes.func,
-	unitChange: PropTypes.func,
+	format: PropTypes.func,
 	items: PropTypes.array,
+	roleChange: PropTypes.func,
 	roles: PropTypes.array,
-	format: PropTypes.func
+	unitChange: PropTypes.func,
 };
 
 export default ContextSelect;

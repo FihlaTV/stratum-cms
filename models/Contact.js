@@ -1,5 +1,5 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
 
 /**
  * Contact Model
@@ -7,7 +7,7 @@ var keystone = require('keystone'),
  */
 
 var Contact = new keystone.List('Contact', {
-	track: { createdAt: true, updatedAt: true, updatedBy: true }
+	track: { createdAt: true, updatedAt: true, updatedBy: true },
 });
 
 Contact.add({
@@ -15,9 +15,9 @@ Contact.add({
 	email: { type: Types.Email, initial: true },
 	image: { type: Types.CloudinaryImage, autoCleanup: true },
 	phone: { type: String },
-	title: { type: String, label: 'Work Title'},
+	title: { type: String, label: 'Work Title' },
 	note: { type: Types.Textarea, collapse: true },
-	showOnContactPage: { type: Boolean }
+	showOnContactPage: { type: Boolean },
 });
 
 /**
@@ -25,7 +25,7 @@ Contact.add({
  */
 
 
-Contact.schema.virtual('description').get(function() {
+Contact.schema.virtual('description').get(function () {
 	return this.get('note') || this.get('title');
 });
 
