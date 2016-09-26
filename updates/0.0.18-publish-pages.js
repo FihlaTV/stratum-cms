@@ -1,6 +1,6 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	async = require('async');
+var	BasePage = keystone.list('BasePage');
 
 /**
  * Changes all current Page states to published since this has not been
@@ -8,7 +8,7 @@ var keystone = require('keystone'),
  */
 exports = module.exports = function (done) {
 	var context = {
-		pages: []
+		pages: [],
 	};
 
 	async.series({
@@ -27,6 +27,6 @@ exports = module.exports = function (done) {
 				page.set('state', 'published');
 				page.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

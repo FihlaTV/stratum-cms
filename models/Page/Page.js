@@ -1,6 +1,6 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types,
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
+var	BasePage = keystone.list('BasePage');
 
 /**
  * Page Model
@@ -13,7 +13,7 @@ var Page = new keystone.List('Page', {
 	defaultColumns: 'title, menu',
 	hidden: false,
 	nocreate: false,
-	nodelete: false
+	nodelete: false,
 });
 Page.add({
 	menu: {
@@ -22,30 +22,30 @@ Page.add({
 		many: false,
 		filters: { static: false },
 		// required: true,
-		initial: true
+		initial: true,
 	},
 	numberOfSubPages: {
 		type: Number,
 		dependsOn: {
-			contentType: 'default'
+			contentType: 'default',
 		},
 		// hidden: true,
 		noedit: true,
-		default: 0
-	}
+		default: 0,
+	},
 });
 Page.relationship({
 	path: 'subPages',
 	ref: 'SubPage',
-	refPath: 'page'
+	refPath: 'page',
 });
-Page.schema.virtual('decreaseSubPages').set(function() {
+Page.schema.virtual('decreaseSubPages').set(function () {
 	this.set('numberOfSubPages', Math.max(0, this.numberOfSubPages - 1));
 });
-Page.schema.virtual('increaseSubPages').set(function() {
+Page.schema.virtual('increaseSubPages').set(function () {
 	this.set('numberOfSubPages', this.numberOfSubPages + 1);
 });
-Page.schema.virtual('hasSubPages').get(function(){
+Page.schema.virtual('hasSubPages').get(function () {
 	return this.get('numberOfSubPages') > 0;
 });
 

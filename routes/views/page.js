@@ -1,10 +1,10 @@
-var keystone = require('keystone'),
-	_ = require('underscore'),
-	importRoutes = keystone.importer(__dirname);
+var keystone = require('keystone');
+var	importRoutes = keystone.importer(__dirname);
 
-exports = module.exports = function(req, res) {
-	var view = new keystone.View(req, res),
-		locals = res.locals, context = {};
+exports = module.exports = function (req, res) {
+	var view = new keystone.View(req, res);
+	var	locals = res.locals;
+	var context = {};
 
 	locals.stratumServer = keystone.get('stratum server');
 	locals.breadcrumbs = [];
@@ -15,29 +15,29 @@ exports = module.exports = function(req, res) {
 		pages: [],
 		page: {},
 		menuPage: {},
-		subPages: []
+		subPages: [],
 	};
 	locals.filters = {
-		shortid: req.params.shortid
+		shortid: req.params.shortid,
 	};
-	
+
 	/**
-	 * Lookup current page from unique id 
+	 * Lookup current page from unique id
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		keystone.list('BasePage').model
 			.findOne()
 			.where('shortId', locals.filters.shortid)
 			.where('state', 'published')
-			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
+			.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories state registerSpecific')
 			.populate('widget resources')
-			.exec(function(err, page) {
+			.exec(function (err, page) {
 				if (!err) {
 					var parentPage = page ? page.page : null;
 					// Make sure the page exists and if there is a parent page then check its state and permission
-					if (!page ||
-						(parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn))
+					if (!page
+						|| (parentPage && (parentPage.state !== 'published' || parentPage.registerSpecific && !locals.registerLoggedIn))
 					)	{
 						res.notFound();
 						return;
@@ -51,18 +51,18 @@ exports = module.exports = function(req, res) {
 				next(err);
 			});
 	});
-	
-	/**	
+
+	/**
 	 * Current MenuBlock
-	 * 
+	 *
 	 * Lookup the current menu block related to the page found from short id
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		keystone.list('MenuBlock').model
 			.findOne()
-			.where('_id', context.menuId)	
-			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
-			.exec(function(err, menu) {
+			.where('_id', context.menuId)
+			.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
+			.exec(function (err, menu) {
 				if (err) {
 					next(err);
 				} else if (!menu) {
@@ -77,25 +77,25 @@ exports = module.exports = function(req, res) {
 
 	/**
 	 * Pages in MenuBlocks
-	 * 
+	 *
 	 * Lookup all pages which have a relation to the current menu block
 	 * Store them in locals
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		keystone.list('Page').model
 			.find()
 			.where('menu', locals.data.currentMenuBlock._id)
 			.where('state', 'published')
-			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
+			.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 			.sort('sortOrder')
 			.select('slug title menuTitle shortId numberOfSubPages')
-			.exec(function(err, pages) {
+			.exec(function (err, pages) {
 				if (!err) {
 					locals.data.pages = pages;
-                    if(pages.length <= 0){
+					if (pages.length <= 0) {
 						res.notFound();
-                        return;                        
-                    }
+						return;
+					}
 				}
 				next(err);
 			});
@@ -103,25 +103,25 @@ exports = module.exports = function(req, res) {
 
 	/**
 	 * Breadcrumbs
-	 * 
+	 *
 	 * Push all breadcrumbs to locals
 	 */
-	view.on('init', function(next){
+	view.on('init', function (next) {
 		var menu = locals.data.currentMenuBlock;
 		var menuPage = locals.data.menuPage;
 		var page = locals.data.page;
 		locals.breadcrumbs.push({
 			label: menu.name,
-			path: '/' + menu.slug
+			path: '/' + menu.slug,
 		});
 		locals.breadcrumbs.push({
 			label: menuPage.titleForMenu,
-			path: '/' + locals.data.currentMenuBlock.slug + '/' + menuPage.slug + '/p/' + menuPage.shortId
+			path: '/' + locals.data.currentMenuBlock.slug + '/' + menuPage.slug + '/p/' + menuPage.shortId,
 		});
-		if(page !== menuPage && page){
+		if (page !== menuPage && page) {
 			locals.breadcrumbs.push({
 				label: page.titleForMenu,
-				path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug + '/p/' + page.shortId
+				path: '/' + locals.data.currentMenuBlock.slug + '/' + page.slug + '/p/' + page.shortId,
 			});
 		}
 		next();
@@ -130,7 +130,7 @@ exports = module.exports = function(req, res) {
 	/**
 	 * SubPages
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		if (!locals.data.page) {
 			next();
 			return;
@@ -138,10 +138,10 @@ exports = module.exports = function(req, res) {
 		keystone.list('SubPage').model
 			.find()
 			.where('page', locals.data.menuPage._id)
-			.where('state', 'published')			
-			.or([{registerSpecific: {$ne: true}}, {registerSpecific: locals.registerLoggedIn}])
+			.where('state', 'published')
+			.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 			.sort('sortOrder')
-			.exec(function(err, subPages) {
+			.exec(function (err, subPages) {
 				if (!err) {
 					locals.data.subPages = subPages;
 				}
@@ -153,25 +153,25 @@ exports = module.exports = function(req, res) {
 	 * ContentType
 	 * If the type is other than default select a different view
 	 */
-	view.on('init', function(next){
-		if(context.contentType && context.contentType !== 'default'){
+	view.on('init', function (next) {
+		if (context.contentType && context.contentType !== 'default') {
 			var contentViews = importRoutes('./content-types');
 			var contentView = contentViews[context.contentType];
-			if(!contentView){
-				next(); //TODO: Error handling
+			if (!contentView) {
+				next(); // TODO: Error handling
 				return;
 			}
 			// Redirect view to contentTypes view
-			contentViews[context.contentType](req, res); 
+			contentViews[context.contentType](req, res);
 		} else {
 			next();
 		}
 	});
-		
+
 	/**
 	 * Contacts
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		if (!locals.data.page || !locals.data.page.contacts) {
 			next();
 			return;
@@ -181,7 +181,7 @@ exports = module.exports = function(req, res) {
 			.where('_id')
 			.in(locals.data.page.contacts)
 			.sort('sortOrder')
-			.exec(function(err, contacts) {
+			.exec(function (err, contacts) {
 				if (!err) {
 					locals.data.contacts = contacts;
 				}
@@ -192,17 +192,17 @@ exports = module.exports = function(req, res) {
 	/**
 	 * Widget Settings
 	 */
-	view.on('init', function(next) {
+	view.on('init', function (next) {
 		var widget = locals.data.widget;
 		switch (widget && widget.getValue('type')) {
 			case 'keystone':
 				keystone.list('KeystoneWidget').model
 					.findOne({
-						'_id': widget.get('keystoneWidget')
+						_id: widget.get('keystoneWidget'),
 					})
-					.exec(function(err, kWidget) {
+					.exec(function (err, kWidget) {
 						if (!err) {
-                            locals.keystoneWidget = kWidget;
+							locals.keystoneWidget = kWidget;
 						}
 						next(err);
 					});
@@ -210,9 +210,9 @@ exports = module.exports = function(req, res) {
 			case 'stratum':
 				keystone.list('StratumWidget').model
 					.findOne({
-						'_id': widget.get('stratumWidget')
+						_id: widget.get('stratumWidget'),
 					})
-					.exec(function(err, sWidget) {
+					.exec(function (err, sWidget) {
 						if (sWidget) {
 							locals.stratumWidget = sWidget;
 						}

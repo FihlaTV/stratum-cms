@@ -1,21 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
 
 class BOAAndel extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
-			loadComplete: false
+			loadComplete: false,
 		};
 	}
-	onComplete(error) {
+	onComplete (error) {
 		this.setState({
 			error: error,
-			loadComplete: true
+			loadComplete: true,
 		});
 	}
-	render() {
+	render () {
 		return (
 			<div>
 				<StratumSimpleData
@@ -29,4 +29,4 @@ class BOAAndel extends Component {
 	}
 }
 
-export default BOAAndel
+export default BOAAndel;

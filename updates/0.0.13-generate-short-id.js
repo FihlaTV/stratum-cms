@@ -1,18 +1,18 @@
-var keystone = require('keystone'),
-	async = require('async'),
-    shortid = require('shortid'),
-	BasePage = keystone.list('BasePage');
+var keystone = require('keystone');
+var	async = require('async');
+var shortid = require('shortid');
+var	BasePage = keystone.list('BasePage');
 
-//Set all instances of layout = wide and set to standard
+// Set all instances of layout = wide and set to standard
 exports = module.exports = function (done) {
 	var context = {
-		pages: []
+		pages: [],
 	};
 
 	async.series({
 		getAllPages: function (next) {
 			BasePage.model
-				.find({shortId: {$exists: false}})
+				.find({ shortId: { $exists: false } })
 				.exec(function (err, pages) {
 					if (!err) {
 						context.pages = pages;
@@ -25,6 +25,6 @@ exports = module.exports = function (done) {
 				page.set('shortId', shortid.generate());
 				page.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

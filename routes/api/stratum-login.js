@@ -1,9 +1,9 @@
-var keystone = require('keystone'),
-	url = require('url'),
-	request = require('request'),
-	zlib = require('zlib');
+var keystone = require('keystone');
+var	url = require('url');
+var	request = require('request');
+var	zlib = require('zlib');
 
-function parseResponse(req, res, body) {
+function parseResponse (req, res, body) {
 	var jsonBody;
 	try {
 		jsonBody = JSON.parse(body);
@@ -13,7 +13,7 @@ function parseResponse(req, res, body) {
 		return res.apiResponse({
 			success: false,
 			code: 'PARSE_ERROR',
-			message: 'Error handling authentication request'
+			message: 'Error handling authentication request',
 		});
 	}
 	if (jsonBody.success && jsonBody.data && jsonBody.data.ContextID) {
@@ -25,7 +25,7 @@ function parseResponse(req, res, body) {
 		jsonBody = {
 			success: false,
 			code: 'CONTEXT_ERROR',
-			message: 'Could not find user data, most likely error with login synchronization'
+			message: 'Could not find user data, most likely error with login synchronization',
 		};
 	}
 
@@ -33,17 +33,16 @@ function parseResponse(req, res, body) {
 }
 
 exports = module.exports = function (req, res) {
-	var referer = req.header('referer'),
-		protocol = referer ? referer.split('/')[0] :
-			req.secure ? 'https:' : 'http:',
-		stratumServer = protocol + '//' + keystone.get('stratum server'),
-
-		apiUrl;
+	var referer = req.header('referer');
+	var	protocol = referer ? referer.split('/')[0]
+		: req.secure ? 'https:' : 'http:';
+	var	stratumServer = protocol + '//' + keystone.get('stratum server');
+	var	apiUrl;
 
 	if (!stratumServer) {
 		return res.apiResponse({
 			success: false,
-			message: 'Stratum URI lookup error'
+			message: 'Stratum URI lookup error',
 		});
 	}
 	// req.url should be either /api/authentication/context or /api/authentication/login
@@ -53,12 +52,12 @@ exports = module.exports = function (req, res) {
 	req.pipe(request({
 		rejectUnauthorized: false,
 		url: apiUrl,
-		encoding: null
+		encoding: null,
 	}, function (err, stratumRes, body) {
 		if (!err && body) {
 			if (stratumRes.headers['content-encoding'] === 'gzip') {
 				zlib.gunzip(body, function (err, dezipped) {
-					parseResponse(req, res,  dezipped.toString('utf-8'));					
+					parseResponse(req, res, dezipped.toString('utf-8'));
 				});
 			} else {
 				parseResponse(req, res, body);
@@ -67,7 +66,7 @@ exports = module.exports = function (req, res) {
 			return res.status(500).apiResponse({
 				success: false,
 				code: 'UNKNOWN_STRATUM_ERROR',
-				message: 'Server error'
+				message: 'Server error',
 			});
 		}
 	}));

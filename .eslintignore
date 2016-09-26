@@ -1,7 +1,10 @@
 docs/*
 public/js/lib/*
 public/js/packages.js
+public/js/dist/*
+public/dist/*
 test/*
 node_modules/*
 coverage/*
 fields/types/**/lib/*
+registers/*

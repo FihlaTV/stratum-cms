@@ -3,9 +3,9 @@ import Spinner from './Spinner';
 import Alert from './Alert';
 
 const SITHSLogin = ({
-    status
+    status,
 }) => {
-	switch (status){
+	switch (status) {
 		case 'SITHS_INTRO':
 			return (
 				<Alert alertType="info">
@@ -19,7 +19,7 @@ const SITHSLogin = ({
 				</div>
 			);
 		default :
-			return <h1>SITHS</h1>
+			return <h1>SITHS</h1>;
 	}
 };
 

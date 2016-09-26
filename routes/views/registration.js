@@ -1,14 +1,14 @@
 var keystone = require('keystone');
 
-exports = module.exports = function(req, res) {
-	
-	var view = new keystone.View(req, res),
-		locals = res.locals;
-	
+exports = module.exports = function (req, res) {
+
+	var view = new keystone.View(req, res);
+	var	locals = res.locals;
+
 	// Set locals
 	locals.section = 'registration';
-	locals.breadcrumbs = [{label: 'Registrering', path: '/registrering'}];
-	//locals.googleApiKey = keystone.get('google api key');
+	locals.breadcrumbs = [{ label: 'Registrering', path: '/registrering' }];
+	// locals.googleApiKey = keystone.get('google api key');
 
 	view.render('registration');
 };

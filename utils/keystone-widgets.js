@@ -1,15 +1,15 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	_ = require('underscore'),
-	fs = require('fs');
+var keystone = require('keystone');
+var	async = require('async');
+var	_ = require('underscore');
+var	fs = require('fs');
 
-exports.loadWidgets = function(callback) {
+exports.loadWidgets = function (callback) {
 	var KeystoneWidget = keystone.list('KeystoneWidget');
 	var context = {};
 
 	async.series({
-		readWidgetMetadata: function(next) {
-			fs.readFile(keystone.get('keystone widgets index'), function(err, data) {
+		readWidgetMetadata: function (next) {
+			fs.readFile(keystone.get('keystone widgets index'), function (err, data) {
 				if (err) {
 					next(err);
 				} else {
@@ -23,20 +23,21 @@ exports.loadWidgets = function(callback) {
 				}
 			});
 		},
-		addNewAndUpdateChanged: function(next) {
-			context.updatedWidgets = [],
-				context.newWidgets = [];
-			async.each(context.widgetsFull, function(widget, cb) {
+		addNewAndUpdateChanged: function (next) {
+			context.updatedWidgets = [];
+			context.newWidgets = [];
+
+			async.each(context.widgetsFull, function (widget, cb) {
 				KeystoneWidget.model.findOne()
 					.where('name', widget.id)
 					.select('name description')
-					.exec(function(err, dWidget) {
+					.exec(function (err, dWidget) {
 						if (err) {
 							cb(err);
 							return;
 						}
 						if (dWidget && dWidget.description !== widget.description) {
-							//Update description
+							// Update description
 							dWidget.description = widget.description;
 							context.updatedWidgets.push(dWidget.name);
 							dWidget.save(cb);
@@ -44,7 +45,7 @@ exports.loadWidgets = function(callback) {
 							var newWidget = new KeystoneWidget.model({
 								name: widget.id,
 								description: widget.description,
-								removed: false
+								removed: false,
 							});
 							context.newWidgets.push(widget.id);
 							newWidget.save(cb);
@@ -54,39 +55,39 @@ exports.loadWidgets = function(callback) {
 					});
 			}, next);
 		},
-		addRemovedStatus: function(next) {
+		addRemovedStatus: function (next) {
 			KeystoneWidget.model.update({
 				name: {
-					$in: context.widgets
+					$in: context.widgets,
 				},
-				removed: true
+				removed: true,
 			}, {
-					removed: false
-				}, {
-					multi: true
-				}, next);
+				removed: false,
+			}, {
+				multi: true,
+			}, next);
 		},
-		removeOldWidgets: function(next) {
+		removeOldWidgets: function (next) {
 			KeystoneWidget.model.update({
 				name: {
-					$nin: context.widgets
+					$nin: context.widgets,
 				},
 				removed: {
-					$ne: true
-				}
+					$ne: true,
+				},
 			}, {
-					removed: true
-				}, {
-					multi: true
-				}, next);
-		}
+				removed: true,
+			}, {
+				multi: true,
+			}, next);
+		},
 	},
-		function(err) {
+		function (err) {
 			if (callback) {
 				callback(err, {
 					indexed: context.widgets,
 					updatedWidgets: context.updatedWidgets,
-					newWidgets: context.newWidgets
+					newWidgets: context.newWidgets,
 				});
 			}
 		});

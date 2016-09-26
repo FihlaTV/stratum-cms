@@ -1,5 +1,5 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
 /**
  * NewsItem Model
@@ -11,7 +11,7 @@ var NewsItem = new keystone.List('NewsItem', {
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	autokey: { path: 'slug', from: 'title', unique: true },
 	plural: 'News',
-	defaultSort: '-publishedDate'
+	defaultSort: '-publishedDate',
 });
 
 NewsItem.add({
@@ -22,40 +22,40 @@ NewsItem.add({
 		type: Types.Date,
 		index: true,
 		dependsOn: { state: 'published' },
-		note: 'News items without a published date will not be displayed in the news listing.\n\n' +
-			'If the date is in the future, the news item will appear at the following date.'
+		note: 'News items without a published date will not be displayed in the news listing.\n\n'
+			+ 'If the date is in the future, the news item will appear at the following date.',
 	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
 	image: { type: Types.CloudinaryImage, autoCleanup: true },
 	imageDescription: {
 		collapse: true,
-		type: String
+		type: String,
 	},
 	imageLayout: {
 		type: Types.Select,
 		options: 'portrait, landscape',
 		default: 'portrait',
 		emptyOption: false,
-		note: 'Determines the position and layout of the news item\'s image. Portrait places is to the right of the text and Landscape above the text'
+		note: 'Determines the position and layout of the news item\'s image. Portrait places is to the right of the text and Landscape above the text',
 	},
 	content: {
 		lead: { type: Types.Textarea, height: 150, note: 'Introduction to the news item. Keep this below ~300 characters' },
-		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'Image,Code' } }
+		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'Image,Code' } },
 	},
 	resources: {
 		type: Types.Relationship,
 		ref: 'Resource',
 		many: true,
-		collapse: true
-	}
+		collapse: true,
+	},
 });
 
 /**
  * Bug in keystone currently prevents error messages to be displayed
- * so this is commented out for now. 
+ * so this is commented out for now.
  */
 // NewsItem.schema.path('content.lead').validate(function(value){
-// 	return !value || value.length <= 300; 
+// 	return !value || value.length <= 300;
 // }, 'Your text cannot be longer than 300 characters. Please try to shorten your text');
 
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';

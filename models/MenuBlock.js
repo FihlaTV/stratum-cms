@@ -1,5 +1,5 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
 
 /**
  * Menu Block Model
@@ -12,25 +12,25 @@ var MenuBlock = new keystone.List('MenuBlock', {
 	autokey: {
 		from: 'name',
 		path: 'slug',
-		unique: true
-	}
+		unique: true,
+	},
 });
 
 MenuBlock.add({
 	name: {
 		type: String,
-		required: true
+		required: true,
 	},
 },
 	{ heading: 'Advanced settings' },
 	{
 		registerSpecific: {
 			type: Boolean,
-			note: 'Only visible to logged in users'
+			note: 'Only visible to logged in users',
 		},
 		static: {
 			type: Boolean,
-			note: 'Advanced option: Check this if this menu item should link to a specific URL'
+			note: 'Advanced option: Check this if this menu item should link to a specific URL',
 		},
 		section: {
 			type: Types.Select,
@@ -38,24 +38,24 @@ MenuBlock.add({
 				{ value: 'external', label: 'External Link' },
 				{ value: 'news', label: 'News' },
 				{ value: 'faq', label: 'Questions' },
-				{ value: 'contact', label: 'Contact Page' }
+				{ value: 'contact', label: 'Contact Page' },
 			],
 			dependsOn: {
-				static: true
-			}
+				static: true,
+			},
 		},
 		staticLink: {
 			type: Types.Url,
 			dependsOn: {
 				static: true,
-				section: 'external'
-			}
-		}
+				section: 'external',
+			},
+		},
 	});
 MenuBlock.relationship({
 	path: 'pages',
 	ref: 'Page',
-	refPath: 'menu'
+	refPath: 'menu',
 });
 
 MenuBlock.schema.virtual('key').get(function () {
@@ -64,10 +64,10 @@ MenuBlock.schema.virtual('key').get(function () {
 
 MenuBlock.schema.virtual('href').get(function () {
 	var sectionLinks = {
-		'news': '/nyheter',
-		'faq': '/faq',
-		'contact': '/kontakt',
-		'external': this.get('staticLink')
+		news: '/nyheter',
+		faq: '/faq',
+		contact: '/kontakt',
+		external: this.get('staticLink'),
 	};
 
 	return this.get('static') ? sectionLinks[this.get('section')] : ('/' + this.get('slug'));
