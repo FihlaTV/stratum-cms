@@ -199,6 +199,10 @@ export function initiateSITHSLogin () {
 			.then(json => {
 				if (json.success) {
 					return dispatch(loginToStratum());
+				} else if (json.code === 4) {
+					// Ask if new card should be attached to User
+					return dispatch(setSITHSStatus('SITHS_NEW_CARD'));
+
 				} else {
 					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
@@ -216,7 +220,17 @@ export function toggleNextState () {
 		const state = getState();
 		const loginMethod = state.login.loginMethod;
 		if (loginMethod === LoginMethod.SITHS_CARD) {
-			return dispatch(initiateSITHSLogin());
+			if (state.login.sithsStatus === 'SITHS_NEW_CARD') {
+				// Dispatch assign card call
+				if (state.login.sithsNewCard.valid) {
+					// console.log('valid');
+					dispatch(setHasNextState(false));
+					dispatch(setSITHSStatus('SITHS_DO_LOGIN')); // Set loading status
+					dispatch(loginToStratum(false, state.login.sithsNewCard));
+				}
+			} else {
+				return dispatch(initiateSITHSLogin());
+			}
 		} else if (loginMethod === LoginMethod.BANK_ID
 			&& state.bankId.bidStage === LoginStages.INPUT_PERSONAL_NUMBER
 			&& state.bankId.personalNumberValidity) {
@@ -257,6 +271,8 @@ function getStratumProxyLoginError (errorCode) {
 			return `Din inloggning kunde identifieras,
 				men du har inte behörighet att gå in i registret.
 				Kontakta registrets support.`;
+		case 'ASSIGN_WRONG_CREDENTIALS':
+			return 'Fel användarnamn och/eller lösenord, var god försök igen...';
 		default:
 			return 'Oväntat fel under identifiering.';
 	}
@@ -267,11 +283,25 @@ function getStratumProxyLoginError (errorCode) {
  * from stratum. This call is handled by a proxy in Keystone and not by
  * stratum directly, in order to read the cookie.
  */
-export function loginToStratum (refresh) {
+export function loginToStratum (refresh, { username, password } = {}) {
+	let conf = {
+		credentials: 'include',
+	};
+
+	if (username && password) {
+		const formData = new FormData();
+		formData.append('username', username);
+		formData.append('password', password);
+		conf = {
+			...conf,
+			method: 'POST',
+			body: formData,
+		};
+	}
 	return dispatch => {
-		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, {
-			credentials: 'include',
-		})
+		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`,
+				conf
+			)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
@@ -419,5 +449,18 @@ export function setShrinkUnitName (shrink) {
 	return {
 		type: SET_SHRINK_UNIT_NAME,
 		shrink: shrink,
+	};
+}
+
+export const UPDATE_SITHS_NEW_CARD = 'UPDATE_SITHS_NEW_CARD';
+
+export function updateSithsNewCard (username, password) {
+	return {
+		type: UPDATE_SITHS_NEW_CARD,
+		newCard: {
+			valid: username.length > 0 && password.length > 0,
+			username,
+			password,
+		},
 	};
 }

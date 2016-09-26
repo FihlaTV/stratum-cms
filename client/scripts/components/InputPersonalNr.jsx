@@ -23,12 +23,13 @@ const InputPersonalNr = ({
 			<div className={classNames.join(' ')}>
 				<label htmlFor="bankIDPersonalNr">Personnummer: </label>
 				<div className="input-group">
-					<span className="input-group-addon"><i className="fa fa-user" /></span>
+					<span className="input-group-addon"><i className="fa fa-user"></i></span>
 					<input
 						type="text"
 						className="form-control check-validation next-to-icon"
 						placeholder="19xxxxxx-xxxx"
 						autoComplete="off"
+						autoFocus
 						id="bankIDPersonalNr"
 						ref={(node) => {
 							input = node;

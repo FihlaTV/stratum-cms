@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/login';
+import { setLoginMethod, resetState,
+	LoginMethod, toggleNextState, showLoginModal,
+	updateSithsNewCard } from '../actions/login';
+// import ChangeLogin from '../components/ChangeLogin';
 import ResetState from '../components/ResetState';
 import NextButton from '../components/NextButton';
 import LoginSelectorList from '../components/LoginSelectorList';
@@ -23,6 +26,8 @@ class Login extends Component {
 			sithsStatus,
 			showModal,
 			https,
+			sithsNewCardChange,
+			validNewCard,
 		} = this.props;
 		if (error) {
 			return (
@@ -75,11 +80,15 @@ class Login extends Component {
 				return (
 					<LoginModal onHide={close} show={showModal} title="SITHS-kort">
 						<LoginModal.Body>
-							<SITHSLogin status={sithsStatus} />
+							<SITHSLogin status={sithsStatus}
+								onNewCardSubmit={nextState}
+								validNewCard={validNewCard}
+								onNewCardChange={sithsNewCardChange}
+							/>
 						</LoginModal.Body>
 						<LoginModal.Footer>
-							<ResetState onClick={resetState}>Tillbaka</ResetState>
-							<NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
+							<ResetState onClick={resetState} disabled={!hasNextState}>Tillbaka</ResetState>
+							<NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState || sithsStatus === 'SITHS_NEW_CARD' && !validNewCard}/>
 						</LoginModal.Footer>
 					</LoginModal>
 				);
@@ -109,6 +118,9 @@ function mapDispatchToProps (dispatch) {
 		close: () => {
 			dispatch(showLoginModal(false));
 		},
+		sithsNewCardChange: ({ username, password }) => {
+			dispatch(updateSithsNewCard(username, password));
+		},
 	};
 }
 function mapStateToProps (state) {
@@ -121,6 +133,7 @@ function mapStateToProps (state) {
 		hasNextState: state.login.hasNextState,
 		showModal: state.login.showLoginModal,
 		https: state.login.https,
+		validNewCard: state.login.sithsNewCard.valid,
 	};
 }
 
