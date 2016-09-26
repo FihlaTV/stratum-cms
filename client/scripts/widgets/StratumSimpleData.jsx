@@ -27,6 +27,9 @@ class StratumSimpleData extends Component {
 		};
 	}
 	componentDidMount () {
+		this.fetchNewData();
+	}
+	fetchNewData () {
 		fetch(this.props.url)
 			.then(res => res.json())
 			.then(json => {

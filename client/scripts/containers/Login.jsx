@@ -48,7 +48,7 @@ class Login extends Component {
 								{ cssClass: 'bankid',
 									loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID' },
 							]}/>
-							{ !https
+							{!https
 							&& <Alert alertType="danger" faIcon="fa-exclamation-triangle">
 								Du är inte under https, inloggningen kommer inte fungera som förväntat
 							</Alert>
