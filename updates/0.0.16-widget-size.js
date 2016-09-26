@@ -1,13 +1,13 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	Widget = keystone.list('Widget');
+var keystone = require('keystone');
+var	async = require('async');
+var	Widget = keystone.list('Widget');
 
 /**
  * Changes all size attributes on widget to default 'small'
  */
 exports = module.exports = function (done) {
 	var context = {
-		widgets: []
+		widgets: [],
 	};
 
 	async.series({
@@ -26,6 +26,6 @@ exports = module.exports = function (done) {
 				widget.set('size', 'small');
 				widget.save(cb);
 			}, next);
-		}
+		},
 	}, done);
 };

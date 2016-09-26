@@ -1,5 +1,5 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
 
 /**
  * Sub Register Model
@@ -9,7 +9,7 @@ var keystone = require('keystone'),
 
 var SubRegister = new keystone.List('SubRegister', {
 	sortable: true,
-	hidden: !keystone.get('is portal') // Only visible in portal mode
+	hidden: !keystone.get('is portal'), // Only visible in portal mode
 });
 
 SubRegister.add({
@@ -21,8 +21,8 @@ SubRegister.add({
 	url: {
 		type: Types.Url,
 		required: true,
-		initial: true
-	}
+		initial: true,
+	},
 });
 
 SubRegister.defaultColumns = 'name';

@@ -1,18 +1,17 @@
 import React, { Component, PropTypes } from 'react';
- 
+
 class User extends Component {
-	render(){
-		const { 
+	render () {
+		const {
 			context,
-			wrongRegister,
 			onUserHover,
 			shrinkName,
 			onClick,
-			unitMaxLength = 20
+			unitMaxLength = 20,
 		} = this.props;
-		if(context){
+		if (context) {
 			const { User, Unit, Role } = context;
-			const unitRegEx = new RegExp(`(.{0,${unitMaxLength-3}}).*`);
+			const unitRegEx = new RegExp(`(.{0,${unitMaxLength - 3}}).*`);
 			const unitName = Unit.UnitName.length > unitMaxLength && shrinkName ? Unit.UnitName.replace(unitRegEx, '$1...') : Unit.UnitName;
 			return (
 				<a className="nav-button-text login-user-display" href="#" onMouseEnter={() => onUserHover(true)} onMouseLeave={() => onUserHover(false)} onClick={onClick}>
@@ -21,34 +20,33 @@ class User extends Component {
 				</a>
 			);
 		} else {
-				return (
-					<a className="nav-button-text login-user-display login-user-display-wrong" href="#" onClick={onClick}>
-						Välj nedan
-					</a>
-				);
+			return (
+				<a className="nav-button-text login-user-display login-user-display-wrong" href="#" onClick={onClick}>
+					Välj nedan
+				</a>
+			);
 		}
-	
+
 	}
 }
 
 User.propTypes = {
-	wrongRegister: PropTypes.bool,
-	onClick: PropTypes.func,
 	context: PropTypes.shape({
 		Unit: PropTypes.shape({
-			UnitName: PropTypes.string.isRequired	
+			UnitName: PropTypes.string.isRequired,
 		}).isRequired,
 		Role: PropTypes.shape({
-			RoleName: PropTypes.string.isRequired
+			RoleName: PropTypes.string.isRequired,
 		}).isRequired,
 		User: PropTypes.shape({
 			FirstName: PropTypes.string.isRequired,
-			LastName: PropTypes.string.isRequired
-		}).isRequired
+			LastName: PropTypes.string.isRequired,
+		}).isRequired,
 	}),
+	onClick: PropTypes.func,
 	onUserHover: PropTypes.func,
 	shrinkName: PropTypes.bool,
-	unitMaxLength: PropTypes.number
+	unitMaxLength: PropTypes.number,
 };
 
 export default User;

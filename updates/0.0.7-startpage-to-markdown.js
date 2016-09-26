@@ -1,41 +1,41 @@
-var keystone = require('keystone'),
-	async = require('async'),
-	StartPage = keystone.list('StartPage');
+var keystone = require('keystone');
+var	async = require('async');
+var	StartPage = keystone.list('StartPage');
 
-//Changes all descriptions on start pages to markdown
-exports = module.exports = function(done) {
+// Changes all descriptions on start pages to markdown
+exports = module.exports = function (done) {
 	var context = {
-		startPages: []
+		startPages: [],
 	};
 
 	async.series({
-		getNewsItems: function(next) {
-			//Find all start pages (should be singleton...)
+		getNewsItems: function (next) {
+			// Find all start pages (should be singleton...)
 			StartPage.model
-				.find(function(err, startPages) {
+				.find(function (err, startPages) {
 					if (!err) {
 						context.startPages = startPages;
 					}
 					next(err);
 				});
 		},
-		convertToMarkdown: function(next) {
-			async.forEach(context.startPages, function(startPage, cb) {
+		convertToMarkdown: function (next) {
+			async.forEach(context.startPages, function (startPage, cb) {
 				var description = startPage.description.toObject();
-				if(!description){
+				if (!description) {
 					cb();
 					return;
 				}
-				try{
-					//Save old description as markdown
+				try {
+					// Save old description as markdown
 					startPage.description = {
-						md: description
+						md: description,
 					};
 					startPage.save(cb);
-				} catch(ex){
+				} catch (ex) {
 					cb(ex);
 				}
 			}, next);
-		}
+		},
 	}, done);
 };

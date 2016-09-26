@@ -1,35 +1,32 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { initLoginModal, showLoginModal, getKeystoneContext, logoutFromStratum, 
+import { initLoginModal, getKeystoneContext, logoutFromStratum,
 	changeContext, dismissTimeleft, setShrinkUnitName } from '../actions/login';
 import { showContextModal, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
-import User from '../components/User.jsx';
-import Spinner from '../components/Spinner';
 import TimeLeftDialog from '../components/TimeLeftDialog';
 import TopNav from '../components/TopNav';
-import Messages from './Messages';
 
 class App extends Component {
-	componentDidMount() {
+	componentDidMount () {
 		const { initContext } = this.props;
 		// See if there is any current login
 		initContext(true);
 	}
-	componentWillReceiveProps(nextProps){
+	componentWillReceiveProps (nextProps) {
 		const { context, initial } = this.props;
 		const { showContextModal, wrongRegister } = nextProps;
-		if(nextProps.context && nextProps.context !== context){
+		if (nextProps.context && nextProps.context !== context) {
 			showContextModal && showContextModal(false);
 		}
-		if(!initial && nextProps.initial || wrongRegister){
+		if (!initial && nextProps.initial || wrongRegister) {
 			showContextModal && showContextModal(true);
 		}
 	}
-	render() {
-		const { 
+	render () {
+		const {
 			showLoginModal,
 			showContextModal,
 			context,
@@ -46,11 +43,11 @@ class App extends Component {
 			setShrinkUnitName,
 			contexts,
 			logout,
-			contextIsVisible
+			contextIsVisible,
 		} = this.props;
 		return (
 			<div>
-				<TopNav 
+				<TopNav
 					loading={contextIsLoading}
 					context={context}
 					wrongRegister={wrongRegister}
@@ -62,14 +59,14 @@ class App extends Component {
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
-				<Context 
+				<Context
 					contexts={contexts}
 					requireChange={wrongRegister}
 					target={contextTarget}
 					inUnit={context && context.Unit.UnitID}
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
-					onLogout={logout} 
+					onLogout={logout}
 					onSubmit={(role, unit) => {
 						setContext(role, unit, contexts);
 					}
@@ -81,7 +78,7 @@ class App extends Component {
 	}
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps (dispatch) {
 	return {
 		initContext: (initial) => {
 			dispatch(getKeystoneContext(initial));
@@ -106,10 +103,10 @@ function mapDispatchToProps(dispatch){
 		},
 		setContextTarget: (target) => {
 			dispatch(setTarget(ReactDOM.findDOMNode(target)));
-		}
+		},
 	};
 }
-function mapStateToProps(state){
+function mapStateToProps (state) {
 	return {
 		context: state.login.context,
 		contextIsLoading: state.login.contextIsLoading,
@@ -120,7 +117,7 @@ function mapStateToProps(state){
 		showTimeleft: state.login.showTimeleft,
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
-		contextIsVisible: state.context.show
+		contextIsVisible: state.context.show,
 	};
 }
 

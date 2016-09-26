@@ -1,5 +1,5 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types;
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
 
 /**
  * Widget Model
@@ -13,71 +13,79 @@ var keystone = require('keystone'),
 var Widget = new keystone.List('Widget', {
 	autokey: {
 		from: 'name',
-		path: 'key'
+		path: 'key',
 	},
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
-	sortable: true
+	sortable: true,
 });
 
 Widget.add({
 	name: {
 		type: String,
-		required: true
+		required: true,
 	},
 	description: {
-		type: String
+		type: String,
 	},
 	type: {
 		type: Types.Select,
 		options: [{
 			value: 'stratum',
-			label: 'Stratum Widget'
+			label: 'Stratum Widget',
 		}, {
 			value: 'keystone',
-			label: 'Keystone Widget'
+			label: 'Keystone Widget',
 		// }, {
 		// 	value: 'other',
 		// 	label: 'Other'
-		}]
+		}],
 	},
 	stratumWidget: {
 		type: Types.Relationship,
 		ref: 'StratumWidget',
 		filters: {
-			removed: false
+			removed: false,
 		},
 		dependsOn: {
-			type: 'stratum'
-		}
+			type: 'stratum',
+		},
 	},
 	keystoneWidget: {
 		type: Types.Relationship,
 		ref: 'KeystoneWidget',
 		filters: {
-			removed: false	
+			removed: false,
 		},
 		dependsOn: {
-			type: 'keystone'
-		}
+			type: 'keystone',
+		},
 	},
 	size: {
 		type: Types.Select,
 		default: 'small',
 		options: ['small', 'large'],
-		emptyOption: false
+		emptyOption: false,
 	},
 	advancedSettings: {
 		type: Types.Textarea,
 		collapse: true,
 		dependsOn: {
-			type: ['stratum', 'keystone']
-		}
+			type: ['stratum', 'keystone'],
+		},
+	},
+	queryString: {
+		type: String,
+		note: 'Add query parameters here, if necessary, on the format one=1&two=abc',
+		dependsOn: {
+			type: 'stratum',
+		},
+		collapse: true,
 	},
 	showOnStartPage: {
 		type: Boolean,
 		hidden: true,
-		note: 'Check here if this widget should be visible on the start page'
-	}
+		note: 'Check here if this widget should be visible on the start page',
+	},
 });
 Widget.defaultColumns = 'name, description, type';
 

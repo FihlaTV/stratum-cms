@@ -39,5 +39,5 @@ export default {
 	SEPOps,
 	HNSVRehabTotal,
 	HNSVCI,
-	HNSVSat
+	HNSVSat,
 };

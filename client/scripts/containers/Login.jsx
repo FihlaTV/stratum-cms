@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setLoginMethod, inputPersonalNumber, resetState, LoginMethod, toggleNextState, showLoginModal } from '../actions/login';
+import { setLoginMethod, resetState,
+	LoginMethod, toggleNextState, showLoginModal,
+	updateSithsNewCard } from '../actions/login';
 // import ChangeLogin from '../components/ChangeLogin';
-import SelectLogin from '../components/SelectLogin';
-import InputPersonalNr from '../components/InputPersonalNr';
 import ResetState from '../components/ResetState';
 import NextButton from '../components/NextButton';
 import LoginSelectorList from '../components/LoginSelectorList';
@@ -13,79 +13,83 @@ import Alert from '../components/Alert';
 import BankID from './BankID';
 
 class Login extends Component {
-	render() {
-		const { 
-			dispatch,
+	render () {
+		const {
 			error,
-			close, 
-			loginMethod, 
-			personalNumber, 
-			resetState, 
-			loginSelect, 
+			close,
+			loginMethod,
+			resetState,
+			loginSelect,
 			validPNr,
 			nextState,
 			hasNextState,
 			sithsStatus,
 			showModal,
-			https
+			https,
+			sithsNewCardChange,
+			validNewCard,
 		} = this.props;
-		if(error){
+		if (error) {
 			return (
-                <LoginModal onHide={close} show={showModal} title="Inloggningen Misslyckades">
+				<LoginModal onHide={close} show={showModal} title="Inloggningen Misslyckades">
 					<LoginModal.Body>
-                        <Alert alertType="danger" faIcon="fa-exclamation-triangle">
-                            {error.message}
-                        </Alert>
+						<Alert alertType="danger" faIcon="fa-exclamation-triangle">
+							{error.message}
+						</Alert>
 					</LoginModal.Body>
 					<LoginModal.Footer>
-                        <ResetState onClick={close}>Stäng</ResetState>
-                    </LoginModal.Footer>
+						<ResetState onClick={close}>Stäng</ResetState>
+					</LoginModal.Footer>
 				</LoginModal>
 			);
 		}
-		switch(loginMethod){
+		switch (loginMethod) {
 			case LoginMethod.NOT_SELECTED:
 				return (
 					<LoginModal onHide={close} show={showModal} title="Välj metod för att logga in">
-                        <LoginModal.Body>
-                            <LoginSelectorList onClick={loginSelect} loginSelectors={[
-                                {cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort'},
-                                {cssClass: 'bankid', 
-                                    loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID'}
-                            ]}/>
-							{ !https &&
-							<Alert alertType="danger" faIcon="fa-exclamation-triangle">
+						<LoginModal.Body>
+							<LoginSelectorList onClick={loginSelect} loginSelectors={[
+								{ cssClass: 'siths', loginMethod: LoginMethod.SITHS_CARD, title: 'SITHS-kort' },
+								{ cssClass: 'bankid',
+									loginMethod: LoginMethod.BANK_ID, title: 'Mobilt BankID' },
+							]}/>
+							{!https
+							&& <Alert alertType="danger" faIcon="fa-exclamation-triangle">
 								Du är inte under https, inloggningen kommer inte fungera som förväntat
 							</Alert>
-							 }
-                        </LoginModal.Body>
-                        <LoginModal.Footer>
-                            <ResetState onClick={close} />
-                        </LoginModal.Footer>
+							}
+						</LoginModal.Body>
+						<LoginModal.Footer>
+							<ResetState onClick={close} />
+						</LoginModal.Footer>
 					</LoginModal>
 				);
 			case LoginMethod.BANK_ID:
 				return (
 					<LoginModal onHide={close} show={showModal} title="Mobilt BankID">
-                        <LoginModal.Body>
-                            <BankID onSubmit={nextState}/>
-                        </LoginModal.Body>
-                        <LoginModal.Footer>
+						<LoginModal.Body>
+							<BankID onSubmit={nextState}/>
+						</LoginModal.Body>
+						<LoginModal.Footer>
 							<ResetState onClick={resetState} disabled={validPNr && !hasNextState}>Tillbaka</ResetState>
-                            <NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
-                        </LoginModal.Footer>
+							<NextButton onClick={nextState} isLoading={validPNr && !hasNextState} disabled={!(validPNr && hasNextState)}/>
+						</LoginModal.Footer>
 					</LoginModal>
 				);
 			case LoginMethod.SITHS_CARD:
 				return (
 					<LoginModal onHide={close} show={showModal} title="SITHS-kort">
-                        <LoginModal.Body>
-                            <SITHSLogin status={sithsStatus} />
-                        </LoginModal.Body>
-                        <LoginModal.Footer>
-							<ResetState onClick={resetState}>Tillbaka</ResetState>
-                            <NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState}/>
-                        </LoginModal.Footer>
+						<LoginModal.Body>
+							<SITHSLogin status={sithsStatus}
+								onNewCardSubmit={nextState}
+								validNewCard={validNewCard}
+								onNewCardChange={sithsNewCardChange}
+							/>
+						</LoginModal.Body>
+						<LoginModal.Footer>
+							<ResetState onClick={resetState} disabled={!hasNextState}>Tillbaka</ResetState>
+							<NextButton onClick={nextState} isLoading={!hasNextState} disabled={!hasNextState || sithsStatus === 'SITHS_NEW_CARD' && !validNewCard}/>
+						</LoginModal.Footer>
 					</LoginModal>
 				);
 		}
@@ -93,14 +97,14 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  loginMethod: PropTypes.oneOf([
-    'BANK_ID',
-    'SITHS_CARD',
-	'NOT_SELECTED'
-  ])
+	loginMethod: PropTypes.oneOf([
+		'BANK_ID',
+		'SITHS_CARD',
+		'NOT_SELECTED',
+	]),
 };
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps (dispatch) {
 	return {
 		resetState: () => {
 			dispatch(resetState());
@@ -113,10 +117,13 @@ function mapDispatchToProps(dispatch){
 		},
 		close: () => {
 			dispatch(showLoginModal(false));
-		}
+		},
+		sithsNewCardChange: ({ username, password }) => {
+			dispatch(updateSithsNewCard(username, password));
+		},
 	};
 }
-function mapStateToProps(state){
+function mapStateToProps (state) {
 	return {
 		error: state.login.error,
 		loginMethod: state.login.loginMethod,
@@ -125,7 +132,8 @@ function mapStateToProps(state){
 		sithsStatus: state.login.sithsStatus,
 		hasNextState: state.login.hasNextState,
 		showModal: state.login.showLoginModal,
-		https: state.login.https
+		https: state.login.https,
+		validNewCard: state.login.sithsNewCard.valid,
 	};
 }
 

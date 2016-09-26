@@ -1,5 +1,5 @@
 exports.create = {
 	StartPage: [
-		{ 'header': 'Registername' }
-	]
+		{ header: 'Registername' },
+	],
 };

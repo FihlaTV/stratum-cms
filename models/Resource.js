@@ -1,7 +1,7 @@
-var keystone = require('keystone'),
-	Types = keystone.Field.Types,
-	shortid = require('shortid'),
-	path = require('path');
+var keystone = require('keystone');
+var	Types = keystone.Field.Types;
+var	shortid = require('shortid');
+var	path = require('path');
 
 
 /**
@@ -12,7 +12,7 @@ var keystone = require('keystone'),
 var Resource = new keystone.List('Resource', {
 	map: { name: 'title' },
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
-	defaultSort: '-createdAt'
+	defaultSort: '-createdAt',
 });
 
 Resource.add({
@@ -21,22 +21,22 @@ Resource.add({
 		type: Types.AzureFile,
 		note: 'File size cannot be above 30 MB',
 		// TODO: Would be nice if this could be stored globally but there seems to be a bug
-		//       in the azurefile config concerning container name, so remember to add this for all 
-		//       AzureFile fields 
+		//       in the azurefile config concerning container name, so remember to add this for all
+		//       AzureFile fields
 		containerFormatter: function (item, filename) {
 			return keystone.get('brand safe');
 		},
 		filenameFormatter: function (item, filename) {
 			return 'r/' + item.title.substr(0, 65).replace(/\W+/g, '-') + '-' + item.shortId + path.extname(filename).toLowerCase();
-		}
+		},
 	},
 	shortId: {
-        type: String,
-        'default': shortid.generate,
-        unique: true,
+		type: String,
+		default: shortid.generate,
+		unique: true,
 		hidden: true,
-        noedit: true
-    },
+		noedit: true,
+	},
 	// Only used for hiding file url when not needed
 	hasFile: {
 		type: Boolean,
@@ -45,7 +45,7 @@ Resource.add({
 		watch: 'file',
 		value: function () {
 			return this.file && this.file.exists;
-		}
+		},
 	},
 	fileUrl: {
 		type: Types.Url,
@@ -55,13 +55,13 @@ Resource.add({
 		value: function () {
 			return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
 		},
-		note: 'Use this link if you must reference this resource directly'
+		note: 'Use this link if you must reference this resource directly',
 	},
 	description: { type: Types.Textarea, initial: true },
 });
 
 Resource.schema.virtual('file.secureUrl').get(function () {
-	 return this.file && this.file.exists && this.file.url.replace(/^http/, 'https');
+	return this.file && this.file.exists && this.file.url.replace(/^http/, 'https');
 });
 Resource.schema.virtual('fileType').get(function () {
 	var fileType = this.file && this.file.exists && this.file.filetype;

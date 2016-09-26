@@ -1,10 +1,11 @@
-var keystone = require('keystone'),
-	async = require('async');
+var keystone = require('keystone');
+var	async = require('async');
 
 exports.updateCount = function (cb) {
-	var context = {pagesUpdated: 0},
-	Page = keystone.list('Page'),
-	SubPage = keystone.list('SubPage');
+	var context = { pagesUpdated: 0 };
+	var Page = keystone.list('Page');
+	var SubPage = keystone.list('SubPage');
+
 	Page.model
 		.find()
 		.exec(function (err, pages) {
@@ -16,9 +17,9 @@ exports.updateCount = function (cb) {
 					context.pagesUpdated++;
 					SubPage.model
 						.where('page', page._id)
-						.where('state', 'published')						
+						.where('state', 'published')
 						.count(function (err, count) {
-							if(!err){
+							if (!err) {
 								page.set('numberOfSubPages', count);
 								page.save(callback);
 							} else {
@@ -27,9 +28,9 @@ exports.updateCount = function (cb) {
 						});
 				},
 				function (err) {
-					if(cb){
+					if (cb) {
 						cb(err, context);
-					} else if(err) {
+					} else if (err) {
 						throw err;
 					}
 				});

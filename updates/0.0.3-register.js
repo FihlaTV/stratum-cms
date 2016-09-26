@@ -1,5 +1,5 @@
 exports.create = {
 	RegisterInformation: [
-		{ 'name': 'Registername' }
-	]
+		{ name: 'Registername' },
+	],
 };

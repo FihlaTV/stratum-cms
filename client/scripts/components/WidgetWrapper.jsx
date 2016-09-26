@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import widgets from '../widgets/';
 
 class WidgetWrapper extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {};
 	}
-	render() {
+	render () {
 		const Widget = widgets[this.props.id];
 		return Widget ? (
 			<Widget {...this.props}>{this.props.children}</Widget>
@@ -15,7 +15,7 @@ class WidgetWrapper extends Component {
 }
 
 WidgetWrapper.propTypes = {
-	id: PropTypes.oneOf(Object.keys(widgets)).isRequired
+	id: PropTypes.oneOf(Object.keys(widgets)).isRequired,
 };
 
 export default WidgetWrapper;
