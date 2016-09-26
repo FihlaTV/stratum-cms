@@ -8,6 +8,9 @@ import MYRPostTotal from './MYRPostTotal';
 import RORHearingTest from './RORHearingTest';
 import RORSatInfo from './RORSatInfo';
 import SEPOps from './SEPOps';
+import HNSVRehabTotal from './HNSVRehabTotal';
+import HNSVCI from './HNSVCI';
+import HNSVSat from './HNSVSat';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -19,6 +22,9 @@ export { MYRPostTotal };
 export { RORHearingTest };
 export { RORSatInfo };
 export { SEPOps };
+export { HNSVRehabTotal };
+export { HNSVCI };
+export { HNSVSat };
 
 export default {
 	BOAArtrosSkola,
@@ -31,4 +37,7 @@ export default {
 	RORHearingTest,
 	RORSatInfo,
 	SEPOps,
+	HNSVRehabTotal,
+	HNSVCI,
+	HNSVSat,
 };

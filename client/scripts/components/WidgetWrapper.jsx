@@ -8,9 +8,9 @@ class WidgetWrapper extends Component {
 	}
 	render () {
 		const Widget = widgets[this.props.id];
-		return (
+		return Widget ? (
 			<Widget {...this.props}>{this.props.children}</Widget>
-		);
+		) : null;
 	}
 }
 

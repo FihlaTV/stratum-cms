@@ -1,18 +1,18 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const HNSVPirs = ({
+const HNSVCI = ({
 	description,
 }) => {
 	return (
 		<StartPageWidget
-			url="/stratum/api/statistics/hnsv/pirsny?simple=1&apikey=bK3H9bwaG4o="
+			url="/stratum/api/statistics/hnsv/implantat?simple=1&APIKey=bK3H9bwaG4o="
 			description={description}
-			format="0.0"
+			format="0.0 %"
 	/>
 	);
 };
 
-HNSVPirs.defaultProps = {};
+HNSVCI.defaultProps = {};
 
-export default HNSVPirs;
+export default HNSVCI;

@@ -13,7 +13,7 @@
 	},
 	"HNSVPirs": {
 		"id": "HNSVPirs",
-		"description": "En beskrivning som förklarar den här widgeten..."
+		"description": "Hörselnedsättningens påverkan på dagligt liv. Medelvärde."
 	},
   "HNSBChildrenNew": {
     "id": "HNSBChildrenNew",
@@ -38,5 +38,17 @@
   "SEPOps": {
     "id": "SEPOps",
     "description": "Antal registrerade septumoperationer totalt i registret."
+	},
+  "HNSVRehabTotal": {
+    "id": "HNSVRehabTotal",
+    "description": "Andel som fått utvidgad rehabilitering."
+  },
+  "HNSVCI": {
+    "id": "HNSVCI",
+    "description": "Andel som har kokleaimplantat."
+  },
+  "HNSVSat": {
+    "id": "HNSVSat",
+    "description": "Upplever god nytta av hörselvårdens insatser."
   }
 }
