@@ -199,7 +199,7 @@ export function initiateSITHSLogin () {
 			.then(json => {
 				if (json.success) {
 					return dispatch(loginToStratum());
-				} else if (json.code === 4) {
+				} else if (json.code === 3 || json.code === 4) {
 					// Ask if new card should be attached to User
 					return dispatch(setSITHSStatus('SITHS_NEW_CARD'));
 
