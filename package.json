@@ -50,6 +50,7 @@
     "eslint": "2.13.1",
     "eslint-config-keystone": "2.4.0",
     "eslint-plugin-react": "^5.1.0",
+    "expect": "^1.20.2",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.8.5",
     "gulp": "3.9.1",
@@ -62,6 +63,7 @@
     "jshint-stylish": "2.2.0",
     "less-loader": "2.2.3",
     "merge-stream": "1.0.0",
+    "mocha": "^3.1.0",
     "react-transform-hmr": "1.0.4",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
@@ -79,7 +81,9 @@
     "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
     "build_all": "set NODE_ENV=production&&gulp build-all",
     "lint": "eslint . --ext=js --ext=jsx",
-    "lint_fix": "eslint . --fix --ext=js --ext=jsx"
+    "lint_fix": "eslint . --fix --ext=js --ext=jsx",
+    "test": "mocha --compilers js:babel-core/register --recursive client/test/",
+    "test:watch": "npm test -- --watch"
   },
   "main": "keystone.js"
 }
