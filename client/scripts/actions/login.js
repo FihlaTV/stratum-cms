@@ -283,25 +283,11 @@ function getStratumProxyLoginError (errorCode) {
  * from stratum. This call is handled by a proxy in Keystone and not by
  * stratum directly, in order to read the cookie.
  */
-export function loginToStratum (refresh, { username, password } = {}) {
-	let conf = {
-		credentials: 'include',
-	};
-
-	if (username && password) {
-		const formData = new FormData();
-		formData.append('username', username);
-		formData.append('password', password);
-		conf = {
-			...conf,
-			method: 'POST',
-			body: formData,
-		};
-	}
+export function loginToStratum (refresh) {
 	return dispatch => {
-		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`,
-				conf
-			)
+		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, {
+			credentials: 'include',
+		})
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
