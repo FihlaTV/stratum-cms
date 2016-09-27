@@ -202,7 +202,7 @@ export function initiateSITHSLogin () {
 				} else if (json.code === 3 || json.code === 4) {
 					// Ask if new card should be attached to User
 					return dispatch(setSITHSStatus('SITHS_NEW_CARD'));
-
+					dispatch(setHasNextState(true));
 				} else {
 					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
