@@ -34,6 +34,12 @@ const SITHSLogin = ({
 					/>
 				</div>
 			);
+		case 'SITHS_NEW_CARD_COMPLETE':
+			return (
+				<Alert alertType="success">
+					<p><strong>Ditt kort är nu upplagt i systemet.</strong> Logga in med hjälp av "Logga in"-knappen uppe till höger.</p>
+				</Alert>
+			);
 		default :
 			return <h1>SITHS</h1>;
 	}
