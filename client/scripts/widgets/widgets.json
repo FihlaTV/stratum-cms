@@ -50,5 +50,9 @@
   "HNSVSat": {
     "id": "HNSVSat",
     "description": "Upplever god nytta av hörselvårdens insatser."
+  },
+  "RORImproved": {
+    "id": "RORImproved",
+    "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
   }
 }

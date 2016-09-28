@@ -11,6 +11,7 @@ import SEPOps from './SEPOps';
 import HNSVRehabTotal from './HNSVRehabTotal';
 import HNSVCI from './HNSVCI';
 import HNSVSat from './HNSVSat';
+import RORImproved from './RORImproved';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -25,6 +26,7 @@ export { SEPOps };
 export { HNSVRehabTotal };
 export { HNSVCI };
 export { HNSVSat };
+export { RORImproved };
 
 export default {
 	BOAArtrosSkola,
@@ -40,4 +42,5 @@ export default {
 	HNSVRehabTotal,
 	HNSVCI,
 	HNSVSat,
+	RORImproved,
 };
