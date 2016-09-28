@@ -13,6 +13,7 @@ import HNSVCI from './HNSVCI';
 import HNSVSat from './HNSVSat';
 import RORImproved from './RORImproved';
 import RORVentetid from './RORVentetid';
+import FONOForbettring from './FONOForbettring';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -29,6 +30,7 @@ export { HNSVCI };
 export { HNSVSat };
 export { RORImproved };
 export { RORVentetid };
+export { FONOForbettring };
 
 export default {
 	BOAArtrosSkola,
@@ -46,4 +48,5 @@ export default {
 	HNSVSat,
 	RORImproved,
 	RORVentetid,
+	FONOForbettring,
 };

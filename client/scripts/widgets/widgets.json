@@ -58,5 +58,9 @@
   "RORVentetid": {
     "id": "RORVentetid",
     "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
+  },
+  "FONOForbettring": {
+    "id": "FONOForbettring",
+    "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
   }
 }
