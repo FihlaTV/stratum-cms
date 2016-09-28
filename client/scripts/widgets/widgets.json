@@ -50,5 +50,21 @@
   "HNSVSat": {
     "id": "HNSVSat",
     "description": "Upplever god nytta av hörselvårdens insatser."
+  },
+  "RORImproved": {
+    "id": "RORImproved",
+    "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
+  },
+  "RORVentetid": {
+    "id": "RORVentetid",
+    "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
+  },
+  "FONOForbettring": {
+    "id": "FONOForbettring",
+    "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
+  },
+  "FONOPatientenket": {
+    "id": "FONOPatientenket",
+    "description": "Andel svar på patientenkät cirka 4 månader efter operation"
   }
 }
