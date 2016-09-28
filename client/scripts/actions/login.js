@@ -327,7 +327,7 @@ function assignSithsCard ({ username, password } = {}) {
 				if (json.success) {
 					console.log('login with new siths card successful...');
 					dispatch(setSITHSStatus('SITHS_NEW_CARD_COMPLETE'));
-					setTimeout(() => window.location.reload(), 2000); // For now...
+					setTimeout(() => window.location.reload(), 5000); // For now...
 				} else {
 					const errorCode = json.code === 1 && 'ASSIGN_WRONG_CREDENTIALS';
 					const error = new Error(getStratumProxyLoginError(errorCode));
