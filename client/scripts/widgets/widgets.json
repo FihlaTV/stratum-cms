@@ -62,5 +62,9 @@
   "FONOForbettring": {
     "id": "FONOForbettring",
     "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
+  },
+  "FONOPatientenket": {
+    "id": "FONOPatientenket",
+    "description": "Andel svar på patientenkät cirka 4 månader efter operation"
   }
 }
