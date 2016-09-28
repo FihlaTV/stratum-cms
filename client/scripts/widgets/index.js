@@ -11,6 +11,10 @@ import SEPOps from './SEPOps';
 import HNSVRehabTotal from './HNSVRehabTotal';
 import HNSVCI from './HNSVCI';
 import HNSVSat from './HNSVSat';
+import RORImproved from './RORImproved';
+import RORVentetid from './RORVentetid';
+import FONOForbettring from './FONOForbettring';
+import FONOPatientenket from './FONOPatientenket';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -25,6 +29,10 @@ export { SEPOps };
 export { HNSVRehabTotal };
 export { HNSVCI };
 export { HNSVSat };
+export { RORImproved };
+export { RORVentetid };
+export { FONOForbettring };
+export { FONOPatientenket };
 
 export default {
 	BOAArtrosSkola,
@@ -40,4 +48,8 @@ export default {
 	HNSVRehabTotal,
 	HNSVCI,
 	HNSVSat,
+	RORImproved,
+	RORVentetid,
+	FONOForbettring,
+	FONOPatientenket,
 };
