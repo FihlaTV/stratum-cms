@@ -199,10 +199,10 @@ export function initiateSITHSLogin () {
 			.then(json => {
 				if (json.success) {
 					return dispatch(loginToStratum());
-				} else if (json.code === 4) {
+				} else if (json.code === 3 || json.code === 4) {
 					// Ask if new card should be attached to User
+					dispatch(setHasNextState(true));
 					return dispatch(setSITHSStatus('SITHS_NEW_CARD'));
-
 				} else {
 					const error = new Error(json.code ? sithsErrorMessages(json.code) : json.message);
 					throw (error);
@@ -226,7 +226,7 @@ export function toggleNextState () {
 					// console.log('valid');
 					dispatch(setHasNextState(false));
 					dispatch(setSITHSStatus('SITHS_DO_LOGIN')); // Set loading status
-					dispatch(loginToStratum(false, state.login.sithsNewCard));
+					dispatch(assignSithsCard(state.login.sithsNewCard));
 				}
 			} else {
 				return dispatch(initiateSITHSLogin());
@@ -283,25 +283,11 @@ function getStratumProxyLoginError (errorCode) {
  * from stratum. This call is handled by a proxy in Keystone and not by
  * stratum directly, in order to read the cookie.
  */
-export function loginToStratum (refresh, { username, password } = {}) {
-	let conf = {
-		credentials: 'include',
-	};
-
-	if (username && password) {
-		const formData = new FormData();
-		formData.append('username', username);
-		formData.append('password', password);
-		conf = {
-			...conf,
-			method: 'POST',
-			body: formData,
-		};
-	}
+export function loginToStratum (refresh) {
 	return dispatch => {
-		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`,
-				conf
-			)
+		return fetch(`/api/authentication/login?_=${(new Date()).getTime()}`, {
+			credentials: 'include',
+		})
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
@@ -314,6 +300,37 @@ export function loginToStratum (refresh, { username, password } = {}) {
 					// return dispatch(setBIDStage(LoginStages.LOGIN_COMPLETED));
 				} else {
 					const error = new Error(json.code ? getStratumProxyLoginError(json.code) : json.message);
+					throw (error);
+				}
+			})
+			.catch(error => {
+				console.log('request failed', error);
+				dispatch(loginError(error));
+			});
+	};
+}
+
+function assignSithsCard ({ username, password } = {}) {
+	const formData = new FormData();
+	formData.append('username', username);
+	formData.append('password', password);
+
+	return dispatch => {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login?_=${(new Date()).getTime()}`, {
+			credentials: true,
+			method: 'POST',
+			body: formData,
+		}
+			)
+			.then(res => res.json())
+			.then(json => {
+				if (json.success) {
+					console.log('login with new siths card successful...');
+					dispatch(setSITHSStatus('SITHS_NEW_CARD_COMPLETE'));
+					setTimeout(() => window.location.reload(), 2000); // For now...
+				} else {
+					const errorCode = json.code === 1 && 'ASSIGN_WRONG_CREDENTIALS';
+					const error = new Error(getStratumProxyLoginError(errorCode));
 					throw (error);
 				}
 			})
