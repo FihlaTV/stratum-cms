@@ -12,6 +12,7 @@ import HNSVRehabTotal from './HNSVRehabTotal';
 import HNSVCI from './HNSVCI';
 import HNSVSat from './HNSVSat';
 import RORImproved from './RORImproved';
+import RORVentetid from './RORVentetid';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -27,6 +28,7 @@ export { HNSVRehabTotal };
 export { HNSVCI };
 export { HNSVSat };
 export { RORImproved };
+export { RORVentetid };
 
 export default {
 	BOAArtrosSkola,
@@ -43,4 +45,5 @@ export default {
 	HNSVCI,
 	HNSVSat,
 	RORImproved,
+	RORVentetid,
 };

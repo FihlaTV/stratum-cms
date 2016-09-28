@@ -54,5 +54,9 @@
   "RORImproved": {
     "id": "RORImproved",
     "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
+  },
+  "RORVentetid": {
+    "id": "RORVentetid",
+    "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
   }
 }
