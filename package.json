@@ -82,7 +82,7 @@
     "build_all": "set NODE_ENV=production&&gulp build-all",
     "lint": "eslint . --ext=js --ext=jsx",
     "lint_fix": "eslint . --fix --ext=js --ext=jsx",
-    "test": "mocha --compilers js:babel-core/register --recursive client/test/",
+    "test": "mocha --compilers js:babel-core/register --recursive client/test/ --require client/test/testconfig.js",
     "test:watch": "npm test -- --watch"
   },
   "main": "keystone.js"
