@@ -311,17 +311,10 @@ export function loginToStratum (refresh) {
 }
 
 function assignSithsCard ({ username, password } = {}) {
-	const formData = new FormData();
-	formData.append('username', username);
-	formData.append('password', password);
-
 	return dispatch => {
-		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/login?_=${(new Date()).getTime()}`, {
+		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/assign?_=${(new Date()).getTime()}&username=${username}&password=${password}`, {
 			credentials: true,
-			method: 'POST',
-			body: formData,
-		}
-			)
+		})
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
