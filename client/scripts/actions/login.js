@@ -313,7 +313,7 @@ export function loginToStratum (refresh) {
 function assignSithsCard ({ username, password } = {}) {
 	return dispatch => {
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/assign?_=${(new Date()).getTime()}&username=${username}&password=${password}`, {
-			credentials: true,
+			credentials: 'include',
 		})
 			.then(res => res.json())
 			.then(json => {
