@@ -1,5 +1,8 @@
-# Stratum CMS [![Stories in Prepared](https://badge.waffle.io/registercentrum/stratum-cms.png?label=prepared&title=Prepared)](http://waffle.io/registercentrum/stratum-cms) [![Stories in Progress](https://badge.waffle.io/registercentrum/stratum-cms.png?label=in+Progress&title=In%20Progress)](http://waffle.io/registercentrum/stratum-cms)
+# Stratum CMS 
 
+[![Build Status](https://travis-ci.org/Registercentrum/stratum-cms.svg?branch=master)](https://travis-ci.org/Registercentrum/stratum-cms)
+[![Stories in Prepared](https://badge.waffle.io/registercentrum/stratum-cms.png?label=prepared&title=Prepared)](http://waffle.io/registercentrum/stratum-cms)
+[![Stories in Progress](https://badge.waffle.io/registercentrum/stratum-cms.png?label=in+Progress&title=In%20Progress)](http://waffle.io/registercentrum/stratum-cms)
 
 ## Register support
 It is currently possible to add multiple registers by running separate instances of keystone from separate `keystone.js` files, prefferably configured as follows:
