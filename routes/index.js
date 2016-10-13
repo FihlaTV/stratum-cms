@@ -105,6 +105,7 @@ exports = module.exports = function (app) {
 	// Logout
 	app.get('/logout', routes.views.logout);
 
+	app.get('/react/*', routes.views.react);
 	// Views for dynamic routes
 	app.get('/:menublock/', routes.views.menublock);
 	app.get('*/p/:shortid', routes.views.page);

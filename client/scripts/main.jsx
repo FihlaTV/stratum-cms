@@ -24,6 +24,7 @@ const { CLIENT_COOKIE_DOMAIN } = process.env;
 const cookieConf = { domain: CLIENT_COOKIE_DOMAIN };
 const mainContainer = document.getElementById('login-button-react');
 const messageContainer = document.getElementById('message-container');
+const routerContainer = document.getElementById('react-container');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
 
 let store = compose(
@@ -62,6 +63,9 @@ if (messageContainer) {
 		</Provider>,
 		messageContainer
 	);
+}
+if (routerContainer) {
+	console.log('routerContainer');
 }
 if (keystoneWidgets) {
 	// Read widget id from data-attribute
