@@ -11,6 +11,12 @@ import find from 'array.prototype.find';
 import Messages from './containers/Messages';
 import cookies from 'js-cookie';
 
+// React Router
+import { browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { Router } from 'react-router';
+import routes from './routes';
+
 // Webpack dependencies
 // import 'jquery'; // not needed, bundled with bootstrap
 import 'bootstrap';
@@ -31,6 +37,8 @@ let store = compose(
 		applyMiddleware(thunkMiddleware),
 		window.devToolsExtension ? window.devToolsExtension() : f => f
 	)(createStore)(loginApp);
+
+const history = syncHistoryWithStore(browserHistory, store);
 
 if (module.hot) {
 	module.hot.accept('./reducers/reducers.js', () => {
@@ -66,6 +74,12 @@ if (messageContainer) {
 }
 if (routerContainer) {
 	console.log('routerContainer');
+	render(
+		<Provider store={store}>
+			<Router history={history} routes={routes} />
+		</Provider>,
+		routerContainer
+	);
 }
 if (keystoneWidgets) {
 	// Read widget id from data-attribute
