@@ -12,8 +12,8 @@
 @navbar-main-height: 46px;
 @navbar-main-padding-vertical:          ((@navbar-main-height - @line-height-computed) / 2);
 
-img.navbar-brand-image, 
-img.navbar-brand-image-big, 
+img.navbar-brand-image,
+img.navbar-brand-image-big,
 img.navbar-brand-image-small{
 	height: @navbar-image-height;
 	// margin: ((@navbar-height - @navbar-image-height) / 2) 0;
@@ -21,7 +21,7 @@ img.navbar-brand-image-small{
 	margin-right: @gutter;
 	float: left;
 	@media (min-width: @grid-float-breakpoint) {
-		margin-left: 0;	
+		margin-left: 0;
 	}
 }
 
@@ -126,7 +126,7 @@ img.navbar-brand-image-small{
 				}
 				.nav-button-text-big{
 					&:after{
-						content: '\00A0 \2014 \00A0';	
+						content: '\00A0 \2014 \00A0';
 					}
 				}
 			}
@@ -146,7 +146,7 @@ img.navbar-brand-image-small{
 						.btn;
 						.btn-default;
 						margin-left: @gutter;
-						
+
 					}
 					a.registration-link{
 					// 	height: 45px;
@@ -238,11 +238,23 @@ img.navbar-brand-image-small{
 // 	margin-right: @gutter;
 // 	float: left;
 // 	@media (min-width: @grid-float-breakpoint) {
-// 		margin-left: 0;	
+// 		margin-left: 0;
 // 	}
 // }
 
 .navbar-big {
+	border-top: 3px solid @brand-primary;
+
+	@media (min-width: @grid-float-breakpoint) {
+		border-top-width: 4px;
+	}
+
+	> .container-fluid{
+		@media (min-width: @grid-float-breakpoint) {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
 	.navbar-brand-image-big{
 		height: @navbar-image-big-height;
 		margin: ((@navbar-height - @navbar-image-big-height) / 2) 0;
@@ -278,7 +290,7 @@ img.navbar-brand-image-small{
 
 	}
 	.navbar-main {
-		
+
 		@media (min-width: @grid-float-breakpoint) {
 			background-color: @gray-lighter;
 			border-top: 1px solid darken(@gray-lighter, 10%);

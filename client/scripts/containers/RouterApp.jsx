@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, IndexLink } from 'react-router';
+// import { Link, IndexLink } from 'react-router';
+import Menu from '../components/Menu';
+import { Grid } from 'react-bootstrap';
 
 class App extends Component {
 	render () {
@@ -8,15 +10,14 @@ class App extends Component {
 			children,
 			location,
 		} = this.props;
-		console.log(location);
+
 		return (
 			<div>
-				<p>{location.pathname}</p>
-				<IndexLink to="/react/" activeClassName="active" className="btn btn-primary">Registercentrum</IndexLink>
-				<Link to="/react/about" activeClassName="active" className="btn btn-primary">About</Link>
-				<div>
+				<Menu />
+				<Grid>
 					{children}
-				</div>
+					<p>{location.pathname}</p>
+				</Grid>
 			</div>
 		);
 	}
