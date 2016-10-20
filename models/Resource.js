@@ -3,6 +3,7 @@ var	Types = keystone.Field.Types;
 var	shortid = require('shortid');
 var	path = require('path');
 
+require('dotenv').load();
 
 /**
  * Resource Model
@@ -15,21 +16,37 @@ var Resource = new keystone.List('Resource', {
 	defaultSort: '-createdAt',
 });
 
+var USE_AZURE = !!(process.env.AZURE_STORAGE_ACCESS_KEY && process.env.AZURE_STORAGE_ACCOUNT);
+
+function filenameFormatter (item, filename) {
+	var extension = USE_AZURE ? path.extname(filename).toLowerCase() : ('.' + filename.extension);
+	return 'r/' + item.title.substr(0, 65).replace(/\W+/g, '-') + '-' + item.shortId + extension;
+}
+
+function getFileConfig () {
+	if (USE_AZURE) {
+		return {
+			type: Types.AzureFile,
+			note: 'File size cannot be above 30 MB',
+			// TODO: Would be nice if this could be stored globally but there seems to be a bug
+			//       in the azurefile config concerning container name, so remember to add this for all
+			//       AzureFile fields
+			containerFormatter: function (item, filename) {
+				return keystone.get('brand safe');
+			},
+			filenameFormatter: filenameFormatter,
+		};
+	}
+	return {
+		type: Types.LocalFile,
+		dest: 'public/temp',
+		filename: filenameFormatter,
+	};
+}
+
 Resource.add({
 	title: { type: String, required: true },
-	file: {
-		type: Types.AzureFile,
-		note: 'File size cannot be above 30 MB',
-		// TODO: Would be nice if this could be stored globally but there seems to be a bug
-		//       in the azurefile config concerning container name, so remember to add this for all
-		//       AzureFile fields
-		containerFormatter: function (item, filename) {
-			return keystone.get('brand safe');
-		},
-		filenameFormatter: function (item, filename) {
-			return 'r/' + item.title.substr(0, 65).replace(/\W+/g, '-') + '-' + item.shortId + path.extname(filename).toLowerCase();
-		},
-	},
+	file: getFileConfig(),
 	shortId: {
 		type: String,
 		default: shortid.generate,
@@ -53,7 +70,11 @@ Resource.add({
 		noedit: true,
 		watch: 'file',
 		value: function () {
-			return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
+			if (USE_AZURE) {
+				return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
+			} else {
+				return this.file.exists ? '/temp/' + this.file.filename : '';
+			}
 		},
 		note: 'Use this link if you must reference this resource directly',
 	},
@@ -61,7 +82,10 @@ Resource.add({
 });
 
 Resource.schema.virtual('file.secureUrl').get(function () {
-	return this.file && this.file.exists && this.file.url.replace(/^http/, 'https');
+	if (USE_AZURE) {
+		return this.file && this.file.exists && this.file.url.replace(/^http/, 'https');
+	}
+	return this.fileUrl;
 });
 Resource.schema.virtual('fileType').get(function () {
 	var fileType = this.file && this.file.exists && this.file.filetype;
