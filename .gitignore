@@ -40,10 +40,13 @@ public/js/dist
 # Minified CSS/JS
 public/dist/
 
+# Temporary resources
+public/temp
+
 # Register configurations
 registers/
 
-# VS Code specific 
+# VS Code specific
 .vscode
 
 last_commit.json
