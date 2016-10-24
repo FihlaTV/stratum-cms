@@ -28,6 +28,9 @@ const Menu = () => {
 							<LinkContainer to="/react/contact" activeClassName="active">
 								<NavItem>Contact</NavItem>
 							</LinkContainer>
+              <LinkContainer to="/react/nyheter" activeClassName="active"> 
+                <NavItem>Nyheter</NavItem>
+              </LinkContainer>
 							<LinkContainer to="/react/about" activeClassName="active">
 								<NavDropdown title="Test">
 									<LinkContainer to="/react/about" activeClassName="active">
