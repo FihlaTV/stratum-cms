@@ -42,23 +42,3 @@ User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
 
 User.defaultColumns = 'name, email, isAdmin';
 User.register();
-
-
-var Usero = keystone.list('User').model;
-
-var user = new Usero({
-    name: { first:'Abcd', last:'xyz' },
-    email: 'abc@xyz.com',
-    password: 'password',
-    isAdmin: true
-});
-
-user.save(function (err) {
-    if (err) {
-        // handle error
-        return console.log(err);
-    }
-
-    // user has been saved
-    console.log(user);
-});

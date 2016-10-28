@@ -1,28 +1,41 @@
-import React, { PropTypes } from 'react';
-import fetch from 'isomorphic-fetch';
-import getNews from '../actions/news';
+import React from 'react';
+import NewsListItem from '../components/NewsListItem';
+import NewsFilter from '../components/NewsFilter';
+import NewsPagination from '../components/NewsPagination';
+import { getNews, changeYearFilter, incrementCurrentPage, decrementCurrentPage, changeCurrentPage } from '../actions/news';
+import { connect } from 'react-redux';
 
-console.log(getNews);
-class News extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {loading: true, news: []}
-    }
-    componentDidMount() {
-      fetch('/api/news')
-        .then(res => {
-          if(res.status >= 400) {
-            throw new Error("Bad res from server");
-          }
-          return res.json();
-        })
-        .then( news => {
-          this.setState({loading: false, news: news.data.messages})
-})
-}
-    render() {
-        return this.state.loading ? <h1> Laddar</h1> : <h1> Nyheter!!!</h1> 
-    }
-}
+const News = (props) => {
+	const { news } = props;
+	if (news !== 'loading') {
+		return (
+			<div>
+				<div className="row">
+					<div className="col-md-8">
+						{props.news.filteredNews.slice(news.currentPage * 5 - 5, news.currentPage * 5).map(article => <NewsListItem key={article.title} article={article} />)}
+					</div>
+					<div className="col-md-4">
+						<NewsFilter {...props} />
+					</div>
+				</div>
+				<NewsPagination {...props} />
+			</div>
+		);
+	}	else {
+		props.getNews();
+		return <h1> Laddar</h1>;
+	}
+};
 
-export default News
+const mapStateToProps = ({ news }) => {
+	return { news };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	getNews: () => dispatch(getNews()),
+	changeYearFilter: (year) => dispatch(changeYearFilter(year)),
+	incrementCurrentPage: () => dispatch(incrementCurrentPage()),
+	decrementCurrentPage: () => dispatch(decrementCurrentPage()),
+	changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(News);

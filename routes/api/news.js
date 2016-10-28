@@ -6,6 +6,7 @@ exports = module.exports = function (req, res) {
 	  keystone.list('NewsItem').model
 		    .find({state: 'published'})
         .where('publishedDate', { $exists: true, $lte: currentTime})
+		.select('content.lead')
 		    .exec(function (err, results) {
 			      if (err) {
 				        return res.apiResponse({
