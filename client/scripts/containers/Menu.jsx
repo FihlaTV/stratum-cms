@@ -20,7 +20,7 @@ class Menu extends Component {
 			 * Since bootstrap only supports 2 levels in menues, the structure
 			 * should be flat and styled with classes after level 1
 			 */
-			if (level > 0 && items) {
+			if (level > 0 && items && items.length > 0) {
 				return prev.concat(
 					this.formatMenu([{ url, label, key, hasChildren: true }], level),
 					this.formatMenu(items, level + 1)
@@ -36,7 +36,7 @@ class Menu extends Component {
 			 * Add an extra Menu item for root level menues for displaying
 			 * a dropdown in mobile and a single link in desktop
 			 */
-			if (level === 0 && items) {
+			if (level === 0 && items && items.length > 0) {
 				retVal.push(
 					<LinkContainer to={`/react${url}`} activeClassName="active" key={`${key}-desktop`}>
 						{this.getLinkContents({ url, label, key }, level, true)}
@@ -55,14 +55,14 @@ class Menu extends Component {
 		if (level === 0) {
 			if (desktop) {
 				classNames.push('visible-md', 'visible-lg');
-			} else if (items) {
+			} else if (items && items.length > 0) {
 				classNames.push('hidden-md', 'hidden-lg');
 			}
 		}
 		if (hasChildren) {
 			classNames.push('has-sub-pages');
 		}
-		if (items) {
+		if (items && items.length > 0) {
 			return (
 				<NavDropdown className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
 					{this.formatMenu(items, level + 1)}

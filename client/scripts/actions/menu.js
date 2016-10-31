@@ -11,7 +11,7 @@ function receiveMenuItems (items) {
 
 export function fetchMenuItems () {
 	return (dispatch) => {
-		fetch('/api/menu')
+		fetch('/api/menu', { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
