@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { Link, IndexLink } from 'react-router';
-import Menu from '../components/Menu';
+import Menu from '../containers/Menu';
 import { Grid } from 'react-bootstrap';
 
 class App extends Component {

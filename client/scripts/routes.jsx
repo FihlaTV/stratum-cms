@@ -17,6 +17,10 @@ const Index = () => (
 	<h1>Registercentrum</h1>
 );
 
+const Page = () => (
+	<h1>Page</h1>
+);
+
 export default (
 	<Route path="/react/" component={App}>
 		<IndexRoute component={Index} />
@@ -24,5 +28,6 @@ export default (
 			<Route path="more" component={() => <h1>More About</h1>} />
 		</Route>
 		<Route path="contact" component={Contact} />
+		<Route path="**/p/:pageId" component={Page} />
 	</Route>
 );
