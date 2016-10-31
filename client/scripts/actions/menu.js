@@ -16,8 +16,9 @@ export function fetchMenuItems () {
 			.then(json => {
 				if (json.success) {
 					dispatch(receiveMenuItems(json.data));
+				} else {
+					throw new Error(json.error);
 				}
-				throw new Error(json.error);
 			})
 			.catch(error => {
 				console.log('Failed to load menu items', error);
