@@ -60,14 +60,17 @@ NewsItem.add({
 
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
 NewsItem.register();
-
-/* var News = keystone.list('NewsItem').model;
-
-Array.apply(null, { length: 5200 }).map(function (item, index) {
+/*
+var News = keystone.list('NewsItem').model;
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+Array.apply(null, { length: 52 * 20 }).map(function (item, index) {
+	var year = randomIntFromInterval(2010,2016);
 var news = new News({
-createdAt: "2016-10-26T11:09:16.872Z",
+createdAt: year + "-10-26T11:09:16.872Z",
 title: "Bacon ipsum" + index,
-publishedDate: "2016-10-25T22:00:00.000Z",
+publishedDate: year + "-10-25T22:00:00.000Z",
 resources: [ ],
 content: {
 lead: "Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!" + index,
@@ -86,7 +89,7 @@ news.save(function (err) {
     }
 
     // user has been saved
-    console.log(user);
+    console.log(news);
 })
 })
 */

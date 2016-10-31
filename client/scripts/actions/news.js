@@ -8,7 +8,7 @@ export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
 export function changeYearFilter (filter) {
 	return { type: CHANGE_YEAR_FILTER, filter };
 };
-const messages = (newsArr) => {
+const news = (newsArr) => {
 	return { type: NEWS, news: newsArr };
 };
 
@@ -16,7 +16,7 @@ export function getNews () {
 	return (dispatch) => {
 		fetch('/api/news')
        .then(res => res.json())
-       .then(json => dispatch(messages(json.data.messages)));
+       .then(json => dispatch(news(json.data.news)));
 	};
 }
 

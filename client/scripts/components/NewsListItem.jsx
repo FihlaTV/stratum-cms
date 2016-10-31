@@ -3,7 +3,7 @@ import React from 'react';
 const NewsListItem = ({ article }) => {
 	const date = new Date(article.publishedDate);
 	return (
-		<div className="news-list-item" key={article.title}>
+		<div className="news-list-item" >
 			<a href={`/nyheter/${article.title}`}>
 				<div className="news-list-item-content">
 					<h2>{article.title}</h2>
