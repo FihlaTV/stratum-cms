@@ -1,12 +1,5 @@
 import expect from 'expect';
-import thunk from 'redux-thunk';
-import nock from 'nock';
-import configureMockStore from 'redux-mock-store';
-
 import * as actions from '../scripts/actions/news.js';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
 
 describe('Page actions', () => {
 
@@ -40,12 +33,3 @@ describe('Page actions', () => {
 		expect(actions.changeYearFilter(2015)).toEqual(expectedAction);
 	});
 });
-
-describe('News actions', () => {
-	it('news action sends an action with type NEWS and news with an array of news articels', () => {
-		const expectedAction = {
-			type: 'NEWS',
-			news:
-		}
-	})
-})

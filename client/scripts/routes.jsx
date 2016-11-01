@@ -1,6 +1,7 @@
 import React from 'react';
 import App from './containers/RouterApp';
 import News from './containers/News';
+import NewsItem from './components/NewsItem';
 import { Route, IndexRoute } from 'react-router';
 
 const About = () => (
@@ -21,6 +22,7 @@ export default (
 		<IndexRoute component={Index} />
 		<Route path="/react/about" component={About} />
 		<Route path="/react/contact" component={Contact} />
-    <Route path="/react/nyheter" component={News} />
+		<Route path="/react/nyheter" component={News} />
+		<Route path="/react/nyheter/:nyhet" component={NewsItem} />
 	</Route>
 );

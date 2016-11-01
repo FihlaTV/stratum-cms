@@ -6,7 +6,7 @@ exports = module.exports = function (req, res) {
 	keystone.list('NewsItem').model
 		.find({ state: 'published' })
 		.where('publishedDate', { $exists: true, $lte: currentTime })
-		.select('content.lead title publishedDate')
+		.select('content.lead title publishedDate slug')
 		.exec(function (err, results) {
 			if (err) {
 				return res.apiResponse({
