@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { Link, IndexLink } from 'react-router';
-import Menu from '../containers/Menu';
+import Menu from '../components/Menu';
 import { Grid } from 'react-bootstrap';
 
 class App extends Component {
@@ -9,11 +9,12 @@ class App extends Component {
 		const {
 			children,
 			location,
+			menuItems,
 		} = this.props;
 
 		return (
 			<div>
-				<Menu />
+				<Menu items={menuItems} />
 				<Grid>
 					{children}
 					<p>{location.pathname}</p>
@@ -30,6 +31,7 @@ function mapDispatchToProps (dispatch) {
 function mapStateToProps (state, { location }) {
 	return {
 		location,
+		menuItems: state.menu.items,
 	};
 }
 

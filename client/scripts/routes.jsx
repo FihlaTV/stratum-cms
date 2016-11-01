@@ -2,15 +2,15 @@ import React from 'react';
 import App from './containers/RouterApp';
 import { Route, IndexRoute } from 'react-router';
 
-const About = ({ children }) => (
+const News = ({ children }) => (
 	<div>
-		<h1>About</h1>
+		<h1>Nyheter</h1>
 		{children}
 	</div>
 );
 
-const Contact = () => (
-	<h1>Contact</h1>
+const FAQ = () => (
+	<h1>FAQ</h1>
 );
 
 const Index = () => (
@@ -24,10 +24,10 @@ const Page = () => (
 export default (
 	<Route path="/react/" component={App}>
 		<IndexRoute component={Index} />
-		<Route path="about" component={About}>
+		<Route path="nyheter" component={News}>
 			<Route path="more" component={() => <h1>More About</h1>} />
 		</Route>
-		<Route path="contact" component={Contact} />
+		<Route path="faq" component={FAQ} />
 		<Route path="**/p/:pageId" component={Page} />
 	</Route>
 );
