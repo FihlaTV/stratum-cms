@@ -2,7 +2,6 @@ var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
 	var	locals = res.locals;
-	console.log(req.params.newsItem);
 	// Set locals
 	locals.section = 'news';
 	locals.breadcrumbs = [{ label: 'Nyheter', path: '/nyheter' }];

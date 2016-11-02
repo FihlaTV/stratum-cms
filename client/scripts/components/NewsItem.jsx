@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
+import Spinner from './Spinner'
 class NewsItem extends Component {
 	constructor (props) {
 		super(props);
@@ -49,13 +50,13 @@ class NewsItem extends Component {
 							</div>
 						</article>
 					</div>
-					{this.pictureJSX()}
+					{newsItem.image ? this.pictureJSX() : null}
 				</div>
 			</div>
 		);
 	}
 	render () {
-		return this.state.loading ? <h1>HeJ!</h1> : this.newsItemJSX();
+		return this.state.loading ? <Spinner /> : this.newsItemJSX();
 	}
 };
 

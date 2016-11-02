@@ -19,7 +19,6 @@ const NewsPagination = ({ news, incrementCurrentPage, decrementCurrentPage, chan
 		}
 		return news.pages.slice(lowerPagination, upperPagination);
 	};
-	console.log(paginationNumbers());
 	return (
 		<ul className="pagination">
 			<li className={isFirst ? 'disabled' : null}>
