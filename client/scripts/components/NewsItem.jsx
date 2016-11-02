@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 class NewsItem extends Component {
 	constructor (props) {
 		super(props);
@@ -24,7 +24,14 @@ class NewsItem extends Component {
 		const day = published.getUTCDate();
 		return `${year}-${formatedMonth}-${day}`;
 	}
-	pictureJSX () {
+	landscapeJSX () {
+		return (
+			<div className="caption-ct base-page-head-image base-page-head-image-full">
+				<img src={this.state.newsItem.image.url} className="news-item-main-img img-responsive" width="750" />
+			</div>
+		);
+	}
+	portraitJSX () {
 		return (
 			<div className="col-md-4 content-page-image">
 				<div className="caption-image">
@@ -44,13 +51,14 @@ class NewsItem extends Component {
 								<span className="published-at">{this.formatedPublishedDate()}</span>
 								<h1>{newsItem.title}</h1>
 							</header>
+							{newsItem.imageLayout === 'landscape' ? this.landscapeJSX() : null}
 							<div className="post">
 								<p className="lead">{newsItem.content.lead}</p>
 								<div dangerouslySetInnerHTML={{ __html: newsItem.content.extended.html }}></div>
 							</div>
 						</article>
 					</div>
-					{newsItem.image ? this.pictureJSX() : null}
+					{newsItem.imageLayout === 'portrait' ? this.portraitJSX() : null}
 				</div>
 			</div>
 		);
