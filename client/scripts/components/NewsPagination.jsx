@@ -12,7 +12,7 @@ const NewsPagination = ({ news, incrementCurrentPage, decrementCurrentPage, chan
 		let lowerPagination = news.currentPage >= 7 ? news.currentPage - 4 : 0;
 		let upperPagination = news.currentPage <= news.pages.length - 6 ? news.currentPage + 4 : news.pages.length;
 		if (lowerPagination >= news.pages.length - 10) {
-			lowerPagination = news.pages.length - 10
+			lowerPagination = news.pages.length - 10;
 		}
 		if (upperPagination <= 10) {
 			upperPagination = 10;

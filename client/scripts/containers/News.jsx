@@ -2,7 +2,7 @@ import React from 'react';
 import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
 import NewsPagination from '../components/NewsPagination';
-import Spinner from '../components/Spinner'
+import Spinner from '../components/Spinner';
 import { getNews, changeYearFilter, incrementCurrentPage, decrementCurrentPage, changeCurrentPage } from '../actions/news';
 import { connect } from 'react-redux';
 
