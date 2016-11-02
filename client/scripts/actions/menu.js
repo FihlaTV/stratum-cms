@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetch from '../utils/testable-fetch';
 
 export const RECEIVE_MENU_ITEMS = 'RECEIVE_MENU_ITEMS';
 
@@ -11,7 +11,7 @@ function receiveMenuItems (items) {
 
 export function fetchMenuItems () {
 	return (dispatch) => {
-		fetch('/api/menu', { credentials: 'include' })
+		return fetch('/api/menu', { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
