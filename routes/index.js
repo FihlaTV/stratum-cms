@@ -85,6 +85,9 @@ exports = module.exports = function (app) {
 	app.get('/api/messages', keystone.middleware.cors);
 	app.get('/api/messages', routes.api.messages);
 
+	// Menu
+	app.get('/api/menu', routes.api.menu);
+
 	// API calls for refreshing metadata
 	app.all('/api/refresh/stratum-widgets', routes.api['stratum-widgets']);
 	app.all('/api/refresh/stratum-registers', routes.api['stratum-registers']);

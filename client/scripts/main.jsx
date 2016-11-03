@@ -73,7 +73,6 @@ if (messageContainer) {
 	);
 }
 if (routerContainer) {
-	console.log('routerContainer');
 	render(
 		<Provider store={store}>
 			<Router history={history} routes={routes} />
