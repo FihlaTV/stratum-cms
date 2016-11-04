@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetch from '../utils/testable-fetch';
 export const NEWS = 'NEWS';
 export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
 export const INCREMENT_CURRENTPAGE = 'INCREMENT_CURRENTPAGE';
@@ -14,7 +14,7 @@ const news = (newsArr) => {
 
 export function getNews () {
 	return (dispatch) => {
-		fetch('/api/news')
+		return fetch('/api/news')
        .then(res => res.json())
        .then(json => dispatch(news(json.data.news)));
 	};

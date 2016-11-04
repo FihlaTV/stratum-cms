@@ -10,6 +10,7 @@ import es6Promise from 'es6-promise';
 import find from 'array.prototype.find';
 import Messages from './containers/Messages';
 import cookies from 'js-cookie';
+import 'babel-polyfill';
 
 // React Router
 import { browserHistory } from 'react-router';

@@ -31,7 +31,7 @@ export default (state = 'loading', action) => {
 			if (state.currentPage <= state.pages.length - 1) {
 				return Object.assign({}, state, { currentPage: state.currentPage + 1 });
 			} else {
-				return Object.assign({}, state, { currentPage: state.page.length - 1 });
+				return Object.assign({}, state, { currentPage: state.pages.length });
 			}
 		case DECREMENT_CURRENTPAGE:
 			if (state.currentPage > 1) {

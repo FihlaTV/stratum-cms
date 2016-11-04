@@ -7,7 +7,7 @@ import React from 'react';
 ); */
 const NewsPagination = ({ news, incrementCurrentPage, decrementCurrentPage, changeCurrentPage }) => {
 	const isFirst = news.currentPage <= 1;
-	const isLast = news.currentPage >= news.pages.length - 1;
+	const isLast = news.currentPage >= news.pages.length;
 	const paginationNumbers = () => {
 		let lowerPagination = news.currentPage >= 7 ? news.currentPage - 4 : 0;
 		let upperPagination = news.currentPage <= news.pages.length - 6 ? news.currentPage + 4 : news.pages.length;
