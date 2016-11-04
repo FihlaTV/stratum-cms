@@ -7,10 +7,10 @@ function formatMenu (menuItems, level = 0) {
 	return menuItems.reduce((prev, menuItem, i, arr) => {
 		const { url, label, key, items } = menuItem;
 
-			/**
-			 * Since bootstrap only supports 2 levels in menues, the structure
-			 * should be flat and styled with classes after level 1
-			 */
+		/**
+		 * Since bootstrap only supports 2 levels in menues, the structure
+		 * should be flat and styled with classes after level 1
+		 */
 		if (level > 0 && items && items.length > 0) {
 			return prev.concat(
 				formatMenu([{ url, label, key, hasChildren: true }], level),
@@ -23,10 +23,10 @@ function formatMenu (menuItems, level = 0) {
 			</LinkContainer>,
 		]);
 
-			/**
-			 * Add an extra Menu item for root level menues for displaying
-			 * a dropdown in mobile and a single link in desktop
-			 */
+		/**
+		 * Add an extra Menu item for root level menues for displaying
+		 * a dropdown in mobile and a single link in desktop
+		 */
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
 				<LinkContainer to={`/react${url}`} activeClassName="active" key={`${key}-desktop`}>
