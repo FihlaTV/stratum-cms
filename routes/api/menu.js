@@ -36,9 +36,9 @@ function formatRootMenu (pages, subPages) {
 			fMenu.items = reduceLinks(pages, menu, fMenu.url, function (page) {
 				return page.menu && page.menu.equals(menu._id);
 			}, subPages);
-			if (fMenu.items.length > 0) {
-				fMenu.url = fMenu.items[0].url;
-			}
+			// if (fMenu.items.length > 0) {
+			// 	fMenu.url = fMenu.items[0].url;
+			// }
 		}
 		return fMenu;
 	};
