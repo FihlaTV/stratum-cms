@@ -46,11 +46,13 @@ describe('Page actions', () => {
 describe('getNews Action', () => {
 
 	it('getNews will fetch list of newsItems, then post an action with type NEWS and news with a array of newsItems', () => {
+/*eslint-disable */
 		const mockNewsArr = [
 			{ "_id":"581719cfe87f6bd027229e28","slug":"bacon-ipsum4","title":"Bacon ipsum4","publishedDate":"2015-10-25T22:00:00.000Z","content":{"lead":"Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4"}},
 			{"_id":"581719cfe87f6bd027229e2d","slug":"bacon-ipsum9","title":"Bacon ipsum9","publishedDate":"2011-10-25T22:00:00.000Z","content":{"lead":"Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!9"}},
 			{"_id":"581719cfe87f6bd027229e32","slug":"bacon-ipsum14","title":"Bacon ipsum14","publishedDate":"2010-10-25T22:00:00.000Z","content":{"lead":"Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!14"}}
 		];
+/*eslint-enable*/
 		nock(LOCAL_MOCK_URL)
 			.get('/api/news')
 			.reply(0, {
