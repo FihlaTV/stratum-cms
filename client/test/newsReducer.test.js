@@ -1,7 +1,6 @@
 import * as actions from '../scripts/actions/news';
 import newsReducer from '../scripts/reducers/news';
 import expect from 'expect';
-import 'babel-polyfill';
 
 describe('News reducer test for case NEWS', () => {
 	it('When no news exists it returns the string "loading"', () => {

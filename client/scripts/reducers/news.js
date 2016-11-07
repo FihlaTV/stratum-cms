@@ -9,7 +9,14 @@ export default (state = 'loading', action) => {
 			const newsArr = action.news.reverse();
 			let newsObj = {};
 			newsObj.articles = newsArr;
-			newsObj.filterYears = Array.from(new Set(newsArr.map(obj => new Date(obj.publishedDate).getUTCFullYear())));
+			newsObj.filterYears = newsArr.reduce((yearArr, obj) => {
+				const year = new Date(obj.publishedDate).getUTCFullYear()
+				if(yearArr.indexOf(year) === -1) {
+					return yearArr.concat(year)
+				} else {
+					return yearArr
+				}
+			}, []);
 			newsObj.articlesPerYear = newsObj.filterYears.reduce((pre, curr) => {
 				pre[curr] = filterNewsByYear(newsArr, curr).length;
 				return pre;
