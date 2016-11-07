@@ -10,11 +10,11 @@ export default (state = 'loading', action) => {
 			let newsObj = {};
 			newsObj.articles = newsArr;
 			newsObj.filterYears = newsArr.reduce((yearArr, obj) => {
-				const year = new Date(obj.publishedDate).getUTCFullYear()
-				if(yearArr.indexOf(year) === -1) {
-					return yearArr.concat(year)
+				const year = new Date(obj.publishedDate).getUTCFullYear();
+				if (yearArr.indexOf(year) === -1) {
+					return yearArr.concat(year);
 				} else {
-					return yearArr
+					return yearArr;
 				}
 			}, []);
 			newsObj.articlesPerYear = newsObj.filterYears.reduce((pre, curr) => {
