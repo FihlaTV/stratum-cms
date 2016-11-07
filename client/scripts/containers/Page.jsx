@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { initPage } from '../actions/page';
+import { initPage } from '../actions/page';
 
 class Page extends Component {
 	componentDidMount () {
-		const { dispatch } = this.props;
-		// dispatch(initPage());
+		const { dispatch, params } = this.props;
+		const { pageId } = params;
+		dispatch(initPage(pageId));
 	}
 	render () {
 		const {
+			params,
+			page = {},
 		} = this.props;
-
+		const {
+			title,
+		} = page;
 		return (
-			<h1>Page</h1>
+			<div>
+				<h1>{title}</h1>
+				<p>{params.pageId}</p>
+			</div>
 		);
 	}
 }

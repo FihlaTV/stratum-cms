@@ -1,6 +1,7 @@
 import React from 'react';
 import App from './containers/RouterApp';
 import { Route, IndexRoute } from 'react-router';
+import Page from './containers/Page';
 
 const News = ({ children }) => (
 	<div>
@@ -15,10 +16,6 @@ const FAQ = () => (
 
 const Index = () => (
 	<h1>Registercentrum</h1>
-);
-
-const Page = () => (
-	<h1>Page</h1>
 );
 
 export default (

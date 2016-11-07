@@ -9,7 +9,7 @@ function receivePage (page) {
 	};
 }
 
-export function fetchPage (pageId) {
+export function initPage (pageId) {
 	return (dispatch) => {
 		return fetch(`/api/pages/${pageId}`, { credentials: 'include' })
 			.then(res => res.json())
