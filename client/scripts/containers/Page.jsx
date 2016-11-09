@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import Spinner from '../components/Spinner';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
 
 const PageContainer = ({
@@ -40,24 +40,42 @@ class Page extends Component {
 			lead,
 			content = {},
 			image,
-			imageDescription,
+			extraImages = [],
 			displayPrintButton,
 		} = page;
 		return (
-			<PageContainer loading={loading}>
-				<header>
-					<h1>{title}</h1>
-				</header>
-				{image && <div className="caption-ct base-page-head-image base-page-head-image-full">
-					<img src={image.url} alt={imageDescription} className="img-response"/>
-					{imageDescription && <div className="caption-text">{imageDescription}</div>}
-				</div>}
-				{lead && <p className="lead">
-					{lead}
-				</p>}
-				<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
-				{displayPrintButton && <PrintButton/>}
-			</PageContainer>
+			<Row>
+				<PageContainer loading={loading}>
+					<header>
+						<h1>{title}</h1>
+					</header>
+					{image && <div className="caption-ct base-page-head-image base-page-head-image-full">
+						<img src={image.url} alt={image.description} className="img-response"/>
+						{image.description && <div className="caption-text">{image.description}</div>}
+					</div>}
+					{lead && <p className="lead">
+						{lead}
+					</p>}
+					<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
+					{displayPrintButton && <PrintButton/>}
+				</PageContainer>
+				<Col md={4}>
+					<div className="content-page-images">
+						<Row>
+						{extraImages && extraImages.map((image, i) =>
+							<Col md={12} sm={6} xs={12} key={`extra-image-${i}`}>
+								<div className="caption-image">
+									<a href={image.nativeUrl}>
+										<img src={image.url} alt={image.description} className="img-response"/>
+									</a>
+									{image.description && <div className="caption-text">{image.description}</div>}
+								</div>
+							</Col>
+							)}
+						</Row>
+					</div>
+				</Col>
+			</Row>
 		);
 	}
 }
