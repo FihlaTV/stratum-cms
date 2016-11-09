@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-fetch';
-import Spinner from './Spinner';
+import Spinner from '../components/Spinner';
+import { getNewsArticle, clearNewsArticle } from '../actions/news';
+import { connect } from 'react-redux';
+
 class NewsItem extends Component {
 	constructor (props) {
 		super(props);
-		this.state = { loading: true };
 	}
 
 	componentDidMount () {
-		fetch(`/api/news/${this.props.params.nyhet}`)
-			.then(res => res.json())
-			.then(json => this.loadData(json.data));
-		console.log(this.props.params.nyhet);
+		this.props.getNewsArticle(this.props.params.nyhet);
 	}
-	loadData (data) {
-		this.setState({ loading: false, newsItem: data });
+	componentWillUnmount () {
+		this.props.clearNewsArticle();
 	}
 	formatedPublishedDate () {
-		const published = new Date(this.state.newsItem.publishedDate);
+		const published = new Date(this.props.news.newsArticle.publishedDate);
 		const year = published.getUTCFullYear();
 		const month = published.getUTCMonth() + 1;
 		const formatedMonth = month < 10 ? '0' + month : month;
@@ -28,7 +26,7 @@ class NewsItem extends Component {
 	landscapeJSX () {
 		return (
 			<div className="caption-ct base-page-head-image base-page-head-image-full">
-				<img src={this.state.newsItem.image.url} className="news-item-main-img img-responsive" width="750" />
+				<img src={this.props.news.newsArticle.image.url} className="news-item-main-img img-responsive" width="750" />
 			</div>
 		);
 	}
@@ -36,13 +34,13 @@ class NewsItem extends Component {
 		return (
 			<div className="col-md-4 content-page-image">
 				<div className="caption-image">
-					<img src={this.state.newsItem.image.url} className="img-responsive" width="640" />
+					<img src={this.props.news.newsArticle.image.url} className="img-responsive" width="640" />
 				</div>
 			</div>
 		);
 	}
 	newsItemJSX () {
-		const newsItem = this.state.newsItem;
+		const newsItem = this.props.news.newsArticle;
 		return (
 			<div className="news-item-full">
 				<div className="row">
@@ -65,8 +63,17 @@ class NewsItem extends Component {
 		);
 	}
 	render () {
-		return this.state.loading ? <Spinner /> : this.newsItemJSX();
+		return this.props.news.newsArticle.loading ? <Spinner /> : this.newsItemJSX();
 	}
 };
 
-export default NewsItem;
+const mapStateToProps = ({ news }) => {
+	return { news };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	getNewsArticle: (nyhet) => dispatch(getNewsArticle(nyhet)),
+	clearNewsArticle: () => dispatch(clearNewsArticle()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsItem);

@@ -1,7 +1,7 @@
 import React from 'react';
 import App from './containers/RouterApp';
 import News from './containers/News';
-import NewsItem from './components/NewsItem';
+import NewsItem from './containers/NewsItem';
 import { Route, IndexRoute } from 'react-router';
 
 

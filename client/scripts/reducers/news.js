@@ -1,9 +1,9 @@
-import { NEWS, CHANGE_YEAR_FILTER, CHANGE_CURRENTPAGE } from '../actions/news';
+import { NEWS, CHANGE_YEAR_FILTER, CHANGE_CURRENTPAGE, NEWS_ARTICLE, CLEAR_NEWS_ARTICLE } from '../actions/news';
 
 const filterNewsByYear = (newsArr, year) => newsArr.filter(obj => new Date(obj.publishedDate).getUTCFullYear() === year);
 
 const createPagesArr = (articles) => Array.apply(null, { length: Math.ceil(articles.length / 5) }).map((item, index) => index + 1);
-export default (state = 'loading', action) => {
+export default (state = { loading: true }, action) => {
 	switch (action.type) {
 		case NEWS:
 			const newsArr = action.news;
@@ -25,6 +25,8 @@ export default (state = 'loading', action) => {
 			newsObj.filteredNews = newsArr;
 			newsObj.pages = createPagesArr(newsObj.articles);
 			newsObj.currentPage = 1;
+			newsObj.newsArticle = { loading: true };
+			newsObj.loading = false;
 			return Object.assign({}, newsObj);
 		case CHANGE_YEAR_FILTER:
 			if (action.filter === 'alla') {
@@ -39,6 +41,11 @@ export default (state = 'loading', action) => {
 				return Object.assign({}, state, { currentPage: action.page });
 			}
 			return state;
+		case NEWS_ARTICLE:
+			const article = Object.assign({}, action.newsArticle, { loading: false });
+			return Object.assign({}, state, { newsArticle: article });
+		case CLEAR_NEWS_ARTICLE:
+			return Object.assign({}, state, { newsArticle: { loading: true } });
 		default:
 			return state;
 	}

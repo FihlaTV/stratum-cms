@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 const News = (props) => {
 	const { news } = props;
-	if (news !== 'loading') {
+	if (!news.loading) {
 		return (
 			<div>
 				<div className="row">

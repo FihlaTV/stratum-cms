@@ -2,6 +2,8 @@ import fetch from '../utils/testable-fetch';
 export const NEWS = 'NEWS';
 export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
 export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
+export const NEWS_ARTICLE = 'NEWS_ARTICLE';
+export const CLEAR_NEWS_ARTICLE = 'CLEAR_NEWS_ARTICLE';
 
 export function changeYearFilter (filter) {
 	return { type: CHANGE_YEAR_FILTER, filter };
@@ -20,4 +22,20 @@ export function getNews () {
 
 export function changeCurrentPage (page) {
 	return { type: CHANGE_CURRENTPAGE, page: page };
+}
+
+const newsArticle = (article) => {
+	return { type: NEWS_ARTICLE, newsArticle: article };
+};
+
+export function getNewsArticle (nyhet) {
+	return (dispatch) => {
+		return		fetch(`/api/news/${nyhet}`)
+			.then(res => res.json())
+			.then(json => dispatch(newsArticle(json.data)));
+	};
+}
+
+export function clearNewsArticle () {
+	return { type: CLEAR_NEWS_ARTICLE };
 }
