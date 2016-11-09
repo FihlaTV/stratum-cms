@@ -27,29 +27,6 @@ describe('News reducer test for case NEWS', () => {
 	});
 });
 
-describe('News reducer tests for INCREMENT_CURRENTPAGE case', () => {
-	it('When there are pages with higher number', () => {
-		expect(newsReducer({ currentPage: 1, pages: [1, 2, 3, 4] }, { type: actions.INCREMENT_CURRENTPAGE })).toEqual({ currentPage: 2, pages: [1, 2, 3, 4] });
-		expect(newsReducer({ currentPage: 2, pages: [1, 2, 3, 4] }, { type: actions.INCREMENT_CURRENTPAGE })).toEqual({ currentPage: 3, pages: [1, 2, 3, 4] });
-	});
-
-	it('When calling INCREMENT_CURRENTPAGE on the last page it will return the last page', () => {
-		expect(newsReducer({ currentPage: 4, pages: [1, 2, 3, 4] }, { type: actions.INCREMENT_CURRENTPAGE })).toEqual({ currentPage: 4, pages: [1, 2, 3, 4] });
-	});
-});
-
-describe('News reducer tests for DECREMENT_CURRENTPAGE case', () => {
-	it('When the pages is over 1 it will decrement', () => {
-		expect(newsReducer({ currentPage: 4, pages: [1, 2, 3, 4] }, { type: actions.DECREMENT_CURRENTPAGE })).toEqual({ currentPage: 3, pages: [1, 2, 3, 4] });
-		expect(newsReducer({ currentPage: 3, pages: [1, 2, 3, 4] }, { type: actions.DECREMENT_CURRENTPAGE })).toEqual({ currentPage: 2, pages: [1, 2, 3, 4] });
-	});
-
-	it('When the page is one or lower it will be set too 1', () => {
-		expect(newsReducer({ currentPage: 1, pages: [1, 2, 3, 4] }, { type: actions.DECREMENT_CURRENTPAGE })).toEqual({ currentPage: 1, pages: [1, 2, 3, 4] });
-		expect(newsReducer({ currentPage: -2, pages: [1, 2, 3, 4] }, { type: actions.DECREMENT_CURRENTPAGE })).toEqual({ currentPage: 1, pages: [1, 2, 3, 4] });
-	});
-});
-
 describe('News reducer test for CHANGE_CURRENTPAGE case', () => {
 	it('When the page exist in the pages array it will go too that page', () => {
 		expect(newsReducer({ currentPage: 1, pages: [1, 2, 3, 4] }, { type: actions.CHANGE_CURRENTPAGE, page: 3 })).toEqual({ currentPage: 3, pages: [1, 2, 3, 4] });

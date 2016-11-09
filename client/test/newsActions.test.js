@@ -12,20 +12,6 @@ describe('Page actions', () => {
 		nock.cleanAll();
 	});
 
-	it('incrementCurrentPage sends a action with type INCREMENT_CURRENTPAGE', () => {
-		const expectedAction = {
-			type: 'INCREMENT_CURRENTPAGE',
-		};
-		expect(actions.incrementCurrentPage()).toEqual(expectedAction, 'hej');
-	});
-
-	it('decrementCurrentPage sends an action with type DECREMENT_CURRENTPAGE', () => {
-		const expectedAction = {
-			type: 'DECREMENT_CURRENTPAGE',
-		};
-		expect(actions.decrementCurrentPage()).toEqual(expectedAction);
-	});
-
 	it('changeCurrentPage sends an action with type CHANGE_CURRENTPAGE and page as a number', () => {
 		const expectedAction = {
 			type: 'CHANGE_CURRENTPAGE',

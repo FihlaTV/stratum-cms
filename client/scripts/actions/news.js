@@ -1,8 +1,6 @@
 import fetch from '../utils/testable-fetch';
 export const NEWS = 'NEWS';
 export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
-export const INCREMENT_CURRENTPAGE = 'INCREMENT_CURRENTPAGE';
-export const DECREMENT_CURRENTPAGE = 'DECREMENT_CURRENTPAGE';
 export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
 
 export function changeYearFilter (filter) {
@@ -18,14 +16,6 @@ export function getNews () {
        .then(res => res.json())
        .then(json => dispatch(news(json.data.news)));
 	};
-}
-
-export function incrementCurrentPage () {
-	return { type: INCREMENT_CURRENTPAGE };
-}
-
-export function decrementCurrentPage () {
-	return { type: DECREMENT_CURRENTPAGE };
 }
 
 export function changeCurrentPage (page) {

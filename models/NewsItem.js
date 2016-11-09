@@ -60,36 +60,3 @@ NewsItem.add({
 
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
 NewsItem.register();
-/*
-var News = keystone.list('NewsItem').model;
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
-Array.apply(null, { length: 52 * 20 }).map(function (item, index) {
-	var year = randomIntFromInterval(2010,2016);
-var news = new News({
-createdAt: year + "-10-26T11:09:16.872Z",
-title: "Bacon ipsum" + index,
-publishedDate: year + "-10-25T22:00:00.000Z",
-resources: [ ],
-content: {
-lead: "Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!" + index,
-extended: {
-	html: "<p>Bacon ipsum dolor amet ground round ham pork loin brisket. Prosciutto tri-tip rump, meatball pork belly ham hock ribeye ball tip biltong andouille picanha pork alcatra. Shank biltong spare ribs pork chop chuck beef ribs cow ham hock. Prosciutto brisket short ribs tri-tip bresaola, pastrami tongue leberkas ball tip pig venison kielbasa bacon shank jowl.</p> <p>Kielbasa pig meatloaf, shoulder bresaola capicola salami beef ribs meatball rump. Chicken tail venison beef ribs, turducken fatback prosciutto pastrami cupim. Ball tip short loin spare ribs swine. Venison brisket corned beef tongue drumstick bresaola, salami short loin burgdoggen.</p> <p>Ground round alcatra boudin ham meatloaf leberkas spare ribs porchetta flank turkey venison pork loin strip steak cow. Prosciutto rump strip steak hamburger sirloin kielbasa corned beef pastrami fatback. Sirloin chicken filet mignon, fatback flank biltong bresaola tail t-bone short loin ground round beef rump ham leberkas. Shankle sausage turducken leberkas brisket. Pastrami short ribs pancetta, flank pork chop capicola strip steak filet mignon jowl ribeye. Landjaeger ground round tongue, leberkas venison cupim alcatra biltong.</p> <p>Sirloin pork chop tongue boudin jowl, pancetta corned beef brisket kevin fatback pork belly venison prosciutto. Ground round beef ribs corned beef brisket fatback short ribs ribeye filet mignon picanha jerky tail. Ground round pork chop t-bone alcatra landjaeger turkey sausage salami meatloaf fatback. Frankfurter drumstick hamburger brisket cow. Ribeye salami pastrami t-bone. Picanha pork alcatra pastrami prosciutto strip steak meatball shoulder burgdoggen hamburger bacon bresaola kevin beef sirloin.</p> <p>Boudin meatloaf ham pancetta ball tip landjaeger turducken fatback andouille. Pork loin biltong pig porchetta, capicola cupim tongue. Picanha meatball porchetta beef ribs pork flank ham tongue. Prosciutto bresaola venison, fatback chuck capicola kielbasa filet mignon picanha leberkas.</p> <p>Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!</p> ",
-	md: "Bacon ipsum dolor amet ground round ham pork loin brisket. Prosciutto tri-tip rump, meatball pork belly ham hock ribeye ball tip biltong andouille picanha pork alcatra. Shank biltong spare ribs pork chop chuck beef ribs cow ham hock. Prosciutto brisket short ribs tri-tip bresaola, pastrami tongue leberkas ball tip pig venison kielbasa bacon shank jowl. Kielbasa pig meatloaf, shoulder bresaola capicola salami beef ribs meatball rump. Chicken tail venison beef ribs, turducken fatback prosciutto pastrami cupim. Ball tip short loin spare ribs swine. Venison brisket corned beef tongue drumstick bresaola, salami short loin burgdoggen. Ground round alcatra boudin ham meatloaf leberkas spare ribs porchetta flank turkey venison pork loin strip steak cow. Prosciutto rump strip steak hamburger sirloin kielbasa corned beef pastrami fatback. Sirloin chicken filet mignon, fatback flank biltong bresaola tail t-bone short loin ground round beef rump ham leberkas. Shankle sausage turducken leberkas brisket. Pastrami short ribs pancetta, flank pork chop capicola strip steak filet mignon jowl ribeye. Landjaeger ground round tongue, leberkas venison cupim alcatra biltong. Sirloin pork chop tongue boudin jowl, pancetta corned beef brisket kevin fatback pork belly venison prosciutto. Ground round beef ribs corned beef brisket fatback short ribs ribeye filet mignon picanha jerky tail. Ground round pork chop t-bone alcatra landjaeger turkey sausage salami meatloaf fatback. Frankfurter drumstick hamburger brisket cow. Ribeye salami pastrami t-bone. Picanha pork alcatra pastrami prosciutto strip steak meatball shoulder burgdoggen hamburger bacon bresaola kevin beef sirloin. Boudin meatloaf ham pancetta ball tip landjaeger turducken fatback andouille. Pork loin biltong pig porchetta, capicola cupim tongue. Picanha meatball porchetta beef ribs pork flank ham tongue. Prosciutto bresaola venison, fatback chuck capicola kielbasa filet mignon picanha leberkas. Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!"
-}
-},
-imageLayout: "portrait",
-state: "published"
-})
-news.save(function (err) {
-    if (err) {
-        // handle error
-        return console.log(err);
-    }
-
-    // user has been saved
-    console.log(news);
-})
-})
-*/

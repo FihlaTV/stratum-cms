@@ -1,4 +1,4 @@
-import { NEWS, CHANGE_YEAR_FILTER, INCREMENT_CURRENTPAGE, DECREMENT_CURRENTPAGE, CHANGE_CURRENTPAGE } from '../actions/news';
+import { NEWS, CHANGE_YEAR_FILTER, CHANGE_CURRENTPAGE } from '../actions/news';
 
 const filterNewsByYear = (newsArr, year) => newsArr.filter(obj => new Date(obj.publishedDate).getUTCFullYear() === year);
 
@@ -6,7 +6,7 @@ const createPagesArr = (articles) => Array.apply(null, { length: Math.ceil(artic
 export default (state = 'loading', action) => {
 	switch (action.type) {
 		case NEWS:
-			const newsArr = action.news.reverse();
+			const newsArr = action.news;
 			let newsObj = {};
 			newsObj.articles = newsArr;
 			newsObj.filterYears = newsArr.reduce((yearArr, obj) => {
@@ -27,25 +27,13 @@ export default (state = 'loading', action) => {
 			newsObj.currentPage = 1;
 			return Object.assign({}, newsObj);
 		case CHANGE_YEAR_FILTER:
-			if (action.filter === 'Alla') {
-				return Object.assign({}, state, { filteredNews: state.articles, pages: createPagesArr(state.articles), currentPage: 1 });
+			if (action.filter === 'alla') {
+				return Object.assign({}, state, { filteredNews: state.articles, pages: createPagesArr(state.articles) });
 			} else if (typeof action.filter === 'number') {
 				const filteredNews = filterNewsByYear(state.articles, action.filter);
-				return Object.assign({}, state, { filteredNews: filteredNews, pages: createPagesArr(filteredNews), currentPage: 1 });
+				return Object.assign({}, state, { filteredNews: filteredNews, pages: createPagesArr(filteredNews) });
 			}
 			return state;
-		case INCREMENT_CURRENTPAGE:
-			if (state.currentPage <= state.pages.length - 1) {
-				return Object.assign({}, state, { currentPage: state.currentPage + 1 });
-			} else {
-				return Object.assign({}, state, { currentPage: state.pages.length });
-			}
-		case DECREMENT_CURRENTPAGE:
-			if (state.currentPage > 1) {
-				return Object.assign({}, state, { currentPage: state.currentPage - 1 });
-			} else {
-				return Object.assign({}, state, { currentPage: 1 });
-			}
 		case CHANGE_CURRENTPAGE:
 			if (state.pages.indexOf(action.page) !== -1) {
 				return Object.assign({}, state, { currentPage: action.page });

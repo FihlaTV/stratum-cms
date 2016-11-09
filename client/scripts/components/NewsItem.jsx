@@ -21,8 +21,9 @@ class NewsItem extends Component {
 		const year = published.getUTCFullYear();
 		const month = published.getUTCMonth() + 1;
 		const formatedMonth = month < 10 ? '0' + month : month;
-		const day = published.getUTCDate();
-		return `${year}-${formatedMonth}-${day}`;
+		const day = published.getDate();
+		const formatedDay = day < 10 ? '0' + day : day;
+		return `${year}-${formatedMonth}-${formatedDay}`;
 	}
 	landscapeJSX () {
 		return (
@@ -51,14 +52,14 @@ class NewsItem extends Component {
 								<span className="published-at">{this.formatedPublishedDate()}</span>
 								<h1>{newsItem.title}</h1>
 							</header>
-							{newsItem.imageLayout === 'landscape' ? this.landscapeJSX() : null}
+							{newsItem.imageLayout === 'landscape' && newsItem.image ? this.landscapeJSX() : null}
 							<div className="post">
 								<p className="lead">{newsItem.content.lead}</p>
 								<div dangerouslySetInnerHTML={{ __html: newsItem.content.extended.html }}></div>
 							</div>
 						</article>
 					</div>
-					{newsItem.imageLayout === 'portrait' ? this.portraitJSX() : null}
+					{newsItem.imageLayout === 'portrait' && newsItem.image ? this.portraitJSX() : null}
 				</div>
 			</div>
 		);

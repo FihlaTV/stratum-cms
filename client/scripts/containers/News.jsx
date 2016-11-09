@@ -3,7 +3,7 @@ import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
 import NewsPagination from '../components/NewsPagination';
 import Spinner from '../components/Spinner';
-import { getNews, changeYearFilter, incrementCurrentPage, decrementCurrentPage, changeCurrentPage } from '../actions/news';
+import { getNews, changeYearFilter, changeCurrentPage } from '../actions/news';
 import { connect } from 'react-redux';
 
 const News = (props) => {
@@ -35,8 +35,6 @@ const mapStateToProps = ({ news }) => {
 const mapDispatchToProps = (dispatch) => ({
 	getNews: () => dispatch(getNews()),
 	changeYearFilter: (year) => dispatch(changeYearFilter(year)),
-	incrementCurrentPage: () => dispatch(incrementCurrentPage()),
-	decrementCurrentPage: () => dispatch(decrementCurrentPage()),
 	changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(News);
