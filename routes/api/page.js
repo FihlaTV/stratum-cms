@@ -26,6 +26,7 @@ exports = module.exports = function (req, res) {
 				content: results.content,
 				layout: results.layout,
 				contentType: results.contentType,
+				displayPrintButton: results.displayPrintButton,
 			};
 			if (results.image.exists) {
 				data.image = {

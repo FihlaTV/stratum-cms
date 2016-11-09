@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import Spinner from '../components/Spinner';
 import { Col } from 'react-bootstrap';
+import PrintButton from '../components/PrintButton';
 
 const PageContainer = ({
 	loading,
@@ -40,6 +41,7 @@ class Page extends Component {
 			content = {},
 			image,
 			imageDescription,
+			displayPrintButton,
 		} = page;
 		return (
 			<PageContainer loading={loading}>
@@ -54,6 +56,7 @@ class Page extends Component {
 					{lead}
 				</p>}
 				<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
+				{displayPrintButton && <PrintButton/>}
 			</PageContainer>
 		);
 	}
