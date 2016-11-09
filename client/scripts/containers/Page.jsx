@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import Spinner from '../components/Spinner';
-import { Grid, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 const PageContainer = ({
 	loading,
@@ -31,7 +31,6 @@ class Page extends Component {
 	}
 	render () {
 		const {
-			params,
 			page = {},
 			loading = true,
 		} = this.props;
