@@ -1,17 +1,40 @@
-import React, { PropTypes } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import React, { PropTypes, Component } from 'react';
+import { Col, Row, Image, Modal } from 'react-bootstrap';
 
-const Image = ({ image, clickable }) => {
-	const img = <img src={image.url} alt={image.description} className="img-response"/>;
-	if (clickable) {
-		return (
-			<a href={image.nativeUrl}>
-				{img}
-			</a>
-		);
+class ClickableImage extends Component {
+	constructor (props) {
+		super(props);
+		this.state = {
+			showFullImage: false,
+		};
 	}
-	return img;
-};
+	toggleModal (show) {
+		this.setState({
+			showFullImage: !!show,
+		});
+	}
+	render () {
+		const { showFullImage } = this.state;
+		const { image, clickable } = this.props;
+		const img = <Image src={image.url} alt={image.description} responsive/>;
+		if (clickable) {
+			return (
+				<div>
+					<Modal show={showFullImage} onHide={() => this.toggleModal(false)} bsSize="large">
+						<Modal.Body><Image src={image.nativeUrl || image.url} responsive/></Modal.Body>
+					</Modal>
+					<a href={image.nativeUrl} onClick={(e) => {
+						e.preventDefault();
+						this.toggleModal(true);
+					}} >
+						{img}
+					</a>
+				</div>
+			);
+		}
+		return img;
+	}
+}
 
 const DockedImages = ({ images, clickable }) => {
 	return (
@@ -20,7 +43,7 @@ const DockedImages = ({ images, clickable }) => {
 			{images && images.map((image, i) =>
 				<Col md={12} sm={6} xs={12} key={`extra-image-${i}`}>
 					<div className="caption-image">
-						<Image clickable image={image}/>
+						<ClickableImage clickable image={image}/>
 						{image.description && <div className="caption-text">{image.description}</div>}
 					</div>
 				</Col>
