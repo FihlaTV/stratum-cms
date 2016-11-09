@@ -2,22 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 const YearLi = ({ year, news, changeYearFilter, location }) => <li><Link to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: year, page: 1 }) }}>{`${year} (${news.articlesPerYear[year]})`}</Link></li>;
-/*
-const NewsFilter = (props) => {
-	const news = props.news;
-	const location = props.location;
-	props.changeYearFilter(location.query.year === 'alla' ? 'alla' : parseInt(location.query.year))
-	return (
-		<div className="news-filter">
-			<h2>Filtrera nyheter</h2>
-			<span className="news-filter-header">År</span>
-			<ul className="news-filter-list">
-				<li onClick={() => props.changeYearFilter('Alla')}><Link to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: 'alla' }) }}>Alla ({news.articlesPerYear.all})</Link></li>
-				{news.filterYears.sort((yearA, yearB) => yearA < yearB).map(year => <YearLi key={year} {...props} year={year} />)}
-			</ul>
-		</div>
-	);
-}; */
 
 class NewsFilter extends Component {
 	constructor (props) {
