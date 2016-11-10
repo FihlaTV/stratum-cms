@@ -3,7 +3,7 @@ import { NEWS, CHANGE_YEAR_FILTER, CHANGE_CURRENTPAGE, NEWS_ARTICLE, CLEAR_NEWS_
 const filterNewsByYear = (newsArr, year) => newsArr.filter(obj => new Date(obj.publishedDate).getUTCFullYear() === year);
 
 const createPagesArr = (articles) => Array.apply(null, { length: Math.ceil(articles.length / 5) }).map((item, index) => index + 1);
-export default (state = { loading: true }, action) => {
+export default (state = { loading: true, newsArticle: { loading: true } }, action) => {
 	switch (action.type) {
 		case NEWS:
 			const newsArr = action.news;
@@ -25,7 +25,6 @@ export default (state = { loading: true }, action) => {
 			newsObj.filteredNews = newsArr;
 			newsObj.pages = createPagesArr(newsObj.articles);
 			newsObj.currentPage = 1;
-			newsObj.newsArticle = { loading: true };
 			newsObj.loading = false;
 			return Object.assign({}, newsObj);
 		case CHANGE_YEAR_FILTER:

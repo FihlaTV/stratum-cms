@@ -4,7 +4,7 @@ import expect from 'expect';
 
 describe('News reducer test for case NEWS', () => {
 	it('When no news exists it returns the string "loading"', () => {
-		expect(newsReducer(undefined, {})).toEqual({ loading: true });
+		expect(newsReducer(undefined, {})).toEqual({ loading: true, newsArticle: { loading: true } });
 	});
 
 	it('When initilized by an action with the type NEWS, it creates state object', () => {
