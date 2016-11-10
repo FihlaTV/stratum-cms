@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { Col, Row, Image, Modal } from 'react-bootstrap';
 
-class ClickableImage extends Component {
+class EnlargeableImage extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -10,18 +10,23 @@ class ClickableImage extends Component {
 	}
 	toggleModal (show) {
 		this.setState({
-			showFullImage: !!show,
+			showFullImage: typeof show !== 'undefined' ? !!show : !this.state.showFullImage,
 		});
 	}
 	render () {
 		const { showFullImage } = this.state;
-		const { image, clickable } = this.props;
+		const { image, enlargeable } = this.props;
 		const img = <Image src={image.url} alt={image.description} responsive/>;
-		if (clickable) {
+		if (enlargeable) {
 			return (
 				<div>
 					<Modal show={showFullImage} onHide={() => this.toggleModal(false)} bsSize="large">
-						<Modal.Body><Image src={image.nativeUrl || image.url} responsive/></Modal.Body>
+						<Modal.Header closeButton>
+							<Modal.Title>{image.description}</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<Image src={image.nativeUrl || image.url} responsive/>
+						</Modal.Body>
 					</Modal>
 					<a href={image.nativeUrl} onClick={(e) => {
 						e.preventDefault();
@@ -36,14 +41,14 @@ class ClickableImage extends Component {
 	}
 }
 
-const DockedImages = ({ images, clickable }) => {
+const DockedImages = ({ images, enlargeable = false }) => {
 	return (
 		<div className="content-page-images">
 			<Row>
 			{images && images.map((image, i) =>
 				<Col md={12} sm={6} xs={12} key={`extra-image-${i}`}>
 					<div className="caption-image">
-						<ClickableImage clickable image={image}/>
+						<EnlargeableImage enlargeable={enlargeable} image={image}/>
 						{image.description && <div className="caption-text">{image.description}</div>}
 					</div>
 				</Col>
@@ -54,6 +59,7 @@ const DockedImages = ({ images, clickable }) => {
 };
 
 DockedImages.propTypes = {
+	enlargeable: PropTypes.bool,
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
 			url: PropTypes.string.isRequired,

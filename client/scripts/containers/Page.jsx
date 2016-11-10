@@ -61,7 +61,7 @@ class Page extends Component {
 					{displayPrintButton && <PrintButton/>}
 				</PageContainer>
 				<Col md={4}>
-					<DockedImages images={extraImages} />
+					<DockedImages images={extraImages} enlargeable/>
 				</Col>
 			</Row>
 		);
