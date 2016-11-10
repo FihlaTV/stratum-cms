@@ -1,18 +1,5 @@
 var keystone = require('keystone');
-var cloudinary = require('cloudinary');
-var _ = require('underscore');
-
-function formatCloudinaryImage (image, description, opts) {
-	var defaultOpts = {
-		secure: true,
-		format: 'jpg',
-	};
-	return _.extend({
-		url: cloudinary.url(image.public_id, _.extend({}, defaultOpts, opts)),
-		nativeUrl: cloudinary.url(image.public_id, defaultOpts),
-		description: description,
-	}, opts);
-}
+var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 
 exports = module.exports = function (req, res) {
 
