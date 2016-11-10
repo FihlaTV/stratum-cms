@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
 import { getNewsArticle, clearNewsArticle } from '../actions/news';
 import { connect } from 'react-redux';
@@ -32,19 +33,19 @@ class NewsItem extends Component {
 	}
 	portraitJSX () {
 		return (
-			<div className="col-md-4 content-page-image">
+			<Col md={4} className="content-page-image">
 				<div className="caption-image">
 					<img src={this.props.news.newsArticle.image.url} className="img-responsive" width="640" />
 				</div>
-			</div>
+			</Col>
 		);
 	}
 	newsItemJSX () {
 		const newsItem = this.props.news.newsArticle;
 		return (
 			<div className="news-item-full">
-				<div className="row">
-					<div className="col-md-8">
+				<Row>
+					<Col md={8}>
 						<article className="base-page clearfix">
 							<header>
 								<span className="published-at">{this.formatedPublishedDate()}</span>
@@ -56,9 +57,9 @@ class NewsItem extends Component {
 								<div dangerouslySetInnerHTML={{ __html: newsItem.content.extended.html }}></div>
 							</div>
 						</article>
-					</div>
+					</Col>
 					{newsItem.imageLayout === 'portrait' && newsItem.image ? this.portraitJSX() : null}
-				</div>
+				</Row>
 			</div>
 		);
 	}

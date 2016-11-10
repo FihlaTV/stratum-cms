@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
 import NewsPagination from '../components/NewsPagination';
@@ -11,14 +12,14 @@ const News = (props) => {
 	if (!news.loading) {
 		return (
 			<div>
-				<div className="row">
-					<div className="col-md-8">
+				<Row>
+					<Col md={8}>
 						{props.news.filteredNews.slice(news.currentPage * 5 - 5, news.currentPage * 5).map(article => <NewsListItem key={article.title} article={article} />)}
-					</div>
-					<div className="col-md-4">
+					</Col>
+					<Col md={4}>
 						<NewsFilter {...props} />
-					</div>
-				</div>
+					</Col>
+				</Row>
 				<NewsPagination {...props} />
 			</div>
 		);
