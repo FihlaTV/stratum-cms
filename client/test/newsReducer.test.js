@@ -4,7 +4,7 @@ import expect from 'expect';
 
 describe('News reducer test for case NEWS', () => {
 	it('When no news exists it returns the string "loading"', () => {
-		expect(newsReducer(undefined, {})).toEqual('loading');
+		expect(newsReducer(undefined, {})).toEqual({ loading: true });
 	});
 
 	it('When initilized by an action with the type NEWS, it creates state object', () => {
@@ -18,7 +18,7 @@ describe('News reducer test for case NEWS', () => {
 		const reducer = newsReducer(undefined, { type: actions.NEWS, news: mockNewsArr });
 		expect(reducer).toBeA('object');
 		expect(reducer.articles).toEqual(mockNewsArr);
-		expect(reducer.filterYears).toEqual([2010, 2011, 2015]);
+		expect(reducer.filterYears).toEqual([2015, 2011, 2010]);
 		expect(reducer.articlesPerYear).toEqual({ all: 3, 2010: 1, 2011: 1, 2015: 1 });
 		expect(reducer.numberOfArticles).toEqual(3);
 		expect(reducer.filteredNews).toEqual(mockNewsArr.reverse());
