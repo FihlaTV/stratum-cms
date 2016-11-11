@@ -8,9 +8,10 @@ import DockedImages from '../components/DockedImages';
 
 const PageContainer = ({
 	loading,
+	layout,
 	children,
 }) => (
-	<Col md={8}>
+	<Col md={layout === 'full' ? 12 : 8}>
 		<article className="base-page">
 			{loading ? <Spinner /> : children}
 		</article>
@@ -40,13 +41,14 @@ class Page extends Component {
 			title,
 			lead,
 			content = {},
+			layout,
 			image,
 			extraImages = [],
 			displayPrintButton,
 		} = page;
 		return (
 			<Row>
-				<PageContainer loading={loading}>
+				<PageContainer loading={loading} layout={layout}>
 					<header>
 						<h1>{title}</h1>
 					</header>
@@ -60,8 +62,8 @@ class Page extends Component {
 					<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
 					{displayPrintButton && <PrintButton/>}
 				</PageContainer>
-				<Col md={4}>
-					<DockedImages images={extraImages} enlargeable/>
+				<Col md={layout === 'full' ? 12 : 4}>
+					<DockedImages images={extraImages} enlargeable wide={layout === 'full'}/>
 				</Col>
 			</Row>
 		);

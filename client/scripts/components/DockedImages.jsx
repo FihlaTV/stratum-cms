@@ -41,12 +41,16 @@ class EnlargeableImage extends Component {
 	}
 }
 
-const DockedImages = ({ images, enlargeable = false }) => {
+const DockedImages = ({
+	images,
+	enlargeable = false,
+	wide,
+}) => {
 	return (
 		<div className="content-page-images">
 			<Row>
 			{images && images.map((image, i) =>
-				<Col md={12} sm={6} xs={12} key={`extra-image-${i}`}>
+				<Col md={wide ? 6 : 12} sm={6} xs={12} key={`extra-image-${i}`}>
 					<div className="caption-image">
 						<EnlargeableImage enlargeable={enlargeable} image={image}/>
 						{image.description && <div className="caption-text">{image.description}</div>}
