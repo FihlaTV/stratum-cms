@@ -3,17 +3,17 @@ import { Image, Glyphicon } from 'react-bootstrap';
 
 const ContactPerson = ({
 	name,
-	imageUrl,
+	image = {},
 	description,
 	email,
 	phone,
 }) => {
 	return (
 		<div className="contact-person">
+			<div className="contact-person-image">
+				<Image src={image.url || '/images/avatar.png'} alt={name} />
+			</div>
 			<div className="contact-person-info">
-				<div className="contact-person-image">
-					<Image src={imageUrl || '/images/avatar.png'} alt={name} />
-				</div>
 				<h3>{name}</h3>
 				{description && <p className="contact-person-title">{description}</p>}
 				{phone && <p><Glyphicon glyph="phone" /> {phone}</p>}
@@ -36,7 +36,7 @@ ContactPersons.propTypes = {
 	contacts: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string.isRequired,
-			imageUrl: PropTypes.string,
+			image: PropTypes.object,
 			description: PropTypes.string,
 			email: PropTypes.string,
 			phone: PropTypes.string,
