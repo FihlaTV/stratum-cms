@@ -26,7 +26,7 @@ export default (state = { loading: true, newsArticle: { loading: true } }, actio
 			newsObj.pages = createPagesArr(newsObj.articles);
 			newsObj.currentPage = 1;
 			newsObj.loading = false;
-			return Object.assign({}, newsObj);
+			return Object.assign({}, state, newsObj);
 		case CHANGE_YEAR_FILTER:
 			if (action.filter === 'alla') {
 				return Object.assign({}, state, { filteredNews: state.articles, pages: createPagesArr(state.articles) });

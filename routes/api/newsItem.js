@@ -16,7 +16,7 @@ exports = module.exports = function (req, res) {
 		slug: locals.filters.newsItem,
 		publishedDate: { $lte: new Date() },
 	})
-	.populate('resources')
+	.populate('author resources')
 	.exec(function (err, newsItem) {
 		if (!err) {
 			if (!newsItem) {
