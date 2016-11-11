@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 
 exports = module.exports = function (req, res) {
 	var	locals = res.locals;
@@ -23,9 +24,20 @@ exports = module.exports = function (req, res) {
 				res.notFound(null, 'Det gick inte att hitta någon nyhet som matchade den adress du angav...');
 				return;
 			}
-			res.apiResponse({
+
+			var data = {
+				publishedDate: newsItem.publishedDate,
+				title: newsItem.title,
+				slug: newsItem.slug,
+				author: newsItem.author,
+				resources: newsItem.resources,
+				content: newsItem.content,
+				imageLayout: newsItem.imageLayout,
+				image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription),
+			};
+			return res.apiResponse({
 				success: true,
-				data: newsItem,
+				data: data,
 			});
 		}
 	});
