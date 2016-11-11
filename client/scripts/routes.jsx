@@ -3,6 +3,7 @@ import App from './containers/RouterApp';
 import News from './containers/News';
 import NewsItem from './containers/NewsItem';
 import { Route, IndexRoute } from 'react-router';
+import Page from './containers/Page';
 
 
 const FAQ = () => (
@@ -11,10 +12,6 @@ const FAQ = () => (
 
 const Index = () => (
 	<h1>Registercentrum</h1>
-);
-
-const Page = () => (
-	<h1>Page</h1>
 );
 
 export default (
