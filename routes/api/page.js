@@ -9,6 +9,7 @@ exports = module.exports = function (req, res) {
 	keystone.list('BasePage').model
 		.findOne()
 		.where('shortId', filters.shortId)
+		.populate('contacts')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -29,6 +30,15 @@ exports = module.exports = function (req, res) {
 				displayPrintButton: results.displayPrintButton,
 				extraImages: results.extraImages.map(function (image) {
 					return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
+				}),
+				contacts: results.contacts.map(function (contact) {
+					return {
+						name: contact.name.full,
+						description: contact.description,
+						email: contact.email,
+						phone: contact.phone,
+						image: formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }),
+					};
 				}),
 			};
 			if (results.image.exists) {

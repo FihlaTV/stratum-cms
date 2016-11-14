@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner';
 import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
 import DockedImages from '../components/DockedImages';
+import ContactPersons from '../components/ContactPersons';
 
 const PageContainer = ({
 	loading,
@@ -45,6 +46,7 @@ class Page extends Component {
 			image,
 			extraImages = [],
 			displayPrintButton,
+			contacts = [],
 		} = page;
 		return (
 			<Row>
@@ -63,6 +65,8 @@ class Page extends Component {
 					{displayPrintButton && <PrintButton/>}
 				</PageContainer>
 				<Col md={layout === 'full' ? 12 : 4}>
+					<h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>
+					<ContactPersons contacts={contacts}/>
 					<DockedImages images={extraImages} enlargeable wide={layout === 'full'}/>
 				</Col>
 			</Row>
