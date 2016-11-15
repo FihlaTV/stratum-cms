@@ -16,7 +16,7 @@ exports = module.exports = function (req, res) {
 	uri = req.url.replace(/^\/stratum\//, stratumUrl);
 
 	// Special handling for REST verbs and Direct calls
-	if (['POST', 'PUT', 'DELETE'].indexOf(req.method) !== -1) {
+	if (['POST', 'PUT'].indexOf(req.method) !== -1) {
 		// body-parser prevents the simple proxy to work.
 		// https://github.com/request/request/issues/1664
 		// http://stackoverflow.com/questions/26121830/proxy-json-requests-with-node-express.
