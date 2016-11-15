@@ -19,27 +19,27 @@ exports = module.exports = function (req, res) {
 	})
 	.populate('author resources')
 	.exec(function (err, newsItem) {
-		if (!err) {
-			if (!newsItem) {
-				res.notFound(null, 'Det gick inte att hitta någon nyhet som matchade den adress du angav...');
-				return;
-			}
-
-			var data = {
-				publishedDate: newsItem.publishedDate,
-				title: newsItem.title,
-				slug: newsItem.slug,
-				author: newsItem.author,
-				resources: newsItem.resources,
-				content: newsItem.content,
-				imageLayout: newsItem.imageLayout,
-				image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription),
-			};
+		if (err || !newsItem) {
 			return res.apiResponse({
-				success: true,
-				data: data,
+				success: false,
+				error: err,
 			});
 		}
+		var imgWidth = newsItem.imageLayout === 'landscape' ? 750 : 640;
+		var data = {
+			publishedDate: newsItem.publishedDate,
+			title: newsItem.title,
+			slug: newsItem.slug,
+			author: newsItem.author,
+			resources: newsItem.resources,
+			content: newsItem.content,
+			imageLayout: newsItem.imageLayout,
+			image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription, { width: imgWidth, crop: 'fill' }),
+		};
+		return res.apiResponse({
+			success: true,
+			data: data,
+		});
 	});
 
 };

@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-const YearLi = ({ year, news, changeYearFilter, location }) => <li><Link to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: year, page: 1 }) }}>{`${year} (${news.articlesPerYear[year]})`}</Link></li>;
+const YearLi = ({ year, news, changeYearFilter, location, active }) => (
+	<li>
+		<Link to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: year, page: 1 }) }}
+			style={active ? { color: 'black' } : {}}	>
+			{`${year} (${news.articlesPerYear[year]})`}
+		</Link>
+	</li>
+);
 
 class NewsFilter extends Component {
 	constructor (props) {
@@ -25,8 +32,13 @@ class NewsFilter extends Component {
 				<h2>Filtrera nyheter</h2>
 				<span className="news-filter-header">År</span>
 				<ul className="news-filter-list">
-					<li> <Link to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: 'alla', page: 1 }) }}>Alla ({news.articlesPerYear.all})</Link></li>
-					{news.filterYears.sort((yearA, yearB) => yearA < yearB).map(year => <YearLi key={year} {...this.props} year={year} />)}
+					<li>
+						<Link
+							to={{ pathname: location.pathname, query: Object.assign({}, location.query, { year: 'alla', page: 1 }) }}
+							style={location.query.year === 'alla' || location.query.year === undefined ? { color: 'black' } : {}}
+						>Alla ({news.articlesPerYear.all})</Link>
+					</li>
+					{news.filterYears.sort((yearA, yearB) => yearA < yearB).map(year => <YearLi key={year} {...this.props} year={year} active={year === parseInt(location.query.year)}/>)}
 				</ul>
 			</div>
 		);

@@ -10,7 +10,7 @@ const NewsListItem = ({ article }) => {
 	const formatedDay = day < 10 ? '0' + day : day;
 	return (
 		<div className="news-list-item" >
-			<Link to={`/react/nyheter/${article.slug}`}>
+			<Link to={`/react/nyheter/${article.slug}`} >
 				<div className="news-list-item-content">
 					<h2>{article.title}</h2>
 					<p className="published-at">{`${year}-${formatedMonth}-${formatedDay}`}</p>

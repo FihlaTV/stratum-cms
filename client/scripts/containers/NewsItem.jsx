@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
+import DockedImages from '../components/DockedImages';
 import Resources from '../components/Resources';
 import { getNewsArticle, clearNewsArticle } from '../actions/news';
 import { connect } from 'react-redux';
@@ -37,18 +38,20 @@ class NewsItem extends Component {
 			</div>
 		);
 	}
-	landscape () {
+	landscape (image) {
 		return (
 			<div className="caption-ct base-page-head-image base-page-head-image-full">
-				<img src={this.props.news.newsArticle.image.url} className="news-item-main-img img-responsive" width="750" />
+				<img src={image.url} className="news-item-main-img img-responsive" width="750" />
+				{image.description && <div className="caption-text">{image.description}</div>}
 			</div>
 		);
 	}
-	portrait () {
+	portrait (image) {
 		return (
-			<Col md={4} className="content-page-image">
+			<Col md={4} className="content-page-images">
 				<div className="caption-image">
-					<img src={this.props.news.newsArticle.image.url} className="img-responsive" width="640" />
+					<img src={image.url} className="img-responsive" width="640" />
+					{image.description && <div className="caption-text">{image.description}</div>}
 				</div>
 			</Col>
 		);
@@ -64,7 +67,7 @@ class NewsItem extends Component {
 								<span className="published-at">{this.formatedPublishedDate()}</span>
 								<h1>{newsItem.title}</h1>
 							</header>
-							{newsItem.imageLayout === 'landscape' && newsItem.image ? this.landscape() : null}
+							{newsItem.imageLayout === 'landscape' && newsItem.image.url ? this.landscape(newsItem.image) : null}
 							<div className="post">
 								<p className="lead">{newsItem.content.lead}</p>
 								<div dangerouslySetInnerHTML={{ __html: newsItem.content.extended.html }}></div>
@@ -72,8 +75,9 @@ class NewsItem extends Component {
 							{newsItem.author ? this.author() : null}
 						</article>
 					</Col>
-					{newsItem.imageLayout === 'portrait' && newsItem.image ? this.portrait() : null}
-					{newsItem.resources.length > 0 ? <Resources resources={newsItem.resources} /> : null}
+					<Col md={4}><DockedImages images={[newsItem.image]} enlargeable wide={false} />
+					{newsItem.resources.length > 0 && <Resources resources={newsItem.resources} />}
+					</Col>
 				</Row>
 			</div>
 		);
