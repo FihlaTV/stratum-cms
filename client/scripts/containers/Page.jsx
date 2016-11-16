@@ -24,7 +24,9 @@ class Page extends Component {
 	componentDidMount () {
 		const { dispatch, params } = this.props;
 		const { pageId } = params;
-		dispatch(fetchPage(pageId));
+		if (pageId) {
+			dispatch(fetchPage(pageId));
+		}
 	}
 	componentWillReceiveProps (nextProps) {
 		const { dispatch, params } = this.props;
@@ -33,6 +35,19 @@ class Page extends Component {
 		if (nextPageId && params.pageId !== nextPageId) {
 			dispatch(fetchPage(nextPageId));
 		}
+		if (nextProps.menuItems.length > 0 && !nextProps.params.pageId) {
+			const rePage = this.findFirstPageInMenu(nextProps.params.menu, nextProps.menuItems);
+			// Redirect to found page
+			this.props.router.push(`/react${rePage.url}`);
+		}
+	}
+	findFirstPageInMenu (menuKey, menuItems) {
+		const menuBlock = menuItems.find((item) => item.key === menuKey);
+		if (menuBlock && menuBlock.items) {
+			return menuBlock.items[0];
+		}
+		// Throw error instead
+		return null;
 	}
 	findMenuBlock (pageId, menuItems = [], level = 0) {
 		if (!pageId) {

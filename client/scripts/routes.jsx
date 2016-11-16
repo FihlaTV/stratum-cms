@@ -25,7 +25,7 @@ export default (
 			<Route path="more" component={() => <h1>More About</h1>} />
 		</Route>
 		<Route path="faq" component={FAQ} />
-		<Route path=":menu" >
+		<Route path=":menu" component={Page}>
 			<Route path=":page**/p/:pageId" component={Page} />
 		</Route>
 	</Route>
