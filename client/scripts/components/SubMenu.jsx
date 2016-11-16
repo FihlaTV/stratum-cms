@@ -55,19 +55,21 @@ const SubNav = ({
 const SubMenu = ({
 	menuBlock = {},
 	activePageId,
+	displaySingleItem = false,
 }) => {
 	const { items = [] } = menuBlock;
 	const activeTopPage = findActivePage(activePageId, items);
-	return (
+	return displaySingleItem || items.length > 1 ? (
 		<div className="sub-menu">
 			<SubNav menuItems={items} activeTopPage={activeTopPage}/>
 		</div>
-	);
+	) : null;
 
 };
 
 SubMenu.propTypes = {
 	activePageId: PropTypes.string,
+	displaySingleItem: PropTypes.bool,
 	menuBlock: PropTypes.object,
  };
 
