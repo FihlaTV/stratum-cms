@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import Spinner from '../components/Spinner';
@@ -6,6 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
 import DockedImages from '../components/DockedImages';
 import ContactPersons from '../components/ContactPersons';
+import SubMenu from '../components/SubMenu';
 
 const PageContainer = ({
 	loading,
@@ -33,9 +34,25 @@ class Page extends Component {
 			dispatch(fetchPage(nextPageId));
 		}
 	}
+	findMenuBlock (pageId, menuItems = [], level = 0) {
+		if (!pageId) {
+			return;
+		}
+		const matches = menuItems.filter((menuItem) => {
+			if (menuItem.items && menuItem.pageKey !== pageId) {
+				return this.findMenuBlock(pageId, menuItem.items, level + 1);
+			}
+			return pageId === menuItem.pageKey;
+		});
+		if (matches.length > 0) {
+			return level === 0 ? matches[0] : true;
+		}
+		return false;
+	}
 	render () {
 		const {
 			page = {},
+			menuItems = [],
 			loading = true,
 		} = this.props;
 		const {
@@ -47,6 +64,7 @@ class Page extends Component {
 			extraImages = [],
 			displayPrintButton,
 			contacts = [],
+			shortId,
 		} = page;
 		return (
 			<Row>
@@ -65,7 +83,8 @@ class Page extends Component {
 					{displayPrintButton && <PrintButton/>}
 				</PageContainer>
 				<Col md={layout === 'full' ? 12 : 4}>
-					<h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>
+					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
+					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages images={extraImages} enlargeable wide={layout === 'full'}/>
 				</Col>
@@ -77,7 +96,12 @@ const mapStateToProps = (state) => {
 	return {
 		page: state.page,
 		loading: state.page.isLoading,
+		menuItems: state.menu.items,
 	};
+};
+
+Page.propTypes = {
+	contacts: PropTypes.array,
 };
 
 export default connect(mapStateToProps)(Page);
