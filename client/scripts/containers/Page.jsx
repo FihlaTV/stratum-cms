@@ -83,7 +83,7 @@ class Page extends Component {
 					{displayPrintButton && <PrintButton/>}
 				</PageContainer>
 				<Col md={layout === 'full' ? 12 : 4}>
-					<SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} />
+					<SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages images={extraImages} enlargeable wide={layout === 'full'}/>
