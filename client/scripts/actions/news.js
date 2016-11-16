@@ -1,4 +1,5 @@
 import fetch from '../utils/testable-fetch';
+import { newError } from './error'
 export const NEWS = 'NEWS';
 export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
 export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
@@ -32,7 +33,16 @@ export function getNewsArticle (nyhet) {
 	return (dispatch) => {
 		return		fetch(`/api/news/${nyhet}`)
 			.then(res => res.json())
-			.then(json => dispatch(newsArticle(json.data)));
+			.then(json => {
+				if (json.success) {
+					dispatch(newsArticle(json.data));
+				} else {
+					throw new Error(json.error);
+				}
+			})
+			.catch(error => {
+				dispatch(newError(error.message));
+			});
 	};
 }
 

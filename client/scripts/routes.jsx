@@ -3,6 +3,7 @@ import App from './containers/RouterApp';
 import RenderChildren from './components/RenderChildren';
 import News from './containers/News';
 import NewsItem from './containers/NewsItem';
+import ErrorPage from './components/ErrorPage';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
 
@@ -24,5 +25,6 @@ export default (
 		</Route>
 		<Route path="faq" component={FAQ} />
 		<Route path="**/p/:pageId" component={Page} />
+		<Route path="*" component={ErrorPage} />
 	</Route>
 );

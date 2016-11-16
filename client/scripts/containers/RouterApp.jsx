@@ -6,9 +6,17 @@ import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
 
 class App extends Component {
+	constructor (props) {
+		super(props);
+	}
 	componentDidMount () {
 		const { dispatch } = this.props;
 		dispatch(fetchMenuItems());
+	}
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.error.status && this.props.location.pathname !== '/react/404') {
+			this.props.router.push('/react/404');
+		}
 	}
 	render () {
 		const {
@@ -33,6 +41,7 @@ function mapStateToProps (state, { location }) {
 	return {
 		location,
 		menuItems: state.menu.items,
+		error: state.error,
 	};
 }
 
