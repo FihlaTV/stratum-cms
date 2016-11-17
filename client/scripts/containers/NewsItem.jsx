@@ -75,7 +75,7 @@ class NewsItem extends Component {
 							{newsItem.author ? this.author() : null}
 						</article>
 					</Col>
-					<Col md={4}><DockedImages images={[newsItem.image]} enlargeable wide={false} />
+					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image.url && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
 					{newsItem.resources.length > 0 && <Resources resources={newsItem.resources} />}
 					</Col>
 				</Row>
