@@ -1,5 +1,5 @@
 import fetch from '../utils/testable-fetch';
-import { newError } from './error'
+import { newError } from './error';
 export const NEWS = 'NEWS';
 export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
 export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
