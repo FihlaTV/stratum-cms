@@ -8,7 +8,10 @@ import { getNews, changeYearFilter, changeCurrentPage } from '../actions/news';
 import { connect } from 'react-redux';
 
 const News = (props) => {
-	const { news } = props;
+	const { news, children } = props;
+	if (children) {
+		return children;
+	}
 	if (!news.loading) {
 		return (
 			<div>

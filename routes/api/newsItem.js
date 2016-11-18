@@ -30,12 +30,27 @@ exports = module.exports = function (req, res) {
 			publishedDate: newsItem.publishedDate,
 			title: newsItem.title,
 			slug: newsItem.slug,
-			author: newsItem.author,
-			resources: newsItem.resources,
 			content: newsItem.content,
 			imageLayout: newsItem.imageLayout,
 			image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription, { width: imgWidth, crop: 'fill' }),
 		};
+		if (newsItem.author) {
+			data.author = {
+				name: newsItem.author.name,
+				email: newsItem.author.email,
+				image: formatCloudinaryImage(newsItem.author.image, '', { width: 80, crop: 'fill', height: 80, gravity: 'face' }),
+			};
+		}
+		if (newsItem.resources) {
+			data.resources = newsItem.resources.map(function (resource) {
+				return {
+					title: resource.title,
+					description: resource.description,
+					fileUrl: resource.fileUrl,
+					filetype: resource.fileType,
+				};
+			});
+		}
 		return res.apiResponse({
 			success: true,
 			data: data,

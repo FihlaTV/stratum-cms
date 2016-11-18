@@ -1,6 +1,5 @@
 import React from 'react';
 import App from './containers/RouterApp';
-import RenderChildren from './components/RenderChildren';
 import News from './containers/News';
 import NewsItem from './containers/NewsItem';
 import ErrorPage from './components/ErrorPage';
@@ -19,8 +18,7 @@ const Index = () => (
 export default (
 	<Route path="/react/" component={App}>
 		<IndexRoute component={Index} />
-		<Route path="nyheter" component={RenderChildren} >
-			<IndexRoute component={News} />
+		<Route path="nyheter" component={News} >
 			<Route path=":nyhet" component={NewsItem} />
 		</Route>
 		<Route path="faq" component={FAQ} />

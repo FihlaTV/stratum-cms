@@ -1,3 +1,5 @@
+import moment from 'moment';
+import 'moment/locale/sv';
 import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
@@ -16,15 +18,6 @@ class NewsItem extends Component {
 	}
 	componentWillUnmount () {
 		this.props.clearNewsArticle();
-	}
-	formatedPublishedDate () {
-		const published = new Date(this.props.news.newsArticle.publishedDate);
-		const year = published.getUTCFullYear();
-		const month = published.getUTCMonth() + 1;
-		const formatedMonth = month < 10 ? '0' + month : month;
-		const day = published.getDate();
-		const formatedDay = day < 10 ? '0' + day : day;
-		return `${year}-${formatedMonth}-${formatedDay}`;
 	}
 	author () {
 		const author = this.props.news.newsArticle.author;
@@ -46,16 +39,7 @@ class NewsItem extends Component {
 			</div>
 		);
 	}
-	portrait (image) {
-		return (
-			<Col md={4} className="content-page-images">
-				<div className="caption-image">
-					<img src={image.url} className="img-responsive" width="640" />
-					{image.description && <div className="caption-text">{image.description}</div>}
-				</div>
-			</Col>
-		);
-	}
+
 	newsItem () {
 		const newsItem = this.props.news.newsArticle;
 		return (
@@ -64,7 +48,7 @@ class NewsItem extends Component {
 					<Col md={8}>
 						<article className="base-page clearfix">
 							<header>
-								<span className="published-at">{this.formatedPublishedDate()}</span>
+								<span className="published-at">{moment(this.props.news.newsArticle.publishedDate).format('L')}</span>
 								<h1>{newsItem.title}</h1>
 							</header>
 							{newsItem.imageLayout === 'landscape' && newsItem.image.url ? this.landscape(newsItem.image) : null}
