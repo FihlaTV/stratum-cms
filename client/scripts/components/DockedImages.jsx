@@ -44,13 +44,15 @@ class EnlargeableImage extends Component {
 const DockedImages = ({
 	images,
 	enlargeable = false,
-	wide,
+	imageXSCols = 12,
+	imageSMCols = 6,
+	imageMDCols = 12,
 }) => {
 	return (
 		<div className="content-page-images">
 			<Row>
 			{images && images.map((image, i) =>
-				<Col md={wide ? 6 : 12} sm={6} xs={12} key={`extra-image-${i}`}>
+				<Col md={imageMDCols} sm={imageSMCols} xs={imageXSCols} key={`extra-image-${i}`}>
 					<div className="caption-image">
 						<EnlargeableImage enlargeable={enlargeable} image={image}/>
 						{image.description && <div className="caption-text">{image.description}</div>}
@@ -62,8 +64,19 @@ const DockedImages = ({
 	);
 };
 
+const colValidation = (props, propName, componentName) => {
+	if (props[propName] < 1 || props[propName] > 12) {
+		return new Error(
+			`${propName} should be between 1 and 12`
+		);
+	}
+};
+
 DockedImages.propTypes = {
 	enlargeable: PropTypes.bool,
+	imageMDCols: colValidation,
+	imageSMCols: colValidation,
+	imageXSCols: colValidation,
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
 			url: PropTypes.string.isRequired,
