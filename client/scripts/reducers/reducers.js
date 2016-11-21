@@ -4,6 +4,7 @@ import context from './context';
 import messages from './messages';
 import menu from './menu';
 import page from './page';
+import registerInformation from './registerInformation';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
@@ -15,4 +16,5 @@ export default combineReducers({
 	menu,
 	routing,
 	page,
+	registerInformation,
 });

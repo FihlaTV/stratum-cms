@@ -75,7 +75,6 @@ exports = module.exports = function (app) {
 	// API
 	app.all('/api*', keystone.middleware.api);
 	app.all('/api/pages', routes.api.pages);
-	app.all('/api/pages/:id', routes.api.page);
 	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/authentication/context', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
@@ -86,6 +85,12 @@ exports = module.exports = function (app) {
 
 	// Menu
 	app.get('/api/menu', routes.api.menu);
+
+	// Page
+	app.get('/api/pages/:id', routes.api.page);
+
+	// Register information
+	app.get('/api/register-information', routes.api['register-information']);
 
 	// API calls for refreshing metadata
 	app.all('/api/refresh/stratum-widgets', routes.api['stratum-widgets']);
