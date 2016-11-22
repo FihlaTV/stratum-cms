@@ -6,6 +6,7 @@ const Footer = ({
 	name,
 	location,
 	email,
+	phone,
 }) => {
 	const {
 		street1,
@@ -18,8 +19,8 @@ const Footer = ({
 	return (
 		<footer>
 			<Grid>
-				{[name, street1, street2, cityComplete].filter((x) => !!x).join(', ')}
-				{Email && ', '}
+				{[name, street1, street2, cityComplete, phone].filter((x) => !!x).join(', ')}
+				{Email && <br/>}
 				{Email}
 			</Grid>
 		</footer>
