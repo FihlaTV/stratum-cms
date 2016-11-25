@@ -26,7 +26,7 @@ export default (
 		</Route>
 		<Route path="faq" component={FAQ} />
 		<Route path=":menu" component={Page}>
-			<Route path=":page**/p/:pageId" component={Page} />
+			<Route path=":page(/:subpage)/p/:pageId" component={Page} />
 		</Route>
 	</Route>
 );
