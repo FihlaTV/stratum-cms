@@ -9,7 +9,9 @@ exports = module.exports = function (req, res) {
 	keystone.list('BasePage').model
 		.findOne()
 		.where('shortId', filters.shortId)
-		.populate('contacts')
+		.populate('contacts', 'name description email phone image')
+		.populate('page', 'shortId title slug')
+		.select('shortId title subtitle slug pageType lead content.html layout contentType displayPrintButton extraImage contacts page image')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -43,6 +45,13 @@ exports = module.exports = function (req, res) {
 			};
 			if (results.image.exists) {
 				data.image = formatCloudinaryImage(results.image, results.imageDescription, { width: 750, crop: 'fill' });
+			}
+			if (results.pageType === 'SubPage') {
+				data.parentPage = results.get('page').toObject();
+				delete data.parentPage._id;
+				delete data.parentPage.__v;
+				delete data.parentPage.__t;
+				delete data.page;
 			}
 			return res.apiResponse({
 				success: true,
