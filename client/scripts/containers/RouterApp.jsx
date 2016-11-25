@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { Link, IndexLink } from 'react-router';
 import Menu from '../components/Menu';
+import Breadcrumbs from '../components/Breadcrumbs';
 import Footer from '../components/Footer';
 import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
@@ -19,12 +20,14 @@ class App extends Component {
 			location,
 			menuItems,
 			registerInformation,
+			breadcrumbs,
 		} = this.props;
 
 		return (
 			<div>
 				<Menu items={menuItems} />
 				<Grid>
+					<Breadcrumbs items={breadcrumbs}/>
 					{children}
 					<p>{location.pathname}</p>
 				</Grid>
@@ -39,6 +42,7 @@ function mapStateToProps (state, { location }) {
 		location,
 		menuItems: state.menu.items,
 		registerInformation: state.registerInformation,
+		breadcrumbs: state.breadcrumbs.items,
 	};
 }
 

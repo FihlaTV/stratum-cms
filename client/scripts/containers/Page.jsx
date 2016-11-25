@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
+import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import Spinner from '../components/Spinner';
 import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
@@ -29,17 +30,45 @@ class Page extends Component {
 		}
 	}
 	componentWillReceiveProps (nextProps) {
-		const { dispatch, params } = this.props;
+		const { dispatch, params, page, menuItems } = this.props;
 		const nextPageId = nextProps.params.pageId;
+		const nextPage = nextProps.page;
 
 		if (nextPageId && params.pageId !== nextPageId) {
 			dispatch(fetchPage(nextPageId));
+		}
+		if (nextPage && nextPage !== page || nextProps.menuItem !== menuItems) {
+			const currentMenu = nextProps.menuItems.find((menu = []) => menu.key === nextProps.params.menu) || {};
+			this.setBreadcrumbs(currentMenu, nextPage);
 		}
 		if (nextProps.menuItems.length > 0 && !nextProps.params.pageId) {
 			const rePage = this.findFirstPageInMenu(nextProps.params.menu, nextProps.menuItems);
 			// Redirect to found page
 			this.props.router.push(`/react${rePage.url}`);
 		}
+	}
+	componentWillUnmount () {
+		const { dispatch } = this.props;
+		dispatch(clearBreadcrumbs());
+	}
+	getPageUrl (menu, page, parentPage) {
+		const { slug, shortId } = page;
+		const parentUrl = parentPage ? `${parentPage.slug}/` : '';
+
+		return `/react/${menu}/${parentUrl}${slug}/p/${shortId}`;
+	}
+	setBreadcrumbs (menu, page) {
+		const { dispatch } = this.props;
+		const { parentPage, title } = page;
+		let breadcrumbs = [{ url: '/react/', label: 'Start' }];
+
+		breadcrumbs.push({ url: `/react/${menu.key}`, label: menu.label });
+		if (parentPage) {
+			breadcrumbs.push({ url: this.getPageUrl(menu, parentPage), label: parentPage.title });
+		}
+		breadcrumbs.push({ url: this.getPageUrl(menu, page, parentPage), label: title });
+
+		dispatch(setBreadcrumbs(breadcrumbs));
 	}
 	findFirstPageInMenu (menuKey, menuItems) {
 		const menuBlock = menuItems.find((item) => item.key === menuKey);
