@@ -3,13 +3,9 @@ import App from './containers/RouterApp';
 import News from './containers/News';
 import NewsItem from './containers/NewsItem';
 import ErrorPage from './components/ErrorPage';
+import FAQ from './containers/FAQ';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
-
-
-const FAQ = () => (
-	<h1>FAQ</h1>
-);
 
 const Index = () => (
 	<h1>Registercentrum</h1>

@@ -81,6 +81,8 @@ exports = module.exports = function (app) {
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
 	app.get('/api/news', routes.api.news);
 	app.get('/api/news/:newsItem/', routes.api.newsItem);
+	app.get('/api/questions', routes.api.faq);
+	app.get('/api/questions/category/:questionCategory', routes.api.faq);
 
 	// Allow cross domain calls for messages
 	app.get('/api/messages', keystone.middleware.cors);
