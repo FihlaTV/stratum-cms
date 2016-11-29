@@ -22,8 +22,8 @@ const Breadcrumbs = ({
 
 Breadcrumbs.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape({
-		url: PropTypes.string,
-		label: PropTypes.string,
+		url: PropTypes.string.isRequired,
+		label: PropTypes.string.isRequired,
 	})),
  };
 

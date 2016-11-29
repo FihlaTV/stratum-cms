@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
+import { clearPage } from '../actions/page';
 import Spinner from '../components/Spinner';
 import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
@@ -23,10 +24,12 @@ const PageContainer = ({
 
 class Page extends Component {
 	componentDidMount () {
-		const { dispatch, params } = this.props;
-		const { pageId } = params;
+		const { dispatch, params, menuItems } = this.props;
+		const { pageId, menu } = params;
 		if (pageId) {
 			dispatch(fetchPage(pageId));
+		} else if (menu && menuItems.length > 0) {
+			this.redirectFromMenu(menu, menuItems);
 		}
 	}
 	componentWillReceiveProps (nextProps) {
@@ -38,35 +41,41 @@ class Page extends Component {
 			dispatch(fetchPage(nextPageId));
 		}
 		if (nextPage && nextPage !== page || nextProps.menuItem !== menuItems) {
-			const currentMenu = nextProps.menuItems.find((menu = []) => menu.key === nextProps.params.menu) || {};
-			this.setBreadcrumbs(currentMenu, nextPage);
+			const currentMenu = nextProps.menuItems.find((menu) => menu.key === nextProps.params.menu);
+			if (currentMenu && nextPage) {
+				this.setBreadcrumbs(currentMenu, nextPage);
+			}
 		}
 		if (nextProps.menuItems.length > 0 && !nextProps.params.pageId) {
-			const rePage = this.findFirstPageInMenu(nextProps.params.menu, nextProps.menuItems);
-			// Redirect to found page
-			this.props.router.push(`/react${rePage.url}`);
+			this.redirectFromMenu(nextProps.params.menu, nextProps.menuItems);
 		}
 	}
 	componentWillUnmount () {
 		const { dispatch } = this.props;
 		dispatch(clearBreadcrumbs());
+		dispatch(clearPage());
+	}
+	redirectFromMenu (menuSlug, menuItems) {
+		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
+		// Redirect to found page
+		this.props.router.push(`/react${rePage.url}`);
 	}
 	getPageUrl (menu, page, parentPage) {
 		const { slug, shortId } = page;
 		const parentUrl = parentPage ? `${parentPage.slug}/` : '';
 
-		return `/react/${menu}/${parentUrl}${slug}/p/${shortId}`;
+		return `${menu}/${parentUrl}${slug}/p/${shortId}`;
 	}
 	setBreadcrumbs (menu, page) {
 		const { dispatch } = this.props;
 		const { parentPage, title } = page;
-		let breadcrumbs = [{ url: '/react/', label: 'Start' }];
+		let breadcrumbs = [];
 
-		breadcrumbs.push({ url: `/react/${menu.key}`, label: menu.label });
+		breadcrumbs.push({ url: `${menu.key}`, label: menu.label });
 		if (parentPage) {
-			breadcrumbs.push({ url: this.getPageUrl(menu, parentPage), label: parentPage.title });
+			breadcrumbs.push({ url: this.getPageUrl(menu.key, parentPage), label: parentPage.title });
 		}
-		breadcrumbs.push({ url: this.getPageUrl(menu, page, parentPage), label: title });
+		breadcrumbs.push({ url: this.getPageUrl(menu.key, page, parentPage), label: title });
 
 		dispatch(setBreadcrumbs(breadcrumbs));
 	}
@@ -91,7 +100,7 @@ class Page extends Component {
 		if (matches.length > 0) {
 			return level === 0 ? matches[0] : true;
 		}
-		return false;
+		return undefined;
 	}
 	render () {
 		const {
@@ -138,7 +147,7 @@ class Page extends Component {
 }
 const mapStateToProps = (state) => {
 	return {
-		page: state.page,
+		page: state.page.currentPage,
 		loading: state.page.isLoading,
 		menuItems: state.menu.items,
 	};
