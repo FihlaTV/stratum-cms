@@ -30,7 +30,7 @@ exports = module.exports = function (req, res) {
 					category: category.category,
 					questions: [],
 				};
-				var qAndA = { question: question.question, answer: question.answer.md };
+				var qAndA = { question: question.question, answer: question.answer.html };
 				categories[id].questions.push(qAndA);
 			}
 		});

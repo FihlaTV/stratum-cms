@@ -18,9 +18,9 @@ export default (
 			<Route path=":nyhet" component={NewsItem} />
 		</Route>
 		<Route path="faq" component={FAQ} />
-		<Route path="*" component={ErrorPage} />
 		<Route path=":menu" component={Page}>
-			<Route path=":page**/p/:pageId" component={Page} />
+			<Route path=":page(/:subpage)/p/:pageId" component={Page} />
 		</Route>
+		<Route path="*" component={ErrorPage} />
 	</Route>
 );

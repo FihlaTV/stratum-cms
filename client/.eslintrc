@@ -3,7 +3,8 @@
      "keystone"
   ],
   "rules": {
-    "react/jsx-no-bind": 0
+    "react/jsx-no-bind": 0,
+		"react/jsx-pascal-case": ["error", {"allowAllCaps": true}]
   },
   "globals": {
     "_": true,

@@ -2,6 +2,7 @@ import fetch from '../utils/testable-fetch';
 
 export const RECEIVE_PAGE = 'RECEIVE_PAGE';
 export const SET_LOADING = 'SET_LOADING';
+export const CLEAR_PAGE = 'CLEAR_PAGE';
 
 function receivePage (page) {
 	return {
@@ -34,5 +35,11 @@ export function fetchPage (pageId) {
 				console.log('Failed to load menu items', error);
 				dispatch(setLoading(false));
 			});
+	};
+}
+
+export function clearPage () {
+	return {
+		type: CLEAR_PAGE,
 	};
 }
