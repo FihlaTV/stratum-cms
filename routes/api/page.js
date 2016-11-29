@@ -11,7 +11,7 @@ exports = module.exports = function (req, res) {
 		.where('shortId', filters.shortId)
 		.populate('contacts', 'name description email phone image')
 		.populate('page', 'shortId title slug')
-		.select('shortId title subtitle slug pageType lead content.html layout contentType displayPrintButton extraImage contacts page image')
+		.select('shortId title subtitle slug pageType lead content.html layout contentType displayPrintButton extraImage contacts page image questionCategories')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -42,6 +42,7 @@ exports = module.exports = function (req, res) {
 						image: formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }),
 					};
 				}),
+				questionCategories: results.questionCategories,
 			};
 			if (results.image.exists) {
 				data.image = formatCloudinaryImage(results.image, results.imageDescription, { width: 750, crop: 'fill' });

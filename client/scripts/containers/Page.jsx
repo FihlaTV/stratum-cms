@@ -9,6 +9,7 @@ import PrintButton from '../components/PrintButton';
 import DockedImages from '../components/DockedImages';
 import ContactPersons from '../components/ContactPersons';
 import SubMenu from '../components/SubMenu';
+import FAQ from './FAQ';
 
 const PageContainer = ({
 	loading,
@@ -118,6 +119,7 @@ class Page extends Component {
 			displayPrintButton,
 			contacts = [],
 			shortId,
+			questionCategories = [],
 		} = page;
 		return (
 			<Row>
@@ -134,6 +136,7 @@ class Page extends Component {
 					</p>}
 					<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
 					{displayPrintButton && <PrintButton/>}
+					{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
 				</PageContainer>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
