@@ -2,20 +2,14 @@ import React from 'react';
 import App from './containers/RouterApp';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
+import Index from './containers/Index';
+import FAQ from './containers/FAQ';
 
 const News = ({ children }) => (
 	<div>
 		<h1>Nyheter</h1>
 		{children}
 	</div>
-);
-
-const FAQ = () => (
-	<h1>FAQ</h1>
-);
-
-const Index = () => (
-	<h1>Registercentrum</h1>
 );
 
 export default (
