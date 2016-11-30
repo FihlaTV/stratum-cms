@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 import DockedImages from '../components/DockedImages';
 import Resources from '../components/Resources';
 import { getNewsArticle, clearNewsArticle } from '../actions/news';
+import { setBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
 
 class NewsItem extends Component {
@@ -18,6 +19,7 @@ class NewsItem extends Component {
 	}
 	componentWillUnmount () {
 		this.props.clearNewsArticle();
+		this.props.setBreadcrumbs([{ url: 'nyheter', label: 'Nyheter' }]);
 	}
 	author () {
 		const author = this.props.news.newsArticle.author;
@@ -78,6 +80,7 @@ const mapStateToProps = ({ news }) => {
 const mapDispatchToProps = (dispatch) => ({
 	getNewsArticle: (nyhet) => dispatch(getNewsArticle(nyhet)),
 	clearNewsArticle: () => dispatch(clearNewsArticle()),
+	setBreadcrumbs: (bcArr) => dispatch(setBreadcrumbs(bcArr)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsItem);
