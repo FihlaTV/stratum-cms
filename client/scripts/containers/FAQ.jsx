@@ -53,7 +53,7 @@ const mapStateToProps = ({ faq, menu }) => {
 	return { faq, menu };
 };
 const mapDispatchToProps = (dispatch) => ({
-	getQuestions: () => dispatch(getQuestions()),
+	getQuestions: (categoriesArray) => dispatch(getQuestions(categoriesArray)),
 	setBreadcrumbs: (bcArr) => dispatch(setBreadcrumbs(bcArr)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
