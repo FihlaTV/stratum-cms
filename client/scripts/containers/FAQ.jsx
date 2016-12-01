@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getQuestions } from '../actions/faq';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
@@ -27,10 +28,14 @@ class FAQ extends Component {
 
 	faqContent () {
 		return (
-			<div className="base-page">
-				<h1>Frågor och svar</h1>
-				<Questions faqArr={this.props.faq.questions} />
-			</div>
+			<Row>
+				<Col md={8} >
+					<div className="base-page">
+						<h1>Frågor och svar</h1>
+						<Questions faqArr={this.props.faq.questions} />
+					</div>
+				</Col>
+			</Row>
 		);
 	}
 	pageContent () {
