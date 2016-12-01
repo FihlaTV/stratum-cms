@@ -18,7 +18,7 @@ const PageContainer = ({
 }) => (
 	<Col md={layout === 'full' ? 12 : 8}>
 		<article className="base-page">
-			{children}
+			{loading ? <Spinner /> : children}
 		</article>
 	</Col>
 );
