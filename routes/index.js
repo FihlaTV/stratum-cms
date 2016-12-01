@@ -93,6 +93,9 @@ exports = module.exports = function (app) {
 	// Page
 	app.get('/api/pages/:id', routes.api.page);
 
+	// Start Page
+	app.get('/api/start-page', routes.api['start-page']);
+
 	// Register information
 	app.get('/api/register-information', routes.api['register-information']);
 

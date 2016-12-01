@@ -6,10 +6,7 @@ import ErrorPage from './components/ErrorPage';
 import FAQ from './containers/FAQ';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
-
-const Index = () => (
-	<h1>Registercentrum</h1>
-);
+import Index from './containers/Index';
 
 export default (
 	<Route path="/react/" component={App}>

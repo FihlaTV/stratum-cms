@@ -26,9 +26,11 @@ class News extends Component {
 		if (!news.loading) {
 			return (
 				<div>
+					<h1>Nyheter och meddelanden</h1>
+					<p>Antal artiklar: {news.filteredNews.length}</p>
 					<Row>
 						<Col md={8}>
-							{this.props.news.filteredNews.slice(news.currentPage * 5 - 5, news.currentPage * 5).map(article => <NewsListItem key={article.title} article={article} setBreadcrumbs={this.props.setBreadcrumbs}/>)}
+							{news.filteredNews.slice(news.currentPage * 5 - 5, news.currentPage * 5).map(article => <NewsListItem key={article.title} article={article} setBreadcrumbs={this.props.setBreadcrumbs}/>)}
 						</Col>
 						<Col md={4}>
 							<NewsFilter {...this.props} />

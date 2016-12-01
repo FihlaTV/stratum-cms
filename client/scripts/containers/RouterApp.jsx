@@ -25,7 +25,6 @@ class App extends Component {
 	render () {
 		const {
 			children,
-			location,
 			menuItems,
 			registerInformation,
 			breadcrumbs,
@@ -37,7 +36,6 @@ class App extends Component {
 				<Grid>
 					<Breadcrumbs items={breadcrumbs}/>
 					{children}
-					<p>{location.pathname}</p>
 				</Grid>
 				<Footer {...registerInformation}/>
 			</div>
