@@ -8,7 +8,7 @@ const Jumbotron = ({
 }) => (
 	<div className="jumbotron">
 		<h1>{header}</h1>
-		<div className="lead" dangerouslySetInnerHTML={{ __html: description }}/>
+		<div className="lead" dangerouslySetInnerHTML={{ __html: description.html }}/>
 		<Row>
 			<StartPageWidget digit="78,7 %" description="Hur många patienter med SOM hörselprovas före rörinstättning på din klink?"/>
 		</Row>

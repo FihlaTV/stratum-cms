@@ -1,20 +1,26 @@
 var keystone = require('keystone');
 var async = require('async');
+var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 
 exports = module.exports = function (req, res) {
-	var context = {};
+	// var context = {};
 	async.series({
 		startPage: function (next) {
 			keystone.list('StartPage').model
 				.findOne()
-				.select('header description.html jumbotron informationBlurb quickLink')
+				.select('header description.html jumbotron.description.html jumbotron.header jumbotron.isVisible informationBlurb quickLink')
 				.populate('informationBlurb.newsItem', 'image title slug imageLayout publishedDate content.lead')
 				.populate('quickLink.page', 'slug shortId')
 				.exec(function (err, startPage) {
+					var sp;
 					if (!err && startPage) {
-						context.startPage = startPage;
+						sp = startPage.toObject();
+						delete sp._id;
+						if (sp.informationBlurb && sp.informationBlurb.image) {
+							sp.informationBlurb.image = formatCloudinaryImage(sp.informationBlurb.image, { width: 500, crop: 'fill' });
+						}
 					}
-					next(err, startPage);
+					next(err, sp);
 				});
 		},
 		startPageWidgets: function (next) {
