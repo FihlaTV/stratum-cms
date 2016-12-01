@@ -56,7 +56,7 @@ function getLinkContents (item, level, desktop = false) {
 	}
 	if (items && items.length > 0) {
 		return (
-			<NavDropdown className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
+			<NavDropdown onClick={(e) => e.preventDefault()} className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
 				{formatMenu(items, level + 1)}
 			</NavDropdown>
 		);
