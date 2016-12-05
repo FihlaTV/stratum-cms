@@ -12,13 +12,18 @@ class Index extends Component {
 		dispatch(fetchStartPage());
 	}
 	render () {
-		const { jumbotron, description = {}, header } = this.props;
-		// console.log(startPage);
+		const {
+			jumbotron,
+			description = {},
+			header,
+			widgets,
+		} = this.props;
+		console.log(widgets);
 		return (
 			<div>
 				<Row>
 					<Col md={12}>
-						<Jumbotron {...jumbotron} />
+						<Jumbotron {...jumbotron} widgets={widgets} />
 					</Col>
 				</Row>
 				<Row>

@@ -6,7 +6,7 @@ export const RECEIVE_START_PAGE = 'RECEIVE_START_PAGE';
 function receiveStartPage (startPage) {
 	return {
 		type: RECEIVE_START_PAGE,
-		startPage,
+		...startPage,
 	};
 }
 
@@ -24,7 +24,7 @@ export function fetchStartPage () {
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
-					dispatch(receiveStartPage(json.data.startPage));
+					dispatch(receiveStartPage(json.data));
 					// dispatch(setLoading(false));
 				} else {
 					throw new Error(json.error);

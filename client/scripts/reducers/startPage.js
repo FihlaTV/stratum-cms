@@ -10,8 +10,9 @@ export default (state = initialState, action) => {
 				header,
 				informationBlurb,
 				jumbotron,
-			} = action.startPage;
-			return Object.assign({}, state, { description, header, informationBlurb, jumbotron });
+				widgets,
+			} = action;
+			return Object.assign({}, state, { description, header, informationBlurb, jumbotron, widgets });
 		default:
 			return state;
 	}

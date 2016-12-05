@@ -6,6 +6,12 @@ var	Types = keystone.Field.Types;
  * ==========
  */
 
+var informationBlurbTypes = exports.informationBlurbTypes = {
+	NEWS_ITEM: 'newsItem',
+	NEWS_ROLL: 'newsRoll',
+	IMAGE: 'image',
+};
+
 var StartPage = new keystone.List('StartPage', {
 	nocreate: true,
 	nodelete: true,
@@ -62,13 +68,13 @@ StartPage.add({
 					+ '\n- **News Roll**: Displays the 3 latest news items in a compressed format',
 				// '\n- **Meeting**: Select important meetings which should be shown',
 				options: [{
-					value: 'image',
+					value: informationBlurbTypes.IMAGE,
 					label: 'Image',
 				}, {
-					value: 'newsRoll',
+					value: informationBlurbTypes.NEWS_ROLL,
 					label: 'News Roll',
 				}, {
-					value: 'newsItem',
+					value: informationBlurbTypes.NEWS_ITEM,
 					label: 'News Item',
 				// }, {
 				// 	value: 'meeting',
@@ -81,7 +87,7 @@ StartPage.add({
 				many: false,
 				filters: { state: 'published' },
 				dependsOn: {
-					'informationBlurb.type': 'newsItem',
+					'informationBlurb.type': informationBlurbTypes.NEWS_ITEM,
 				},
 				note: 'Select which news item that should be shown on the start page. If no news item is selected '
 					+ 'the latest available will be selected',
@@ -92,7 +98,7 @@ StartPage.add({
 				default: 'smallImage',
 				emptyOption: false,
 				dependsOn: {
-					'informationBlurb.type': 'newsItem',
+					'informationBlurb.type': informationBlurbTypes.NEWS_ITEM,
 				},
 			},
 			image: {
@@ -100,7 +106,7 @@ StartPage.add({
 				type: Types.CloudinaryImage,
 				autoCleanup: true,
 				dependsOn: {
-					'informationBlurb.type': 'image',
+					'informationBlurb.type': informationBlurbTypes.IMAGE,
 				},
 			},
 			meeting: {
