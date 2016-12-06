@@ -12,6 +12,7 @@ exports = module.exports = function (req, res) {
 	locals.data = {};
 
 
+	console.log(req.query);
 	keystone.list('NewsItem').model.findOne({
 		state: 'published',
 		slug: locals.filters.newsItem,
@@ -25,14 +26,22 @@ exports = module.exports = function (req, res) {
 				error: err,
 			});
 		}
-		var imgWidth = newsItem.imageLayout === 'landscape' ? 750 : 640;
+		var imageSettings = {};
+		if (req.query.h && req.query.w) {
+			imageSettings.width = req.query.w;
+			imageSettings.height = req.query.h;
+			imageSettings.crop = 'fit';
+		} else {
+			imageSettings.width = newsItem.imageLayout === 'landscape' ? 750 : 640;
+			imageSettings.crop = 'fill';
+		}
 		var data = {
 			publishedDate: newsItem.publishedDate,
 			title: newsItem.title,
 			slug: newsItem.slug,
 			content: newsItem.content,
 			imageLayout: newsItem.imageLayout,
-			image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription, { width: imgWidth, crop: 'fill' }),
+			image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings),
 		};
 		if (newsItem.author) {
 			data.author = {

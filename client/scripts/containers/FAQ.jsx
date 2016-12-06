@@ -11,8 +11,8 @@ class FAQ extends Component {
 		super(props);
 	}
 	componentDidMount () {
-		if (this.props.categoriesArray) {
-			this.props.getQuestions(this.props.categoriesArray);
+		if (this.props.categories) {
+			this.props.getQuestions(this.props.categories);
 		} else {
 			if (this.props.menu.items.length >= 1) {
 				this.props.setBreadcrumbs([{ url: 'faq', label: this.props.menu.items.find(obj => obj.key === this.props.route.path).label }]);
@@ -21,7 +21,7 @@ class FAQ extends Component {
 		}
 	}
 	componentWillReceiveProps (nextProps) {
-		if (nextProps.menu.items.length >= 1 && this.props.menu.items.length === 0) {
+		if (nextProps.menu.items.length >= 1 && this.props.menu.items.length === 0 && !this.props.categories) {
 			this.props.setBreadcrumbs([{ url: 'faq', label: nextProps.menu.items.find(obj => obj.key === this.props.route.path).label }]);
 		}
 	}

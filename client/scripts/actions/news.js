@@ -29,9 +29,13 @@ const newsArticle = (article) => {
 	return { type: NEWS_ARTICLE, newsArticle: article };
 };
 
-export function getNewsArticle (nyhet) {
+export function getNewsArticle (nyhet, querystring) {
+	let url = `/api/news/${nyhet}`;
+	if (querystring) {
+		url += querystring;
+	}
 	return (dispatch) => {
-		return		fetch(`/api/news/${nyhet}`)
+		return	fetch(url)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {

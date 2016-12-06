@@ -8,8 +8,9 @@ import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
 import Index from './containers/Index';
 
+
 export default (
-	<Route path="/react/" component={App}>
+	<Route path="/react" component={App}>
 		<IndexRoute component={Index} />
 		<Route path="nyheter" component={News} >
 			<Route path=":nyhet" component={NewsItem} />
