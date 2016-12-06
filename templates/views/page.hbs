@@ -28,6 +28,11 @@
 				{{>printbutton}}
 				{{/if}}
 			</article>
+			{{#ifeq resourcePlacement "left"}}
+				{{#if resources}}
+					{{>resourcelist resources}}
+				{{/if}}
+			{{/ifeq}}
 		</div>
 		{{/with}}
 		<div class="{{#ifeq data.page.layout "full"}}col-xs-12{{else}}col-md-4{{/ifeq}}">
@@ -63,9 +68,11 @@
 			{{#ifeq data.widget.size "small"}}
 				{{> widget widget=data.widget stratumWidget=stratumWidget keystoneWidget=keystoneWidget}}
 			{{/ifeq}}
+			{{#ifeq data.page.resourcePlacement "right"}}
 			{{#if data.page.resources}}
 			{{>resourcelist data.page.resources}}
 			{{/if}}
+			{{/ifeq}}
 			{{#if data.contacts}}
 			<h2>{{pluralTitle data.contacts "Kontaktperson" "Kontaktpersoner"}}</h2>
 			<div class="content-page-contacts">

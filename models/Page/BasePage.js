@@ -143,6 +143,11 @@ BasePage.add({
 		ref: 'Resource',
 		many: true,
 	},
+	resourcePlacement: {
+		type: Types.Select,
+		options: 'left, right',
+		default: 'right',
+	},
 	contacts: {
 		type: Types.Relationship,
 		ref: 'Contact',
