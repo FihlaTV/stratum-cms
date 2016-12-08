@@ -22,13 +22,16 @@ function omitRecursive (obj, iteratee, context) {
 function formatInformationBlurb (informationBlurb) {
 	switch (informationBlurb.type) {
 		case informationBlurbTypes.IMAGE:
-			return { type: informationBlurbTypes.IMAGE, image: formatCloudinaryImage(informationBlurb.image, null, { width: 720, height: 540, crop: 'fill' }) };
+			return {
+				type: informationBlurbTypes.IMAGE,
+				image: informationBlurb.image && formatCloudinaryImage(informationBlurb.image, null, { width: 720, height: 540, crop: 'fill' }),
+			};
 		case informationBlurbTypes.NEWS_ITEM: {
 			var newsItem = informationBlurb.newsItem;
 			if (!newsItem) {
 				return {};
 			}
-			newsItem.image = formatCloudinaryImage(newsItem.image, null, { width: 500, crop: 'fill' });
+			newsItem.image = newsItem.image && formatCloudinaryImage(newsItem.image, null, { width: 500, crop: 'fill' });
 			newsItem.content = newsItem.content && newsItem.content.lead;
 			return { type: informationBlurbTypes.NEWS_ITEM, newsItem: newsItem, newsItemLayout: informationBlurb.newsItemLayout };
 		}
