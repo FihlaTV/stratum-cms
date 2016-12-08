@@ -2,11 +2,33 @@ var keystone = require('keystone');
 var async = require('async');
 var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 var informationBlurbTypes = require('../../models/StartPage').informationBlurbTypes;
+var IS_PORTAL = keystone.get('is portal');
+// var _ = require('underscore');
+
+// function omitRecursive (obj, iteratee, context) {
+// 	var r = _.omit(obj, iteratee, context);
+
+// 	_.each(r, function (val, key) {
+// 		if (Array.isArray(val)) {
+// 			r[key] = val.map(function (v) {
+// 				if (typeof v === 'object') {
+// 					return omitRecursive(v, iteratee, context);
+// 				}
+// 				return v;
+// 			});
+// 		}
+// 		else if (typeof val === 'object') {
+// 			r[key] = omitRecursive(val, iteratee, context);
+// 		}
+// 	});
+
+// 	return r;
+// }
 
 function formatInformationBlurb (informationBlurb) {
 	switch (informationBlurb.type) {
 		case informationBlurbTypes.IMAGE:
-			return { type: informationBlurbTypes.IMAGE, image: formatCloudinaryImage(informationBlurb.image, null, { width: 500, crop: 'fill' }) };
+			return { type: informationBlurbTypes.IMAGE, image: formatCloudinaryImage(informationBlurb.image, null, { width: 720, height: 540, crop: 'fill' }) };
 		case informationBlurbTypes.NEWS_ITEM: {
 			var newsItem = informationBlurb.newsItem;
 			if (!newsItem) {
@@ -16,9 +38,24 @@ function formatInformationBlurb (informationBlurb) {
 			newsItem.content = newsItem.content && newsItem.content.lead;
 			return { type: informationBlurbTypes.NEWS_ITEM, newsItem: newsItem, newsItemLayout: informationBlurb.newsItemLayout };
 		}
+		case informationBlurbTypes.NEWS_ROLL:
+			return { type: informationBlurbTypes.NEWS_ROLL };
 		default:
 			return {};
 	}
+}
+
+function convertResultsToJSON (next) {
+	return function (err, results) {
+		var resultsObj;
+		if (!err && results) {
+			resultsObj = Array.isArray(results)
+				? results.map(function (r) { return r.toObject(); })
+				: results.toObject();
+			// delete sp._id;
+		}
+		next(err, resultsObj);
+	};
 }
 
 exports = module.exports = function (req, res) {
@@ -30,14 +67,7 @@ exports = module.exports = function (req, res) {
 				.select('header description.html jumbotron.description.html jumbotron.header jumbotron.isVisible informationBlurb quickLink')
 				.populate('informationBlurb.newsItem', 'image title slug imageLayout publishedDate content.lead')
 				.populate('quickLink.page', 'slug shortId')
-				.exec(function (err, startPage) {
-					var sp;
-					if (!err && startPage) {
-						sp = startPage.toObject();
-						delete sp._id;
-					}
-					next(err, sp);
-				});
+				.exec(convertResultsToJSON(next));
 		},
 		startPageWidgets: function (next) {
 			keystone.list('StartPageWidget').model
@@ -47,7 +77,7 @@ exports = module.exports = function (req, res) {
 			.limit(8)
 			.populate('widget')
 			.populate('page', 'slug shortId')
-			.exec(next);
+			.exec(convertResultsToJSON(next));
 		},
 		newsItems: function (next) {
 			keystone.list('NewsItem').model
@@ -59,17 +89,17 @@ exports = module.exports = function (req, res) {
 			})
 			.sort('-publishedDate')
 			.limit(3)
-			.exec(next);
+			.exec(convertResultsToJSON(next));
 		},
 		subRegisters: function (next) {
-			if (!keystone.get('is portal')) {
+			if (!IS_PORTAL) {
 				next();
 				return;
 			}
 			keystone.list('SubRegister').model
 				.find()
 				.sort('sortOrder')
-				.exec(next);
+				.exec(convertResultsToJSON(next));
 		},
 	}, function (err, results) {
 		var informationBlurb;
@@ -88,10 +118,11 @@ exports = module.exports = function (req, res) {
 			results.startPage.informationBlurb = formatInformationBlurb(informationBlurb);
 		}
 		results.startPage.widgets = results.startPageWidgets;
+		results.startPage.isPortal = IS_PORTAL;
 
 		return res.apiResponse({
 			success: true,
-			data: results.startPage,
+			data: results.startPage, //omitRecursive(results.startPage, ['_id', '__v', '__t']),
 		});
 	});
 
