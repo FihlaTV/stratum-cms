@@ -12,7 +12,6 @@ exports = module.exports = function (req, res) {
 	locals.data = {};
 
 
-	console.log(req.query);
 	keystone.list('NewsItem').model.findOne({
 		state: 'published',
 		slug: locals.filters.newsItem,
