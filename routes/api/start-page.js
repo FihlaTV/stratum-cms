@@ -3,27 +3,21 @@ var async = require('async');
 var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 var informationBlurbTypes = require('../../models/StartPage').informationBlurbTypes;
 var IS_PORTAL = keystone.get('is portal');
-// var _ = require('underscore');
+var _ = require('underscore');
 
-// function omitRecursive (obj, iteratee, context) {
-// 	var r = _.omit(obj, iteratee, context);
-
-// 	_.each(r, function (val, key) {
-// 		if (Array.isArray(val)) {
-// 			r[key] = val.map(function (v) {
-// 				if (typeof v === 'object') {
-// 					return omitRecursive(v, iteratee, context);
-// 				}
-// 				return v;
-// 			});
-// 		}
-// 		else if (typeof val === 'object') {
-// 			r[key] = omitRecursive(val, iteratee, context);
-// 		}
-// 	});
-
-// 	return r;
-// }
+function omitRecursive (obj, iteratee, context) {
+	if (obj && typeof obj === 'object' && !_.isDate(obj) && !_.isArray(obj)) {
+		var r = _.omit(obj, iteratee, context);
+		return _.each(r, function (val, key) {
+			r[key] = omitRecursive(val, iteratee, context);
+		});
+	} else if (_.isArray(obj)) {
+		return obj.map(function (obj2) {
+			return omitRecursive(obj2, iteratee, context);
+		});
+	}
+	return obj;
+}
 
 function formatInformationBlurb (informationBlurb) {
 	switch (informationBlurb.type) {
@@ -52,7 +46,6 @@ function convertResultsToJSON (next) {
 			resultsObj = Array.isArray(results)
 				? results.map(function (r) { return r.toObject(); })
 				: results.toObject();
-			// delete sp._id;
 		}
 		next(err, resultsObj);
 	};
@@ -122,7 +115,7 @@ exports = module.exports = function (req, res) {
 
 		return res.apiResponse({
 			success: true,
-			data: results.startPage, //omitRecursive(results.startPage, ['_id', '__v', '__t']),
+			data: omitRecursive(results.startPage, ['_id', '__v', '__t', 'updatedAt', 'updatedBy', 'createdAt']),
 		});
 	});
 
