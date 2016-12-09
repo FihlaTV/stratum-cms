@@ -40,8 +40,10 @@ exports = module.exports = function (req, res) {
 			slug: newsItem.slug,
 			content: newsItem.content,
 			imageLayout: newsItem.imageLayout,
-			image: formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings),
 		};
+		if (newsItem.image.public_id) {
+			data.image = formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings);
+		}
 		if (newsItem.author) {
 			data.author = {
 				name: newsItem.author.name,
