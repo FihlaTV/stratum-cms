@@ -53,7 +53,7 @@ class NewsItem extends Component {
 								<span className="published-at">{moment(this.props.news.newsArticle.publishedDate).format('L')}</span>
 								<h1>{newsItem.title}</h1>
 							</header>
-							{newsItem.imageLayout === 'landscape' && newsItem.image.url ? this.landscape(newsItem.image) : null}
+							{newsItem.imageLayout === 'landscape' && newsItem.image && this.landscape(newsItem.image)}
 							<div className="post">
 								<p className="lead">{newsItem.content.lead}</p>
 								<div dangerouslySetInnerHTML={{ __html: newsItem.content.extended.html }}></div>
@@ -61,7 +61,7 @@ class NewsItem extends Component {
 							{newsItem.author ? this.author() : null}
 						</article>
 					</Col>
-					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image.url && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
+					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
 					{newsItem.resources.length > 0 && <Resources resources={newsItem.resources} />}
 					</Col>
 				</Row>

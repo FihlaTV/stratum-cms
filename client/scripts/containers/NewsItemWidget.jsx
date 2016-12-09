@@ -25,7 +25,7 @@ class NewsItemWidget extends Component {
 			<div className="news-widget-simple news-widget-portrait">
 				<h2>{article.title}</h2>
 				<div className="news-widget-portrait-inner">
-					{article.image.url ? <img className="img-portrait" src={article.image.url}/> : null}
+					{article.image ? <img className="img-portrait" src={article.image.url}/> : null}
 					<p>{article.content.lead}</p>
 					<Link to={`/react/nyheter/${article.slug}`}>Läs mer.</Link>
 				</div>
@@ -39,7 +39,7 @@ class NewsItemWidget extends Component {
 				<Link to={`/react/nyhter/${article.slug}`}>
 					<h2>{article.title}</h2>
 					<div className="img-landscape-ct">
-						{article.image.url ? <img src={article.image.url} className="img-landscape" /> : null}
+						{article.image ? <img src={article.image.url} className="img-landscape" /> : null}
 					</div>
 				</Link>
 			</div>
