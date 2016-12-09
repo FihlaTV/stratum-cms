@@ -147,6 +147,7 @@ BasePage.add({
 		type: Types.Select,
 		options: 'left, right',
 		default: 'right',
+		emptyOptions: false,
 	},
 	contacts: {
 		type: Types.Relationship,
