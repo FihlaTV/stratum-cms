@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Accordion, Panel } from 'react-bootstrap';
 
-const Questions = ({ faqArr, children }) => (
+const Questions = ({ faqArr }) => (
 	<div>
 		{faqArr.map(categoryObj => (
 			<div key={categoryObj.category}>
@@ -16,4 +16,7 @@ const Questions = ({ faqArr, children }) => (
 	</div>
 );
 
+Questions.propTypes = {
+	faqArr:	PropTypes.array.isRequired,
+};
 export default Questions;

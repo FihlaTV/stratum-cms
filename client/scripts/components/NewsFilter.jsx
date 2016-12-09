@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 const YearLi = ({ year, news, changeYearFilter, location, active }) => (
@@ -44,5 +44,19 @@ class NewsFilter extends Component {
 		);
 	}
 }
+
+NewsFilter.propTypes = {
+	changeYearFilter: PropTypes.func.isRequired,
+	location: PropTypes.object.isRequired,
+	news: PropTypes.object.isRequired,
+};
+
+YearLi.propTypes = {
+	active: PropTypes.bool.isRequired,
+	changeYearFilter: PropTypes.func.isRequired,
+	location: PropTypes.object.isRequired,
+	news: PropTypes.object.isRequired,
+	year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 export default NewsFilter;

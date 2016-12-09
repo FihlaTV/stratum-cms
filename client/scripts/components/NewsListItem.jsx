@@ -1,7 +1,7 @@
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import moment from 'moment';
 import 'moment/locale/sv';
-import React from 'react';
-import { Link } from 'react-router';
 
 const NewsListItem = ({ article, setBreadcrumbs }) => {
 	return (
@@ -16,4 +16,10 @@ const NewsListItem = ({ article, setBreadcrumbs }) => {
 		</div>
 	);
 };
+
+NewsListItem.propTypes = {
+	article: PropTypes.object.isRequired,
+	setBreadcrumbs: PropTypes.func.isRequired,
+};
+
 export default NewsListItem;

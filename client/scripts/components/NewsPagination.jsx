@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 class NewsPagination extends Component {
@@ -92,4 +92,9 @@ class NewsPagination extends Component {
 	}
 }
 
+NewsPagination.propTypes = {
+	changeCurrentPage: PropTypes.func.isRequired,
+	location: PropTypes.object.isRequired,
+	news: PropTypes.object.isRequired,
+};
 export default NewsPagination;
