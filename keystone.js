@@ -54,6 +54,7 @@ keystone.init({
 	'stratum api key': process.env.STRATUM_API_KEY,
 	'stratum server': process.env.STRATUM_SERVER || 'stratum.registercentrum.se',
 	'is portal': process.env.IS_PORTAL === 'true',
+	'is demo': process.env.IS_DEMO === 'true',
 	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
 	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),

@@ -70,9 +70,19 @@ function parseResponse (req, res, body, post) {
 
 exports = module.exports = function (req, res) {
 	var referer = req.header('referer');
-	var protocol = referer ? referer.split('/')[0]
-			: req.secure ? 'https:' : 'http:';
-	var stratumServer = protocol + '//' + keystone.get('stratum server');
+	var isDemo = keystone.get('is demo');
+	var protocol;
+	var	stratumServer;
+
+	if (isDemo) {
+		protocol = 'http:';
+	} else if (referer) {
+		protocol = referer.split('/')[0];
+	} else {
+		protocol = req.secure ? 'https:' : 'http:';
+	}
+
+	stratumServer = protocol + '//' + keystone.get('stratum server');
 	var	conf = {
 		rejectUnauthorized: false,
 		encoding: null,

@@ -3,11 +3,20 @@ var	keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
 	var referer = req.header('referer');
-	var protocol = referer ? referer.split('/')[0]
-			: req.secure ? 'https:' : 'http:';
+	var isDemo = keystone.get('is demo');
+	var protocol;
+	var	stratumUrl;
+	var uri;
+
+	if (isDemo) {
+		protocol = 'http:';
+	} else if (referer) {
+		protocol = referer.split('/')[0];
+	} else {
+		protocol = req.secure ? 'https:' : 'http:';
+	}
 	// Might be a good idea to have a more fail safe approach to this string concatenation.
-	var	stratumUrl = protocol + '//' + keystone.get('stratum server') + '/';
-	var	uri;
+	stratumUrl = protocol + '//' + keystone.get('stratum server') + '/';
 
 	if (!(/^\/stratum\/[^\/]/).test(req.url)) {
 		res.notFound();
