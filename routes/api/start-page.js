@@ -55,7 +55,8 @@ function convertResultsToJSON (next) {
 }
 
 exports = module.exports = function (req, res) {
-	// var context = {};
+	var context = {};
+
 	async.series({
 		startPage: function (next) {
 			keystone.list('StartPage').model
@@ -68,12 +69,38 @@ exports = module.exports = function (req, res) {
 		startPageWidgets: function (next) {
 			keystone.list('StartPageWidget').model
 			.find()
+			.select('description digit linkType page link useWidget keystoneWidget widget linkText slug')
 			.where('showOnStartPage', true)
 			.sort('sortOrder')
 			.limit(8)
-			.populate('widget')
+			.populate('widget', 'type widget keystoneWidget')
 			.populate('page', 'slug shortId')
-			.exec(convertResultsToJSON(next));
+			.exec(function (err, results) {
+				convertResultsToJSON(function (err, results) {
+					context.spWidgets = results;
+					next(err, results);
+				})(err, results);
+			});
+		},
+		keystoneWidgets: function (next) {
+			async.each(context.spWidgets, function (widget, cb) {
+				if (widget.useWidget
+						&& widget.widget && widget.widget.type === 'keystone') {
+					keystone.list('KeystoneWidget').model
+						.findOne()
+						.select('name')
+						.where('_id', widget.widget.keystoneWidget)
+						.exec(function (err, kWidget) {
+							if (!err && kWidget) {
+								widget.keystoneWidget = kWidget.name;
+							}
+							cb(err);
+						});
+				} else {
+					cb();
+				}
+				delete widget.widget;
+			}, next);
 		},
 		newsItems: function (next) {
 			keystone.list('NewsItem').model
@@ -113,7 +140,7 @@ exports = module.exports = function (req, res) {
 			}
 			results.startPage.informationBlurb = formatInformationBlurb(informationBlurb);
 		}
-		results.startPage.widgets = results.startPageWidgets;
+		results.startPage.widgets = context.spWidgets;
 		results.startPage.isPortal = IS_PORTAL;
 
 		return res.apiResponse({
@@ -121,32 +148,4 @@ exports = module.exports = function (req, res) {
 			data: omitRecursive(results.startPage, ['_id', '__v', '__t', 'updatedAt', 'updatedBy', 'createdAt']),
 		});
 	});
-
-
-	// // Populate StartPageWidgets with dynamic Widgets
-	// view.on('init', function (next) {
-	// 	var startPageWidgets = locals.data.startPageWidgets;
-	// 	async.each(startPageWidgets, function (widget, cb) {
-	// 		// Only works with KeystoneWidget for now
-	// 		if (widget.useWidget
-	// 				&& widget.widget && widget.widget.type === 'keystone') {
-	// 			if (widget.linkType === 'page' && widget.page) {
-	// 				widget.link = widget.page.directPath;
-	// 			}
-	// 			keystone.list('KeystoneWidget').model
-	// 				.findOne()
-	// 				.where('_id', widget.widget.keystoneWidget)
-	// 				.exec(function (err, kWidget) {
-	// 					if (!err) {
-	// 						widget.keystoneWidget = kWidget;
-	// 					}
-	// 					cb(err);
-	// 				});
-	// 		} else {
-	// 			cb();
-	// 		}
-	// 	}, next);
-	// });
-
-
 };

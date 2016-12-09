@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 
-const StartPageWidget = ({ digit, description, link, linkText }) => (
+const StartPageWidget = ({ digit, description, link, linkText, keystoneWidget }) => (
 	<Col className="startpage-widget" md={3} sm={4}>
 		<span className="startpage-widget-digit">
 			{digit}
