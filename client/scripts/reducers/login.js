@@ -16,6 +16,10 @@ import {
 	UPDATE_SITHS_NEW_CARD,
 	} from '../actions/login';
 
+const { CLIENT_DEMO_USERNAME } = process.env;
+
+const demoUser = CLIENT_DEMO_USERNAME;
+
 const initialState = {
 	loginMethod: LoginMethod.NOT_SELECTED,
 	hasNextState: true,
@@ -27,6 +31,7 @@ const initialState = {
 		username: '',
 		password: '',
 	},
+	demoUser,
 };
 
 export default (state = initialState, action) => {
