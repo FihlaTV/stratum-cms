@@ -78,6 +78,10 @@ exports = module.exports = function (app) {
 	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/authentication/context', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
+	app.get('/api/news', routes.api.news);
+	app.get('/api/news/:newsItem/', routes.api.newsItem);
+	app.get('/api/questions', routes.api.faq);
+	app.get('/api/questions/category/:questionCategory', routes.api.faq);
 
 	// Allow cross domain calls for messages
 	app.get('/api/messages', keystone.middleware.cors);
@@ -118,7 +122,7 @@ exports = module.exports = function (app) {
 	app.get('/logout', routes.views.logout);
 
 	app.get('/react/*', routes.views.react);
-	// Views for dynamic routes
+  // Views for dynamic routes
 	app.get('/:menublock/', routes.views.menublock);
 	app.get('*/p/:shortid', routes.views.page);
 };

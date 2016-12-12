@@ -1,19 +1,60 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { getQuestions } from '../actions/faq';
+import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
+import Questions from '../components/Questions';
+import Spinner from '../components/Spinner';
 
-const FAQ = ({
-	categories = [],
-}) => {
-	return (
-		<div>
-			{categories.map((id) => {
-				return <h2 key={id}>{id}</h2>;
-			})}
-		</div>
-	);
+class FAQ extends Component {
+	constructor (props) {
+		super(props);
+	}
+	componentDidMount () {
+		if (this.props.categories) {
+			this.props.getQuestions(this.props.categories);
+		} else {
+			if (this.props.menu.items.length >= 1) {
+				this.props.setBreadcrumbs([{ url: 'faq', label: this.props.menu.items.find(obj => obj.key === this.props.route.path).label }]);
+			};
+			this.props.getQuestions();
+		}
+	}
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.menu.items.length >= 1 && this.props.menu.items.length === 0 && !this.props.categories) {
+			this.props.setBreadcrumbs([{ url: 'faq', label: nextProps.menu.items.find(obj => obj.key === this.props.route.path).label }]);
+		}
+	}
+
+	faqContent () {
+		return (
+			<Row>
+				<Col md={8} >
+					<div className="base-page">
+						<h1>Frågor och svar</h1>
+						<Questions faqArr={this.props.faq.questions} />
+					</div>
+				</Col>
+			</Row>
+		);
+	}
+	pageContent () {
+		return <Questions faqArr={this.props.faq.questions} />;
+	}
+	content () {
+		return this.props.categoriesArray ? this.pageContent() : this.faqContent();
+	}
+	render () {
+		return this.props.faq.loading ? <Spinner /> : this.content();
+	}
+}
+
+const mapStateToProps = ({ faq, menu }) => {
+	return { faq, menu };
 };
-
-FAQ.propTypes = {
-	categories: PropTypes.array,
-};
-
-export default FAQ;
+const mapDispatchToProps = (dispatch) => ({
+	getQuestions: (categoriesArray) => dispatch(getQuestions(categoriesArray)),
+	setBreadcrumbs: (bcArr) => dispatch(setBreadcrumbs(bcArr)),
+	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(FAQ);

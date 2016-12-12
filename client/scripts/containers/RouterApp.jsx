@@ -9,10 +9,18 @@ import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
 
 class App extends Component {
+	constructor (props) {
+		super(props);
+	}
 	componentDidMount () {
 		const { dispatch } = this.props;
 		dispatch(fetchMenuItems());
 		dispatch(fetchRegisterInformation());
+	}
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.error.status && this.props.location.pathname !== '/react/404') {
+			this.props.router.push('/react/404');
+		}
 	}
 	render () {
 		const {
@@ -39,6 +47,7 @@ function mapStateToProps (state, { location }) {
 	return {
 		location,
 		menuItems: state.menu.items,
+		error: state.error,
 		registerInformation: state.registerInformation,
 		breadcrumbs: state.breadcrumbs.items,
 	};
