@@ -17,7 +17,7 @@ export const LoginMethod = {
 	SITHS_CARD: 'SITHS_CARD',
 };
 
-const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV } = process.env;
+const { CLIENT_REGISTER_ID, CLIENT_STRATUM_SERVER, NODE_ENV, CLIENT_DEMO_USERNAME, CLIENT_DEMO_PASSWORD = 'demo' } = process.env;
 
 export function getKeystoneContext (isInitial) {
 	return (dispatch) => {
@@ -103,6 +103,9 @@ export function initLoginModal () {
 		const protocol = window.location.protocol === 'https:';
 		dispatch(setCurrentProtocol(protocol));
 		dispatch(resetState(true));
+		if (CLIENT_DEMO_USERNAME) {
+			return dispatch(assignSithsCard({ username: CLIENT_DEMO_USERNAME, password: CLIENT_DEMO_PASSWORD, timeout: 0 }));
+		}
 		if (!protocol && NODE_ENV !== 'development') {
 			dispatch(loginError(new Error('Det går inte att logga in pga att du inte besöker webbplatsen över https. Var god försök igen under https.')));
 		}
@@ -310,7 +313,7 @@ export function loginToStratum (refresh) {
 	};
 }
 
-function assignSithsCard ({ username, password } = {}) {
+function assignSithsCard ({ username, password, timeout = 5000 } = {}) {
 	return dispatch => {
 		return fetch(`${CLIENT_STRATUM_SERVER}/api/authentication/assign?_=${(new Date()).getTime()}&username=${username}&password=${password}`, {
 			credentials: 'include',
@@ -320,7 +323,7 @@ function assignSithsCard ({ username, password } = {}) {
 				if (json.success) {
 					console.log('login with new siths card successful...');
 					dispatch(setSITHSStatus('SITHS_NEW_CARD_COMPLETE'));
-					setTimeout(() => window.location.reload(), 5000); // For now...
+					setTimeout(() => window.location.reload(), timeout); // For now...
 				} else {
 					const errorCode = json.code === 1 && 'ASSIGN_WRONG_CREDENTIALS';
 					const error = new Error(getStratumProxyLoginError(errorCode));
