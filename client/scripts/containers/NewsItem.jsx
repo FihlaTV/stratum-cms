@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
 import DockedImages from '../components/DockedImages';
-import Resources from '../components/Resources';
+import ResourceList from '../components/ResourceList';
 import { getNewsArticle, clearNewsArticle } from '../actions/news';
 import { setBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
@@ -62,7 +62,7 @@ class NewsItem extends Component {
 						</article>
 					</Col>
 					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
-					{newsItem.resources.length > 0 && <Resources resources={newsItem.resources} />}
+					{newsItem.resources.length > 0 && <ResourceList	resources={newsItem.resources} />}
 					</Col>
 				</Row>
 			</div>

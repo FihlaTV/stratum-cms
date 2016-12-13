@@ -48,7 +48,7 @@ exports = module.exports = function (req, res) {
 			data.author = {
 				name: newsItem.author.name,
 				email: newsItem.author.email,
-				image: formatCloudinaryImage(newsItem.author.image, '', { width: 80, crop: 'fill', height: 80, gravity: 'face' }),
+				image: formatCloudinaryImage(newsItem.author.image, null, { width: 80, crop: 'fill', height: 80, gravity: 'face' }),
 			};
 		}
 		if (newsItem.resources) {
@@ -57,7 +57,7 @@ exports = module.exports = function (req, res) {
 					title: resource.title,
 					description: resource.description,
 					fileUrl: resource.fileUrl,
-					filetype: resource.fileType,
+					fileType: resource.fileType,
 				};
 			});
 		}
