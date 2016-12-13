@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import Resources from '../scripts/components/Resources';
+import ResourceList from '../scripts/components/ResourceList';
 
 describe('Tests for Resource component', () => {
 	const resources = [
@@ -9,17 +9,17 @@ describe('Tests for Resource component', () => {
 			title: 'En annan fil!',
 			description: 'En annan fil!',
 			fileUrl: '/temp/r/En-annan-fil--r1JES6ZZl.jpg',
-			filetype: 'image',
+			fileType: 'image',
 		},
 		{
 			title: 'En fil!',
 			description: 'En fil ',
 			fileUrl: '/temp/r/En-fil--HJZWSTZWl.JPG',
-			filetype: 'image',
+			fileType: 'image',
 		},
 	];
 
-	const wrapper = shallow(<Resources resources={resources}/>);
+	const wrapper = shallow(<ResourceList resources={resources}/>);
 	it('Will contain a <h2>Dokument att ladda ner</h2>', () => {
 		expect(wrapper.contains(<h2>Dokument att ladda ner</h2>));
 	});
