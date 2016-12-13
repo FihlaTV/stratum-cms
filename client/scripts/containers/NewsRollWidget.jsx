@@ -19,7 +19,7 @@ const NewsRollWidget = (props) => {
 						</li>
 					))}
 				</ul>
-				<Link to="/react/nyheter">Se fler nyheter</Link>
+				<Link to="/react/nyheter">Se fler nyheter.</Link>
 			</div>
 		</div>
 	);
