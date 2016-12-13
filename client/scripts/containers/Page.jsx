@@ -10,17 +10,15 @@ import DockedImages from '../components/DockedImages';
 import ContactPersons from '../components/ContactPersons';
 import SubMenu from '../components/SubMenu';
 import FAQ from './FAQ';
+import ResourceList from '../components/ResourceList';
 
 const PageContainer = ({
 	loading,
-	layout,
 	children,
 }) => (
-	<Col md={layout === 'full' ? 12 : 8}>
-		<article className="base-page">
-			{loading ? <Spinner /> : children}
-		</article>
-	</Col>
+	<article className="base-page">
+		{loading ? <Spinner /> : children}
+	</article>
 );
 
 class Page extends Component {
@@ -120,29 +118,35 @@ class Page extends Component {
 			contacts = [],
 			shortId,
 			questionCategories = [],
+			resources = [],
+			resourcePlacement,
 		} = page;
 		return (
 			<Row>
-				<PageContainer loading={loading} layout={layout}>
-					<header>
-						<h1>{title}</h1>
-					</header>
-					{image && <div className="caption-ct base-page-head-image base-page-head-image-full">
-						<img src={image.url} alt={image.description} className="img-response"/>
-						{image.description && <div className="caption-text">{image.description}</div>}
-					</div>}
-					{lead && <p className="lead">
-						{lead}
-					</p>}
-					<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
-					{displayPrintButton && <PrintButton/>}
-					{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
-				</PageContainer>
+				<Col md={layout === 'full' ? 12 : 8}>
+					<PageContainer loading={loading} layout={layout}>
+						<header>
+							<h1>{title}</h1>
+						</header>
+						{image && <div className="caption-ct base-page-head-image base-page-head-image-full">
+							<img src={image.url} alt={image.description} className="img-response"/>
+							{image.description && <div className="caption-text">{image.description}</div>}
+						</div>}
+						{lead && <p className="lead">
+							{lead}
+						</p>}
+						<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
+						{displayPrintButton && <PrintButton/>}
+						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
+					</PageContainer>
+					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} />}
+				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
+					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} />}
 				</Col>
 			</Row>
 		);

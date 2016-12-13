@@ -10,8 +10,9 @@ exports = module.exports = function (req, res) {
 		.findOne()
 		.where('shortId', filters.shortId)
 		.populate('contacts', 'name description email phone image')
+		.populate('resources')
 		.populate('page', 'shortId title slug')
-		.select('shortId title subtitle slug pageType lead content.html layout contentType displayPrintButton extraImage contacts page image questionCategories')
+		.select('shortId title subtitle slug pageType resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -30,6 +31,7 @@ exports = module.exports = function (req, res) {
 				layout: results.layout,
 				contentType: results.contentType,
 				displayPrintButton: results.displayPrintButton,
+				resourcePlacement: results.resourcePlacement,
 				extraImages: results.extraImages.map(function (image) {
 					return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
 				}),
@@ -43,6 +45,14 @@ exports = module.exports = function (req, res) {
 					};
 				}),
 				questionCategories: results.questionCategories,
+				resources: results.resources.map(function (resource) {
+					return {
+						title: resource.title,
+						description: resource.description,
+						fileUrl: resource.fileUrl,
+						fileType: resource.fileType,
+					};
+				}),
 			};
 			if (results.image.exists) {
 				data.image = formatCloudinaryImage(results.image, results.imageDescription, { width: 750, crop: 'fill' });
