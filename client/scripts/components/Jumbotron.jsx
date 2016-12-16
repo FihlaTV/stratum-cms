@@ -11,8 +11,8 @@ const Jumbotron = ({
 		<h1>{header}</h1>
 		{description && <div className="lead" dangerouslySetInnerHTML={{ __html: description.html }}/>}
 		<Row>
-			{widgets.map(({ slug, digit, description, keystoneWidget }) =>
-				<StartPageWidget keystoneWidget={keystoneWidget} key={slug} digit={digit} description={description}/>
+			{widgets.map((widget) =>
+				<StartPageWidget key={widget.slug} {...widget} wide={widgets.length < 4}/>
 			)}
 		</Row>
 	</div>

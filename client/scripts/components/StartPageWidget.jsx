@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Col } from 'react-bootstrap';
 import WidgetWrapper from './WidgetWrapper';
+import PageLink from '../containers/PageLink';
 
-const WidgetContainer = ({ link, linkText, children }) =>
+const WidgetLink = ({ link, linkText, linkType, page = {} }) =>
+{
+	switch (linkType) {
+		case 'page':
+			return <PageLink pageId={page.shortId}>{linkText}</PageLink>;
+		case 'static':
+			return <a href={link}>{linkText}</a>;
+		default:
+			return null;
+	}
+};
+
+const WidgetContainer = ({ link, linkText, linkType, page, children, wide }) =>
 (
-	<Col className="startpage-widget" md={3} sm={4}>
+	<Col className="startpage-widget" md={wide ? 4 : 3} sm={4}>
 		{children}
-		{link && linkText && <a href={link}>{linkText}</a>}
+		<WidgetLink link={link} linkText={linkText} linkType={linkType} page={page}/>
 	</Col>
 );
 
-const StartPageWidget = ({ digit, description, link, linkText, keystoneWidget }) =>
+const StartPageWidget = (props) =>
 {
+	const { digit, description, keystoneWidget } = props;
+
 	if (keystoneWidget) {
 		return (
-			<WidgetContainer link={link} linkText={linkText}>
+			<WidgetContainer {...props}>
 				<WidgetWrapper id={keystoneWidget} description={description} />
 			</WidgetContainer>
 		);
 	}
 	return (
-		<WidgetContainer link={link} linkText={linkText}>
+		<WidgetContainer {...props}>
 			<span className="startpage-widget-digit">
 				{digit}
 			</span>
@@ -29,6 +44,10 @@ const StartPageWidget = ({ digit, description, link, linkText, keystoneWidget })
 			</span>
 		</WidgetContainer>
 	);
+};
+
+StartPageWidget.propTypes = {
+	wide: PropTypes.bool,
 };
 
 export default StartPageWidget;
