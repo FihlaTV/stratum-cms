@@ -20,11 +20,11 @@ class PageLink extends Component {
 		}, null);
 	}
 	render () {
-		const { menuItems, pageId, children } = this.props;
+		const { menuItems, pageId, children, ...rest } = this.props;
 		const menu = this.findPage(pageId, menuItems);
 
 		if (menu) {
-			return <Link to={`/react${menu.url}`}>{children || menu.label}</Link>;
+			return <Link to={`/react${menu.url}`} {...rest}>{children || menu.label}</Link>;
 		}
 		return null;
 	}

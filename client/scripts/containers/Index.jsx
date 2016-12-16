@@ -7,6 +7,20 @@ import { fetchStartPage } from '../actions/startPage';
 import ImageWidget from '../components/ImageWidget';
 import NewsRollWidget from './NewsRollWidget';
 import NewsItemWidget from './NewsItemWidget';
+import PageLink from './PageLink';
+
+const SubRegisterList = ({ subRegisters = [] }) =>
+(
+	<div className="sub-registers sub-registers-simple">
+		<ul>
+			{subRegisters.map(({ name, url }, i) => (
+				<li key={`subregister-${i}`}>
+					<a href={url}>{name}</a>
+				</li>
+			))}
+		</ul>
+	</div>
+);
 
 class Index extends Component {
 	componentDidMount () {
@@ -33,25 +47,46 @@ class Index extends Component {
 			description = {},
 			header,
 			widgets,
+			isPortal,
 			informationBlurb = {},
+			subRegisters = [],
+			quickLink,
 		} = this.props;
 		let descriptionClassNames = ['base-column', 'brief-info-column'];
 		if (informationBlurb.type === 'image') {
 			descriptionClassNames.push('startpage-description-height');
 		}
+		const Jumbo = <Jumbotron {...jumbotron} widgets={widgets} className={isPortal ? 'jumbotron-portal' : null}/>;
+		const Description = (
+			<div className={descriptionClassNames.join(' ')}>
+				<h2>{header}</h2>
+				<div dangerouslySetInnerHTML={{ __html: description.html }} />
+			</div>
+		);
+		if (isPortal) {
+			return (
+				<div>
+					<Col md={7}>
+						{Jumbo}
+						{Description}
+					</Col>
+					<Col md={5}>
+						<h2>Delregister</h2>
+						<SubRegisterList subRegisters={subRegisters} />
+						{this.getInformationBlurbComponent(informationBlurb)}
+						{quickLink && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
+					</Col>
+				</div>
+			);
+		}
 		return (
 			<div>
 				<Row>
 					<Col md={12}>
-						<Jumbotron {...jumbotron} widgets={widgets} />
+						{Jumbo}
 					</Col>
-				</Row>
-				<Row>
 					<Col md={7}>
-						<div className={descriptionClassNames.join(' ')}>
-							<h2>{header}</h2>
-							<div dangerouslySetInnerHTML={{ __html: description.html }} />
-						</div>
+						{Description}
 					</Col>
 					<Col md={5}>
 						{this.getInformationBlurbComponent(informationBlurb)}

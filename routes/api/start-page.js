@@ -67,6 +67,9 @@ exports = module.exports = function (req, res) {
 				.exec(convertResultsToJSON(next));
 		},
 		startPageWidgets: function (next) {
+			if (IS_PORTAL) {
+				return next();
+			}
 			keystone.list('StartPageWidget').model
 			.find()
 			.select('description digit linkType page link useWidget keystoneWidget widget linkText slug')
@@ -83,6 +86,9 @@ exports = module.exports = function (req, res) {
 			});
 		},
 		keystoneWidgets: function (next) {
+			if (IS_PORTAL) {
+				return next();
+			}
 			async.each(context.spWidgets, function (widget, cb) {
 				if (widget.useWidget
 						&& widget.widget && widget.widget.type === 'keystone') {
@@ -140,6 +146,7 @@ exports = module.exports = function (req, res) {
 			}
 			results.startPage.informationBlurb = formatInformationBlurb(informationBlurb);
 		}
+		results.startPage.subRegisters = results.subRegisters;
 		results.startPage.widgets = context.spWidgets;
 		results.startPage.isPortal = IS_PORTAL;
 

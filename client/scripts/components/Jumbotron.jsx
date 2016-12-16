@@ -1,13 +1,14 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
+import { Row, Jumbotron as BootstrapJumbotron } from 'react-bootstrap';
 import StartPageWidget from './StartPageWidget';
 
 const Jumbotron = ({
 	header,
 	description,
 	widgets = [],
+	...props,
 }) => (
-	<div className="jumbotron">
+	<BootstrapJumbotron {...props}>
 		<h1>{header}</h1>
 		{description && <div className="lead" dangerouslySetInnerHTML={{ __html: description.html }}/>}
 		<Row>
@@ -15,7 +16,7 @@ const Jumbotron = ({
 				<StartPageWidget key={widget.slug} {...widget} wide={widgets.length < 4}/>
 			)}
 		</Row>
-	</div>
+	</BootstrapJumbotron>
 );
 
 

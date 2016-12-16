@@ -11,8 +11,11 @@ export default (state = initialState, action) => {
 				informationBlurb,
 				jumbotron,
 				widgets,
+				isPortal,
+				subRegisters,
+				quickLink,
 			} = action;
-			return Object.assign({}, state, { description, header, informationBlurb, jumbotron, widgets });
+			return Object.assign({}, state, { description, header, informationBlurb, jumbotron, widgets, isPortal, subRegisters, quickLink });
 		default:
 			return state;
 	}
