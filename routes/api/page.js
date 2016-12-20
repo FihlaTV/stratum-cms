@@ -11,8 +11,9 @@ exports = module.exports = function (req, res) {
 		.where('shortId', filters.shortId)
 		.populate('contacts', 'name description email phone image')
 		.populate('resources')
+		.populate('widget')
 		.populate('page', 'shortId title slug')
-		.select('shortId title subtitle slug pageType resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories')
+		.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -32,6 +33,7 @@ exports = module.exports = function (req, res) {
 				contentType: results.contentType,
 				displayPrintButton: results.displayPrintButton,
 				resourcePlacement: results.resourcePlacement,
+				widget: results.widget,
 				extraImages: results.extraImages.map(function (image) {
 					return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
 				}),

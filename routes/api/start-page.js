@@ -3,21 +3,8 @@ var async = require('async');
 var formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 var informationBlurbTypes = require('../../models/StartPage').informationBlurbTypes;
 var IS_PORTAL = keystone.get('is portal');
-var _ = require('underscore');
-
-function omitRecursive (obj, iteratee, context) {
-	if (obj && typeof obj === 'object' && !_.isDate(obj) && !_.isArray(obj)) {
-		var r = _.omit(obj, iteratee, context);
-		return _.each(r, function (val, key) {
-			r[key] = omitRecursive(val, iteratee, context);
-		});
-	} else if (_.isArray(obj)) {
-		return obj.map(function (obj2) {
-			return omitRecursive(obj2, iteratee, context);
-		});
-	}
-	return obj;
-}
+var omitRecursive = require('../../utils/general').omitRecursive;
+var convertResultsToJSON = require('../../utils/general').convertResultsToJSON;
 
 function formatInformationBlurb (informationBlurb) {
 	switch (informationBlurb.type) {
@@ -40,18 +27,6 @@ function formatInformationBlurb (informationBlurb) {
 		default:
 			return {};
 	}
-}
-
-function convertResultsToJSON (next) {
-	return function (err, results) {
-		var resultsObj;
-		if (!err && results) {
-			resultsObj = Array.isArray(results)
-				? results.map(function (r) { return r.toObject(); })
-				: results.toObject();
-		}
-		next(err, resultsObj);
-	};
 }
 
 exports = module.exports = function (req, res) {
