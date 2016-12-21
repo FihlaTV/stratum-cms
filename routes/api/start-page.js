@@ -29,6 +29,35 @@ function formatInformationBlurb (informationBlurb) {
 	}
 }
 
+function formatJumbotron (_jumbotron) {
+	var jumbotron, resource, newsItem;
+	if (_jumbotron && _jumbotron.isVisible) {
+		jumbotron = {
+			header: _jumbotron.header,
+			type: _jumbotron.type,
+		};
+		if (jumbotron.type === 'wide') {
+			resource = _jumbotron.resource;
+			newsItem = _jumbotron.newsItem;
+			if (resource) {
+				jumbotron.resource = {
+					url: resource.fileUrl,
+					label: _jumbotron.resourceLinkText || resource.title,
+				};
+			}
+			if (newsItem) {
+				jumbotron.newsItem = {
+					label: _jumbotron.newsLinkText || newsItem.title,
+					slug: newsItem.slug,
+				};
+			}
+		} else {
+			jumbotron.description = _jumbotron.description;
+		}
+	}
+	return jumbotron;
+}
+
 exports = module.exports = function (req, res) {
 	var context = {};
 
@@ -36,13 +65,20 @@ exports = module.exports = function (req, res) {
 		startPage: function (next) {
 			keystone.list('StartPage').model
 				.findOne()
-				.select('header description.html jumbotron.description.html jumbotron.header jumbotron.isVisible informationBlurb quickLink')
+				.select('header description.html jumbotron informationBlurb quickLink')
 				.populate('informationBlurb.newsItem', 'image title slug imageLayout publishedDate content.lead')
 				.populate('quickLink.page', 'slug shortId')
-				.exec(convertResultsToJSON(next));
+				.populate('jumbotron.newsItem', 'title slug')
+				.populate('jumbotron.resource', 'title fileUrl')
+				.exec(function (err, results) {
+					convertResultsToJSON(function (err, results) {
+						context.showJumbotron = results && results.jumbotron && results.jumbotron.isVisible;
+						next(err, results);
+					})(err, results);
+				});
 		},
 		startPageWidgets: function (next) {
-			if (IS_PORTAL) {
+			if (IS_PORTAL || !context.showJumbotron) {
 				return next();
 			}
 			keystone.list('StartPageWidget').model
@@ -120,6 +156,9 @@ exports = module.exports = function (req, res) {
 				informationBlurb.newsItem = results.newsItems[0];
 			}
 			results.startPage.informationBlurb = formatInformationBlurb(informationBlurb);
+		}
+		if (results.startPage.jumbotron) {
+			results.startPage.jumbotron = formatJumbotron(results.startPage.jumbotron);
 		}
 		results.startPage.subRegisters = results.subRegisters;
 		results.startPage.widgets = context.spWidgets;
