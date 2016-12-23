@@ -56,7 +56,7 @@ class Index extends Component {
 		if (informationBlurb.type === 'image') {
 			descriptionClassNames.push('startpage-description-height');
 		}
-		const Jumbo = jumbotron ? <Jumbotron {...jumbotron} widgets={widgets} className={isPortal ? 'jumbotron-portal' : null}/> : null;
+		const Jumbo = jumbotron ? <Jumbotron {...jumbotron} widgets={widgets} portal={isPortal}/> : null;
 		const Description = (
 			<div className={descriptionClassNames.join(' ')}>
 				<h2>{header}</h2>
