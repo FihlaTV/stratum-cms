@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import Spinner from '../components/Spinner';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Grid } from 'react-bootstrap';
 import Jumbotron from '../components/Jumbotron';
 import { fetchStartPage } from '../actions/startPage';
 import ImageWidget from '../components/ImageWidget';
@@ -81,17 +81,17 @@ class Index extends Component {
 		}
 		return (
 			<div>
-				<Row>
-					<Col md={12}>
-						{Jumbo}
-					</Col>
-					<Col md={7}>
-						{Description}
-					</Col>
-					<Col md={5}>
-						{this.getInformationBlurbComponent(informationBlurb)}
-					</Col>
-				</Row>
+				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
+				<Grid>
+					<Row>
+						<Col md={7}>
+							{Description}
+						</Col>
+						<Col md={5}>
+							{this.getInformationBlurbComponent(informationBlurb)}
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		);
 	}
