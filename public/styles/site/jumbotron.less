@@ -13,10 +13,12 @@
 		margin-top: -@gutter-xlarge;
 		border-radius: 0;
 		background-color: #f2ede7;
-		background-image: url('/images/jumbotron_background.png');
 		background-repeat: no-repeat;
 		background-position: center;
-		height: 400px;
+		@media screen and (min-width: @screen-sm-min) {
+			height: 400px;
+			background-image: url('/images/jumbotron_background.png');
+		}
 		h1,.h1 {
 			font-size: 30px;
 			font-weight: 300;
