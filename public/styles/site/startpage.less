@@ -2,12 +2,24 @@
 	font-size: @font-size-base;
 	border-left: 1px solid lighten(@gray, 25%);
 	height: 100px;
+	&.startpage-widget-wide-jumbotron {
+		border-left: 0;
+		.startpage-widget-digit {
+			font-size: 30px;
+			font-weight: 400;
+		}
+		.startpage-widget-text {
+			font-weight: normal;
+			font-size: 14px;
+		}
+		height: auto;
+	}
 	// text-align: center;
 	.startpage-widget-digit{
 		display: block;
 		font-size: @font-size-base*2.5;
 		font-weight: 700;
-		color: #9d1975;
+		color: @brand-secondary;
 		white-space: nowrap;
 		overflow: hidden;
 	}

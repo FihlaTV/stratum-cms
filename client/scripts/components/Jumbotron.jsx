@@ -1,18 +1,20 @@
 import React, { PropTypes } from 'react';
 import { Row, Jumbotron as BootstrapJumbotron, Grid, Col } from 'react-bootstrap';
+import NewsLink from './NewsLink';
 import StartPageWidget from './StartPageWidget';
 
 const WideJumbotron = ({ header, newsItem, resource, widgets }) => (
 	<Grid>
-		<Col md={7}>
+		<Col md={7} sm={10}>
 			<h1>{header}</h1>
-			{newsItem && <a href="#" className="jumbotron-news-link">{newsItem.label}</a>}
+			{newsItem && <NewsLink slug={newsItem.slug} className="jumbotron-news-link">{newsItem.label}</NewsLink>}
+			<hr/>
 			<Row>
 				{widgets.slice(0, 2).map((widget) =>
-					<StartPageWidget key={widget.slug} {...widget} wide/>
+					<StartPageWidget key={widget.slug} {...widget} wide wideJumbotron />
 				)}
 			</Row>
-			{resource && <a href="#" className="jumbotron-resource-link">{resource.label}</a>}
+			{resource && <a href={resource.url} target="_blank" className="jumbotron-resource-link">{resource.label}</a>}
 		</Col>
 	</Grid>
 );

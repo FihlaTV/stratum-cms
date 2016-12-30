@@ -5,6 +5,7 @@
 @headings-font-weight: 400;
 @headings-font-family:    "Roboto Slab";
 @headings-color:          @brand-primary;
+@headings-color-h1:       @headings-color;
 @font-size-h1:            floor((@font-size-base * 2)); // ~36px
 @font-size-h2:            floor((@font-size-base * 1.6)); // ~30px
 @font-size-h3:            ceil((@font-size-base * 1.15)); // ~24px
@@ -15,6 +16,9 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 	margin-top: 0;
 	text-transform: uppercase;
 }
+h1,.h1{
+	color: @headings-color-h1;
+}
 @blockquote-font-size: @font-size-base;
 @font-family-sans-serif:  "open_sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @icon-font-path:          "~bootstrap/fonts/";
@@ -22,7 +26,8 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 
 /* Color variables */
 @brand-primary:                  #286d7d;
-@link-color:         	         #359aa3;
+@brand-secondary:                #9d1975;
+@link-color:                     #359aa3;
 @brand-success:                  #5cb85c; //currently not overridden...
 @brand-info:                     #5bc0de; //currently not overridden...
 @brand-warning:                  #f0ad4e; //currently not overridden...
@@ -51,7 +56,7 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 
 /* Jumbotron */
 @jumbotron-bg:                   lighten(@primary-light, 5%);
-@jumbotron-heading-color:        @brand-primary;
+@jumbotron-heading-color:        @headings-color;
 @jumbotron-font-size:            ceil((@font-size-base * 1.25));
 
 /* Navbar */

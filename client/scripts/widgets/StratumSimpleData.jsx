@@ -63,7 +63,7 @@ class StratumSimpleData extends Component {
 	render () {
 		if (this.state.loading) {
 			return (
-				<Spinner/>
+				<Spinner style={{ margin: '10px auto' }}/>
 			);
 		} else if (this.state.error) {
 			return (
