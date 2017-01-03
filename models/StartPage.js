@@ -32,6 +32,11 @@ StartPage.add({
 			hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image',
 		},
 	},
+	internalLinks: {
+		type: Types.Relationship,
+		ref: 'InternalLink',
+		many: true,
+	},
 },
 	'Jumbotron', {
 		jumbotron: {
