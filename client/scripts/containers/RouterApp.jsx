@@ -8,10 +8,11 @@ import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
 
-const MainContainer = ({ hasGrid, children = null }) => {
+const MainContainer = ({ hasGrid, children = null, breadcrumbs }) => {
 	if (hasGrid) {
 		return (
 			<Grid>
+				{breadcrumbs && <Breadcrumbs items={breadcrumbs}/>}
 				{children}
 			</Grid>
 		);
@@ -45,8 +46,7 @@ class App extends Component {
 		return (
 			<div>
 				<Menu items={menuItems} />
-				<MainContainer hasGrid={location.pathname !== '/react/'}>
-					<Breadcrumbs items={breadcrumbs}/>
+				<MainContainer hasGrid={location.pathname !== '/react/'} breadcrumbs={breadcrumbs}>
 					{children}
 				</MainContainer>
 				<Footer {...registerInformation}/>
