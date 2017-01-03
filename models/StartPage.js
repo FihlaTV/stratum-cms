@@ -80,7 +80,6 @@ StartPage.add({
 					'jumbotron.isVisible': true,
 					'jumbotron.type': 'wide',
 				},
-				// note: '',
 			},
 			newsLinkText: {
 				type: String,
