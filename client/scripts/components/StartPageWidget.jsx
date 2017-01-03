@@ -15,9 +15,9 @@ const WidgetLink = ({ link, linkText, linkType, page = {} }) =>
 	}
 };
 
-const WidgetContainer = ({ link, linkText, linkType, page, children, wide }) =>
+const WidgetContainer = ({ link, linkText, linkType, page, children, wide, wideJumbotron }) =>
 (
-	<Col className="startpage-widget" md={wide ? 4 : 3} sm={4}>
+	<Col className={(wideJumbotron ? 'startpage-widget-wide-jumbotron ' : '') + 'startpage-widget'} md={wide ? 4 : 3} sm={4}>
 		{children}
 		<WidgetLink link={link} linkText={linkText} linkType={linkType} page={page}/>
 	</Col>

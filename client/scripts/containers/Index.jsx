@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import Spinner from '../components/Spinner';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Grid } from 'react-bootstrap';
 import Jumbotron from '../components/Jumbotron';
 import { fetchStartPage } from '../actions/startPage';
 import ImageWidget from '../components/ImageWidget';
@@ -56,7 +56,7 @@ class Index extends Component {
 		if (informationBlurb.type === 'image') {
 			descriptionClassNames.push('startpage-description-height');
 		}
-		const Jumbo = <Jumbotron {...jumbotron} widgets={widgets} className={isPortal ? 'jumbotron-portal' : null}/>;
+		const Jumbo = jumbotron ? <Jumbotron {...jumbotron} widgets={widgets} portal={isPortal}/> : null;
 		const Description = (
 			<div className={descriptionClassNames.join(' ')}>
 				<h2>{header}</h2>
@@ -81,17 +81,17 @@ class Index extends Component {
 		}
 		return (
 			<div>
-				<Row>
-					<Col md={12}>
-						{Jumbo}
-					</Col>
-					<Col md={7}>
-						{Description}
-					</Col>
-					<Col md={5}>
-						{this.getInformationBlurbComponent(informationBlurb)}
-					</Col>
-				</Row>
+				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
+				<Grid>
+					<Row>
+						<Col md={7}>
+							{Description}
+						</Col>
+						<Col md={5}>
+							{this.getInformationBlurbComponent(informationBlurb)}
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		);
 	}

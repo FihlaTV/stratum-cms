@@ -40,6 +40,21 @@ StartPage.add({
 				type: Boolean,
 				default: true,
 			},
+			type: {
+				type: Types.Select,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+				},
+				emptyOption: false,
+				default: 'default',
+				options: [{
+					value: 'default',
+					label: 'Default jumbotron with title, introduction and widgets',
+				}, {
+					value: 'wide',
+					label: 'Wide jumbotron with link to news item and two widgets',
+				}],
+			},
 			header: {
 				type: String,
 				dependsOn: {
@@ -53,6 +68,40 @@ StartPage.add({
 				},
 				dependsOn: {
 					'jumbotron.isVisible': true,
+					'jumbotron.type': 'default',
+				},
+			},
+			newsItem: {
+				type: Types.Relationship,
+				ref: 'NewsItem',
+				many: false,
+				filters: { state: 'published' },
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			newsLinkText: {
+				type: String,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			resource: {
+				type: Types.Relationship,
+				ref: 'Resource',
+				many: false,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			resourceLinkText: {
+				type: String,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
 				},
 			},
 		},
