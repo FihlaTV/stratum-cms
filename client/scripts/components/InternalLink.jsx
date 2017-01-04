@@ -7,14 +7,14 @@ const InternalLink = ({
 	linkText,
 	icon,
 }) => (
-	<div>
+	<div className="internal-link">
 		<h2>{title}</h2>
-		<p>{description}
+		{icon && <img src={icon.url}/>}
+		<p>{description}&nbsp;
 			<a href={link}>
 				{linkText}
 			</a>
 		</p>
-		{icon && <img src={icon.url}/>}
 	</div>
 );
 

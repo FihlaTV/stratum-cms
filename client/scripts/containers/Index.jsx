@@ -23,6 +23,23 @@ const SubRegisterList = ({ subRegisters = [] }) =>
 	</div>
 );
 
+const InternalLinks = ({ internalLinks = [] }) =>
+{
+	if (internalLinks) {
+		const cols = Math.min(internalLinks.length, 4);
+		return (
+			<Row>
+				{internalLinks.map((link, i) => (
+					<Col md={12 / cols} key={`internal-link-${i}`}>
+						<InternalLink {...link} />
+					</Col>
+				))}
+			</Row>
+		);
+	}
+	return null;
+};
+
 class Index extends Component {
 	componentDidMount () {
 		const { dispatch } = this.props;
@@ -85,8 +102,8 @@ class Index extends Component {
 			<div>
 				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
 				<Grid>
+					<InternalLinks internalLinks={internalLinks} />
 					<Row>
-						{internalLinks.map((link, i) => <InternalLink key={`internal-link-${i}`} {...link} />)}
 						<Col md={7}>
 							{Description}
 						</Col>
