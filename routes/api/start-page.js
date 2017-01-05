@@ -61,7 +61,7 @@ function formatJumbotron (_jumbotron) {
 function formatInternalLinks (internalLinks) {
 	return (internalLinks || []).map(function (internalLink) {
 		if (internalLink.icon) {
-			internalLink.icon = formatCloudinaryImage(internalLink.icon, null, { width: 67, height: 67, crop: 'fill', radius: 'max' });
+			internalLink.icon = formatCloudinaryImage(internalLink.icon, null, { width: 67, height: 67, crop: 'fill' });
 		}
 		return internalLink;
 	});

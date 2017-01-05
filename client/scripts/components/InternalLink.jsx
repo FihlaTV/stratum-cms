@@ -1,4 +1,13 @@
 import React from 'react';
+import { Link as RLink } from 'react-router';
+
+const Link = ({ to, children }) => {
+	if ((/^[a-zA-Z]+:\/\//).test(to)) {
+		return <a href={to}>{children}</a>;
+	} else {
+		return <RLink to={to}>{children}</RLink>;
+	}
+};
 
 const InternalLink = ({
 	title,
@@ -11,9 +20,9 @@ const InternalLink = ({
 		<h2>{title}</h2>
 		{icon && <img src={icon.url}/>}
 		<p>{description}&nbsp;
-			<a href={link}>
+			<Link to={link}>
 				{linkText}
-			</a>
+			</Link>
 		</p>
 	</div>
 );
