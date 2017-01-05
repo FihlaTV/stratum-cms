@@ -58,6 +58,15 @@ function formatJumbotron (_jumbotron) {
 	return jumbotron;
 }
 
+function formatInternalLinks (internalLinks) {
+	return (internalLinks || []).map(function (internalLink) {
+		if (internalLink.icon) {
+			internalLink.icon = formatCloudinaryImage(internalLink.icon, null, { width: 67, height: 67, crop: 'fill' });
+		}
+		return internalLink;
+	});
+}
+
 exports = module.exports = function (req, res) {
 	var context = {};
 
@@ -65,11 +74,12 @@ exports = module.exports = function (req, res) {
 		startPage: function (next) {
 			keystone.list('StartPage').model
 				.findOne()
-				.select('header description.html jumbotron informationBlurb quickLink')
+				.select('header description.html jumbotron informationBlurb quickLink internalLinks')
 				.populate('informationBlurb.newsItem', 'image title slug imageLayout publishedDate content.lead')
 				.populate('quickLink.page', 'slug shortId')
 				.populate('jumbotron.newsItem', 'title slug')
 				.populate('jumbotron.resource', 'title fileUrl')
+				.populate('internalLinks')
 				.exec(function (err, results) {
 					convertResultsToJSON(function (err, results) {
 						context.showJumbotron = results && results.jumbotron && results.jumbotron.isVisible;
@@ -159,6 +169,9 @@ exports = module.exports = function (req, res) {
 		}
 		if (results.startPage.jumbotron) {
 			results.startPage.jumbotron = formatJumbotron(results.startPage.jumbotron);
+		}
+		if (results.startPage.internalLinks) {
+			results.startPage.internalLinks = formatInternalLinks(results.startPage.internalLinks);
 		}
 		results.startPage.subRegisters = results.subRegisters;
 		results.startPage.widgets = context.spWidgets;

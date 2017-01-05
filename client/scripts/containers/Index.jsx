@@ -5,6 +5,7 @@ import { Col, Row, Grid } from 'react-bootstrap';
 import Jumbotron from '../components/Jumbotron';
 import { fetchStartPage } from '../actions/startPage';
 import ImageWidget from '../components/ImageWidget';
+import InternalLink from '../components/InternalLink';
 import NewsRollWidget from './NewsRollWidget';
 import NewsItemWidget from './NewsItemWidget';
 import PageLink from './PageLink';
@@ -21,6 +22,23 @@ const SubRegisterList = ({ subRegisters = [] }) =>
 		</ul>
 	</div>
 );
+
+const InternalLinks = ({ internalLinks = [] }) =>
+{
+	if (internalLinks.length > 0) {
+		const cols = Math.min(internalLinks.length, 4);
+		return (
+			<Row>
+				{internalLinks.map((link, i) => (
+					<Col md={12 / cols} key={`internal-link-${i}`}>
+						<InternalLink {...link} />
+					</Col>
+				))}
+			</Row>
+		);
+	}
+	return null;
+};
 
 class Index extends Component {
 	componentDidMount () {
@@ -46,6 +64,7 @@ class Index extends Component {
 			jumbotron,
 			description = {},
 			header,
+			internalLinks = [],
 			widgets,
 			isPortal,
 			informationBlurb = {},
@@ -83,6 +102,7 @@ class Index extends Component {
 			<div>
 				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
 				<Grid>
+					<InternalLinks internalLinks={internalLinks} />
 					<Row>
 						<Col md={7}>
 							{Description}

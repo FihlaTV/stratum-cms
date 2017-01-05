@@ -8,6 +8,7 @@ export default (state = initialState, action) => {
 			const {
 				description,
 				header,
+				internalLinks,
 				informationBlurb,
 				jumbotron,
 				widgets,
@@ -15,7 +16,7 @@ export default (state = initialState, action) => {
 				subRegisters,
 				quickLink,
 			} = action;
-			return Object.assign({}, state, { description, header, informationBlurb, jumbotron, widgets, isPortal, subRegisters, quickLink });
+			return Object.assign({}, state, { description, header, internalLinks, informationBlurb, jumbotron, widgets, isPortal, subRegisters, quickLink });
 		default:
 			return state;
 	}
