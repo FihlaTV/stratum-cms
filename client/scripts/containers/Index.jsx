@@ -25,7 +25,7 @@ const SubRegisterList = ({ subRegisters = [] }) =>
 
 const InternalLinks = ({ internalLinks = [] }) =>
 {
-	if (internalLinks) {
+	if (internalLinks.length > 0) {
 		const cols = Math.min(internalLinks.length, 4);
 		return (
 			<Row>
