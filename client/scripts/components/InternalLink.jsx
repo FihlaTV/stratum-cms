@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link as RLink } from 'react-router';
 
 const Link = ({ to, children }) => {
@@ -26,5 +26,15 @@ const InternalLink = ({
 		</p>
 	</div>
 );
+
+InternalLink.propTypes = {
+	description: PropTypes.string,
+	icon: PropTypes.shape({
+		url: PropTypes.string,
+	}),
+	link: PropTypes.string,
+	linkText: PropTypes.string,
+	title: PropTypes.string,
+};
 
 export default InternalLink;
