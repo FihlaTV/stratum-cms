@@ -160,7 +160,22 @@ BasePage.add({
 		type: Boolean,
 		note: 'If this is check this page will only be visible to logged in users',
 	},
-
+}, 'Side Blurb', {
+	sideBlurb: {
+		show: {
+			type: Boolean,
+			label: 'Show Side Blurb',
+			note: 'Determines if there should be a area to the right for extra information',
+		},
+		title: {
+			type: String,
+			dependsOn: { 'sideBlurb.show': true },
+		},
+		content: {
+			type: Types.Markdown,
+			dependsOn: { 'sideBlurb.show': true },
+		},
+	},
 });
 BasePage.defaultColumns = 'title, pageType|20%';
 
