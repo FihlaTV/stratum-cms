@@ -160,20 +160,20 @@ BasePage.add({
 		type: Boolean,
 		note: 'If this is check this page will only be visible to logged in users',
 	},
-}, 'Side Blurb', {
-	sideBlurb: {
+}, 'Side Area', {
+	sideArea: {
 		show: {
 			type: Boolean,
-			label: 'Show Side Blurb',
+			label: 'Show Side Area',
 			note: 'Determines if there should be a area to the right for extra information',
 		},
 		title: {
 			type: String,
-			dependsOn: { 'sideBlurb.show': true },
+			dependsOn: { 'sideArea.show': true },
 		},
 		content: {
 			type: Types.Markdown,
-			dependsOn: { 'sideBlurb.show': true },
+			dependsOn: { 'sideArea.show': true },
 		},
 	},
 });

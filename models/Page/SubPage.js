@@ -15,7 +15,7 @@ var SubPage = new keystone.List('SubPage', {
 	defaultColumns: 'title, page',
 	nodelete: false,
 });
-SubPage.add({
+SubPage.add('Sub Page Settings', {
 	page: {
 		type: Types.Relationship,
 		ref: 'Page',
