@@ -59,7 +59,8 @@ const SubMenu = ({
 }) => {
 	const { items = [] } = menuBlock;
 	const activeTopPage = findActivePage(activePageId, items);
-	return displaySingleItem || items.length > 1 ? (
+	const onePageWithChildren = items.length === 1 && items[0].items && items[0].items.length > 0;
+	return displaySingleItem || items.length > 1 || onePageWithChildren ? (
 		<div className="sub-menu">
 			<SubNav menuItems={items} activeTopPage={activeTopPage}/>
 		</div>
