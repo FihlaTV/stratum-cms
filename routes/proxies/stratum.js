@@ -1,6 +1,15 @@
 var request = require('request');
 var	keystone = require('keystone');
 
+function getErrorHandlingFn (res, msg) {
+	return function (err) {
+		console.log('//--- Error in Stratum proxy: ' + (msg || '') + ' ---//');
+		console.log(err);
+
+		return res.status(500).json({ error: 'Stratum error' });
+	};
+}
+
 exports = module.exports = function (req, res, next) {
 	var referer;
 	var isDemo;
@@ -27,13 +36,8 @@ exports = module.exports = function (req, res, next) {
 	uri = req.url.replace(/^\/stratum\//, stratumUrl);
 
 	req
-		.pipe(
-			request(uri)
-		)
-		.on('error', function (err) {
-			console.log('//--- Error in Stratum proxy ---//');
-			console.log(err);
-			return res.json({ error: 'Stratum error' }, 500);
-		})
-		.pipe(res);
+		.pipe(request(uri))
+		.on('error', getErrorHandlingFn(res, 'on request to stratum'))
+		.pipe(res)
+		.on('error', getErrorHandlingFn(res, 'on response pipe'));
 };
