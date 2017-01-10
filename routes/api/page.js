@@ -13,7 +13,7 @@ exports = module.exports = function (req, res) {
 		.populate('resources')
 		.populate('widget')
 		.populate('page', 'shortId title slug')
-		.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories')
+		.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories sideArea')
 		.exec(function (err, results) {
 			if (err || !results) {
 				return res.apiResponse({
@@ -55,6 +55,7 @@ exports = module.exports = function (req, res) {
 						fileType: resource.fileType,
 					};
 				}),
+				sideArea: results.sideArea && results.sideArea.show && results.sideArea,
 			};
 			if (results.image.exists) {
 				data.image = formatCloudinaryImage(results.image, results.imageDescription, { width: 750, crop: 'fill' });
