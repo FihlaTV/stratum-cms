@@ -26,7 +26,14 @@ exports = module.exports = function (req, res, next) {
 
 	uri = req.url.replace(/^\/stratum\//, stratumUrl);
 
-	req.pipe(
-		request(uri)
-	).pipe(res);
+	req
+		.pipe(
+			request(uri)
+		)
+		.on('error', function (err) {
+			console.log('//--- Error in Stratum proxy ---//');
+			console.log(err);
+			return res.json({ error: 'Stratum error' }, 500);
+		})
+		.pipe(res);
 };
