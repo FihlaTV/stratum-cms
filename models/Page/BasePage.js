@@ -174,6 +174,9 @@ BasePage.add({
 		content: {
 			type: Types.Markdown,
 			dependsOn: { 'sideArea.show': true },
+			toolbarOptions: {
+				hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image',
+			},
 		},
 	},
 });
