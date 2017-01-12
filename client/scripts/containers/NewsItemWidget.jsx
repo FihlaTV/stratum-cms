@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getNewsArticle, getNews, clearNewsArticle } from '../actions/news';
+import NewsLink from '../components/NewsLink';
 
 class NewsItemWidget extends Component {
 	constructor (props) {
@@ -36,12 +37,12 @@ class NewsItemWidget extends Component {
 		const article = this.props.news.newsArticle;
 		return (
 			<div className="news-widget-simple news-widget-landscape">
-				<Link to={`/react/nyhter/${article.slug}`}>
+				<NewsLink slug={article.slug}>
 					<h2>{article.title}</h2>
 					<div className="img-landscape-ct">
 						{article.image ? <img src={article.image.url} className="img-landscape" /> : null}
 					</div>
-				</Link>
+				</NewsLink>
 			</div>
 		);
 	}
