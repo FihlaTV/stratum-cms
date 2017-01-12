@@ -1,16 +1,17 @@
 .base-page{
 	.white-well();
+	background-color: @base-page-bg-color;
 	margin-bottom: @gutter-xlarge;
 	h1{
-		margin-bottom: @gutter;
+		margin-bottom: @gutter * 2;
 		.base-page-divider{
 			border-bottom: 1px solid @primary-light;
 			padding-bottom: @gutter;
 		}
 	}
-	padding: @gutter-large;
+	padding: @base-page-padding-mobile;
 	@media (min-width: @screen-md-min) {
-		padding: floor(@gutter-large*1.6) @gutter-large*2 @gutter-large*2 @gutter-large*2;
+		padding: @base-page-padding-desktop;
 	}
 	.post {
 		img {
@@ -43,11 +44,11 @@
 }
 .content-page-images{
 	a.caption-image{
-		display: block;		
+		display: block;
 	}
 	.caption-image{
 		overflow: hidden;
-		.white-well();	
+		.white-well();
 		.caption-text{
 			padding: @gutter;
 		}
@@ -63,7 +64,7 @@
 		.white-well();
 		padding: @gutter-large;
 		margin-bottom: @gutter-xlarge;
-		
+
 		.contact-person-image{
 			.make-xs-column(3);
 			.make-md-column(12);
@@ -95,7 +96,7 @@
 				.center-block();
 			}
 			& .contact-person-info{
-				text-align: center;					
+				text-align: center;
 			}
 		}
 	}

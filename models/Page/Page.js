@@ -15,7 +15,7 @@ var Page = new keystone.List('Page', {
 	nocreate: false,
 	nodelete: false,
 });
-Page.add({
+Page.add('Menu', {
 	menu: {
 		type: Types.Relationship,
 		ref: 'MenuBlock',

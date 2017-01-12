@@ -160,7 +160,25 @@ BasePage.add({
 		type: Boolean,
 		note: 'If this is check this page will only be visible to logged in users',
 	},
-
+}, 'Side Area', {
+	sideArea: {
+		show: {
+			type: Boolean,
+			label: 'Show Side Area',
+			note: 'Determines if there should be a area to the right for extra information',
+		},
+		title: {
+			type: String,
+			dependsOn: { 'sideArea.show': true },
+		},
+		content: {
+			type: Types.Markdown,
+			dependsOn: { 'sideArea.show': true },
+			toolbarOptions: {
+				hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image',
+			},
+		},
+	},
 });
 BasePage.defaultColumns = 'title, pageType|20%';
 

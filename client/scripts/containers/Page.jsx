@@ -12,6 +12,16 @@ import SubMenu from '../components/SubMenu';
 import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
 
+const SideArea = ({
+	title,
+	content = {},
+}) => (
+	<div className="side-area">
+		<h2>{title}</h2>
+		<div dangerouslySetInnerHTML={{ __html: content.html }} />
+	</div>
+);
+
 const PageContainer = ({
 	loading,
 	children,
@@ -120,6 +130,7 @@ class Page extends Component {
 			questionCategories = [],
 			resources = [],
 			resourcePlacement,
+			sideArea,
 		} = page;
 		return (
 			<Row>
@@ -143,6 +154,7 @@ class Page extends Component {
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
+					{sideArea && <SideArea {...sideArea} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
