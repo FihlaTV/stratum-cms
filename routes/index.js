@@ -27,6 +27,13 @@ var	webpackDevMiddleware = require('webpack-dev-middleware');
 var	webpackHotMiddleware = require('webpack-hot-middleware');
 var	webpackConfig = require('../webpack.config');
 
+var stratumProxy = require('./proxies/stratum');
+
+/**
+ * Run the Stratum Proxy first as a middleware to avoid crashes during
+ * body-parser
+ */
+keystone.pre('static', stratumProxy);
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -62,9 +69,6 @@ var routes = {
 
 // Setup Route Bindings
 exports = module.exports = function (app) {
-	// Proxies
-	app.all('/stratum/*', routes.proxies.stratum);
-
 	// Activate webpack hot reload middleware
 	if (keystone.get('env') === 'development') {
 		var compiler = webpack(webpackConfig);
