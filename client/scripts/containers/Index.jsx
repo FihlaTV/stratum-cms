@@ -103,6 +103,7 @@ class Index extends Component {
 				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
 				<Grid>
 					<InternalLinks internalLinks={internalLinks} />
+					{internalLinks.length > 0 && <hr className="hr-block" />}
 					<Row>
 						<Col md={7}>
 							{Description}
