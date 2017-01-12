@@ -16,10 +16,10 @@ const SideArea = ({
 	title,
 	content = {},
 }) => (
-	<Col className="side-area">
+	<div className="side-area">
 		<h2>{title}</h2>
 		<div dangerouslySetInnerHTML={{ __html: content.html }} />
-	</Col>
+	</div>
 );
 
 const PageContainer = ({
