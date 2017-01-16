@@ -101,13 +101,18 @@ exports = module.exports = function (req, res) {
 		}
 		if (results.widget) {
 			data.widget = results.widget.toObject();
+			// data.widget.id = context.widget.type === 'keystone' ? data.widget.name : data.widget.widgetSlug;
+			data.widget.title = context.widget.name;
 			data.widget.type = context.widget.type;
+			data.widget.size = context.widget.size;
+			data.widget.description = context.widget.description;
+			data.widget.advancedSettings = context.widget.advancedSettings;
+			data.widget.key = context.widget.key;
 			delete data.widget._id;
 		}
 		return res.apiResponse({
 			success: true,
 			data: data,
-			widget: results.widget,
 		});
 	});
 };

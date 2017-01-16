@@ -22,6 +22,22 @@ const SideArea = ({
 	</div>
 );
 
+const WidgetContainer = ({
+	widget,
+}) => {
+	if (!widget) {
+		return null;
+	}
+	const { title, name, description, ...widgetProps } = widget;
+	return (
+		<div className="side-area">
+			<h2>{title}</h2>
+			<p>{description}</p>
+			<WidgetWrapper id={name} {...widgetProps}/>
+		</div>
+	);
+};
+
 const PageContainer = ({
 	loading,
 	children,
@@ -131,6 +147,7 @@ class Page extends Component {
 			resources = [],
 			resourcePlacement,
 			sideArea,
+			widget,
 		} = page;
 		return (
 			<Row>
@@ -154,6 +171,7 @@ class Page extends Component {
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
+					{widget && <WidgetContainer widget={widget}/>}
 					{sideArea && <SideArea {...sideArea} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>

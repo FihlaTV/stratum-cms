@@ -25,7 +25,7 @@ Widget.add({
 		required: true,
 	},
 	description: {
-		type: String,
+		type: Types.Textarea,
 	},
 	type: {
 		type: Types.Select,
