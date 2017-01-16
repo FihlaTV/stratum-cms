@@ -69,8 +69,9 @@
 @grid-float-breakpoint:     @screen-md-min;
 
 /* Grid */
-// Width of the shadow on grid, set to 0 disable
-@base-shadow-width: 1px;
+// Width of the shadow on grid, set @base-box-shadow to none to disable shadows.
+@base-box-shadow-width: 1px;
+@base-box-shadow: 0 @base-box-shadow-width fadeout(#000, 92%);
 @grid-bg-primary: #ffffff;
 @grid-bg-secondary: @grid-bg-primary;
 @grid-border-radius: 3px;
