@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
-const ResourceList = ({ resources, title = 'Dokument att ladda ner' }) => (
-	<div className="resource-list">
+const ResourceList = ({ resources, container, title = 'Dokument att ladda ner' }) => (
+	<div className={`resource-list${container ? ' side-area side-area-secondary' : ''}`}>
 		<h2>{title}</h2>
 		<ul>
 			{resources.map(({ title, fileType = 'other', fileUrl, description }) => (
@@ -16,6 +16,7 @@ const ResourceList = ({ resources, title = 'Dokument att ladda ner' }) => (
 );
 
 ResourceList.propTypes = {
+	container: PropTypes.bool,
 	resources: PropTypes.arrayOf(PropTypes.shape({
 		title: PropTypes.string,
 		fileType: PropTypes.string,

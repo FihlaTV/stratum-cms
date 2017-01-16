@@ -1,9 +1,13 @@
 .side-area{
 	margin-bottom: @gutter-xlarge;
 	padding: @gutter-large;
+	font-size: 12px;
 	.white-well();
 	@media (min-width: @screen-md-min) {
 		padding: @gutter * 3;
 		padding-top: @gutter * 2;
+	}
+	&.side-area-secondary {
+		background-color: @grid-bg-secondary;
 	}
 }

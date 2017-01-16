@@ -11,6 +11,7 @@ import ContactPersons from '../components/ContactPersons';
 import SubMenu from '../components/SubMenu';
 import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
+import WidgetWrapper from '../components/WidgetWrapper';
 
 const SideArea = ({
 	title,
@@ -167,7 +168,7 @@ class Page extends Component {
 						{displayPrintButton && <PrintButton/>}
 						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
 					</PageContainer>
-					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} />}
+					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} container/>}
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
@@ -176,7 +177,7 @@ class Page extends Component {
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
-					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} />}
+					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} container/>}
 				</Col>
 			</Row>
 		);

@@ -62,7 +62,7 @@ class NewsItem extends Component {
 						</article>
 					</Col>
 					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
-					{newsItem.resources.length > 0 && <ResourceList	resources={newsItem.resources} />}
+					{newsItem.resources.length > 0 && <ResourceList	resources={newsItem.resources} container/>}
 					</Col>
 				</Row>
 			</div>
