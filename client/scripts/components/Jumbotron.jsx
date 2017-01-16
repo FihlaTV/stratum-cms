@@ -5,7 +5,7 @@ import StartPageWidget from './StartPageWidget';
 
 const WideJumbotron = ({ header, newsItem, resource, widgets }) => (
 	<Grid>
-		<Col md={7} sm={10}>
+		<Col md={8} sm={10}>
 			<h1>{header}</h1>
 			{newsItem && <NewsLink slug={newsItem.slug} className="jumbotron-news-link">{newsItem.label}</NewsLink>}
 			<hr/>
