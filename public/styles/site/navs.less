@@ -21,7 +21,7 @@
 		}
 		> h2 {
 			margin: 0;
-			padding: @nav-link-padding;
+			padding: @side-nav-link-padding;
 		}
 	}
 	&.nav-page {
@@ -51,14 +51,14 @@
 		> li {
 			> a {
 				border-top: 2px dotted @gray-light;
-				padding-left: extract(@nav-link-padding, 2) + @gutter-large;
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large;
 			}
 		}
 	}
 	&.nav-page-new .nav-page-second {
 		> li {
 			> a {
-				padding-left: extract(@nav-link-padding, 2) + @gutter-large * 2;
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large * 2;
 				border-radius: 0;
 			}
 		}
@@ -66,14 +66,14 @@
 	&.nav-page-second{
 		> li {
 			> a {
-				padding-left: extract(@nav-link-padding, 2) + @gutter-large;
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large;
 				border-radius: 0;
 			}
 		}
 	}
 	li.has-sub-pages{
 		> a {
-			padding-right: extract(@nav-link-padding, 2) + 10px;
+			padding-right: extract(@side-nav-link-padding, 2) + 10px;
 		}
 		> a:before{
 			.fa-icon();
@@ -81,7 +81,7 @@
 			content: @fa-var-chevron-right;
 			color: @link-color;
 			top: 50%;
-			right: extract(@nav-link-padding, 2);
+			right: extract(@side-nav-link-padding, 2);
 			transform: translateY(-50%);
 		}
 		&.expanded{
