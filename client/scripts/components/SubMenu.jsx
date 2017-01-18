@@ -44,8 +44,10 @@ const SubNav = ({
 	containsSubPages = false,
 	activeTopPage,
 	header,
+	inContainer,
 }) => {
-	const cls = containsSubPages ? 'nav-page-second' : 'nav-page-new';
+	const cls = containsSubPages ? 'nav-page-second'
+		: (inContainer ? 'nav-page' : 'nav-page-new');
 	return (
 		<Nav bsStyle="pills" className={cls} stacked>
 			{header && <h2>{header}</h2>}
@@ -58,14 +60,15 @@ const SubMenu = ({
 	menuBlock = {},
 	activePageId,
 	displaySingleItem = false,
-	displayHeader = true,
+	displayHeader,
+	inContainer,
 }) => {
 	const { items = [] } = menuBlock;
 	const activeTopPage = findActivePage(activePageId, items);
 	const onePageWithChildren = items.length === 1 && items[0].items && items[0].items.length > 0;
 	return displaySingleItem || items.length > 1 || onePageWithChildren ? (
 		<div className="sub-menu">
-			<SubNav menuItems={items} activeTopPage={activeTopPage} header={displayHeader && menuBlock.label}/>
+			<SubNav menuItems={items} activeTopPage={activeTopPage} header={displayHeader && menuBlock.label} inContainer={inContainer}/>
 		</div>
 	) : null;
 
@@ -73,7 +76,9 @@ const SubMenu = ({
 
 SubMenu.propTypes = {
 	activePageId: PropTypes.string,
+	displayHeader: PropTypes.bool,
 	displaySingleItem: PropTypes.bool,
+	inContainer: PropTypes.bool,
 	menuBlock: PropTypes.object,
  };
 

@@ -44,6 +44,7 @@ class NewsItem extends Component {
 
 	newsItem () {
 		const newsItem = this.props.news.newsArticle;
+		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		return (
 			<div className="news-item-full">
 				<Row>
@@ -62,7 +63,7 @@ class NewsItem extends Component {
 						</article>
 					</Col>
 					<Col md={4}>{newsItem.imageLayout === 'portrait' && newsItem.image && <DockedImages images={[newsItem.image]} enlargeable wide={false} />}
-					{newsItem.resources.length > 0 && <ResourceList	resources={newsItem.resources} container/>}
+					{newsItem.resources.length > 0 && <ResourceList	resources={newsItem.resources} inContainer={isModernTheme}/>}
 					</Col>
 				</Row>
 			</div>

@@ -44,7 +44,7 @@ class App extends Component {
 		} = this.props;
 
 		return (
-			<div>
+			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Menu items={menuItems} />
 				<MainContainer hasGrid={location.pathname !== '/react/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}

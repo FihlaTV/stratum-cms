@@ -150,6 +150,7 @@ class Page extends Component {
 			sideArea,
 			widget,
 		} = page;
+		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
@@ -168,16 +169,16 @@ class Page extends Component {
 						{displayPrintButton && <PrintButton/>}
 						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
 					</PageContainer>
-					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} container/>}
+					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
-					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} />}
+					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} displayHeader={isModernTheme} inContainer={!isModernTheme} />}
 					{widget && <WidgetContainer widget={widget}/>}
 					{sideArea && <SideArea {...sideArea} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
-					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} container/>}
+					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
 				</Col>
 			</Row>
 		);
