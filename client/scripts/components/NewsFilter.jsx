@@ -28,7 +28,7 @@ class NewsFilter extends Component {
 		const news = this.props.news;
 		const location = this.props.location;
 		return (
-			<div className="news-filter">
+			<div className="news-filter side-area">
 				<h2>Filtrera nyheter</h2>
 				<span className="news-filter-header">År</span>
 				<ul className="news-filter-list">
