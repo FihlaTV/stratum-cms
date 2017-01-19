@@ -7,12 +7,15 @@ exports = module.exports = function (req, res) {
 	var filters = {
 		shortId: req.params.id,
 	};
+	var locals = res.locals || {};
 	var context = {};
 	async.series({
 		page: function (next) {
 			keystone.list('BasePage').model
 				.findOne()
 				.where('shortId', filters.shortId)
+				.where('state', 'published')
+				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 				.populate('contacts', 'name description email phone image')
 				.populate('resources')
 				.populate('widget')
