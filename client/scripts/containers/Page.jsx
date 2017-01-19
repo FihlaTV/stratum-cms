@@ -84,7 +84,7 @@ class Page extends Component {
 	redirectFromMenu (menuSlug, menuItems) {
 		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
 		// Redirect to found page
-		this.props.router.push(`/react${rePage.url}`);
+		this.props.router.replace(`/react${rePage.url}`);
 	}
 	getPageUrl (menu, page, parentPage) {
 		const { slug, shortId } = page;
