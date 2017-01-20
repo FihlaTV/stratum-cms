@@ -1,25 +1,31 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import NewsLink from './NewsLink';
 import moment from 'moment';
 import 'moment/locale/sv';
 
-const NewsListItem = ({ article, setBreadcrumbs }) => {
+const NewsListItem = ({ slug, title, publishedDate, content = {} }) => {
 	return (
 		<div className="news-list-item" >
-			<Link to={`/react/nyheter/${article.slug}`} onClick={() => setBreadcrumbs([{ url: 'nyheter/', label: 'Nyheter' }, { url: `nyheter/${article.slug}`, label: article.title }])} >
+			<NewsLink
+				slug={slug}
+			>
 				<div className="news-list-item-content">
-					<h2>{article.title}</h2>
-					<p className="published-at">{moment(article.publishedDate).format('L')}</p>
-					<p className="lead">{article.content.lead}</p>
+					<h2>{title}</h2>
+					<p className="published-at">{moment(publishedDate).format('L')}</p>
+					<p className="lead">{content.lead}</p>
 				</div>
-			</Link>
+			</NewsLink>
 		</div>
 	);
 };
 
 NewsListItem.propTypes = {
-	article: PropTypes.object.isRequired,
-	setBreadcrumbs: PropTypes.func.isRequired,
+	content: PropTypes.shape({
+		lead: PropTypes.string,
+	}),
+	publishedDate: PropTypes.string,
+	slug: PropTypes.string,
+	title: PropTypes.string,
 };
 
 export default NewsListItem;

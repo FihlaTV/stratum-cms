@@ -13,24 +13,30 @@ class News extends Component {
 		super(props);
 	}
 	componentDidMount () {
-		this.props.setBreadcrumbs([{ url: '/nyheter/', label: 'Nyheter' }]);
+		const { title, setBreadcrumbs } = this.props;
+		setBreadcrumbs([{ url: '/nyheter/', label: title }], true, title);
 	}
 	componentWillUnmount () {
 		this.props.clearBreadcrumbs();
 	}
 	render () {
-		const { news, children } = this.props;
+		const { news, children, title } = this.props;
 		if (children) {
 			return children;
 		}
 		if (!news.loading) {
 			return (
 				<div>
-					<h1>Nyheter och meddelanden</h1>
+					<h1>{title}</h1>
 					<p>Antal artiklar: {news.filteredNews.length}</p>
 					<Row>
 						<Col md={8}>
-							{news.filteredNews.slice(news.currentPage * 5 - 5, news.currentPage * 5).map(article => <NewsListItem key={article.title} article={article} setBreadcrumbs={this.props.setBreadcrumbs}/>)}
+							{news.filteredNews
+								.slice(news.currentPage * 5 - 5, news.currentPage * 5)
+								.map(({ slug, ...rest }) => (
+									<NewsListItem key={slug} slug={slug} {...rest}/>
+								))
+							}
 						</Col>
 						<Col md={4}>
 							<NewsFilter {...this.props} />
@@ -54,7 +60,12 @@ const mapDispatchToProps = (dispatch) => ({
 	getNews: () => dispatch(getNews()),
 	changeYearFilter: (year) => dispatch(changeYearFilter(year)),
 	changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
-	setBreadcrumbs: (bcArr) => dispatch(setBreadcrumbs(bcArr)),
+	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
+
+News.defaultProps = {
+	title: 'Nyheter',
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(News);

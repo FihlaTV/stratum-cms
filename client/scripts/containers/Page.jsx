@@ -103,7 +103,7 @@ class Page extends Component {
 		}
 		breadcrumbs.push({ url: this.getPageUrl(menu.key, page, parentPage), label: title });
 
-		dispatch(setBreadcrumbs(breadcrumbs));
+		dispatch(setBreadcrumbs(breadcrumbs, true, title));
 	}
 	findFirstPageInMenu (menuKey, menuItems) {
 		const menuBlock = menuItems.find((item) => item.key === menuKey);

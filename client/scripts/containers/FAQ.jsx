@@ -37,7 +37,7 @@ class FAQ extends Component {
 	setBreadcrumbs (menuItems, routePath) {
 		const label = menuItems.find(menuItem => menuItem.key === routePath).label;
 
-		this.props.setBreadcrumbs([{ url: 'faq', label }]);
+		this.props.setBreadcrumbs([{ url: 'faq', label }], true, label);
 	}
 	render () {
 		const { loading, questions, title, categories } = this.props;
@@ -60,7 +60,7 @@ const mapStateToProps = ({ faq, menu }) => {
 	};
 };
 const mapDispatchToProps = (dispatch) => ({
-	setBreadcrumbs: (breadcrumbs) => dispatch(setBreadcrumbs(breadcrumbs)),
+	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
 	getQuestions: (categories) => dispatch(getQuestions(categories)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
