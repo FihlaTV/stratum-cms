@@ -34,6 +34,9 @@ class FAQ extends Component {
 			this.setBreadcrumbs(nextMenu.items, route.path);
 		}
 	}
+	componentWillUnmount () {
+		this.props.clearBreadcrumbs();
+	}
 	setBreadcrumbs (menuItems, routePath) {
 		const label = menuItems.find(menuItem => menuItem.key === routePath).label;
 
