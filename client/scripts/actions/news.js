@@ -29,12 +29,11 @@ const newsArticle = (article) => {
 	return { type: NEWS_ARTICLE, newsArticle: article };
 };
 
-export function getNewsArticle (nyhet, querystringObj) {
+export function getNewsArticle (nyhet, params) {
 	let url = `/api/news/${nyhet}`;
-	if (querystringObj) {
-		const queryParams = Object.keys(querystringObj).map(key => `${key}=${querystringObj[key]}`);
-		const querystring = `?${queryParams.join('&')}`;
-		url += querystring;
+	if (params) {
+		const queryString = '?' + Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
+		url += queryString;
 	}
 	return (dispatch) => {
 		return	fetch(url)

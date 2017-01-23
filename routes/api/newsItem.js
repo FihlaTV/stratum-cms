@@ -26,9 +26,9 @@ exports = module.exports = function (req, res) {
 			});
 		}
 		var imageSettings = {};
-		if (req.query.h && req.query.w) {
-			imageSettings.width = req.query.w;
-			imageSettings.height = req.query.h;
+		if (req.query.height && req.query.width) {
+			imageSettings.width = req.query.width;
+			imageSettings.height = req.query.height;
 			imageSettings.crop = 'fit';
 		} else {
 			imageSettings.width = newsItem.imageLayout === 'landscape' ? 750 : 640;

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getNewsArticle, getNews, clearNewsArticle } from '../actions/news';
 import NewsLink from '../components/NewsLink';
@@ -11,54 +10,53 @@ class NewsItemWidget extends Component {
 	componentDidMount () {
 		let imageSize;
 		if (this.props.layout === 'smallImage') {
-			imageSize = { w: 150, h: 185 };
+			imageSize = { width: 150, height: 185 };
 		} else if (this.props.layout === 'bigImage') {
-			imageSize = { w: 270, h: 428 };
+			imageSize = { width: 428, height: 270 };
 		}
 		this.props.getNewsArticle(this.props.slug, imageSize);
 	}
 	componentWillUnmount () {
 		this.props.clearNewsArticle();
 	}
-	smallImage () {
-		const article = this.props.news.newsArticle;
+	smallImage ({ slug, title, image, content }) {
 		return (
 			<div className="news-widget-simple news-widget-portrait">
-				<h2>{article.title}</h2>
+				<h2>{title}</h2>
 				<div className="news-widget-portrait-inner">
-					{article.image ? <img className="img-portrait" src={article.image.url}/> : null}
-					<p>{article.content.lead}</p>
-					<Link to={`/react/nyheter/${article.slug}`}>Läs mer.</Link>
+					{image && <img className="img-portrait" src={image.url}/>}
+					<p>{content.lead}</p>
+					<NewsLink slug={slug}>Läs mer.</NewsLink>
 				</div>
 			</div>
 		);
 	}
-	bigImage () {
-		const article = this.props.news.newsArticle;
+	bigImage ({ slug, title, image }) {
 		return (
 			<div className="news-widget-simple news-widget-landscape">
-				<NewsLink slug={article.slug}>
-					<h2>{article.title}</h2>
+				<NewsLink slug={slug}>
+					<h2>{title}</h2>
 					<div className="img-landscape-ct">
-						{article.image ? <img src={article.image.url} className="img-landscape" /> : null}
+						{image && <img src={image.url} className="img-landscape" />}
 					</div>
 				</NewsLink>
 			</div>
 		);
 	}
 	content () {
+		const { slug, title, image, content } = this.props;
 		if (this.props.layout === 'smallImage') {
-			return this.smallImage();
+			return this.smallImage({ slug, title, image, content });
 		} else if (this.props.layout === 'bigImage') {
-			return this.bigImage();
+			return this.bigImage({ slug, title, image });
 		}
 	}
 	render () {
-		return this.props.news.newsArticle.loading ? null : <div className="information-blurb">{this.content()}</div>;
+		return this.props.loading ? null : <div className="information-blurb">{this.content()}</div>;
 	}
 }
 
-const mapStateToProps = ({ news }) => ({ news });
+const mapStateToProps = ({ news }) => ({ ...news.newsArticle });
 
 const mapDispatchToProps = (dispatch) => ({
 	getNewsArticle: (nyhet, querystring) => dispatch(getNewsArticle(nyhet, querystring)),
