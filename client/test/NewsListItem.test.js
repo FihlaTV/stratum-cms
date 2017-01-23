@@ -4,10 +4,23 @@ import expect from 'expect';
 import NewsListItem from '../scripts/components/NewsListItem';
 
 describe('Tests for NewsListItem component', () => {
-/*eslint-disable*/
-	const article = { "_id":"581719cfe87f6bd027229e28","slug":"bacon-ipsum4","title":"Bacon ipsum4","publishedDate":"2015-10-25T22:00:00.000Z","content":{"lead":"Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4"}};
-	const wrapper = shallow(<NewsListItem article={article} />);
-/*eslint-enable*/
+	const article = {
+		_id: '581719cfe87f6bd027229e28',
+		slug: 'bacon-ipsum4',
+		title: 'Bacon ipsum4',
+		publishedDate: '2015-10-25T22:00:00.000Z',
+		content: {
+			lead: 'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4',
+		},
+	};
+	const wrapper = shallow(
+		<NewsListItem
+			slug={article.slug}
+			title={article.title}
+			publishedDate={article.publishedDate}
+			content={article.content}
+		/>
+	);
 
 	it('Contains the wrapper div', () => {
 		expect(wrapper.find('div.news-list-item')).toExist('The element with the class news-list-item was not found');
