@@ -9,10 +9,30 @@ export const CLEAR_NEWS_ARTICLE = 'CLEAR_NEWS_ARTICLE';
 export function changeYearFilter (filter) {
 	return { type: CHANGE_YEAR_FILTER, filter };
 };
-const news = (newsArr) => {
-	return { type: NEWS, news: newsArr };
-};
 
+function getYearlyCount (newsItems) {
+	return newsItems.reduce(
+		(prev, { publishedDate }) => {
+			const year = (new Date(publishedDate)).getFullYear();
+			prev[year] = prev[year] || 0;
+			prev[year]++;
+			prev.all++;
+
+			return prev;
+		}, { all: 0 }
+	);
+}
+
+const news = (newsItems = []) => {
+	return {
+		type: NEWS,
+		itemsPerYear: getYearlyCount(newsItems),
+		items: newsItems,
+	};
+};
+/** TODO:
+ * Error handling
+*/
 export function getNews () {
 	return (dispatch) => {
 		return fetch('/api/news')

@@ -4,9 +4,6 @@ import { getNewsArticle, getNews, clearNewsArticle } from '../actions/news';
 import NewsLink from '../components/NewsLink';
 
 class NewsItemWidget extends Component {
-	constructor (props) {
-		super(props);
-	}
 	componentDidMount () {
 		let imageSize;
 		if (this.props.layout === 'smallImage') {

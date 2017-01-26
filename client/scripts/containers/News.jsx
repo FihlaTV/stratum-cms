@@ -1,48 +1,52 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Pagination } from 'react-bootstrap';
 import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
-import NewsPagination from '../components/NewsPagination';
 import Spinner from '../components/Spinner';
 import { getNews, changeYearFilter, changeCurrentPage } from '../actions/news';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
 
 class News extends Component {
-	constructor (props) {
-		super(props);
-	}
 	componentDidMount () {
 		const { title, setBreadcrumbs } = this.props;
+
 		setBreadcrumbs([{ url: '/nyheter/', label: title }], true, title);
 	}
 	componentWillUnmount () {
 		this.props.clearBreadcrumbs();
 	}
+	navigateToPage (pageNr) {
+		const { query, pathname } = this.props.location;
+
+		this.props.router.push({
+			pathname: pathname,
+			query: Object.assign({}, query, { page: pageNr === 1 ? undefined : pageNr }),
+		});
+	}
 	render () {
-		const { news, children, title } = this.props;
+		const { items, children, title, loading, currentYear, currentPage, itemsPerYear, location, itemsPerPage } = this.props;
 		if (children) {
 			return children;
 		}
-		if (!news.loading) {
+		if (!loading) {
 			return (
 				<div>
 					<h1>{title}</h1>
-					<p>Antal artiklar: {news.filteredNews.length}</p>
+					<p>Antal artiklar: {items.length}</p>
 					<Row>
 						<Col md={8}>
-							{news.filteredNews
-								.slice(news.currentPage * 5 - 5, news.currentPage * 5)
+							{items.slice(currentPage * itemsPerPage - itemsPerPage, currentPage * itemsPerPage)
 								.map(({ slug, ...rest }) => (
 									<NewsListItem key={slug} slug={slug} {...rest}/>
 								))
 							}
+							<Pagination prev next items={Math.ceil(items.length / itemsPerPage)} activePage={currentPage} onSelect={(p) => this.navigateToPage(p)}/>
 						</Col>
 						<Col md={4}>
-							<NewsFilter {...this.props} />
+							<NewsFilter year={currentYear} itemsPerYear={itemsPerYear} pathname={location.pathname} query={location.query} />
 						</Col>
 					</Row>
-					<NewsPagination {...this.props} />
 				</div>
 			);
 		}	else {
@@ -52,8 +56,26 @@ class News extends Component {
 	}
 };
 
-const mapStateToProps = ({ news, breadcrumbs }) => {
-	return { news, breadcrumbs };
+function getFilteredNews (items = [], year, page) {
+	if (year !== 'all') {
+		return items.filter(({ publishedDate }) => {
+			return (new Date(publishedDate)).getFullYear() === parseInt(year, 10);
+		});
+	}
+	return items;
+}
+
+const mapStateToProps = ({ news, breadcrumbs }, { location }) => {
+	const { page = 1, year = 'all' } = location.query;
+	return {
+		items: getFilteredNews(news.items, year, page),
+		loading: news.loading,
+		currentPage: parseInt(page, 10),
+		currentYear: year,
+		breadcrumbs,
+		itemsPerYear: news.itemsPerYear,
+		title: news.title,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -65,7 +87,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 News.defaultProps = {
-	title: 'Nyheter',
+	title: 'Nyheter och meddelanden',
+	itemsPerPage: 5,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(News);

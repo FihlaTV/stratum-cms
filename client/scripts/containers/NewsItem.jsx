@@ -23,12 +23,14 @@ class NewsItem extends Component {
 		}
 	}
 	componentWillUnmount () {
-		const { clearNewsArticle } = this.props;
+		const { clearNewsArticle, parentTitle, setBreadcrumbs } = this.props;
+		// Set breadcrumbs to parent view since this will unmount before parent view unmounts.
+		setBreadcrumbs([{ url: '/nyheter/', label: parentTitle }], true, parentTitle);
 		clearNewsArticle();
-		clearBreadcrumbs();
 	}
 	setBreadcrumbs (title, slug) {
-		this.props.setBreadcrumbs([{ url: 'nyheter', label: 'Nyheter' }, { url: `nyheter/${slug}`, label: title }], true, title);
+		const { parentTitle, setBreadcrumbs } = this.props;
+		setBreadcrumbs([{ url: 'nyheter', label: parentTitle }, { url: `nyheter/${slug}`, label: title }], true, title);
 	}
 	getAuthorComponent ({ image, name, email }) {
 		return (
@@ -83,13 +85,14 @@ class NewsItem extends Component {
 };
 
 const mapStateToProps = ({ news }) => {
-	return { ...news.newsArticle };
+	return { ...news.newsArticle, parentTitle: news.title };
 };
 
 const mapDispatchToProps = (dispatch) => ({
 	getNewsArticle: (nyhet) => dispatch(getNewsArticle(nyhet)),
 	clearNewsArticle: () => dispatch(clearNewsArticle()),
 	setBreadcrumbs: (...bcArgs) => dispatch(setBreadcrumbs(...bcArgs)),
+	clearBreadcrumbs: (...args) => dispatch(clearBreadcrumbs(...args)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsItem);

@@ -6,9 +6,7 @@ import 'moment/locale/sv';
 const NewsListItem = ({ slug, title, publishedDate, content = {} }) => {
 	return (
 		<div className="news-list-item" >
-			<NewsLink
-				slug={slug}
-			>
+			<NewsLink slug={slug}>
 				<div className="news-list-item-content">
 					<h2>{title}</h2>
 					<p className="published-at">{moment(publishedDate).format('L')}</p>
