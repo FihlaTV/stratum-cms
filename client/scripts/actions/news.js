@@ -1,14 +1,8 @@
 import fetch from '../utils/testable-fetch';
 import { newError } from './error';
-export const NEWS = 'NEWS';
-export const CHANGE_YEAR_FILTER = 'CHANGE_YEAR_FILTER';
-export const CHANGE_CURRENTPAGE = 'CHANGE_CURRENTPAGE';
+export const RECEIVE_NEWS_ITEMS = 'RECEIVE_NEWS_ITEMS';
 export const NEWS_ARTICLE = 'NEWS_ARTICLE';
 export const CLEAR_NEWS_ARTICLE = 'CLEAR_NEWS_ARTICLE';
-
-export function changeYearFilter (filter) {
-	return { type: CHANGE_YEAR_FILTER, filter };
-};
 
 function getYearlyCount (newsItems) {
 	return newsItems.reduce(
@@ -23,31 +17,42 @@ function getYearlyCount (newsItems) {
 	);
 }
 
-const news = (newsItems = []) => {
+function receiveNewsItems (newsItems = []) {
 	return {
-		type: NEWS,
+		type: RECEIVE_NEWS_ITEMS,
 		itemsPerYear: getYearlyCount(newsItems),
 		items: newsItems,
+		fetchedItems: true,
 	};
-};
-/** TODO:
- * Error handling
-*/
-export function getNews () {
-	return (dispatch) => {
+}
+
+export function fetchNewsItemsIfNeeded () {
+	return (dispatch, getState) => {
+		const { news } = getState();
+		if (news.fetchedItems) {
+			return;
+		}
 		return fetch('/api/news')
        .then(res => res.json())
-       .then(json => dispatch(news(json.data.news)));
+		.then(json => {
+			if (json.success) {
+				dispatch(receiveNewsItems(json.data.news));
+			} else {
+				throw new Error(json.error);
+			}
+		})
+		.catch(error => {
+			dispatch(newError(error.message));
+		});
 	};
 }
 
-export function changeCurrentPage (page) {
-	return { type: CHANGE_CURRENTPAGE, page: page };
+function newsArticle (article) {
+	return {
+		type: NEWS_ARTICLE,
+		newsArticle: article,
+	};
 }
-
-const newsArticle = (article) => {
-	return { type: NEWS_ARTICLE, newsArticle: article };
-};
 
 export function getNewsArticle (nyhet, params) {
 	let url = `/api/news/${nyhet}`;

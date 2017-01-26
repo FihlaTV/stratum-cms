@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 const NewsLink = ({
-	slug,
+	slug = '',
 	children,
 	...props,
 }) => (

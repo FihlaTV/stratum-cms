@@ -8,9 +8,9 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
-describe('getNews Action', () => {
+describe('fetchNewsItemsIfNeeded action', () => {
 
-	it('getNews will fetch list of newsItems, then post an action with type NEWS and news with a array of newsItems', () => {
+	it('fetchNewsItemsIfNeeded will fetch list of newsItems, then post an action with type NEWS and news with a array of newsItems', () => {
 		const mockNewsArr = [
 			{ _id: '581719cfe87f6bd027229e28', slug: 'bacon-ipsum4', title: 'Bacon ipsum4', publishedDate: '2015-10-25T22:00:00.000Z', content: { lead: 'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4' } },
 			{ _id: '581719cfe87f6bd027229e2d', slug: 'bacon-ipsum9', title: 'Bacon ipsum9', publishedDate: '2011-10-25T22:00:00.000Z', content: { lead: 'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!9' } },
@@ -24,7 +24,7 @@ describe('getNews Action', () => {
 			});
 
 		const expectedAction = [{
-			type: 'NEWS',
+			type: actions.RECEIVE_NEWS_ITEMS,
 			items: mockNewsArr,
 			itemsPerYear: {
 				2010: 1,
@@ -32,10 +32,11 @@ describe('getNews Action', () => {
 				2015: 1,
 				all: mockNewsArr.length,
 			},
+			fetchedItems: true,
 		}];
 
 		const store = mockStore({ news: { articles: [] } });
-		return store.dispatch(actions.getNews())
+		return store.dispatch(actions.fetchNewsItemsIfNeeded())
 			.then(() => {
 				expect(store.getActions()).toEqual(expectedAction);
 			});

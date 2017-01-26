@@ -9,6 +9,7 @@ describe('News reducer test for case NEWS', () => {
 				loading: true,
 				newsArticle: { loading: true },
 				itemsPerYear: { all: 0 },
+				fetchedItems: false,
 				title: 'Nyheter och meddelanden',
 			});
 	});
@@ -20,7 +21,7 @@ describe('News reducer test for case NEWS', () => {
 			{ _id: '581719cfe87f6bd027229e32', slug: 'bacon-ipsum14', title: 'Bacon ipsum14', publishedDate: '2010-10-25T22:00:00.000Z', content: { lead: 'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!14' } },
 		];
 		const mockItemsPerYear = { all: mockNewsArr.length, 2010: 1, 2011: 1, 2015: 1 };
-		const reducer = newsReducer(undefined, { type: actions.NEWS, items: mockNewsArr, itemsPerYear: mockItemsPerYear });
+		const reducer = newsReducer(undefined, { type: actions.RECEIVE_NEWS_ITEMS, items: mockNewsArr, itemsPerYear: mockItemsPerYear });
 		expect(reducer).toBeA('object');
 		expect(reducer.items).toEqual(mockNewsArr);
 		expect(reducer.itemsPerYear).toEqual(mockItemsPerYear);

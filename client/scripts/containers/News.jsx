@@ -3,14 +3,15 @@ import { Col, Row, Pagination } from 'react-bootstrap';
 import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
 import Spinner from '../components/Spinner';
-import { getNews, changeYearFilter, changeCurrentPage } from '../actions/news';
+import { fetchNewsItemsIfNeeded, changeYearFilter, changeCurrentPage } from '../actions/news';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
 
 class News extends Component {
 	componentDidMount () {
-		const { title, setBreadcrumbs } = this.props;
+		const { title, setBreadcrumbs, fetchNewsItemsIfNeeded } = this.props;
 
+		fetchNewsItemsIfNeeded();
 		setBreadcrumbs([{ url: '/nyheter/', label: title }], true, title);
 	}
 	componentWillUnmount () {
@@ -50,7 +51,6 @@ class News extends Component {
 				</div>
 			);
 		}	else {
-			this.props.getNews();
 			return <Spinner />;
 		}
 	}
@@ -79,7 +79,7 @@ const mapStateToProps = ({ news, breadcrumbs }, { location }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	getNews: () => dispatch(getNews()),
+	fetchNewsItemsIfNeeded: () => dispatch(fetchNewsItemsIfNeeded()),
 	changeYearFilter: (year) => dispatch(changeYearFilter(year)),
 	changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
 	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
