@@ -48,7 +48,7 @@ export function showMessage (id, show) {
 export const COOKIE_ACCEPTED = 'COOKIE_ACCEPTED';
 
 export function acceptCookie () {
-	cookies.set(COOKIE_CONSENT, 1, { domain: CLIENT_COOKIE_DOMAIN });
+	cookies.set(COOKIE_CONSENT, 1, { expires: 365, domain: CLIENT_COOKIE_DOMAIN });
 	return cookieAccepted(true);
 }
 
