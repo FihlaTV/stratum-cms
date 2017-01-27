@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
+import Messages from './Messages';
 
 const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 	if (hasGrid) {
@@ -45,6 +46,7 @@ class App extends Component {
 
 		return (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
+				<Messages id="message-container"/>
 				<Menu items={menuItems} />
 				<MainContainer hasGrid={location.pathname !== '/react/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
