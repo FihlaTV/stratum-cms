@@ -10,7 +10,7 @@ import Index from './containers/Index';
 
 
 export default (
-	<Route path="/react" component={App}>
+	<Route path="/" component={App}>
 		<IndexRoute component={Index} />
 		<Route path="nyheter" component={News} >
 			<Route path=":nyhet" component={NewsItem} />

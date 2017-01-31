@@ -2,7 +2,7 @@ export const SET_BREADCRUMBS = 'SET_BREADCRUMBS';
 export const CLEAR_BREADCRUMBS = 'CLEAR_BREADCRUMBS';
 
 const { CLIENT_TITLE = '', CLIENT_TITLE_SEPARATOR = '·' } = process.env;
-const indexRoute = { url: '/react/', label: 'Start' };
+const indexRoute = { url: '/', label: 'Start' };
 
 /**
  * Sets the breadcrumbs which should be visible in the page head with help from label and url

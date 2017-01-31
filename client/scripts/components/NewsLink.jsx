@@ -6,7 +6,7 @@ const NewsLink = ({
 	children,
 	...props,
 }) => (
-	<Link to={`/react/nyheter/${slug}`} {...props}>{children}</Link>
+	<Link to={`/nyheter/${slug}`} {...props}>{children}</Link>
 );
 
 NewsLink.propTypes = {

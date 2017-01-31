@@ -60,6 +60,7 @@ keystone.init({
 	'wysiwyg cloudinary images': true,
 	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),
 	'ga property front': process.env.GA_PROPERTY_FRONT,
+	'react spa': process.env.REACT_SPA === 'true',
 
 	'register id': process.env.CLIENT_REGISTER_ID,
 	// Redirect to regular page if whole site is access restricted
