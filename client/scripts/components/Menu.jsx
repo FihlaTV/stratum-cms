@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { IndexLink } from 'react-router';
 
-function formatMenu (menuItems, level = 0) {
+function formatMenu (menuItems, tabLayout, level = 0) {
+	const totalMenuCharacters = level === 0 && tabLayout && menuItems.reduce((p, c) => p + c.label.length, 0);
+
 	return menuItems.reduce((prev, menuItem, i, arr) => {
 		const { url, label, key, items } = menuItem;
 
@@ -13,13 +15,13 @@ function formatMenu (menuItems, level = 0) {
 		 */
 		if (level > 0 && items && items.length > 0) {
 			return prev.concat(
-				formatMenu([{ url, label, key, hasChildren: true }], level),
-				formatMenu(items, level + 1)
+				formatMenu([{ url, label, key, hasChildren: true }], tabLayout, level),
+				formatMenu(items, tabLayout, level + 1)
 			);
 		}
 		let retVal = prev.concat([
 			<LinkContainer to={`/react${url}`} activeClassName="active" key={key}>
-				{getLinkContents(menuItem, level)}
+				{getLinkContents(menuItem, tabLayout, level, null, totalMenuCharacters)}
 			</LinkContainer>,
 		]);
 
@@ -30,7 +32,7 @@ function formatMenu (menuItems, level = 0) {
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
 				<LinkContainer to={`/react${url}`} activeClassName="active" key={`${key}-desktop`}>
-					{getLinkContents({ url, label, key }, level, true)}
+					{getLinkContents({ url, label, key }, tabLayout, level, true, totalMenuCharacters)}
 				</LinkContainer>
 			);
 		}
@@ -40,8 +42,9 @@ function formatMenu (menuItems, level = 0) {
 	}, []);
 }
 
-function getLinkContents (item, level, desktop = false) {
+function getLinkContents (item, tabLayout, level, desktop = false, totalMenuCharacters) {
 	const { label, key, items, hasChildren = false } = item;
+	const tabWidthStyle = tabLayout && totalMenuCharacters ? { width: `${100 * label.length / totalMenuCharacters}%` } : {};
 	let classNames = level === 2 ? ['sub-sub-nav'] : [];
 
 	if (level === 0) {
@@ -50,6 +53,9 @@ function getLinkContents (item, level, desktop = false) {
 		} else if (items && items.length > 0) {
 			classNames.push('hidden-md', 'hidden-lg');
 		}
+		if ((desktop || !items) && tabLayout && totalMenuCharacters) {
+			classNames.push('navbar-main-tab');
+		}
 	}
 	if (hasChildren) {
 		classNames.push('has-sub-pages');
@@ -57,12 +63,12 @@ function getLinkContents (item, level, desktop = false) {
 	if (items && items.length > 0) {
 		return (
 			<NavDropdown onClick={(e) => e.preventDefault()} className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
-				{formatMenu(items, level + 1)}
+				{formatMenu(items, false, level + 1)}
 			</NavDropdown>
 		);
 	} else {
 		return (
-			<NavItem className={classNames.join(' ')}>
+			<NavItem className={classNames.join(' ')} style={tabWidthStyle}>
 				{`${label}`}
 			</NavItem>
 		);
@@ -72,9 +78,10 @@ function getLinkContents (item, level, desktop = false) {
 
 const Menu = ({
 	items,
+	tabLayout,
 }) => {
 	return (
-		<Navbar className="navbar-big" staticTop fluid>
+		<Navbar className="navbar-big navbar-big-tabbed" staticTop fluid>
 			<div className="navbar-header-container">
 				<Navbar.Header>
 					<Navbar.Brand>
@@ -90,7 +97,7 @@ const Menu = ({
 				<div className="navbar-main">
 					<div className="navbar-main-container">
 						<Nav pullLeft>
-							{formatMenu(items)}
+							{formatMenu(items, tabLayout)}
 						</Nav>
 					</div>
 				</div>
@@ -100,6 +107,8 @@ const Menu = ({
 
 };
 
-Menu.propTypes = { };
+Menu.propTypes = {
+	tabLayout: PropTypes.bool,
+};
 
 export default Menu;

@@ -47,7 +47,7 @@ class App extends Component {
 		return (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
-				<Menu items={menuItems} />
+				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>
 				<MainContainer hasGrid={location.pathname !== '/react/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
 				</MainContainer>

@@ -114,6 +114,9 @@ img.navbar-brand-image-small{
 	// box-shadow: 0 0 5px rgba(0,0,0,0.5);
 	// @media (min-width: @grid-float-breakpoint) {
 	.box-shadow(@shadow: 0 0 5px rgba(0,0,0,0.5));
+	.stratum-cms-modern & {
+		.box-shadow(none);
+	}
 	border: 0;
 	// }
 	.navbar-upper {
@@ -217,6 +220,10 @@ img.navbar-brand-image-small{
 					border-bottom: 3px solid @brand-primary;
 					margin-bottom: -3px;
 					.transition(border-bottom .2s ease-in-out);
+					.stratum-cms-modern & {
+						margin-bottom: 0;
+						border-bottom: 0;
+					}
 				}
 			}
 			> .active > a {
@@ -225,6 +232,10 @@ img.navbar-brand-image-small{
 				&:focus {
 					border-bottom: 3px solid @brand-primary;
 					margin-bottom: -3px;
+					.stratum-cms-modern & {
+						margin-bottom: 0;
+						border-bottom: 0;
+					}
 				}
 			}
 		}
@@ -243,10 +254,10 @@ img.navbar-brand-image-small{
 // }
 
 .navbar-big {
-	border-top: 3px solid @brand-primary;
+	border-top: @navbar-big-border-top;
 
 	@media (min-width: @grid-float-breakpoint) {
-		border-top-width: 4px;
+		border-top-width: @navbar-big-border-top-width-desktop;
 	}
 
 	> .container-fluid{
@@ -295,8 +306,8 @@ img.navbar-brand-image-small{
 	.navbar-main {
 
 		@media (min-width: @grid-float-breakpoint) {
-			background-color: @gray-lighter;
-			border-top: 1px solid darken(@gray-lighter, 10%);
+			background-color: @navbar-main-bg;
+			border-top: @navbar-main-border-top;
 		}
 		.navbar-nav {
 			margin: (@navbar-main-padding-vertical / 2) -@navbar-padding-horizontal;
@@ -314,8 +325,40 @@ img.navbar-brand-image-small{
 				> li {
 					float: left;
 					> a {
+						text-transform: @navbar-main-text-transform;
+						font-family:    @navbar-main-font-family;
+						font-size:      @navbar-main-font-size;
+						font-weight:    @navbar-main-font-weight;
+						color:          @navbar-main-link-color;
+						background:     @navbar-main-link-bg;
 						padding-top:    @navbar-main-padding-vertical;
 						padding-bottom: @navbar-main-padding-vertical;
+						&:hover {
+							background: @navbar-main-link-hover-bg;
+							color:      @navbar-main-link-hover-color;
+						}
+					}
+					&.active > a {
+						&, &:hover {
+							background: @navbar-main-link-active-bg;
+							color: @navbar-main-link-active-color;
+						}
+					}
+					// :hover > a {
+					// }
+				}
+				.stratum-cms-modern & {
+					width: 100%;
+					> li {
+						> a {
+							padding: @navbar-main-padding-vertical 0;
+							text-align: center;
+							margin-right: @gutter;
+							border-radius: 3px 3px 0 0;
+						}
+						&:last-child > a {
+							margin-right: 0;
+						}
 					}
 				}
 			}
