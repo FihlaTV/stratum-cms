@@ -44,7 +44,7 @@ class App extends Component {
 			location,
 		} = this.props;
 
-		return (
+		return location.pathname === '/react/404' ? children : (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
 				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>

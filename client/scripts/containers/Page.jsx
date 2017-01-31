@@ -84,7 +84,12 @@ class Page extends Component {
 	redirectFromMenu (menuSlug, menuItems) {
 		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
 		// Redirect to found page
-		this.props.router.replace(`/react${rePage.url}`);
+		if (rePage) {
+			this.props.router.replace(`/react${rePage.url}`);
+		} else {
+			// Could not find a first page in menu.
+			this.props.router.replace('/react/404');
+		}
 	}
 	getPageUrl (menu, page, parentPage) {
 		const { slug, shortId } = page;
@@ -107,10 +112,10 @@ class Page extends Component {
 	}
 	findFirstPageInMenu (menuKey, menuItems) {
 		const menuBlock = menuItems.find((item) => item.key === menuKey);
-		if (menuBlock && menuBlock.items) {
+		if (menuBlock && menuBlock.items && menuBlock.items.length > 0) {
 			return menuBlock.items[0];
 		}
-		// Throw error instead
+
 		return null;
 	}
 	findMenuBlock (pageId, menuItems = [], level = 0) {
