@@ -9,10 +9,10 @@ const BOAArtrosSkola = ({
 				<span
 					className="side-widget-digit"
 				>
-					78%
+					75%
 				</span>
 				<span className="side-widget-description">
-					av de patienter som går artrosskola mår bättre efter avslutad utbildning
+					av patienter som gått artrosskola är tillräckligt fysiskt aktiva efter ett år.
 				</span>
 			</div>
 			<div className="side-widget">
@@ -22,7 +22,7 @@ const BOAArtrosSkola = ({
 					className="side-widget-digit"
 				>
 					<span className="side-widget-description">
-						mottagningar över hela landet registrerar i BOA registret idag
+						mottagningar över hela landet erbjuder artrosskola och rapporterar till BOA-registret.
 					</span>
 				</StratumSimpleData>
 			</div>
