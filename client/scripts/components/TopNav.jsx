@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Spinner from './Spinner';
 import User from './User';
+import { Link } from 'react-router';
+
+const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
+	const className = 'nav-button-text registration-link';
+	if (disabled) {
+		return <a className={className} disabled {...props}>{children}</a>;
+	}
+	if (reactRouter) {
+		return <Link to="/registrering" className={className} {...props}>{children}</Link>;
+	}
+	return <a href="/registrering" className={className} {...props}>{children}</a>;
+};
 
 const TopNav = ({
 	loading,
@@ -11,6 +23,7 @@ const TopNav = ({
 	onUserHover,
 	shrinkUnitName,
 	showLoginModal,
+	reactRouter,
 }) => {
 	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
 	const spinnerStyle = {
@@ -25,14 +38,10 @@ const TopNav = ({
 			<ul className="nav navbar-nav navbar-right">
 				<Spinner small style={spinnerStyle}/>
 				<li style={visibility} className={isRegistration}>
-					<a href="/registrering" className="nav-button-text registration-link" disabled={wrongRegister} onClick={(e) => {
-						if (wrongRegister) {
-							e.preventDefault();
-						}
-					}}>
+					<RegistrationLink disabled={wrongRegister} reactRouter={reactRouter}>
 						<p className="nav-button-text-big">Registrering</p>
 						<p className="nav-button-text-small">med mera</p>
-					</a>
+					</RegistrationLink>
 				</li>
 				<li style={visibility}>
 					<User ref={setContextTarget}
@@ -56,6 +65,10 @@ const TopNav = ({
 			</li>
 		</ul>
 	);
+};
+
+TopNav.propTypes = {
+	reactRouter: PropTypes.bool,
 };
 
 export default TopNav;

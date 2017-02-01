@@ -103,7 +103,7 @@ const Menu = ({
 					</div>
 				</div>
 				<div className="navbar-upper">
-					<UserContext />
+					<UserContext reactRouter/>
 				</div>
 			</Navbar.Collapse>
 		</Navbar>
