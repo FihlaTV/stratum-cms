@@ -24,7 +24,7 @@ class PageLink extends Component {
 		const menu = this.findPage(pageId, menuItems);
 
 		if (menu) {
-			return <Link to={`/react${menu.url}`} {...rest}>{children || menu.label}</Link>;
+			return <Link to={`${menu.url}`} {...rest}>{children || menu.label}</Link>;
 		}
 		return null;
 	}

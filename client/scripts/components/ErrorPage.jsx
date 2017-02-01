@@ -16,7 +16,7 @@ class ErrorPage extends Component {
 			<div className="container error-page">
 				<h1>Kunde inte hitta sidan du letade efter</h1>
 				<p className="error-page-message">{message}</p>
-				<p className="back-link"><Link to="/react/">Gå tillbaka till startsidan</Link></p>
+				<p className="back-link"><Link to="/">Gå tillbaka till startsidan</Link></p>
 			</div>
 		);
 	}
@@ -33,4 +33,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ErrorPage);
 
-// <Button bsStyle="primary" onClick={() => props.router.replace('/react/nyheter/1')}> Redirect </Button>
+// <Button bsStyle="primary" onClick={() => props.router.replace('/nyheter/1')}> Redirect </Button>

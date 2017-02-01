@@ -116,20 +116,25 @@ exports = module.exports = function (app) {
 		app.get('/*', middleware.requireUser);
 	}
 
-	// Views
-	app.get('/', routes.views.index);
-
-	app.get('/nyheter', routes.views.news);
-	app.get('/nyheter/:newsitem/', routes.views.newsitem);
-	app.get('/registrering', routes.views.registration);
-	app.get('/faq', routes.contentTypes.faq);
-	// app.get('/kontakt', routes.views.contact);
 
 	// Logout
 	app.get('/logout', routes.views.logout);
 
-	app.get('/react/*', routes.views.react);
-  // Views for dynamic routes
-	app.get('/:menublock/', routes.views.menublock);
-	app.get('*/p/:shortid', routes.views.page);
+	// Determine if React SPA should be enabled
+	if (keystone.get('react spa')) {
+		app.get('/*', routes.views.react);
+	} else {
+		// Views
+		app.get('/', routes.views.index);
+
+		app.get('/nyheter', routes.views.news);
+		app.get('/nyheter/:newsitem/', routes.views.newsitem);
+		app.get('/registrering', routes.views.registration);
+		app.get('/faq', routes.contentTypes.faq);
+		// app.get('/kontakt', routes.views.contact);
+
+		// Views for dynamic routes
+		app.get('/:menublock/', routes.views.menublock);
+		app.get('*/p/:shortid', routes.views.page);
+	}
 };

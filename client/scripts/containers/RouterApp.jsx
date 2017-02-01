@@ -31,8 +31,8 @@ class App extends Component {
 		dispatch(fetchRegisterInformation());
 	}
 	componentWillReceiveProps (nextProps) {
-		if (nextProps.error.status && this.props.location.pathname !== '/react/404') {
-			this.props.router.push('/react/404');
+		if (nextProps.error.status && this.props.location.pathname !== '/404') {
+			this.props.router.push('/404');
 		}
 	}
 	render () {
@@ -44,11 +44,11 @@ class App extends Component {
 			location,
 		} = this.props;
 
-		return location.pathname === '/react/404' ? children : (
+		return location.pathname === '/404' ? children : (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
 				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>
-				<MainContainer hasGrid={location.pathname !== '/react/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
+				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
 				</MainContainer>
 				<Footer {...registerInformation}/>

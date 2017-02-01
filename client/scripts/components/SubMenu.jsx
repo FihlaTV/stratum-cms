@@ -28,7 +28,7 @@ function renderLink (activeTopPage = {}) {
 			cls.push('expanded');
 		}
 		const Link = (
-			<LinkContainer key={key} to={`/react${url}`} activeClassName="active" className={cls.join(' ')}>
+			<LinkContainer key={key} to={`${url}`} activeClassName="active" className={cls.join(' ')}>
 				<NavItem>
 					{label}
 				</NavItem>

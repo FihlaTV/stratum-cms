@@ -20,7 +20,7 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 			);
 		}
 		let retVal = prev.concat([
-			<LinkContainer to={`/react${url}`} activeClassName="active" key={key}>
+			<LinkContainer to={`${url}`} activeClassName="active" key={key}>
 				{getLinkContents(menuItem, tabLayout, level, null, totalMenuCharacters)}
 			</LinkContainer>,
 		]);
@@ -31,7 +31,7 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 		 */
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
-				<LinkContainer to={`/react${url}`} activeClassName="active" key={`${key}-desktop`}>
+				<LinkContainer to={`${url}`} activeClassName="active" key={`${key}-desktop`}>
 					{getLinkContents({ url, label, key }, tabLayout, level, true, totalMenuCharacters)}
 				</LinkContainer>
 			);
@@ -85,7 +85,7 @@ const Menu = ({
 			<div className="navbar-header-container">
 				<Navbar.Header>
 					<Navbar.Brand>
-						<IndexLink to="/react/" activeClassName="active">
+						<IndexLink to="/" activeClassName="active">
 							<img src="/images/logo_menu_big.png" style={{ display: 'none' }} alt="Registercentrum" className="navbar-brand-image-big" />
 							<img src="/images/logo_menu_small.png" alt="Registercentrum" className="navbar-brand-image-small" />
 						</IndexLink>
