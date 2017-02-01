@@ -318,6 +318,11 @@ img.navbar-brand-image-small{
 				line-height: @line-height-computed;
 			}
 
+			@media (max-width: @grid-float-breakpoint-max) {
+				> li.navbar-main-tab {
+					width: 100% !important;
+				}
+			}
 			// Uncollapse the nav
 			@media (min-width: @grid-float-breakpoint) {
 				float: left;
