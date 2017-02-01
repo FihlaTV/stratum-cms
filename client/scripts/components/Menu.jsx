@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { IndexLink } from 'react-router';
+import UserContext from '../containers/App';
 
 function formatMenu (menuItems, tabLayout, level = 0) {
 	const totalMenuCharacters = level === 0 && tabLayout && menuItems.reduce((p, c) => p + c.label.length, 0);
@@ -100,6 +101,9 @@ const Menu = ({
 							{formatMenu(items, tabLayout)}
 						</Nav>
 					</div>
+				</div>
+				<div className="navbar-upper">
+					<UserContext />
 				</div>
 			</Navbar.Collapse>
 		</Navbar>
