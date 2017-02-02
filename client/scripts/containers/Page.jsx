@@ -42,8 +42,9 @@ const WidgetContainer = ({
 const PageContainer = ({
 	loading,
 	children,
+	layout,
 }) => (
-	<article className="base-page">
+	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}`}>
 		{loading ? <Spinner /> : children}
 	</article>
 );
