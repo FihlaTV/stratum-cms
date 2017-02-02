@@ -1,23 +1,39 @@
 import React, { Component } from 'react';
+import StratumLoader, { startRegistrations } from '../utils/stratumLoader';
 
 class Registration extends Component {
 	componentDidMount () {
-		const script = document.createElement('script');
+		const { containerId, widget } = this.props;
 
-		script.src = '/stratum/api/widgets/RC/Loader?widget=registrations&target=sw-registrations';
-		script.async = true;
-
-		document.body.appendChild(script);
+		if (typeof window.Stratum !== 'undefined' && window.Stratum.ApplicationForRegistrations) {
+			startRegistrations();
+		} else {
+			StratumLoader(containerId, widget);
+		}
+	}
+	componentWillUnmount () {
+		const { Ext, purgeOrphans } = window;
+		const { containerId } = this.props;
+		if (typeof purgeOrphans !== 'undefined' && typeof Ext !== 'undefined') {
+			purgeOrphans(document.getElementById(containerId));
+		}
 	}
 	render () {
+		const { containerId } = this.props;
 		return (
 			<div>
-				<div className="base-page">
-					<div id="sw-registrations"></div>
+				<div className="base-page base-page-full">
+					<div id={containerId}></div>
 				</div>
 			</div>
 		);
 	}
+}
+
+Registration.defaultProps = {
+	registrationId: `registration-script-${(new Date()).getTime()}`,
+	containerId: 'sw-registrations',
+	widget: 'registrations',
 };
 
 export default Registration;
