@@ -119,14 +119,15 @@ function inject (aResourceList, aReadyCallback) {
 // 	return rr;
 
 // }
-
-export function startRegistrations () {
+export function startRegistrations (target = 'sw-registrations', callback = () => {}) {
 	const { Ext, Stratum, Repository, initializeExtJS, Profile } = window;
-	var pn = Ext.get('sw-registrations');
+	var pn = Ext.get(target);
 
 	if (!pn) {
+		callback(false);
 		return;
 	}
+	callback(true);
 	Stratum.showError = function (aMessage) {
 		pn.createChild({
 			cls: 'alert alert-danger',
@@ -195,7 +196,7 @@ function startWidget (target, widget, queryString) {
 	};
 }
 
-export default function (target, widget, queryString = '') {
+export default function (target, widget, queryString = '', callback = () => {}) {
 	// descriptor = getDescriptor();
 	if (!target || !widget) {
 		return;
@@ -218,7 +219,7 @@ export default function (target, widget, queryString = '') {
 					'/stratum/Scripts/ManagerForSubjects.js',
 					'/stratum/Scripts/ApplicationForRegistrations.js',
 				],
-				startRegistrations
+				() => startRegistrations(target, callback)
 			);
 			break;
 		default: // ... is a widget.
