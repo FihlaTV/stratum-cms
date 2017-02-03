@@ -179,21 +179,19 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 	});
 }
 
-function startWidget (target, widget, queryString) {
-	return function () {
-		const { Stratum, Ext, initializeExtJS } = window;
+export function startWidget (target, widget, queryString) {
+	const { Stratum, Ext, initializeExtJS } = window;
 
-		Stratum.isEmbedded = true; // To tell Stratum that calls are made from in an embedded scenario.
-		Stratum.containers = Stratum.containers || {};
-		Stratum.containers[widget] = target;
-		initializeExtJS();
-		Ext.tip.QuickTipManager.init();
-		loadEnvironment(function () {
-			inject(['/stratum/api/widgets/' + widget + queryString], function () {
-				// Do something after widget is loaded?
-			});
+	Stratum.isEmbedded = true; // To tell Stratum that calls are made from in an embedded scenario.
+	Stratum.containers = Stratum.containers || {};
+	Stratum.containers[widget] = target;
+	initializeExtJS();
+	Ext.tip.QuickTipManager.init();
+	loadEnvironment(function () {
+		inject(['/stratum/api/widgets/' + widget + queryString], function () {
+			// Do something after widget is loaded?
 		});
-	};
+	});
 }
 
 export default function (target, widget, queryString = '', callback = () => {}) {
@@ -233,7 +231,7 @@ export default function (target, widget, queryString = '', callback = () => {}) 
 					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
 					'/stratum/Scripts/Repository.js',
 				],
-				startWidget(target, widget, queryString)
+				() => startWidget(target, widget, queryString)
 			);
 			break;
 	}
