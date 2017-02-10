@@ -2,6 +2,9 @@
 var head = document.getElementsByTagName('head')[0];
 // var descriptor;
 
+var	initInProgress = false;
+var _queue = [];
+
 function getResource (aURL) {
 	var sa = [].map.call(document.scripts, function (x) { return x.src; }).concat([].map.call(document.styleSheets, function (x) { return x.href; }));
 	var	us = aURL.toLowerCase().replace('/stratum', '');
@@ -179,19 +182,30 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 	});
 }
 
-export function startWidget (target, widget, queryString) {
+export function startWidget (target, widget, queryString, callback = () => {}) {
 	const { Stratum, Ext, initializeExtJS } = window;
-
 	Stratum.isEmbedded = true; // To tell Stratum that calls are made from in an embedded scenario.
 	Stratum.containers = Stratum.containers || {};
 	Stratum.containers[widget] = target;
 	initializeExtJS();
 	Ext.tip.QuickTipManager.init();
 	loadEnvironment(function () {
-		inject(['/stratum/api/widgets/' + widget + queryString], function () {
-			// Do something after widget is loaded?
-		});
+		inject(['/stratum/api/widgets/' + widget + queryString], callback);
 	});
+}
+function queue (fn) {
+	_queue.push(fn);
+}
+function resumeQueue () {
+	setInitInProgress(false);
+	_queue.forEach(fn => fn());
+	_queue = [];
+}
+function setInitInProgress (status) {
+	initInProgress = !!status;
+}
+function getInitProgress () {
+	return initInProgress;
 }
 
 export default function (target, widget, queryString = '', callback = () => {}) {
@@ -199,40 +213,50 @@ export default function (target, widget, queryString = '', callback = () => {}) 
 	if (!target || !widget) {
 		return;
 	}
-	switch (widget) {
-		case null:
-			// TODO: add message through showError?
-			break;
-		case 'registrations':
-			inject(
-				[
-					'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-					'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-					'/stratum/Default2.css',
-					'/stratum/ExtJS/ext-all.js',
-					'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-					'/stratum/Directs/Handlers/ScriptGenerator.ashx',
-					'/stratum/Scripts/Repository.js',
-					'/stratum/Scripts/ManagerForSubjects.js',
-					'/stratum/Scripts/ApplicationForRegistrations.js',
-				],
-				() => startRegistrations(target, callback)
-			);
-			break;
-		default: // ... is a widget.
-			inject(
-				[
-					'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-					'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-					'/stratum/Default2.css',
-					'/stratum/ExtJS/ext-all.js',
-					'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-					'/stratum/Scripts/Repository.js',
-				],
-				() => startWidget(target, widget, queryString)
-			);
-			break;
+	const doInjects = () => {
+
+		switch (widget) {
+			case null:
+				// TODO: add message through showError?
+				break;
+			case 'registrations':
+				inject(
+					[
+						'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
+						'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
+						'/stratum/Default2.css',
+						'/stratum/ExtJS/ext-all.js',
+						'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
+						'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
+						'/stratum/Directs/Handlers/ScriptGenerator.ashx',
+						'/stratum/Scripts/Repository.js',
+						'/stratum/Scripts/ManagerForSubjects.js',
+						'/stratum/Scripts/ApplicationForRegistrations.js',
+					],
+					() => startRegistrations(target, (...args) => { resumeQueue(); callback(...args); })
+				);
+				break;
+			default: // ... is a widget.
+				inject(
+					[
+						'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
+						'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
+						'/stratum/Default2.css',
+						'/stratum/ExtJS/ext-all.js',
+						'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
+						'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
+						'/stratum/Scripts/Repository.js',
+					],
+					() => startWidget(target, widget, queryString, (...args) => { resumeQueue(); callback(...args); })
+				);
+				break;
+		}
+	};
+	if (getInitProgress()) {
+		queue(doInjects);
+	} else {
+		setInitInProgress(true);
+		doInjects();
 	}
+
 };
