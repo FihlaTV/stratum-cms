@@ -7,7 +7,7 @@ import FAQ from './containers/FAQ';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
 import Index from './containers/Index';
-import Registration from './components/Registration';
+import Registration from './containers/Registration';
 
 
 export default (
