@@ -1,6 +1,4 @@
-// const { Ext, Stratum, initializeExtJS, Profile, Repository, assignProfileSite, assignProfileContext } = window;
 var head = document.getElementsByTagName('head')[0];
-// var descriptor;
 
 var	initInProgress = false;
 var _queue = [];
@@ -17,17 +15,6 @@ function getResource (aURL) {
 	}
 	return null;
 }
-
-// function getDescriptor () {
-// 	var qs = getResource('RC/Loader');
-// 	var wn = qs && qs.match(/\?widget=(.+)&target=([^&]+)((?:&[^&=\s]+=[^&\s]+)*)/i); // Widget name is passed in query string of src attribute.
-
-// 	return {
-// 		widget: wn && wn.length > 1 ? wn[1] : null,
-// 		target: wn && wn.length > 2 ? wn[2] : null,
-// 		queryString: wn && wn.length > 3 && wn[3] !== '' ? ('?' + wn[3].slice(1)) : '',
-// 	};
-// }
 
 function loadEnvironment (aCallback) {
 	const { Ext, Repository, assignProfileSite, assignProfileContext } = window;
@@ -108,20 +95,6 @@ function inject (aResourceList, aReadyCallback) {
 	}
 }
 
-// function getCSSRule (aRule) {
-// 	var ss = document.styleSheets[0], // Assumed to be KeystoneJS's primary CSS.
-// 		rc = ss.cssRules || ss.rules,
-// 		rr;
-
-// 	Ext.Array.each(rc, function (ro) { // No forEach since this is a CSSRuleList.
-// 		if (ro.selectorText === aRule) {
-// 			rr = ro;
-// 			return false;
-// 		}
-// 	});
-// 	return rr;
-
-// }
 export function startRegistrations (target = 'sw-registrations', callback = () => {}) {
 	const { Ext, Stratum, Repository, initializeExtJS, Profile } = window;
 	var pn = Ext.get(target);
@@ -209,7 +182,6 @@ function getInitProgress () {
 }
 
 export default function (target, widget, queryString = '', callback = () => {}) {
-	// descriptor = getDescriptor();
 	if (!target || !widget) {
 		return;
 	}
