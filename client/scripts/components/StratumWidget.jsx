@@ -30,7 +30,7 @@ class StratumWidget extends Component {
 			if (widget === REGISTRATIONS_WIDGET_NAME && window.Stratum.ApplicationForRegistrations) {
 				startRegistrations(target, (success) => this.finishedLoading(success));
 			} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
-				startWidget(target, widget, queryString, () => this.finishedLoading());
+				startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
 			}
 		} else {
 			StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
