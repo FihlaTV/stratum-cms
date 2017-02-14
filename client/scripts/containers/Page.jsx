@@ -12,6 +12,7 @@ import SubMenu from '../components/SubMenu';
 import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
 import WidgetWrapper from '../components/WidgetWrapper';
+import StratumWidget from '../components/StratumWidget';
 
 const SideArea = ({
 	title,
@@ -23,18 +24,23 @@ const SideArea = ({
 	</div>
 );
 
+function queryStringToObject (queryString = '') {
+	const replacedQuery = queryString.replace(/&/g, '","').replace(/=/g, '":"');
+	return replacedQuery ? JSON.parse(`{"${replacedQuery}"}`, (key, value) => key === '' ? value : decodeURIComponent(value)) : {};
+}
+
 const WidgetContainer = ({
 	widget,
 }) => {
 	if (!widget) {
 		return null;
 	}
-	const { title, name, description, ...widgetProps } = widget;
+	const { title, name, description, type, queryString, widgetSlug, key, ...widgetProps } = widget;
 	return (
 		<div className="side-area">
 			<h2>{title}</h2>
 			<p>{description}</p>
-			<WidgetWrapper id={name} {...widgetProps}/>
+			{type === 'keystone' ? <WidgetWrapper id={name} {...widgetProps}/> : <StratumWidget id={key} widget={widgetSlug} query={queryStringToObject(queryString)} />}
 		</div>
 	);
 };

@@ -27,13 +27,18 @@ class StratumWidget extends Component {
 		const queryString = this.formatQuery(query);
 
 		if (typeof window.Stratum !== 'undefined' && widget) {
-			if (widget === REGISTRATIONS_WIDGET_NAME && window.Stratum.ApplicationForRegistrations) {
-				startRegistrations(target, (success) => this.finishedLoading(success));
-			} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
-				startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
-			}
+			this.startWidget({ target, widget, query });
 		} else {
 			StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
+		}
+	}
+	componentWillReceiveProps ({ widget: nWidget, query: nQuery, target: nTarget, id: nId }) {
+		const { widget, target, id } = this.props;
+
+		if (widget && nWidget && (nWidget !== widget || nTarget !== target || nId !== id)) {
+			this.componentWillUnmount();
+			this.setState({ loading: true });
+			this.startWidget({ widget: nWidget, query: nQuery, target: this.state.target });
 		}
 	}
 	componentWillUnmount () {
@@ -53,6 +58,15 @@ class StratumWidget extends Component {
 		this.setState({
 			loading: false,
 		});
+	}
+	startWidget ({ target, widget, query }) {
+		const queryString = this.formatQuery(query);
+
+		if (widget === REGISTRATIONS_WIDGET_NAME && window.Stratum.ApplicationForRegistrations) {
+			startRegistrations(target, (success) => this.finishedLoading(success));
+		} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
+			startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
+		}
 	}
 	render () {
 		const { loading, target } = this.state;
