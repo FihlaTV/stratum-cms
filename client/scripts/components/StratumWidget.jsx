@@ -54,16 +54,22 @@ class StratumWidget extends Component {
 
 		return parameters ? `?${parameters}` : '';
 	}
-	finishedLoading (success) {
-		this.setState({
-			loading: false,
-		});
+	finishedLoading ({ cancelled, success } = {}) {
+		if (!cancelled) {
+			this.setState({
+				loading: false,
+			});
+		}
 	}
 	startWidget ({ target, widget, query }) {
 		const queryString = this.formatQuery(query);
 
-		if (widget === REGISTRATIONS_WIDGET_NAME && window.Stratum.ApplicationForRegistrations) {
-			startRegistrations(target, (success) => this.finishedLoading(success));
+		if (widget === REGISTRATIONS_WIDGET_NAME) {
+			if (!window.Stratum.ApplicationForRegistrations) {
+				StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
+			} else {
+				startRegistrations(target, (success) => this.finishedLoading(success));
+			}
 		} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
 			startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
 		}

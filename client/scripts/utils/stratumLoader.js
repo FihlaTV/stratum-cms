@@ -1,6 +1,7 @@
 var head = document.getElementsByTagName('head')[0];
 
 var	initInProgress = false;
+var hasBeenInitialized = false;
 var _queue = [];
 
 function getResource (aURL) {
@@ -33,6 +34,7 @@ function loadEnvironment (aCallback) {
 
 					if (!o2) { // Not https or not authenticated.
 						// TODO: should Profile.Site be loaded here?
+						// console.log('Stratum.containers: %o', window.Stratum && window.Stratum.containers);
 						aCallback();
 						return;
 					}
@@ -44,6 +46,7 @@ function loadEnvironment (aCallback) {
 							o3.Site.Register = o3; // Reestablish owner reference, since following calls reference Register through Site.
 							assignProfileSite(o3.Site);
 							assignProfileContext(o2); // Yes, o2 is correct :-)
+							// console.log('Stratum.containers: %o', window.Stratum && window.Stratum.containers);
 							aCallback();
 						},
 					});
@@ -53,7 +56,7 @@ function loadEnvironment (aCallback) {
 	});
 }
 
-function inject (aResourceList, aReadyCallback) {
+function inject (aResourceList, aReadyCallback, target) {
 	var cc = aResourceList.length;
 	var uc;
 	var ia;
@@ -90,6 +93,7 @@ function inject (aResourceList, aReadyCallback) {
 			rn.async = false;
 			rn.defer = false;
 		}
+		// console.log(getResource(uc));
 		rn.onload = rn.onreadystatechange = loaded;
 		head.appendChild(rn);
 	}
@@ -100,10 +104,10 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 	var pn = Ext.get(target);
 
 	if (!pn) {
-		callback(false);
+		callback({ success: false, cancelled: true, error: `Kunde inte hitta element "${target}" för registreringsapplikationen.` });
 		return;
 	}
-	callback(true);
+	callback({ success: true });
 	Stratum.showError = function (aMessage) {
 		pn.createChild({
 			cls: 'alert alert-danger',
@@ -163,9 +167,24 @@ export function startWidget (target, widget, queryString, callback = () => {}) {
 	initializeExtJS();
 	Ext.tip.QuickTipManager.init();
 	loadEnvironment(function () {
-		inject(['/stratum/api/widgets/' + widget + queryString], callback);
+		const targetNode = document.getElementById(target);
+		// console.log('@before script inject ---- \ntarget: %s, target-in-dom: %o, widget: %s, stratum-target: %s\nAll equal: %o',
+		// 	target,
+		// 	targetNode,
+		// 	widget,
+		// 	Stratum.containers[widget],
+		// 	target === Stratum.containers[widget] && !!targetNode
+		// );
+		if (targetNode) {
+			inject(['/stratum/api/widgets/' + widget + queryString], callback);
+		} else {
+			callback({ cancelled: true, success: false });
+		}
 	});
 }
+/**
+ * Queue functions
+ */
 function queue (fn) {
 	_queue.push(fn);
 }
@@ -181,49 +200,45 @@ function getInitProgress () {
 	return initInProgress;
 }
 
+function setHasBeenInitialized (status) {
+	hasBeenInitialized = status;
+}
+function getHasBeenInitialized () {
+	return hasBeenInitialized;
+}
+
 export default function (target, widget, queryString = '', callback = () => {}) {
 	if (!target || !widget) {
 		return;
 	}
 	const doInjects = () => {
+		const startFn = widget === 'registrations'
+			? () => startRegistrations(target, (...args) => { resumeQueue(); callback(...args); })
+			: () => startWidget(target, widget, queryString, (...args) => { resumeQueue(); callback(...args); });
 
-		switch (widget) {
-			case null:
-				// TODO: add message through showError?
-				break;
-			case 'registrations':
-				inject(
-					[
-						'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-						'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-						'/stratum/Default2.css',
-						'/stratum/ExtJS/ext-all.js',
-						'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-						'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-						'/stratum/Directs/Handlers/ScriptGenerator.ashx',
-						'/stratum/Scripts/Repository.js',
-						'/stratum/Scripts/ManagerForSubjects.js',
-						'/stratum/Scripts/ApplicationForRegistrations.js',
-					],
-					() => startRegistrations(target, (...args) => { resumeQueue(); callback(...args); })
-				);
-				break;
-			default: // ... is a widget.
-				inject(
-					[
-						'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-						'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-						'/stratum/Default2.css',
-						'/stratum/ExtJS/ext-all.js',
-						'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-						'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-						'/stratum/Scripts/Repository.js',
-					],
-					() => startWidget(target, widget, queryString, (...args) => { resumeQueue(); callback(...args); })
-				);
-				break;
+		// Always load all stratum scripts to avoid missing variables when loading registration application.
+		if (!getHasBeenInitialized()) {
+			inject(
+				[
+					'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
+					'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
+					'/stratum/Default2.css',
+					'/stratum/ExtJS/ext-all.js',
+					'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
+					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
+					'/stratum/Directs/Handlers/ScriptGenerator.ashx',
+					'/stratum/Scripts/Repository.js',
+					'/stratum/Scripts/ManagerForSubjects.js',
+					'/stratum/Scripts/ApplicationForRegistrations.js',
+				],
+				() => { setHasBeenInitialized(true); startFn(); }
+			);
+		} else {
+			startFn();
 		}
 	};
+    // Queue initialization of widgets if an initialization is already in progress..
+	// TODO: Add timout to initialization to avoid halt
 	if (getInitProgress()) {
 		queue(doInjects);
 	} else {
