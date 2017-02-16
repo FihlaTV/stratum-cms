@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { clearPage } from '../actions/page';
-import Spinner from '../components/Spinner';
+// import Spinner from '../components/Spinner';
 import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
 import DockedImages from '../components/DockedImages';
@@ -51,7 +51,7 @@ const PageContainer = ({
 	layout,
 }) => (
 	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}`}>
-		{loading ? <Spinner /> : children}
+		{loading ? null : children}
 	</article>
 );
 

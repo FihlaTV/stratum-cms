@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row, Pagination } from 'react-bootstrap';
 import NewsListItem from '../components/NewsListItem';
 import NewsFilter from '../components/NewsFilter';
-import Spinner from '../components/Spinner';
+// import Spinner from '../components/Spinner';
 import { fetchNewsItemsIfNeeded, changeYearFilter, changeCurrentPage } from '../actions/news';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
@@ -51,7 +51,7 @@ class News extends Component {
 				</div>
 			);
 		}	else {
-			return <Spinner />;
+			return null;
 		}
 	}
 };
