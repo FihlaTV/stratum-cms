@@ -11,4 +11,11 @@ footer, #footer {
 	padding-bottom: 20px;
 	color: @gray-lighter;
 	box-shadow: inset 0px 53px 12px -53px rgba(0,0,0,0.65);
+	a {
+		color: @gray-lighter;
+		text-decoration: underline;
+		&:hover{
+			color: darken(@gray-lighter, 15);
+		}
+	}
 }

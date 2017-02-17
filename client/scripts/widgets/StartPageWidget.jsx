@@ -20,7 +20,7 @@ class StartPageWidget extends Component {
 				<StratumSimpleData
 					url={this.props.url}
 					onLoadComplete={this.onComplete.bind(this)}
-					indicatorClass="startpage-widget-digit"
+					className="startpage-widget-digit"
 					format={this.props.format}
 					unstyled
 					/>

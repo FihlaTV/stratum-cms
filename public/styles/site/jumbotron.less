@@ -9,10 +9,82 @@
 			margin-bottom: 15px;
 		}
 	}
+	&.jumbotron-wide {
+		margin-top: -@gutter-xlarge;
+		border-radius: 0;
+		background-color: @jumbotron-wide-bg;
+		background-repeat: no-repeat;
+		background-position: center;
+		@media screen and (min-width: @screen-sm-min) {
+			height: 400px;
+			background-image: url('/images/jumbotron_background.png');
+			padding-top: 64px;
+			margin-bottom: @gutter-xlarge * 2;
+		}
+		h1,.h1 {
+			font-size: 30px;
+			font-weight: 300;
+		}
+		hr {
+			border: 0;
+			border-top: 2px solid #979797;
+			border-style: dotted;
+			max-width: 380px;
+			margin-left: 0;
+			text-align: left;
+			margin: 21px 0;
+		}
+		padding-top: @gutter-large * 2;
+		a.jumbotron-news-link {
+			display: inline-block;
+			font-family: "Roboto Slab";
+			color: @text-color;
+			font-size: 20px;
+			font-weight: 300;
+			margin-bottom: 5px;
+			&,&:hover {
+				text-decoration: none;
+			}
+			&:after {
+				height: 13px;
+				width: 13px;
+			}
+		}
+		a.jumbotron-resource-link {
+			position: relative;
+			margin-left: 20px;
+			&:before {
+				position: absolute;
+				content: " ";
+				background: url(/images/download.svg) no-repeat;
+				background-size: contain;
+				width: 15px;
+				height: 17.92px;
+				display: inline-block;
+				margin-right: 29px;
+				left: -20px;
+			}
+		}
+		a {
+			font-size: 14px;
+			text-decoration: underline;
+			&:after {
+				content: " ";
+				background: url('/images/chevron.svg') no-repeat;
+				background-size: 10px;
+				background-size: contain;
+				width: 11px;
+				height: 11px;
+				display: inline-block;
+				margin-left: 7px;
+			}
+		}
+	}
 	margin-bottom: @gutter-xlarge;
 	h1,
 	.h1 {
 		// font-size: @font-size-base * 2.5;
+		color: @headings-h1-color;
 		margin-top: 0;
 		font-weight: 700;
 		text-transform: inherit;

@@ -63,15 +63,19 @@
 			color: @gray-lighter;
 			margin: @gutter-large;
 		}
-		background-color: @brand-primary; 
+		background-color: @brand-primary;
 		.news-widget-portrait-inner{
+			overflow: auto;
 			padding: @gutter-large;
-			background-color: #fff;
+			background-color: @grid-bg-secondary;
 		}
 	}
 	&.news-widget-landscape{
 		overflow: hidden;
-		background-color: @brand-primary; 
+		background-color: @brand-primary;
+		a, a:hover {
+			text-decoration: none;
+		}
 		&:hover {
 			img{
 				transform: scale(1.1);

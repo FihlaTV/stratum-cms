@@ -2,14 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
-
 require('dotenv').load();
+
+var indexFile = process.env.WEBPACK_INDEX_FILE || 'client/scripts/index.jsx';
 
 module.exports = {
 	devtool: 'cheap-module-eval-source-map',
 	entry: [
 		'webpack-hot-middleware/client',
-		path.resolve(__dirname, 'client/scripts/index.jsx'),
+		path.resolve(__dirname, indexFile),
 	],
 	output: {
 		path: path.join(__dirname, 'dist'),
@@ -42,7 +43,6 @@ module.exports = {
 				test: /\.jsx{0,1}$/,
 				loader: 'babel-loader',
 				exclude: node_modules_dir,
-				include: path.join(__dirname, '/client/'),
 				query: {
 					presets: ['es2015', 'react'],
 					plugins: ['transform-object-rest-spread', 'transform-object-assign'],

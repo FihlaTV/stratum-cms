@@ -1,0 +1,17 @@
+.breadcrumb {
+	font-size: 12px;
+	border-radius: 0;
+	&, a {
+		color: @breadcrumb-text-color;
+	}
+	a {
+		border-bottom: 1px dotted lighten(@breadcrumb-text-color, 20%);
+		&, &:hover {
+			text-decoration: none;
+		}
+		&:hover {
+			color: darken(@breadcrumb-text-color, 20%);
+			border-bottom-color: @breadcrumb-text-color;
+		}
+	}
+}

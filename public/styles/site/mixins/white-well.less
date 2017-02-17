@@ -1,9 +1,9 @@
 .base-shadow(){
-	.box-shadow(@shadow: 0 1px fadeout(#000, 92%));
+	.box-shadow(@shadow: @base-box-shadow);
 }
 .white-well() {
-	background-color: #fff;
-  	border-radius: 3px;
+	background-color: @grid-bg-primary;
+  	border-radius: @grid-border-radius;
   	.base-shadow();
 }
 .white-well{

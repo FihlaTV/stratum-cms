@@ -5,16 +5,15 @@
 @headings-font-weight: 400;
 @headings-font-family:    "Roboto Slab";
 @headings-color:          @brand-primary;
+@headings-h1-color:       @headings-color;
+@headings-transform:      uppercase;
+@headings-h1-transform:   @headings-transform;
 @font-size-h1:            floor((@font-size-base * 2)); // ~36px
 @font-size-h2:            floor((@font-size-base * 1.6)); // ~30px
 @font-size-h3:            ceil((@font-size-base * 1.15)); // ~24px
 @font-size-h4:            ceil((@font-size-base)); // ~18px
 @font-size-h5:            ceil((@font-size-base * 0.85)); // ~12px
 @font-size-h6:            ceil((@font-size-base * 0.7)); // ~12px
-h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
-	margin-top: 0;
-	text-transform: uppercase;
-}
 @blockquote-font-size: @font-size-base;
 @font-family-sans-serif:  "open_sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @icon-font-path:          "~bootstrap/fonts/";
@@ -22,7 +21,8 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 
 /* Color variables */
 @brand-primary:                  #286d7d;
-@link-color:         	         #359aa3;
+@brand-secondary:                #9d1975;
+@link-color:                     #359aa3;
 @brand-success:                  #5cb85c; //currently not overridden...
 @brand-info:                     #5bc0de; //currently not overridden...
 @brand-warning:                  #f0ad4e; //currently not overridden...
@@ -51,7 +51,8 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 
 /* Jumbotron */
 @jumbotron-bg:                   lighten(@primary-light, 5%);
-@jumbotron-heading-color:        @brand-primary;
+@jumbotron-wide-bg:              @jumbotron-bg;
+@jumbotron-heading-color:        @headings-color;
 @jumbotron-font-size:            ceil((@font-size-base * 1.25));
 
 /* Navbar */
@@ -61,8 +62,47 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
 @navbar-height: 84px;
 @navbar-default-link-color:      @link-color;
 @navbar-default-link-active-bg:  @primary-light;
+@navbar-collapse-bg:             inherit;
+@side-nav-link-padding:          @nav-link-padding;
 // @navbar-default-link-hover-bg: 		none;
+@navbar-big-border-top:          3px solid @brand-primary;
+@navbar-big-border-top-width-desktop: 4px;
+@navbar-main-bg:                 @gray-lighter;
+@navbar-main-link-bg:            inherit;
+@navbar-main-link-active-bg:     @navbar-default-link-active-bg;
+@navbar-main-border-top:         1px solid darken(@gray-lighter, 10%);
+@navbar-main-link-color:         @navbar-default-link-color;
+@navbar-main-link-active-color:  @navbar-default-link-active-color;
+@navbar-main-link-hover-color:   @navbar-default-link-hover-color;
+@navbar-main-link-hover-bg:      @navbar-main-bg;
+@navbar-main-font-family:        @font-family-sans-serif;
+@navbar-main-font-weight:        @headings-font-weight;
+@navbar-main-font-size:          @font-size-base;
+@navbar-main-text-transform:     none;
+@nav-font-family: @font-family-sans-serif;
+
 @border-radius-main: 3px;
 
 //** Point at which the navbar becomes uncollapsed.
 @grid-float-breakpoint:     @screen-md-min;
+
+/* Grid */
+// Width of the shadow on grid, set @base-box-shadow to none to disable shadows.
+@base-box-shadow-width: 1px;
+@base-box-shadow: 0 @base-box-shadow-width fadeout(#000, 92%);
+@grid-bg-primary: #ffffff;
+@grid-bg-secondary: @grid-bg-primary;
+@grid-border-radius: 3px;
+
+/* Defines the background color on page content */
+@base-page-bg-color: @grid-bg-primary;
+@base-page-padding-mobile: @gutter-large;
+@base-page-padding-desktop: floor(@gutter-large*1.6) @gutter-large*2 @gutter-large*2 @gutter-large*2;
+
+/* Breadcrumbs */
+@breadcrumb-padding-horizontal: 0px;
+@breadcrumb-padding-vertical: 0px;
+@breadcrumb-bg: inherit;
+@breadcrumb-separator: '>';
+@breadcrumb-text-color: #767676;
+@breadcrumb-active-color: @breadcrumb-text-color;

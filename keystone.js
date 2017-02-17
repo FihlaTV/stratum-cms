@@ -24,6 +24,7 @@ keystone.init({
 	'name': process.env.BRAND || 'Stratum',
 	'brand': process.env.BRAND || 'Stratum',
 	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(),
+	'title name': process.env.CLIENT_TITLE || '',
 	'static': ['override', path.join(root, 'public')],
 	'favicon': path.join(root, 'public/favicon.ico'),
 	'views': path.join(root, 'templates/views'),
@@ -59,6 +60,7 @@ keystone.init({
 	'wysiwyg cloudinary images': true,
 	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),
 	'ga property front': process.env.GA_PROPERTY_FRONT,
+	'react spa': process.env.REACT_SPA === 'true',
 
 	'register id': process.env.CLIENT_REGISTER_ID,
 	// Redirect to regular page if whole site is access restricted

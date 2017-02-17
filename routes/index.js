@@ -82,10 +82,29 @@ exports = module.exports = function (app) {
 	app.all('/api/authentication/login', routes.api['stratum-login']);
 	app.all('/api/authentication/context', routes.api['stratum-login']);
 	app.all('/api/sub-page-count', routes.api['sub-page-count']);
+	app.get('/api/news', routes.api.news);
+	app.get('/api/news/:newsItem/', routes.api.newsItem);
+	app.get('/api/questions', routes.api.faq);
+	app.get('/api/questions/category/:questionCategory', routes.api.faq);
 
 	// Allow cross domain calls for messages
 	app.get('/api/messages', keystone.middleware.cors);
 	app.get('/api/messages', routes.api.messages);
+
+	// Menu
+	app.get('/api/menu', routes.api.menu);
+
+	// Page
+	app.get('/api/pages/:id', routes.api.page);
+
+	// Widget
+	app.get('/api/widgets/:id', routes.api.widget);
+
+	// Start Page
+	app.get('/api/start-page', routes.api['start-page']);
+
+	// Register information
+	app.get('/api/register-information', routes.api['register-information']);
 
 	// API calls for refreshing metadata
 	app.all('/api/refresh/stratum-widgets', routes.api['stratum-widgets']);
@@ -97,19 +116,25 @@ exports = module.exports = function (app) {
 		app.get('/*', middleware.requireUser);
 	}
 
-	// Views
-	app.get('/', routes.views.index);
-
-	app.get('/nyheter', routes.views.news);
-	app.get('/nyheter/:newsitem/', routes.views.newsitem);
-	app.get('/registrering', routes.views.registration);
-	app.get('/faq', routes.contentTypes.faq);
-	// app.get('/kontakt', routes.views.contact);
 
 	// Logout
 	app.get('/logout', routes.views.logout);
 
-	// Views for dynamic routes
-	app.get('/:menublock/', routes.views.menublock);
-	app.get('*/p/:shortid', routes.views.page);
+	// Determine if React SPA should be enabled
+	if (keystone.get('react spa')) {
+		app.get('/*', routes.views.react);
+	} else {
+		// Views
+		app.get('/', routes.views.index);
+
+		app.get('/nyheter', routes.views.news);
+		app.get('/nyheter/:newsitem/', routes.views.newsitem);
+		app.get('/registrering', routes.views.registration);
+		app.get('/faq', routes.contentTypes.faq);
+		// app.get('/kontakt', routes.views.contact);
+
+		// Views for dynamic routes
+		app.get('/:menublock/', routes.views.menublock);
+		app.get('*/p/:shortid', routes.views.page);
+	}
 };

@@ -37,6 +37,7 @@ exports.initLocals = function (req, res, next) {
 	locals.hasLogin = keystone.get('has login');
 	locals.registerId = keystone.get('register id');
 	locals.gaProperty = keystone.get('ga property front');
+	locals.titleName = keystone.get('title name');
 	locals.env = keystone.get('env');
 	locals.registerLoggedIn = false;
 	if (req.session && req.session.context && req.session.context.ContextID) {

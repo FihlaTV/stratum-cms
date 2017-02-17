@@ -6,6 +6,12 @@ var	Types = keystone.Field.Types;
  * ==========
  */
 
+var informationBlurbTypes = exports.informationBlurbTypes = {
+	NEWS_ITEM: 'newsItem',
+	NEWS_ROLL: 'newsRoll',
+	IMAGE: 'image',
+};
+
 var StartPage = new keystone.List('StartPage', {
 	nocreate: true,
 	nodelete: true,
@@ -26,6 +32,11 @@ StartPage.add({
 			hiddenButtons: 'H1,H2,H3,H4,H5,H6,Code,Quote,Image',
 		},
 	},
+	internalLinks: {
+		type: Types.Relationship,
+		ref: 'InternalLink',
+		many: true,
+	},
 },
 	'Jumbotron', {
 		jumbotron: {
@@ -33,6 +44,21 @@ StartPage.add({
 				label: 'Display the Jumbotron',
 				type: Boolean,
 				default: true,
+			},
+			type: {
+				type: Types.Select,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+				},
+				emptyOption: false,
+				default: 'default',
+				options: [{
+					value: 'default',
+					label: 'Default jumbotron with title, introduction and widgets',
+				}, {
+					value: 'wide',
+					label: 'Wide jumbotron with link to news item and two widgets',
+				}],
 			},
 			header: {
 				type: String,
@@ -47,6 +73,40 @@ StartPage.add({
 				},
 				dependsOn: {
 					'jumbotron.isVisible': true,
+					'jumbotron.type': 'default',
+				},
+			},
+			newsItem: {
+				type: Types.Relationship,
+				ref: 'NewsItem',
+				many: false,
+				filters: { state: 'published' },
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			newsLinkText: {
+				type: String,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			resource: {
+				type: Types.Relationship,
+				ref: 'Resource',
+				many: false,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
+				},
+			},
+			resourceLinkText: {
+				type: String,
+				dependsOn: {
+					'jumbotron.isVisible': true,
+					'jumbotron.type': 'wide',
 				},
 			},
 		},
@@ -62,13 +122,13 @@ StartPage.add({
 					+ '\n- **News Roll**: Displays the 3 latest news items in a compressed format',
 				// '\n- **Meeting**: Select important meetings which should be shown',
 				options: [{
-					value: 'image',
+					value: informationBlurbTypes.IMAGE,
 					label: 'Image',
 				}, {
-					value: 'newsRoll',
+					value: informationBlurbTypes.NEWS_ROLL,
 					label: 'News Roll',
 				}, {
-					value: 'newsItem',
+					value: informationBlurbTypes.NEWS_ITEM,
 					label: 'News Item',
 				// }, {
 				// 	value: 'meeting',
@@ -81,7 +141,7 @@ StartPage.add({
 				many: false,
 				filters: { state: 'published' },
 				dependsOn: {
-					'informationBlurb.type': 'newsItem',
+					'informationBlurb.type': informationBlurbTypes.NEWS_ITEM,
 				},
 				note: 'Select which news item that should be shown on the start page. If no news item is selected '
 					+ 'the latest available will be selected',
@@ -92,7 +152,7 @@ StartPage.add({
 				default: 'smallImage',
 				emptyOption: false,
 				dependsOn: {
-					'informationBlurb.type': 'newsItem',
+					'informationBlurb.type': informationBlurbTypes.NEWS_ITEM,
 				},
 			},
 			image: {
@@ -100,7 +160,7 @@ StartPage.add({
 				type: Types.CloudinaryImage,
 				autoCleanup: true,
 				dependsOn: {
-					'informationBlurb.type': 'image',
+					'informationBlurb.type': informationBlurbTypes.IMAGE,
 				},
 			},
 			meeting: {

@@ -11,12 +11,54 @@
 			margin-top: 0px;
 		}
 	}
-	&.nav-page{
+	&.nav-page, &.nav-page-new {
 		margin-bottom: @gutter-xlarge;
-		overflow: hidden;
-		.white-well();
+		font-family: @nav-font-family;
 		> li {
 			> a {
+				border-radius: 0;
+			}
+		}
+		> h2 {
+			margin: 0;
+			padding: @side-nav-link-padding;
+		}
+	}
+	&.nav-page {
+		overflow: hidden;
+		.white-well();
+		.nav-page-second{
+			> li {
+				> a {
+					border-left-width: 5px;
+					border-left-style: solid;
+				}
+				&.active {
+					> a {
+						border-left-color: @link-color;
+					}
+				}
+			}
+		}
+	}
+	&.nav-page-new {
+		border: 0 dotted @gray-light;
+		border-top-width: 2px;
+		border-bottom-width: 2px;
+		margin-bottom: @gutter*4;
+	}
+	&.nav-page-new, &.nav-page-new .nav-page-second {
+		> li {
+			> a {
+				border-top: 2px dotted @gray-light;
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large;
+			}
+		}
+	}
+	&.nav-page-new .nav-page-second {
+		> li {
+			> a {
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large * 2;
 				border-radius: 0;
 			}
 		}
@@ -24,21 +66,14 @@
 	&.nav-page-second{
 		> li {
 			> a {
+				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large;
 				border-radius: 0;
-				padding-left: extract(@nav-link-padding, 1) + @gutter-large;
-				border-left-width: 5px;
-				border-left-style: solid;
-			}
-			&.active { 
-				> a {
-					border-left-color: @link-color;	
-				}
 			}
 		}
 	}
 	li.has-sub-pages{
 		> a {
-			padding-right: extract(@nav-link-padding, 2) + 10px;
+			padding-right: extract(@side-nav-link-padding, 2) + 10px;
 		}
 		> a:before{
 			.fa-icon();
@@ -46,7 +81,7 @@
 			content: @fa-var-chevron-right;
 			color: @link-color;
 			top: 50%;
-			right: extract(@nav-link-padding, 2);
+			right: extract(@side-nav-link-padding, 2);
 			transform: translateY(-50%);
 		}
 		&.expanded{
@@ -54,7 +89,7 @@
 				content: @fa-var-chevron-down;
 			}
 			&.active > a:before{
-		        color: @nav-pills-active-link-hover-color;	
+		        color: @nav-pills-active-link-hover-color;
 			}
 		}
 		&:hover{

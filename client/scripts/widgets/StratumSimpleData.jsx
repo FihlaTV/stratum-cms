@@ -63,7 +63,7 @@ class StratumSimpleData extends Component {
 	render () {
 		if (this.state.loading) {
 			return (
-				<Spinner/>
+				<Spinner style={{ margin: '10px auto' }}/>
 			);
 		} else if (this.state.error) {
 			return (
@@ -72,7 +72,7 @@ class StratumSimpleData extends Component {
 		}
 		return (
 			<div>
-				<span style={this.props.unstyled ? {} : style} className={this.props.indicatorClass}>{this.state.data}</span>
+				<span style={this.props.unstyled ? {} : style} className={this.props.className}>{this.state.data}</span>
 				{this.props.children}
 			</div>
 		);
@@ -80,12 +80,11 @@ class StratumSimpleData extends Component {
 }
 
 StratumSimpleData.defaultProps = {
-	indicatorClass: 'stratum-widget-indicator',
+	className: 'stratum-widget-indicator',
 };
 
 StratumSimpleData.propTypes = {
 	format: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-	indicatorClass: PropTypes.string,
 	onLoadComplete: PropTypes.func,
 	onStart: PropTypes.func,
 	url: PropTypes.string.isRequired,
