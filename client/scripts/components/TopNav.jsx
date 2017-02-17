@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import Spinner from './Spinner';
 import User from './User';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
 const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
 	const className = 'nav-button-text registration-link';
 	if (disabled) {
 		return <a className={className} disabled {...props}>{children}</a>;
 	}
-	if (reactRouter) {
-		return <Link to="/registrering" className={className} {...props}>{children}</Link>;
-	}
+	// if (reactRouter) {
+	// 	return <Link to="/registrering" className={className} {...props}>{children}</Link>;
+	// }
 	return <a href="/registrering" className={className} {...props}>{children}</a>;
 };
 
