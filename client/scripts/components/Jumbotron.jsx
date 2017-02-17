@@ -22,7 +22,7 @@ const WideJumbotron = ({ header, newsItem, resource, widgets }) => (
 const RegularJumbotron = ({ header, widgets, description }) => (
 	<div>
 		<h1>{header}</h1>
-		{description && <div className="lead" dangerouslySetInnerHTML={{ __html: description.html }}/>}
+		{description && <div className="jumbotron-description" dangerouslySetInnerHTML={{ __html: description.html }}/>}
 		<Row>
 			{widgets.map((widget) =>
 				<StartPageWidget key={widget.slug} {...widget} wide={widgets.length < 4}/>

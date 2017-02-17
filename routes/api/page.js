@@ -40,7 +40,7 @@ exports = module.exports = function (req, res) {
 			} else if (context.widget.type === 'stratum') {
 				keystone.list('StratumWidget').model
 					.findOne()
-					.select('pageId slug widgetSlug')
+					.select('pageId slug widgetSlug queryString')
 					.where('_id', context.widget.stratumWidget)
 					.where('removed', false)
 					.exec(next);
@@ -110,6 +110,7 @@ exports = module.exports = function (req, res) {
 			data.widget.size = context.widget.size;
 			data.widget.description = context.widget.description;
 			data.widget.advancedSettings = context.widget.advancedSettings;
+			data.widget.queryString = context.widget.queryString;
 			data.widget.key = context.widget.key;
 			delete data.widget._id;
 		}

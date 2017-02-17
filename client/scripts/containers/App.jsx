@@ -44,6 +44,7 @@ class App extends Component {
 			contexts,
 			logout,
 			contextIsVisible,
+			reactRouter,
 		} = this.props;
 		return (
 			<div>
@@ -56,6 +57,7 @@ class App extends Component {
 					onUserHover={(hover) => setShrinkUnitName(!hover)}
 					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
+					reactRouter={reactRouter}
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>

@@ -19,7 +19,7 @@ const InternalLink = ({
 	<div className="internal-link">
 		<h2>{title}</h2>
 		{icon && <img src={icon.url}/>}
-		<p>{description}&nbsp;
+		<p>{description}<br/>
 			<Link to={link}>
 				{linkText}
 			</Link>

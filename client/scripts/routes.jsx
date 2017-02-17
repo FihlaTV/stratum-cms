@@ -7,6 +7,7 @@ import FAQ from './containers/FAQ';
 import { Route, IndexRoute } from 'react-router';
 import Page from './containers/Page';
 import Index from './containers/Index';
+import Registration from './containers/Registration';
 
 
 export default (
@@ -17,6 +18,7 @@ export default (
 		</Route>
 		<Route path="faq" component={FAQ} />
 		<Route path="404" component={ErrorPage} />
+		<Route path="registrering" component={Registration} />
 		<Route path=":menu" component={Page}>
 			<Route path=":page(/:subpage)/p/:pageId" component={Page} />
 		</Route>

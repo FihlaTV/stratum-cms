@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { clearPage } from '../actions/page';
-import Spinner from '../components/Spinner';
+// import Spinner from '../components/Spinner';
 import { Col, Row } from 'react-bootstrap';
 import PrintButton from '../components/PrintButton';
 import DockedImages from '../components/DockedImages';
@@ -12,6 +12,7 @@ import SubMenu from '../components/SubMenu';
 import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
 import WidgetWrapper from '../components/WidgetWrapper';
+import StratumWidget from '../components/StratumWidget';
 
 const SideArea = ({
 	title,
@@ -23,18 +24,25 @@ const SideArea = ({
 	</div>
 );
 
+function queryStringToObject (queryString = '') {
+	const replacedQuery = queryString.replace(/&/g, '","').replace(/=/g, '":"');
+	return replacedQuery ? JSON.parse(`{"${replacedQuery}"}`, (key, value) => key === '' ? value : decodeURIComponent(value)) : {};
+}
+
 const WidgetContainer = ({
 	widget,
+	hideMetadata,
+	...props,
 }) => {
 	if (!widget) {
 		return null;
 	}
-	const { title, name, description, ...widgetProps } = widget;
+	const { title, name, description, type, queryString, widgetSlug, key, ...widgetProps } = widget;
 	return (
-		<div className="side-area">
-			<h2>{title}</h2>
-			<p>{description}</p>
-			<WidgetWrapper id={name} {...widgetProps}/>
+		<div {...props}>
+			{!hideMetadata && <h2>{title}</h2>}
+			{!hideMetadata && <p>{description}</p>}
+			{type === 'keystone' ? <WidgetWrapper id={name} {...widgetProps}/> : <StratumWidget id={key} widget={widgetSlug} query={queryStringToObject(queryString)} />}
 		</div>
 	);
 };
@@ -42,14 +50,15 @@ const WidgetContainer = ({
 const PageContainer = ({
 	loading,
 	children,
+	layout,
 }) => (
-	<article className="base-page">
-		{loading ? <Spinner /> : children}
+	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}`}>
+		{loading ? null : children}
 	</article>
 );
 
 class Page extends Component {
-	componentDidMount () {
+	componentWillMount () {
 		const { dispatch, params, menuItems } = this.props;
 		const { pageId, menu } = params;
 		if (pageId) {
@@ -170,6 +179,7 @@ class Page extends Component {
 						{lead && <p className="lead">
 							{lead}
 						</p>}
+						{widget && widget.size === 'large' && <WidgetContainer widget={widget} className="stratum-widget stratum-widget-large" hideMetadata/>}
 						<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
 						{displayPrintButton && <PrintButton/>}
 						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
@@ -178,7 +188,7 @@ class Page extends Component {
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} displayHeader={isModernTheme} inContainer={!isModernTheme} />}
-					{widget && <WidgetContainer widget={widget}/>}
+					{widget && widget.size !== 'large' && <WidgetContainer widget={widget} className="side-area stratum-widget stratum-widget-small" />}
 					{sideArea && <SideArea {...sideArea} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>
