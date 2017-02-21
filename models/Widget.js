@@ -14,6 +14,7 @@ var Widget = new keystone.List('Widget', {
 	autokey: {
 		from: 'name',
 		path: 'key',
+		unique: true,
 	},
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	sortable: true,

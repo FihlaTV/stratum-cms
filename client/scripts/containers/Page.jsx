@@ -37,12 +37,12 @@ const WidgetContainer = ({
 	if (!widget) {
 		return null;
 	}
-	const { title, name, description, type, queryString, widgetSlug, key, ...widgetProps } = widget;
+	const { title, name, description, type, queryString, widgetSlug, advancedSettings, key, ...widgetProps } = widget;
 	return (
 		<div {...props}>
 			{!hideMetadata && <h2>{title}</h2>}
 			{!hideMetadata && <p>{description}</p>}
-			{type === 'keystone' ? <WidgetWrapper id={name} {...widgetProps}/> : <StratumWidget id={key} widget={widgetSlug} query={queryStringToObject(queryString)} />}
+			{type === 'keystone' ? <WidgetWrapper id={name} {...widgetProps}/> : <StratumWidget id={key} target={`sw-${key}`} widget={widgetSlug} query={queryStringToObject(queryString)} advancedSettings={advancedSettings} />}
 		</div>
 	);
 };
@@ -179,7 +179,7 @@ class Page extends Component {
 						{lead && <p className="lead">
 							{lead}
 						</p>}
-						{widget && widget.size === 'large' && <WidgetContainer widget={widget} className="stratum-widget stratum-widget-large" hideMetadata/>}
+						{widget && widget.size === 'large' && <WidgetContainer widget={widget} className="widget widget-large" hideMetadata/>}
 						<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
 						{displayPrintButton && <PrintButton/>}
 						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
@@ -188,7 +188,7 @@ class Page extends Component {
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} displayHeader={isModernTheme} inContainer={!isModernTheme} />}
-					{widget && widget.size !== 'large' && <WidgetContainer widget={widget} className="side-area stratum-widget stratum-widget-small" />}
+					{widget && widget.size !== 'large' && <WidgetContainer widget={widget} className="side-area widget widget-small" />}
 					{sideArea && <SideArea {...sideArea} />}
 					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
 					<ContactPersons contacts={contacts}/>

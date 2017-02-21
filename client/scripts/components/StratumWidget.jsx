@@ -23,22 +23,23 @@ class StratumWidget extends Component {
 	}
 	componentDidMount () {
 		const { target } = this.state;
-		const { widget, query } = this.props;
+		const { widget, query, advancedSettings } = this.props;
 		const queryString = this.formatQuery(query);
 
 		if (typeof window.Stratum !== 'undefined' && widget) {
-			this.startWidget({ target, widget, query });
+			this.startWidget({ target, widget, query, advancedSettings });
 		} else {
+			this.evalAdvancedSettings(advancedSettings);
 			StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
 		}
 	}
-	componentWillReceiveProps ({ widget: nWidget, query: nQuery, target: nTarget, id: nId }) {
+	componentWillReceiveProps ({ widget: nWidget, query: nQuery, target: nTarget, id: nId, advancedSettings }) {
 		const { widget, target, id } = this.props;
 
 		if (widget && nWidget && (nWidget !== widget || nTarget !== target || nId !== id)) {
 			this.componentWillUnmount();
 			this.setState({ loading: true });
-			this.startWidget({ widget: nWidget, query: nQuery, target: this.state.target });
+			this.startWidget({ widget: nWidget, query: nQuery, target: this.state.target, advancedSettings });
 		}
 	}
 	componentWillUnmount () {
@@ -61,7 +62,19 @@ class StratumWidget extends Component {
 			});
 		}
 	}
-	startWidget ({ target, widget, query }) {
+	// TODO: Would be nice to disallow the use of injecting javascript from backend.
+	evalAdvancedSettings (advancedSettings) {
+		if (!advancedSettings) {
+			return;
+		}
+		try {
+			// eslint-disable-next-line no-eval
+			eval(advancedSettings);
+		} catch (err) {
+			console.log('Error loading advanced settings', err);
+		}
+	}
+	startWidget ({ target, widget, query, advancedSettings }) {
 		const queryString = this.formatQuery(query);
 
 		if (widget === REGISTRATIONS_WIDGET_NAME) {
@@ -71,6 +84,7 @@ class StratumWidget extends Component {
 				startRegistrations(target, (success) => this.finishedLoading(success));
 			}
 		} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
+			this.evalAdvancedSettings(advancedSettings);
 			startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
 		}
 	}
@@ -95,6 +109,7 @@ StratumWidget.PropTypes = {
 	target: PropTypes.string,
 	widget: PropTypes.string,
 	query: PropTypes.object,
+	advancedSettings: PropTypes.string,
 };
 
 export default StratumWidget;
