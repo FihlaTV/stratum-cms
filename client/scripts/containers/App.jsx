@@ -69,11 +69,12 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout}
-					onSubmit={(role, unit) => {
-						setContext(role, unit, contexts);
+					onSubmit={(role, unit, forceReload) => {
+						setContext(role, unit, contexts, forceReload);
 					}
 					}
 					onCancel={() => showContextModal(false)}
+					onFirstAccept={() => window.location.reload()}
 				/>
 			</div>
 		);
@@ -94,8 +95,8 @@ function mapDispatchToProps (dispatch) {
 		logout: () => {
 			dispatch(logoutFromStratum());
 		},
-		setContext: (role, unit, contexts) => {
-			dispatch(changeContext(role, unit, contexts));
+		setContext: (role, unit, contexts, forceReload) => {
+			dispatch(changeContext(role, unit, contexts, forceReload));
 		},
 		onTimeleftDismiss: (timeleft) => {
 			dispatch(dismissTimeleft(timeleft));

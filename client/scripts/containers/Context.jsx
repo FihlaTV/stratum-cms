@@ -22,8 +22,10 @@ class Context extends Component {
 			currentRole,
 			currentUnit,
 			onCancel,
+			onFirstAccept,
 			inRole,
 			inUnit,
+			firstTime,
 			requireChange,
 			onSubmit,
 			initial,
@@ -64,11 +66,11 @@ class Context extends Component {
 							disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole}
 							isSyncing={isSyncing}
 							onClick={() => {
-								onSubmit(currentRole, currentUnit);
+								onSubmit(currentRole, currentUnit, firstTime);
 							}}>
 							{requireChange ? 'Acceptera' : 'Byt'}
 						</ContextSyncButton>}
-					{allowAccept && <Button bsStyle="primary" block onClick={onCancel}>Acceptera</Button>}
+					{allowAccept && <Button bsStyle="primary" block onClick={onFirstAccept}>Acceptera</Button>}
 					{!initial && !requireChange && onCancel && <Button block onClick={onCancel}>Avbryt</Button>}
 					<Button
 						block
