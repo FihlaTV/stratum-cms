@@ -70,13 +70,10 @@ function parseResponse (req, res, body, post) {
 
 exports = module.exports = function (req, res) {
 	var referer = req.header('referer');
-	var isDemo = keystone.get('is demo');
 	var protocol;
 	var	stratumServer;
 
-	if (isDemo) {
-		protocol = 'http:';
-	} else if (referer) {
+	if (referer) {
 		protocol = referer.split('/')[0];
 	} else {
 		protocol = req.secure ? 'https:' : 'http:';
