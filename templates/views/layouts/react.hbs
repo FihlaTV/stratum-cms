@@ -22,7 +22,7 @@
 		<![endif]-->
 
 	</head>
-	<body>
+	<body{{#if isDemo}} class="is-demo"{{/if}}>
 		<div id="react-container"></div>
 		{{!-- React scripts --}}
 		{{#ifeq env "development"}}

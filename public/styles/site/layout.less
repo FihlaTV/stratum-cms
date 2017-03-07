@@ -7,6 +7,19 @@ html{
 body{
 	margin-bottom: 100px;
 	.clearfix();
+
+	&.is-demo:before {
+    content: 'DEMO';
+    position: fixed;
+    bottom: 44px;
+    right: -98px;
+    font-size: 67px;
+    background-color: @brand-danger;
+    transform: rotate(-45deg);
+    padding: 0 90px;
+    color: #ffffff;
+    z-index: 1999;
+	}
 }
 .print-button{
 	display: inline-block;

@@ -22,7 +22,7 @@
 		<![endif]-->
 
 	</head>
-	<body>
+	<body{{#if isDemo}} class="is-demo"{{/if}}>
 		<div id="message-container"></div>
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
@@ -137,7 +137,7 @@
         {{#if stratumWidget}}
 		{{#if data.widget.advancedSettings}}
 		<script type="text/javascript">
-			/**  
+			/**
 			 * Advanced widget settings
 			 */
 			{{{data.widget.advancedSettings}}}
