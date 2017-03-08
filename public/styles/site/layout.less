@@ -11,14 +11,16 @@ body{
 	&.is-demo:before {
     content: 'DEMO';
     position: fixed;
-    bottom: 44px;
-    right: -98px;
+    bottom: 43px;
+    right: -105px;
     font-size: 67px;
-    background-color: @brand-danger;
+		font-weight: 500;
+    background-color: @alert-danger-text;
     transform: rotate(-45deg);
     padding: 0 90px;
-    color: #ffffff;
+    color: @alert-danger-bg;
     z-index: 1999;
+		font-weight: 500;
 	}
 }
 .print-button{
