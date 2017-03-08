@@ -32,8 +32,10 @@ User.schema.virtual('canAccessProtected').get(function () {
 /**
  * Relationships
  */
-
-User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
+// Since the message server is light weight it contains no models of NewsItems..
+if (!keystone.get('is message server')) {
+	User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
+}
 
 
 /**
