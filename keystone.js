@@ -88,7 +88,11 @@ keystone.set('locals', {
 keystone.set('brand long', process.env.BRAND_LONG || keystone.get('brand'));
 
 keystone.set('cloudinary folders', true);
-keystone.set('cloudinary prefix', keystone.get('brand safe'));
+if (keystone.get('is demo')) {
+	keystone.set('cloudinary prefix', keystone.get('brand safe') + '-demo');
+} else {
+	keystone.set('cloudinary prefix', keystone.get('brand safe'));
+}
 
 if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
 	try {
