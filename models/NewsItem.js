@@ -26,7 +26,7 @@ NewsItem.add({
 			+ 'If the date is in the future, the news item will appear at the following date.',
 	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
-	image: { type: Types.CloudinaryImage, autoCleanup: true },
+	image: { type: Types.CloudinaryImage, autoCleanup: !keystone.get('is demo') },
 	imageDescription: {
 		collapse: true,
 		type: String,

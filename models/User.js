@@ -12,7 +12,7 @@ User.add({
 	name: { type: Types.Name, required: true, index: true },
 	email: { type: Types.Email, initial: true, required: true, index: true },
 	password: { type: Types.Password, initial: true, required: true },
-	image: { type: Types.CloudinaryImage, autoCleanup: true },
+	image: { type: Types.CloudinaryImage, autoCleanup: !keystone.get('is demo') },
 	phone: { type: String },
 	title: { type: String, label: 'Work Title' },
 }, 'Permissions', {
@@ -32,8 +32,10 @@ User.schema.virtual('canAccessProtected').get(function () {
 /**
  * Relationships
  */
-
-User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
+// Since the message server is light weight it contains no models of NewsItems..
+if (!keystone.get('is message server')) {
+	User.relationship({ ref: 'NewsItem', path: 'news', refPath: 'author' });
+}
 
 
 /**

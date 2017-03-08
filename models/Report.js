@@ -18,7 +18,7 @@ Report.add({
 	title: { type: String, required: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	year: { type: Number },
-	pdf: { type: Types.CloudinaryImage, autoCleanup: true },
+	pdf: { type: Types.CloudinaryImage, autoCleanup: !keystone.get('is demo') },
 });
 
 // Report.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';

@@ -158,7 +158,7 @@ StartPage.add({
 			image: {
 				label: 'Image',
 				type: Types.CloudinaryImage,
-				autoCleanup: true,
+				autoCleanup: !keystone.get('is demo'),
 				dependsOn: {
 					'informationBlurb.type': informationBlurbTypes.IMAGE,
 				},

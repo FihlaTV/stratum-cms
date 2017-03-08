@@ -12,7 +12,6 @@ function getErrorHandlingFn (res, msg) {
 
 exports = module.exports = function (req, res, next) {
 	var referer;
-	var isDemo;
 	var protocol;
 	var	stratumUrl;
 	var uri;
@@ -21,11 +20,8 @@ exports = module.exports = function (req, res, next) {
 		return next();
 	}
 	referer = req.header('referer');
-	isDemo = keystone.get('is demo');
 
-	if (isDemo) {
-		protocol = 'http:';
-	} else if (referer) {
+	if (referer) {
 		protocol = referer.split('/')[0];
 	} else {
 		protocol = req.secure ? 'https:' : 'http:';

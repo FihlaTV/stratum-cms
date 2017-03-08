@@ -30,7 +30,7 @@ InternalLink.add({
 	},
 	icon: {
 		type: Types.CloudinaryImage,
-		autoCleanup: true,
+		autoCleanup: !keystone.get('is demo'),
 	},
 });
 
