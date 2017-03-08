@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{{getTitle breadcrumbs brandLong ' · '}}}</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-		
+
 		{{#ifeq env "production"}}
 		<link href="/dist/{{brandSafe}}.styles.css" rel="stylesheet">
 		{{/ifeq}}
@@ -22,7 +22,7 @@
 		<![endif]-->
 
 	</head>
-	<body{{#if isDemo}} class="is-demo"{{/if}}>
+	<body{{#if isDemo}} class="demo"{{/if}}>
 		<div id="message-container"></div>
 		<div id="header"{{#ifeq section 'homex'}} class="header-first"{{/ifeq}}>
 			<div role="navigation" class="navbar navbar-big navbar-default navbar-static-top">
@@ -114,7 +114,7 @@
 			{{#with lastCommit.commit}}
 				<div id="dev-info" class="hidden-xs" style="float: right; text-align: right; margin-bottom: 10px;">
 					<img src="{{author.avatar_url}}&s=40" width="20" height="20" class="img-rounded"> <a target="_blank" href="{{author.html_url}}">{{author.login}}</a> authored {{date commit.author.date locale="en" timeago=true}}<br>
-					branch {{/with}}<a target="_blank" href="{{lastCommit._links.html}}">{{lastCommit.name}}</a>, 
+					branch {{/with}}<a target="_blank" href="{{lastCommit._links.html}}">{{lastCommit.name}}</a>,
 					{{#with lastCommit.commit}}latest commit <a target="_blank" href="{{html_url}}">{{shortenString sha 10}}</a><br>
 				</div>
 			{{/with}}
