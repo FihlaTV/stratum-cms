@@ -9,7 +9,7 @@ var shortid = require('shortid');
 var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'];
 var	EXTRA_IMAGE = {
 	type: Types.CloudinaryImage,
-	autoCleanup: true,
+	autoCleanup: !keystone.get('is demo'),
 	dependsOn: { contentType: 'default' },
 };
 var	EXTRA_IMAGE_CAPTION = {
@@ -108,7 +108,7 @@ BasePage.add({
 	image: {
 		dependsOn: { contentType: 'default' },
 		type: Types.CloudinaryImage,
-		autoCleanup: true,
+		autoCleanup: !keystone.get('is demo'),
 	},
 	imageDescription: {
 		dependsOn: { contentType: 'default' },

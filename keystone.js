@@ -55,7 +55,7 @@ keystone.init({
 	'stratum api key': process.env.STRATUM_API_KEY,
 	'stratum server': process.env.STRATUM_SERVER || 'stratum.registercentrum.se',
 	'is portal': process.env.IS_PORTAL === 'true',
-	'is demo': process.env.IS_DEMO === 'true',
+	'is demo': process.env.CLIENT_IS_DEMO === 'true',
 	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
 	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),
@@ -88,7 +88,11 @@ keystone.set('locals', {
 keystone.set('brand long', process.env.BRAND_LONG || keystone.get('brand'));
 
 keystone.set('cloudinary folders', true);
-keystone.set('cloudinary prefix', keystone.get('brand safe'));
+if (keystone.get('is demo')) {
+	keystone.set('cloudinary prefix', keystone.get('brand safe') + '-demo');
+} else {
+	keystone.set('cloudinary prefix', keystone.get('brand safe'));
+}
 
 if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
 	try {
