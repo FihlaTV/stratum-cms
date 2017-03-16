@@ -14,6 +14,7 @@ var subPageCount = require('./' + path.join(root, 'utils/sub-page-count'));
 var Helpers = require('./' + path.join(root, 'templates/views/helpers'));
 var appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app';
 var pkg = require('./' + path.join(root, 'package.json'));
+var logging = require('./' + path.join(root, 'utils/logging'));
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -68,6 +69,7 @@ keystone.init({
 	'signout redirect': '/',
 	'cors allow origin': true,
 	'default region': 'SE',
+	'logging middleware': logging,
 });
 
 // Load your project's Models
