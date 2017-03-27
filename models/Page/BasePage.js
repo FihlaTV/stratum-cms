@@ -1,31 +1,12 @@
 var keystone = require('keystone');
 var	Types = keystone.Field.Types;
 var shortid = require('shortid');
+var extensions = require('../../utils/config-extensions');
 
 /**
  * Base Page Model
  * ==========
  */
-var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'];
-var	EXTRA_IMAGE = {
-	type: Types.CloudinaryImage,
-	autoCleanup: !keystone.get('is demo'),
-	dependsOn: { contentType: 'default' },
-};
-var	EXTRA_IMAGE_CAPTION = {
-	type: Types.Textarea, collapse: true,
-	dependsOn: { contentType: 'default' },
-};
-
-function extraImages (_names) {
-	var tmp = {};
-	var names = _names || EXTRA_IMAGES_NAMES;
-	names.forEach(function (name) {
-		tmp[name] = EXTRA_IMAGE;
-		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
-	});
-	return tmp;
-}
 
 var BasePage = new keystone.List('BasePage', {
 	sortable: true,
@@ -155,7 +136,7 @@ BasePage.add({
 		many: true,
 		note: 'Add contact persons to this page, shown in the right margin',
 	},
-	extraImage: extraImages(),
+	extraImage: extensions.extraImages(),
 	registerSpecific: {
 		type: Boolean,
 		note: 'If this is check this page will only be visible to logged in users',
@@ -186,20 +167,7 @@ BasePage.schema.virtual('titleForMenu').get(function () {
 	return this.get('menuTitle') || this.get('title');
 });
 
-BasePage.schema.virtual('extraImages').get(function () {
-	var me = this;
-	var extraImages = [];
-	EXTRA_IMAGES_NAMES.forEach(function (name) {
-		var path = me.extraImage;
-		if (path && path[name] && path[name].exists) {
-			extraImages.push({
-				image: path[name],
-				caption: path[name + 'Caption'],
-			});
-		}
-	});
-	return extraImages;
-});
+BasePage.schema.virtual('extraImages').get(extensions.addExtraImages);
 
 BasePage.schema.virtual('directPath').get(function () {
 	return '/' + this.slug + '/p/' + this.shortId;
