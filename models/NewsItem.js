@@ -1,6 +1,6 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
-
+var extensions = require('../utils/config-extensions');
 /**
  * NewsItem Model
  * ==========
@@ -48,6 +48,7 @@ NewsItem.add({
 		many: true,
 		collapse: true,
 	},
+	extraImage: extensions.extraImages(),
 });
 
 /**
@@ -58,5 +59,6 @@ NewsItem.add({
 // 	return !value || value.length <= 300;
 // }, 'Your text cannot be longer than 300 characters. Please try to shorten your text');
 
+NewsItem.schema.virtual('extraImages').get(extensions.addExtraImages);
 NewsItem.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
 NewsItem.register();
