@@ -26,4 +26,3 @@ exports.convertResultsToJSON = function (next) {
 		next(err, resultsObj);
 	};
 };
-

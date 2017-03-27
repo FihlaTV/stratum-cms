@@ -25,7 +25,6 @@ exports = module.exports = function (req, res) {
 				error: err,
 			});
 		}
-
 		var imageSettings = {};
 		if (req.query.height && req.query.width) {
 			imageSettings.width = req.query.width;
@@ -41,9 +40,6 @@ exports = module.exports = function (req, res) {
 			slug: newsItem.slug,
 			content: newsItem.content,
 			imageLayout: newsItem.imageLayout,
-			extraImages: newsItem.extraImages.map(function (image) {
-				return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
-			}),
 		};
 		if (newsItem.image.public_id) {
 			data.image = formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings);

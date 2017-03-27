@@ -53,7 +53,7 @@ class NewsItem extends Component {
 	}
 
 	newsItem () {
-		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [], extraImages = [] } = this.props;
+		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [] } = this.props;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		return (
 			<div className="news-item-full">
@@ -74,9 +74,6 @@ class NewsItem extends Component {
 					</Col>
 					<Col md={4}>{imageLayout === 'portrait' && image && <DockedImages images={[image]} enlargeable wide={false} />}
 					{resources.length > 0 && <ResourceList	resources={resources} inContainer={isModernTheme}/>}
-					</Col>
-					<Col md={4}>
-						<DockedImages imageSMCols={12} imageMDCols={12} images={extraImages} enlargeable/>
 					</Col>
 				</Row>
 			</div>
