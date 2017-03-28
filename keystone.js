@@ -15,6 +15,7 @@ var Helpers = require('./' + path.join(root, 'templates/views/helpers'));
 var appName = process.env.ROOT ? __dirname.split(path.sep).pop() : 'app';
 var pkg = require('./' + path.join(root, 'package.json'));
 var logging = require('./' + path.join(root, 'utils/logging'));
+var logger = logging.logger;
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -69,7 +70,8 @@ keystone.init({
 	'signout redirect': '/',
 	'cors allow origin': true,
 	'default region': 'SE',
-	'logging middleware': logging,
+	'logger': false,
+	'logging middleware': logging.requestLogger,
 });
 
 // Load your project's Models
@@ -134,7 +136,7 @@ if (keystone.get('is portal')) {
 keystone.set('nav', nav);
 
 // Output environment variable
-console.log('Currently running in ' + keystone.get('env'));
+logger.info('Currently running in ' + keystone.get('env'));
 
 keystone.post('updates', function () {
 	stratum.loadWidgets();
@@ -148,5 +150,8 @@ keystone.post('updates', function () {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-
-keystone.start();
+keystone.start({
+	onHttpServerCreated: function () {
+		logger.info('KeystoneJS started, %s is ready on port %s', keystone.get('port'), process.env.PORT);
+	},
+});
