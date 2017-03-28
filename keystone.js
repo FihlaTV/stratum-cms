@@ -151,7 +151,7 @@ keystone.post('updates', function () {
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start({
-	onHttpServerCreated: function () {
-		logger.info('KeystoneJS started, %s is ready on port %s', keystone.get('port'), process.env.PORT);
+	onStart: function () {
+		logger.info('KeystoneJS started, %s is ready on port %s', keystone.get('name'), keystone.get('port') || 3000);
 	},
 });
