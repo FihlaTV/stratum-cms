@@ -117,7 +117,7 @@ function mapStateToProps (state) {
 		contexts: state.login.contexts,
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
-		showTimeleft: state.login.showTimeleft,
+		showTimeleft: state.login.showTimeleft || window.location.href.indexOf('loggedout') > 0,
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
