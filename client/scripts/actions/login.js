@@ -411,10 +411,7 @@ function setTimeleft (timeleft, show) {
 
 export function dismissTimeleft (timeleft) {
 	return dispatch => {
-		if (window.location.href.indexOf('loggedout') && (!timeleft || timeleft <= 0)) {
-			// dispatch(setTimeleft(timeleft, false));
-			window.location.replace('\?');
-		} else if (timeleft > 0) {
+		if (timeleft > 0) {
 			dispatch(loginToStratum(true));
 		}
 		else {
