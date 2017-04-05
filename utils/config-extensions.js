@@ -10,17 +10,21 @@ var EXTRA_IMAGE = {
 
 var EXTRA_IMAGE_CAPTION = {
 	type: Types.Textarea, collapse: true,
-	//dependsOn: { contentType: 'default' },
 };
 
-exports.extraImages = function (dependency, _names) {
+exports.extraImages = function (extraConfigs, _names) {
 	var tmp = {};
 	var names = _names || EXTRA_IMAGES_NAMES;
 	names.forEach(function (name) {
 		tmp[name] = EXTRA_IMAGE;
-		if (dependency) tmp[name].dependsOn = dependency.dependsOn;
 		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
-		if (dependency) tmp[name + 'Caption'].dependsOn = dependency.dependsOn;
+
+		if (extraConfigs) {
+			for (var attrname in extraConfigs) {
+				tmp[name][attrname] = extraConfigs[attrname];
+				tmp[name + 'Caption'][attrname] = extraConfigs[attrname];
+			}
+		}
 	});
 	return tmp;
 };
