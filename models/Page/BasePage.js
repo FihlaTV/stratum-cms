@@ -136,7 +136,7 @@ BasePage.add({
 		many: true,
 		note: 'Add contact persons to this page, shown in the right margin',
 	},
-	extraImage: extensions.extraImages(),
+	extraImage: extensions.extraImages({ dependsOn: { contentType: 'default' } }),
 	registerSpecific: {
 		type: Boolean,
 		note: 'If this is check this page will only be visible to logged in users',

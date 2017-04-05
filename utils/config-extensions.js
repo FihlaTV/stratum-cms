@@ -6,20 +6,21 @@ var EXTRA_IMAGES_NAMES = ['one', 'two', 'three'];
 var EXTRA_IMAGE = {
 	type: Types.CloudinaryImage,
 	autoCleanup: !keystone.get('is demo'),
-	dependsOn: { contentType: 'default' },
 };
 
 var EXTRA_IMAGE_CAPTION = {
 	type: Types.Textarea, collapse: true,
-	dependsOn: { contentType: 'default' },
+	//dependsOn: { contentType: 'default' },
 };
 
-exports.extraImages = function (_names) {
+exports.extraImages = function (dependency, _names) {
 	var tmp = {};
 	var names = _names || EXTRA_IMAGES_NAMES;
 	names.forEach(function (name) {
 		tmp[name] = EXTRA_IMAGE;
+		if (dependency) tmp[name].dependsOn = dependency.dependsOn;
 		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
+		if (dependency) tmp[name + 'Caption'].dependsOn = dependency.dependsOn;
 	});
 	return tmp;
 };
