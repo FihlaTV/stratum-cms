@@ -414,6 +414,9 @@ export function dismissTimeleft (timeleft) {
 		if (timeleft > 0) {
 			dispatch(loginToStratum(true));
 		}
+		else if (!timeleft) {
+			window.location.replace('\?');
+		}
 		else {
 			// Force logout if time has run out
 			dispatch(setTimeleft(timeleft, false));
@@ -450,7 +453,9 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
-					if (timeleft <= 0) window.location.replace('\?loggedout');  // browserHistory.push('/');
+					if (timeleft <= 0) {
+						window.location.replace('\?loggedout');
+					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {
 						setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
