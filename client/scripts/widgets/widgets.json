@@ -51,6 +51,10 @@
     "id": "HNSVSat",
     "description": "Upplever god nytta av hörselvårdens insatser."
   },
+  "HNSVBaseRegistrations": {
+    "id": "HNSVBaseRegistrations",
+    "description": "Antal registrerade Baseline-enkäter totalt i registret."
+  },
   "RORImproved": {
     "id": "RORImproved",
     "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"

@@ -1,7 +1,7 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const HNSVBaseRegistraions = ({
+const HNSVBaseRegistrations = ({
 	description,
 }) => {
 	return (
@@ -13,6 +13,6 @@ const HNSVBaseRegistraions = ({
 	);
 };
 
-HNSVBaseRegistraions.defaultProps = {};
+HNSVBaseRegistrations.defaultProps = {};
 
-export default HNSVBaseRegistraions;
+export default HNSVBaseRegistrations;
