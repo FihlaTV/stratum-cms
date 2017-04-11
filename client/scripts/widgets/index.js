@@ -1,5 +1,9 @@
 import BOAArtrosSkola from './BOAArtrosSkola';
 import BOAAndel from './BOAAndel';
+import LVRAndelKOL from './LVRAndelKOL';
+import LVRAndelKOLSV from './LVRAndelKOLSV';
+import LVRAndelAstma from './LVRAndelAstma';
+import LVRAndelAstma18 from './LVRAndelAstma18';
 import HNSVSign from './HNSVSign';
 import HNSVPirs from './HNSVPirs';
 import HNSBChildrenNew from './HNSBChildrenNew';
@@ -18,6 +22,10 @@ import FONOPatientenket from './FONOPatientenket';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
+export { LVRAndelKOL };
+export { LVRAndelKOLSV };
+export { LVRAndelAstma };
+export { LVRAndelAstma18 };
 export { HNSVSign };
 export { HNSVPirs };
 export { HNSBChildrenNew };
@@ -37,6 +45,10 @@ export { FONOPatientenket };
 export default {
 	BOAArtrosSkola,
 	BOAAndel,
+	LVRAndelKOL,
+	LVRAndelKOLSV,
+	LVRAndelAstma,
+	LVRAndelAstma18,
 	HNSVSign,
 	HNSVPirs,
 	HNSBChildrenNew,
