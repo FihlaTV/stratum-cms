@@ -15,6 +15,7 @@ import SEPOps from './SEPOps';
 import HNSVRehabTotal from './HNSVRehabTotal';
 import HNSVCI from './HNSVCI';
 import HNSVSat from './HNSVSat';
+import HNSVBaseRegistrations from './HNSVBaseRegistrations';
 import RORImproved from './RORImproved';
 import RORVentetid from './RORVentetid';
 import FONOForbettring from './FONOForbettring';
@@ -37,6 +38,7 @@ export { SEPOps };
 export { HNSVRehabTotal };
 export { HNSVCI };
 export { HNSVSat };
+export { HNSVBaseRegistrations };
 export { RORImproved };
 export { RORVentetid };
 export { FONOForbettring };
@@ -60,6 +62,7 @@ export default {
 	HNSVRehabTotal,
 	HNSVCI,
 	HNSVSat,
+	HNSVBaseRegistrations,
 	RORImproved,
 	RORVentetid,
 	FONOForbettring,

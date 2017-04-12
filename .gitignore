@@ -48,5 +48,6 @@ registers/
 
 # VS Code specific
 .vscode
+.sencha
 
 last_commit.json
