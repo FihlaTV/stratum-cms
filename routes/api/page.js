@@ -16,7 +16,7 @@ exports = module.exports = function (req, res) {
 				.where('shortId', filters.shortId)
 				.where('state', 'published')
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
-				.populate('contacts', 'name description email phone image')
+				.populate('contacts', 'name note title email phone image')
 				.populate('resources')
 				.populate('widget')
 				.populate('page', 'shortId title slug')
