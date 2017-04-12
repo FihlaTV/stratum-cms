@@ -21,8 +21,10 @@ exports.extraImages = function (extraConfigs, _names) {
 
 		if (extraConfigs) {
 			for (var attrname in extraConfigs) {
-				tmp[name][attrname] = extraConfigs[attrname];
-				tmp[name + 'Caption'][attrname] = extraConfigs[attrname];
+				if (Object.prototype.hasOwnProperty.call(extraConfigs, attrname)) {
+					tmp[name][attrname] = extraConfigs[attrname];
+					tmp[name + 'Caption'][attrname] = extraConfigs[attrname];
+				}
 			}
 		}
 	});
