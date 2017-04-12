@@ -3,6 +3,22 @@
 		"id": "BOAArtrosSkola",
 		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
 	},
+	"LVRAndelKOL": {
+		"id": "LVRAndelKOL",
+		"description": "Andel registrerade patienter med diagnosen KOL i öppenvård som röker."
+	},
+	"LVRAndelKOLSV": {
+		"id": "LVRAndelKOLSV",
+		"description": "Andel registrerade patienter med diagnosen KOL i inneliggande som röker."
+	},
+	"LVRAndelAstma": {
+		"id": "LVRAndelAstma",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård."
+	},
+	"LVRAndelAstma18": {
+		"id": "LVRAndelAstma18",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård under 18."
+	},
 	"BOAAndel": {
 		"id": "BOAAndel",
 		"description": "En beskrivning som förklarar den här widgeten..."
