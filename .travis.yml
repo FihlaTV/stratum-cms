@@ -1,6 +1,9 @@
 language: node_js
+os:
+- linux
+- windows
 node_js:
-- '0.12'
+- '6'
 script:
 - npm run lint && npm test
 notifications:
