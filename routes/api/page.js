@@ -20,7 +20,11 @@ exports = module.exports = function (req, res) {
 				.populate('resources')
 				.populate('widget')
 				.populate('page', 'shortId title slug')
-				.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories sideArea')
+				.select([
+					'shortId', 'title', 'subtitle', 'slug', 'pageType', 'widget', 'resourcePlacement',
+					'lead', 'content.html', 'layout', 'contentType', 'displayPrintButton', 'extraImage',
+					'contacts', 'resources', 'page', 'image', 'imageDescription', 'questionCategories', 'sideArea',
+				].join(' '))
 				.exec(function (err, page) {
 					context.widget = page && page.widget;
 					return next(err, page);
