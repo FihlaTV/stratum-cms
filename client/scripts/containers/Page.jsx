@@ -13,6 +13,8 @@ import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
 import WidgetWrapper from '../components/WidgetWrapper';
 import StratumWidget from '../components/StratumWidget';
+import { showScrollButton } from '../actions/scrollbutton';
+import ScrollButton from '../components/scrollbutton';
 
 const SideArea = ({
 	title,
@@ -66,6 +68,9 @@ class Page extends Component {
 		} else if (menu && menuItems.length > 0) {
 			this.redirectFromMenu(menu, menuItems);
 		}
+		window.addEventListener('scroll', () => {
+			this.toggleScrollButton();
+		});
 	}
 	componentWillReceiveProps (nextProps) {
 		const { dispatch, params, page, menuItems } = this.props;
@@ -89,6 +94,9 @@ class Page extends Component {
 		const { dispatch } = this.props;
 		dispatch(clearBreadcrumbs());
 		dispatch(clearPage());
+		window.removeEventListener('scroll', () => {
+			this.toggleScrollButton();
+		});
 	}
 	redirectFromMenu (menuSlug, menuItems) {
 		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
@@ -142,11 +150,22 @@ class Page extends Component {
 		}
 		return undefined;
 	}
+	toggleScrollButton () {
+		const { dispatch } = this.props;
+		if (window.scrollY === 0) {
+			dispatch(showScrollButton('hidden'));
+		}
+		else {
+			dispatch(showScrollButton('visible'));
+		}
+
+	}
 	render () {
 		const {
 			page = {},
 			menuItems = [],
 			loading = true,
+			show = 'hidden',
 		} = this.props;
 		const {
 			title,
@@ -165,6 +184,7 @@ class Page extends Component {
 			widget,
 		} = page;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
+
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
@@ -194,6 +214,7 @@ class Page extends Component {
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
 					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
+					<ScrollButton show={show} />
 				</Col>
 			</Row>
 		);
@@ -204,6 +225,7 @@ const mapStateToProps = (state) => {
 		page: state.page.currentPage,
 		loading: state.page.isLoading,
 		menuItems: state.menu.items,
+		show: state.scrollbutton.show,
 	};
 };
 
