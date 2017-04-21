@@ -18,9 +18,9 @@ var Resource = new keystone.List('Resource', {
 
 var USE_AZURE = !!(process.env.AZURE_STORAGE_ACCESS_KEY && process.env.AZURE_STORAGE_ACCOUNT);
 
-function filenameFormatter (item, filename) {
+function filenameFormatter (filename) {
 	var extension = USE_AZURE ? path.extname(filename).toLowerCase() : ('.' + filename.extension);
-	return 'r/' + item.title.substr(0, 65).replace(/\W+/g, '-') + '-' + item.shortId + extension;
+	return filename.originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-') + '-' + shortid.generate() + extension;
 }
 
 function getFileConfig () {
@@ -44,9 +44,22 @@ function getFileConfig () {
 	};
 }
 
+var storage = new keystone.Storage({
+	adapter: keystone.Storage.Adapters.FS,
+	fs: {
+		path: keystone.expandPath('./public/temp'),
+		generateFilename: filenameFormatter,
+	},
+	schema: {
+		originalname: true,
+		path: true,
+		url: true,
+	},
+});
+
 Resource.add({
 	title: { type: String, required: true },
-	file: getFileConfig(),
+	file: { type: Types.File, storage: storage },
 	shortId: {
 		type: String,
 		default: shortid.generate,
@@ -73,7 +86,7 @@ Resource.add({
 			if (USE_AZURE) {
 				return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
 			} else {
-				return this.file.exists ? '/temp/' + this.file.filename : '';
+				return this.file.filename ? '/temp/' + this.file.filename : '';
 			}
 		},
 		note: 'Use this link if you must reference this resource directly',
