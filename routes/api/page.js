@@ -77,7 +77,7 @@ exports = module.exports = function (req, res) {
 					description: contact.description,
 					email: contact.email,
 					phone: contact.phone,
-					image: formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }),
+					image: contact.image.exists ? formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }) : undefined,
 				};
 			}),
 			questionCategories: page.questionCategories,
