@@ -46,6 +46,6 @@ StartPageWidget.add({
 	},
 });
 
-StartPageWidget.defaultColumns = 'title, useWidget, showOnStartPage';
+StartPageWidget.defaultColumns = 'name, useWidget, showOnStartPage';
 StartPageWidget.register();
 
