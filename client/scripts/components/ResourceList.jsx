@@ -6,7 +6,7 @@ const ResourceList = ({ resources, inContainer, title = 'Dokument att ladda ner'
 		<ul>
 			{resources.map(({ title, fileType = 'other', fileUrl, description }) => (
 				<li key={title}>
-					<i className={`resource-icon resource-${fileType}`}></i>
+					<i className={`resource-icon resource-${fileType}`} />
 					<a href={fileUrl}>{title}</a>
 					<p>{description}</p>
 				</li>

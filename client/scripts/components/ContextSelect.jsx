@@ -8,7 +8,7 @@ const ContextSelect = ({
 	onChange,
     items,
 	format = (x) => `${x.name}`,
-	...other,
+	...other
 }) => {
 
 	return (

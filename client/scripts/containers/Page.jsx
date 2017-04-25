@@ -32,7 +32,7 @@ function queryStringToObject (queryString = '') {
 const WidgetContainer = ({
 	widget,
 	hideMetadata,
-	...props,
+	...props
 }) => {
 	if (!widget) {
 		return null;

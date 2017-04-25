@@ -67,13 +67,13 @@ class NewsItem extends Component {
 							{imageLayout === 'landscape' && image && this.landscape(image)}
 							<div className="post">
 								<p className="lead">{content.lead}</p>
-								{content.extended && <div dangerouslySetInnerHTML={{ __html: content.extended.html }}></div>}
+								{content.extended && <div dangerouslySetInnerHTML={{ __html: content.extended.html }} />}
 							</div>
 							{author && this.getAuthorComponent(author)}
 						</article>
 					</Col>
 					<Col md={4}>{imageLayout === 'portrait' && image && <DockedImages images={[image]} enlargeable wide={false} />}
-					{resources.length > 0 && <ResourceList	resources={resources} inContainer={isModernTheme}/>}
+						{resources.length > 0 && <ResourceList	resources={resources} inContainer={isModernTheme}/>}
 					</Col>
 					<Col md={4}>
 						<DockedImages imageSMCols={12} imageMDCols={12} images={extraImages} enlargeable/>

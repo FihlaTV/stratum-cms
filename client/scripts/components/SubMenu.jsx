@@ -80,6 +80,6 @@ SubMenu.propTypes = {
 	displaySingleItem: PropTypes.bool,
 	inContainer: PropTypes.bool,
 	menuBlock: PropTypes.object,
- };
+};
 
 export default SubMenu;

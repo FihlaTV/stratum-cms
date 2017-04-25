@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const NewsLink = ({
 	slug = '',
 	children,
-	...props,
+	...props
 }) => (
 	<Link to={`/nyheter/${slug}`} {...props}>{children}</Link>
 );

@@ -15,7 +15,7 @@ class Messages extends Component {
 			messages = [],
 			showCookieMessage,
 			dispatch,
-			...rest,
+			...rest
 		} = this.props;
 
 		return (

@@ -27,7 +27,7 @@ describe('Tests for Resource component', () => {
 	it('Will contain a <li> with the info of the first resource item.', () => {
 		const expected = (
 			<li>
-				<i className="resource-icon resource-image"></i>
+				<i className="resource-icon resource-image" />
 				<a href="/temp/r/En-annan-fil--r1JES6ZZl.jpg">En annan fil!</a>
 				<p>En annan fil!</p>
 			</li>

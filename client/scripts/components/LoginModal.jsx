@@ -6,7 +6,7 @@ const LoginModal = ({
 	title,
 	show,
 	titleSmall,
-	...other,
+	...other
 }) => {
 	return (
 		<Modal {...other} show={show}>

@@ -8,7 +8,7 @@ const ContextSyncButton = (props) => {
 		isSyncing,
 		disabled,
 		children,
-		...other,
+		...other
 	} = props;
 
 	return (
