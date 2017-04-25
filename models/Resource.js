@@ -2,6 +2,7 @@ var keystone = require('keystone');
 var	Types = keystone.Field.Types;
 var	shortid = require('shortid');
 var	path = require('path');
+var azure = require('keystone-storage-adapter-azure');
 
 require('dotenv').load();
 
@@ -18,44 +19,39 @@ var Resource = new keystone.List('Resource', {
 
 var USE_AZURE = !!(process.env.AZURE_STORAGE_ACCESS_KEY && process.env.AZURE_STORAGE_ACCOUNT);
 
-function filenameFormatter (filename) {
-	var extension = USE_AZURE ? path.extname(filename).toLowerCase() : ('.' + filename.extension);
-	return filename.originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-') + '-' + shortid.generate() + extension;
-}
+var storage;
 
-function getFileConfig () {
-	if (USE_AZURE) {
-		return {
-			type: Types.AzureFile,
-			note: 'File size cannot be above 30 MB',
-			// TODO: Would be nice if this could be stored globally but there seems to be a bug
-			//       in the azurefile config concerning container name, so remember to add this for all
-			//       AzureFile fields
-			containerFormatter: function (item, filename) {
-				return keystone.get('brand safe');
+if (USE_AZURE) {
+	storage = new keystone.Storage({
+		adapter: azure,
+		azure: {
+			generateFilename: (filename) => {
+				var extension = USE_AZURE ? path.extname(filename).toLowerCase() : ('.' + filename.extension);
+				return `r/${filename.originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
 			},
-			filenameFormatter: filenameFormatter,
-		};
-	}
-	return {
-		type: Types.LocalFile,
-		dest: 'public/temp',
-		filename: filenameFormatter,
-	};
+			container: keystone.get('brand safe'),
+		},
+		schema: {
+			container: true,
+			etag: true,
+			url: true,
+		},
+	});
+} else {
+	storage = new keystone.Storage({
+		adapter: keystone.Storage.Adapters.FS,
+		fs: {
+			path: keystone.expandPath('./override/temp'),
+			generateFilename: ({ originalname }) => { console.log(originalname); return originalname; },
+			whenExists: 'overwrite',
+		},
+		schema: {
+			originalname: true,
+			path: true,
+			url: true,
+		},
+	});
 }
-
-var storage = new keystone.Storage({
-	adapter: keystone.Storage.Adapters.FS,
-	fs: {
-		path: keystone.expandPath('./public/temp'),
-		generateFilename: filenameFormatter,
-	},
-	schema: {
-		originalname: true,
-		path: true,
-		url: true,
-	},
-});
 
 Resource.add({
 	title: { type: String, required: true },
