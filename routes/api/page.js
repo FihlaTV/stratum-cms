@@ -81,14 +81,16 @@ exports = module.exports = function (req, res) {
 				};
 			}),
 			questionCategories: page.questionCategories,
-			resources: page.resources.map(function (resource) {
-				return {
-					title: resource.title,
-					description: resource.description,
-					fileUrl: resource.fileUrl,
-					fileType: resource.fileType,
-				};
-			}),
+			resources: page.resources
+				.filter(({ fileUrl }) => !!fileUrl)
+				.map(({ title, description, fileUrl, fileType }) =>
+					({
+						title,
+						description,
+						fileUrl,
+						fileType,
+					})
+				),
 			sideArea: page.sideArea && page.sideArea.show && page.sideArea,
 		};
 		if (page.image.exists) {
