@@ -92,6 +92,7 @@ exports = module.exports = function (req, res) {
 					description: resource.description,
 					fileUrl: resource.fileUrl,
 					fileType: resource.fileType,
+					filename: resource.file.filename,
 				};
 			}),
 			sideArea: page.sideArea && page.sideArea.show && page.sideArea,
