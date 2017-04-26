@@ -1,18 +1,8 @@
 var gulp = require('gulp');
-var	eslint = require('gulp-eslint');
-var	watch = require('gulp-watch');
-var	inquirer = require('inquirer');
 var	webpack = require('webpack');
 var	webpackConf = require('./webpack.production.config');
 var	path = require('path');
 var	glob = require('glob');
-
-/*
- * Create variables for our project paths so we can change in one place
- */
-var paths = {
-	src: ['./models/**/*.js', './routes/**/*.js', 'keystone.js'],
-};
 
 // Finds all instances of .env-files in register folders
 var registers = glob.sync('./registers/*/.env').map(function (stylePath) {
@@ -42,35 +32,3 @@ registers.forEach(function (el) {
 gulp.task('build-all', registers.map(function (el) {
 	return 'build-register-' + el.name;
 }));
-
-
-// gulp lint
-gulp.task('lint', function () {
-	gulp.src(paths.src)
-		.pipe(eslint())
-		.pipe(eslint.format());
-});
-
-// gulp watcher for lint
-gulp.task('watch:lint', function () {
-	gulp.src(paths.src)
-		.pipe(watch())
-		.pipe(eslint())
-		.pipe(eslint.format());
-});
-
-gulp.task('new-register', function (done) {
-	inquirer.prompt([{
-		type: 'input',
-		name: 'register',
-		message: 'Insert register name (no spaces)',
-	}],
-		function (params) {
-			gulp.src(['.env', 'keystone.js']) // Relative to __dirname
-				.pipe(gulp.dest('registers/' + params.register))
-				.on('finish', function () {
-					// console.log('Created register %s', params.register);
-					done();
-				});
-		});
-});
