@@ -10,13 +10,20 @@
 	margin-bottom: @gutter-large;
 	margin-right: @gutter-large;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	font-family: @headings-font-family;
 	cursor: pointer;
 
+	&:hover {
+		text-decoration: none;
+		background-color: darken(@grid-bg-primary, 10%);
+	}
 	@media (max-width: @screen-md-min) {
 		background-color: @brand-primary;
 		color: white;
 		&:hover {
 			color: white;
+			text-decoration: none;
+			background-color: darken(@brand-primary, 10%);
 		}
 	}
 
