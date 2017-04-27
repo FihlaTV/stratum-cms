@@ -44,7 +44,7 @@ class App extends Component {
 			registerInformation,
 			breadcrumbs,
 			location,
-			show = document.body.scrollHeight > window.innerHeight,
+			showScrollButton = document.body.scrollHeight > window.innerHeight,
 		} = this.props;
 
 		return location.pathname === '/404' ? children : (
@@ -53,7 +53,7 @@ class App extends Component {
 				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>
 				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
-					{show && <ScrollButton/>}
+					{showScrollButton && <ScrollButton/>}
 				</MainContainer>
 				<Footer {...registerInformation}/>
 			</div>
