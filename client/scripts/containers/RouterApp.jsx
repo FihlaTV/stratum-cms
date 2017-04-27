@@ -9,7 +9,6 @@ import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
 import Messages from './Messages';
 import ScrollButton from '../components/scrollbutton';
-import { showScrollButton } from '../actions/scrollbutton';
 
 const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 	if (hasGrid) {
@@ -31,30 +30,13 @@ class App extends Component {
 		const { dispatch } = this.props;
 		dispatch(fetchMenuItems());
 		dispatch(fetchRegisterInformation());
-		window.addEventListener('scroll', () => {
-			this.toggleScrollButton();
-		});
 	}
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.error.status && this.props.location.pathname !== '/404') {
 			this.props.router.push('/404');
 		}
 	}
-	componentWillUnmount () {
-		window.removeEventListener('scroll', () => {
-			this.toggleScrollButton();
-		});
-	}
-	toggleScrollButton () {
-		const { dispatch } = this.props;
-		if (window.scrollY === 0) {
-			dispatch(showScrollButton('hidden'));
-		}
-		else {
-			dispatch(showScrollButton('visible'));
-		}
 
-	}
 	render () {
 		const {
 			children,
@@ -62,7 +44,7 @@ class App extends Component {
 			registerInformation,
 			breadcrumbs,
 			location,
-			show = 'hidden',
+			show = document.body.scrollHeight > window.innerHeight,
 		} = this.props;
 
 		return location.pathname === '/404' ? children : (
@@ -71,7 +53,7 @@ class App extends Component {
 				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>
 				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
-					<ScrollButton show={show} />
+					{show && <ScrollButton/>}
 				</MainContainer>
 				<Footer {...registerInformation}/>
 			</div>
@@ -86,7 +68,6 @@ function mapStateToProps (state, { location }) {
 		error: state.error,
 		registerInformation: state.registerInformation,
 		breadcrumbs: state.breadcrumbs.items,
-		show: state.scrollbutton.show,
 	};
 }
 
