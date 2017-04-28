@@ -9,7 +9,21 @@ function generateConfig (indexPath, brand, envVars) {
 	return {
 		entry: {
 			base: indexPath,
-			vendors: ['react', 'jquery', 'react-bootstrap', 'react-dom', 'redux'],
+			vendors: [
+				'react',
+				'react-bootstrap',
+				'react-dom',
+				'react-router',
+				'redux',
+				'react-redux',
+				'react-router-redux',
+				'es6-promise',
+				'react-ga',
+				'js-cookie',
+				'bootstrap', // TODO: Remove with SPA
+				'jquery', // TODO: Remove with SPA
+				'moment',
+			],
 		},
 		output: {
 			path: path.resolve(__dirname, 'public/dist/'),
@@ -34,36 +48,51 @@ function generateConfig (indexPath, brand, envVars) {
 			}),
 			new webpack.optimize.UglifyJsPlugin(),
 			new ExtractTextPlugin(brand + '.styles.css'),
-			new webpack.optimize.CommonsChunkPlugin('vendors', brand + '.vendors.js'),
+			new webpack.optimize.CommonsChunkPlugin({
+				name: 'vendors',
+				filename: brand + '.vendors.js',
+			}),
 		],
 		module: {
-			loaders: [{
+			rules: [{
 				test: /\.jsx{0,1}$/,
 				loader: 'babel-loader',
-				exclude: [node_modules_dir],
-				query: {
+				exclude: node_modules_dir,
+				options: {
 					presets: ['es2015', 'react'],
-					plugins: ['transform-object-rest-spread', 'transform-object-assign'],
+					plugins: [require('babel-plugin-transform-object-rest-spread'), require('babel-plugin-transform-object-assign')],
 				},
 			}, {
 				test: /\.less$/,
-				loader: ExtractTextPlugin.extract(['css', 'less']),
+				loader: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
 			}, {
 				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=application/font-woff',
+				loader: 'url-loader',
+				options: {
+					limit: 10000,
+					mimetype: 'application/font-woff',
+				},
 			}, {
 				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=application/octet-stream',
+				loader: 'url-loader',
+				options: {
+					limit: 10000,
+					mimetype: 'application/octet-stream',
+				},
 			}, {
 				test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'file',
+				loader: 'file-loader',
 			}, {
 				test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=image/svg+xml',
+				loader: 'url-loader',
+				options: {
+					limit: 10000,
+					mimetype: 'image/svg+xml',
+				},
 			}],
 		},
 		resolve: {
-			extensions: ['', '.js', '.jsx'],
+			extensions: ['.js', '.jsx'],
 		},
 	};
 }
@@ -106,4 +135,3 @@ function initConfig (_indexPath) {
 };
 
 module.exports = initConfig();
-module.exports.initConfig = initConfig;
