@@ -11,12 +11,16 @@ exports = module.exports = function (req, res) {
 	};
 	locals.data = {};
 
+	var states = ['published'];
+	if (req.user && req.user.canAccessProtected) {
+		states.push('draft');
+	}
 
 	keystone.list('NewsItem').model.findOne({
-		state: 'published',
+		state: { $in: states },
 		slug: locals.filters.newsItem,
-		publishedDate: { $lte: new Date() },
 	})
+	.or([{ publishedDate: { $lte: new Date() } }, { state: 'draft' }])
 	.populate('author resources')
 	.exec(function (err, newsItem) {
 		if (err || !newsItem) {

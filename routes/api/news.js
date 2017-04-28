@@ -2,10 +2,14 @@ var keystone = require('keystone');
 
 exports = module.exports = function (req, res) {
 	var currentTime = new Date();
+	var states = ['published'];
+	if (req.user && req.user.canAccessProtected) {
+		states.push('draft');
+	}
 
 	keystone.list('NewsItem').model
-		.find({ state: 'published' })
-		.where('publishedDate', { $exists: true, $lte: currentTime })
+		.find({ state: { $in: states } })
+		.or([{ publishedDate: { $exists: true, $lte: currentTime } }, { state: 'draft' }])
 		.sort('-publishedDate')
 		.select('content.lead title publishedDate slug')
 		.exec(function (err, results) {
@@ -15,6 +19,7 @@ exports = module.exports = function (req, res) {
 					error: err,
 				});
 			}
+
 			return res.apiResponse({
 				success: true,
 				data: {
