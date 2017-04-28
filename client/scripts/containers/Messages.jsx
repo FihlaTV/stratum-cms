@@ -15,7 +15,9 @@ class Messages extends Component {
 			messages = [],
 			showCookieMessage,
 			dispatch,
-			...rest, // eslint-disable-line
+			/* eslint-disable */
+			...rest,
+			/* eslint-enable */
 		} = this.props;
 
 		return (
