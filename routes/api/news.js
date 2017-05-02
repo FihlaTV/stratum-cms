@@ -11,7 +11,7 @@ exports = module.exports = function (req, res) {
 		.find({ state: { $in: states } })
 		.or([{ publishedDate: { $exists: true, $lte: currentTime } }, { state: 'draft' }])
 		.sort('-publishedDate')
-		.select('content.lead title publishedDate slug')
+		.select('content.lead title publishedDate slug state')
 		.exec(function (err, results) {
 			if (err) {
 				return res.apiResponse({
