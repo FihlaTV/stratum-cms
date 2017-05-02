@@ -84,7 +84,7 @@ class Index extends Component {
 		);
 		if (isPortal) {
 			return (
-				<div>
+				<Grid>
 					<Col md={7}>
 						{Jumbo}
 						{Description}
@@ -95,7 +95,7 @@ class Index extends Component {
 						{this.getInformationBlurbComponent(informationBlurb)}
 						{quickLink && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
 					</Col>
-				</div>
+				</Grid>
 			);
 		}
 		return (
