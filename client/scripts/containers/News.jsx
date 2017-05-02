@@ -57,7 +57,7 @@ class News extends Component {
 };
 
 function getFilteredNews (items = [], year, page) {
-	if (year === ' Utkast') {
+	if (year === ' draft') {
 		return items.filter(({ state }) => {
 			return state === 'draft';
 		});

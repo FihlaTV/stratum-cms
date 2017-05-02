@@ -7,7 +7,7 @@ export const CLEAR_NEWS_ARTICLE = 'CLEAR_NEWS_ARTICLE';
 function getYearlyCount (newsItems) {
 	return newsItems.reduce(
 		(prev, { publishedDate, state }) => {
-			const year = state !== 'draft' ? (new Date(publishedDate)).getFullYear() : ' Utkast';
+			const year = state !== 'draft' ? (new Date(publishedDate)).getFullYear() : ' draft';
 
 			prev[year] = prev[year] || 0;
 			prev[year]++;
