@@ -53,14 +53,14 @@ class NewsItem extends Component {
 	}
 
 	newsItem () {
-		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [], extraImages = [] } = this.props;
+		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [], extraImages = [], state } = this.props;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		var publishedAt = publishedDate !== null ? moment(publishedDate).format('L') : 'Utkast';
 		return (
 			<div className="news-item-full">
 				<Row>
 					<Col md={8}>
-						<article className="base-page clearfix">
+						<article className={`base-page clearfix` + `${state === 'draft' ? ' draft' : ''}`}>
 							<header>
 								<span className="published-at">{publishedAt}</span>
 								<h1>{title}</h1>

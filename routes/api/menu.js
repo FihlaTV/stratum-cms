@@ -46,7 +46,10 @@ function formatRootMenu (pages, subPages) {
 
 exports = module.exports = function (req, res) {
 	var locals = res.locals;
-
+	var states = ['published'];
+	if (req.user && req.user.canAccessProtected) {
+		states.push('draft');
+	}
 	async.parallel({
 		menuItems: function (done) {
 			keystone.list('MenuBlock').model
@@ -57,8 +60,7 @@ exports = module.exports = function (req, res) {
 		},
 		pages: function (done) {
 			keystone.list('Page').model
-				.find()
-				.where('state', 'published')
+				.find({ state: { $in: states } })
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 				.select('shortId slug menuTitle title sortOrder menu')
 				.sort('sortOrder')
@@ -66,8 +68,7 @@ exports = module.exports = function (req, res) {
 		},
 		subPages: function (done) {
 			keystone.list('SubPage').model
-				.find()
-				.where('state', 'published')
+				.find({ state: { $in: states } })
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 				.select('shortId slug menuTitle title sortOrder page')
 				.sort('sortOrder')

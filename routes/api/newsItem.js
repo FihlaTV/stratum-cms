@@ -48,6 +48,7 @@ exports = module.exports = function (req, res) {
 			extraImages: newsItem.extraImages.map(function (image) {
 				return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
 			}),
+			state: newsItem.state,
 		};
 		if (newsItem.image.public_id) {
 			data.image = formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings);
