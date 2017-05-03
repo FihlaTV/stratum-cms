@@ -10,6 +10,7 @@ function reduceLinks (pages, menu, prefix, isChildFn, subPages) {
 				key: page.slug,
 				pageKey: page.shortId,
 				sortOrder: page.sortOrder,
+				state: page.state,
 			};
 			if (subPages) {
 				var subPagePrefix = [prefix, page.slug].join('/');
@@ -62,7 +63,7 @@ exports = module.exports = function (req, res) {
 			keystone.list('Page').model
 				.find({ state: { $in: states } })
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
-				.select('shortId slug menuTitle title sortOrder menu')
+				.select('shortId slug menuTitle title sortOrder menu state')
 				.sort('sortOrder')
 				.exec(done);
 		},
