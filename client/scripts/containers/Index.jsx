@@ -93,7 +93,7 @@ class Index extends Component {
 						<h2>Delregister</h2>
 						<SubRegisterList subRegisters={subRegisters} />
 						{this.getInformationBlurbComponent(informationBlurb)}
-						{quickLink && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
+						{quickLink && quickLink.page && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
 					</Col>
 				</Grid>
 			);
