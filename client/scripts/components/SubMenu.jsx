@@ -30,7 +30,6 @@ function renderLink (activeTopPage = {}) {
 		if (state === 'draft') {
 			cls.push('nav-page-draft');
 		}
-	}
 		const Link = (
 			<LinkContainer key={key} to={`${url}`} activeClassName="active" className={cls.join(' ')}>
 				<NavItem>

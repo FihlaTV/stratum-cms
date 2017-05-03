@@ -44,7 +44,7 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 }
 
 function getLinkContents (item, tabLayout, level, desktop = false, totalMenuCharacters) {
-	const { label, key, items, hasChildren = false, state } = item;
+	const { label, key, items, hasChildren = false } = item;
 	const tabWidthStyle = tabLayout && totalMenuCharacters ? { width: `${100 * label.length / totalMenuCharacters}%` } : {};
 	let classNames = level === 2 ? ['sub-sub-nav'] : [];
 
