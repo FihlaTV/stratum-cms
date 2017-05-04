@@ -60,7 +60,7 @@ class NewsItem extends Component {
 			<div className="news-item-full">
 				<Row>
 					<Col md={8}>
-						<article className={`base-page clearfix` + `${state === 'draft' ? ' draft' : ''}`}>
+						<article className={`base-page clearfix` + `${state === 'draft' ? ' draft draft-banner' : ''}`}>
 							<header>
 								<span className="published-at">{publishedAt}</span>
 								<h1>{title}</h1>

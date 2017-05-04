@@ -53,7 +53,7 @@ const PageContainer = ({
 	layout,
 	state,
 }) => (
-	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}` + ` ${state}`}>
+	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}` + ` ${state === 'draft' ? 'draft draft-banner' : ''}`}>
 		{loading ? null : children}
 	</article>
 );
