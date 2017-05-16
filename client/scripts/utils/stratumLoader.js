@@ -211,15 +211,13 @@ function injectWithCacheBusting (urisToInject, startFunction) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
-
 			const response = JSON.parse(this.responseText).data;
-
 			const stratumVersion = response.StratumVersion;
 			const versionizedInjects = urisToInject.map(function (current) {
 				current = current + '?sv=' + stratumVersion;
 				return current;
 			});
-			console.log(versionizedInjects);
+
 			inject(
 				versionizedInjects,
 				() => { setHasBeenInitialized(true); startFunction(); }
