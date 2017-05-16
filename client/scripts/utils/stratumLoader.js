@@ -207,6 +207,28 @@ function getHasBeenInitialized () {
 	return hasBeenInitialized;
 }
 
+function injectWithCacheBusting (urisToInject, startFunction) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4 && this.status === 200) {
+
+			const response = JSON.parse(this.responseText).data;
+
+			const stratumVersion = response.StratumVersion;
+			const versionizedInjects = urisToInject.map(function (current) {
+				current = current + '?sv=' + stratumVersion;
+				return current;
+			});
+			console.log(versionizedInjects);
+			inject(
+				versionizedInjects,
+				() => { setHasBeenInitialized(true); startFunction(); }
+			);
+		}
+	};
+	xhttp.open('GET', '/stratum/api/configurations/globals', true);
+	xhttp.send();
+}
 export default function (target, widget, queryString = '', callback = () => {}) {
 	if (!target || !widget) {
 		return;
@@ -218,21 +240,19 @@ export default function (target, widget, queryString = '', callback = () => {}) 
 
 		// Always load all stratum scripts to avoid missing variables when loading registration application.
 		if (!getHasBeenInitialized()) {
-			inject(
-				[
-					'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-					'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-					'/stratum/Default2.css',
-					'/stratum/ExtJS/ext-all.js',
-					'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-					'/stratum/Directs/Handlers/ScriptGenerator.ashx',
-					'/stratum/Scripts/Repository.js',
-					'/stratum/Scripts/ManagerForSubjects.js',
-					'/stratum/Scripts/ApplicationForRegistrations.js',
-				],
-				() => { setHasBeenInitialized(true); startFn(); }
-			);
+			var urisToInject = [
+				'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
+				'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
+				'/stratum/Default2.css',
+				'/stratum/ExtJS/ext-all.js',
+				'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
+				'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
+				'/stratum/Directs/Handlers/ScriptGenerator.ashx',
+				'/stratum/Scripts/Repository.js',
+				'/stratum/Scripts/ManagerForSubjects.js',
+				'/stratum/Scripts/ApplicationForRegistrations.js',
+			];
+			injectWithCacheBusting(urisToInject, startFn);
 		} else {
 			startFn();
 		}
