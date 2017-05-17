@@ -224,7 +224,7 @@ function injectWithCacheBusting (urisToInject, startFunction) {
 			);
 		}
 	};
-	xhttp.open('GET', '/stratum/api/configurations/globals', true);
+	xhttp.open('GET', `/stratum/api/configurations/globals?_=${(new Date()).getTime()}`, true);
 	xhttp.send();
 }
 export default function (target, widget, queryString = '', callback = () => {}) {
