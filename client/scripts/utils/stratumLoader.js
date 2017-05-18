@@ -151,6 +151,7 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 					Stratum.ApplicationForRegistrations(lc.hash, lc.query);
 					break;
 				case 'page':
+					lc.query.scope = 1;
 					Stratum.ApplicationForRegistrations(lc.hash, lc.query);
 					break;
 				default:
