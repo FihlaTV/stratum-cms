@@ -10,7 +10,7 @@ exports = module.exports = function (req, res) {
 	var locals = res.locals || {};
 	var context = {};
 	var states = ['published'];
-	if (req.user && req.user.canAccessProtected) {
+	if (req.user && req.user.canAccessKeystone) {
 		states.push('draft');
 	}
 	async.series({

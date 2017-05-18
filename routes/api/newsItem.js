@@ -12,7 +12,7 @@ exports = module.exports = function (req, res) {
 	locals.data = {};
 
 	var states = ['published'];
-	if (req.user && req.user.canAccessProtected) {
+	if (req.user && req.user.canAccessKeystone) {
 		states.push('draft');
 	}
 
