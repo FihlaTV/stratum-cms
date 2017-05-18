@@ -8,7 +8,7 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 	const totalMenuCharacters = level === 0 && tabLayout && menuItems.reduce((p, c) => p + c.label.length, 0);
 
 	return menuItems.reduce((prev, menuItem, i, arr) => {
-		const { url, label, key, items } = menuItem;
+		const { url, label, key, items, state } = menuItem;
 
 		/**
 		 * Since bootstrap only supports 2 levels in menues, the structure
@@ -33,7 +33,7 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
 				<LinkContainer to={`${url}`} activeClassName="active" key={`${key}-desktop`}>
-					{getLinkContents({ url, label, key }, tabLayout, level, true, totalMenuCharacters)}
+					{getLinkContents({ url, label, key, state }, tabLayout, level, true, totalMenuCharacters)}
 				</LinkContainer>
 			);
 		}
