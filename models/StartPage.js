@@ -47,6 +47,7 @@ StartPage.add({
 			},
 			type: {
 				type: Types.Select,
+				hidden: keystone.get('is portal'),
 				dependsOn: {
 					'jumbotron.isVisible': true,
 				},
