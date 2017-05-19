@@ -20,6 +20,7 @@ import RORImproved from './RORImproved';
 import RORVentetid from './RORVentetid';
 import FONOForbettring from './FONOForbettring';
 import FONOPatientenket from './FONOPatientenket';
+import SPOQTotal from './SPOQTotal';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -43,6 +44,7 @@ export { RORImproved };
 export { RORVentetid };
 export { FONOForbettring };
 export { FONOPatientenket };
+export { SPOQTotal };
 
 export default {
 	BOAArtrosSkola,
@@ -67,4 +69,5 @@ export default {
 	RORVentetid,
 	FONOForbettring,
 	FONOPatientenket,
+	SPOQTotal,
 };
