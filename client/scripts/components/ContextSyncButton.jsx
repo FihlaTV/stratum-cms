@@ -8,9 +8,7 @@ const ContextSyncButton = (props) => {
 		isSyncing,
 		disabled,
 		children,
-		/* eslint-disable */
-		...other,
-		/* eslint-enable */
+		...other // eslint-disable-line comma-dangle
 	} = props;
 
 	return (
