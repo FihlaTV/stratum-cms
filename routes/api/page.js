@@ -9,12 +9,16 @@ exports = module.exports = function (req, res) {
 	};
 	var locals = res.locals || {};
 	var context = {};
+	var states = ['published'];
+	if (req.user && req.user.canAccessKeystone) {
+		states.push('draft');
+	}
 	async.series({
 		page: function (next) {
 			keystone.list('BasePage').model
-				.findOne()
+				.findOne({ state: { $in: states } })
 				.where('shortId', filters.shortId)
-				.where('state', 'published')
+
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 				.populate('contacts', 'name note title email phone image')
 				.populate('resources')
@@ -83,15 +87,17 @@ exports = module.exports = function (req, res) {
 			questionCategories: page.questionCategories,
 			resources: page.resources
 				.filter(({ fileUrl }) => !!fileUrl)
-				.map(({ title, description, fileUrl, fileType }) =>
+				.map(({ title, description, fileUrl, fileType, filename }) =>
 					({
 						title,
 						description,
 						fileUrl,
 						fileType,
+						filename,
 					})
 				),
 			sideArea: page.sideArea && page.sideArea.show && page.sideArea,
+			state: page.state,
 		};
 		if (page.image.exists) {
 			data.image = formatCloudinaryImage(page.image, page.imageDescription, { width: 750, crop: 'fill' });

@@ -51,8 +51,9 @@ const PageContainer = ({
 	loading,
 	children,
 	layout,
+	state,
 }) => (
-	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}`}>
+	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}` + ` ${state === 'draft' ? 'draft draft-banner' : ''}`}>
 		{loading ? null : children}
 	</article>
 );
@@ -163,12 +164,13 @@ class Page extends Component {
 			resourcePlacement,
 			sideArea,
 			widget,
+			state,
 		} = page;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
-					<PageContainer loading={loading} layout={layout}>
+					<PageContainer loading={loading} layout={layout} state={state}>
 						<header>
 							<h1>{title}</h1>
 						</header>

@@ -17,7 +17,7 @@ function findActivePage (activePageId, menuItems = []) {
 
 function renderLink (activeTopPage = {}) {
 	return (menuItem) => {
-		const { key, url, label, items = [], pageKey } = menuItem;
+		const { key, url, label, items = [], pageKey, state } = menuItem;
 		const cls = [];
 		const displaySubNav = pageKey === activeTopPage.pageKey && items.length > 0;
 
@@ -26,6 +26,9 @@ function renderLink (activeTopPage = {}) {
 		}
 		if (displaySubNav) {
 			cls.push('expanded');
+		}
+		if (state === 'draft') {
+			cls.push('nav-page-draft');
 		}
 		const Link = (
 			<LinkContainer key={key} to={`${url}`} activeClassName="active" className={cls.join(' ')}>
