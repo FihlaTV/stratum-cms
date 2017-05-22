@@ -3,7 +3,7 @@ var keystone = require('keystone');
 exports = module.exports = function (req, res) {
 	var currentTime = new Date();
 	var states = ['published'];
-	if (req.user && req.user.canAccessProtected) {
+	if (req.user && req.user.canAccessKeystone) {
 		states.push('draft');
 	}
 
