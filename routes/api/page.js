@@ -9,18 +9,26 @@ exports = module.exports = function (req, res) {
 	};
 	var locals = res.locals || {};
 	var context = {};
+	var states = ['published'];
+	if (req.user && req.user.canAccessKeystone) {
+		states.push('draft');
+	}
 	async.series({
 		page: function (next) {
 			keystone.list('BasePage').model
-				.findOne()
+				.findOne({ state: { $in: states } })
 				.where('shortId', filters.shortId)
-				.where('state', 'published')
+
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
-				.populate('contacts', 'name description email phone image')
+				.populate('contacts', 'name note title email phone image')
 				.populate('resources')
 				.populate('widget')
 				.populate('page', 'shortId title slug')
-				.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories sideArea')
+				.select([
+					'shortId', 'title', 'subtitle', 'slug', 'pageType', 'widget', 'resourcePlacement',
+					'lead', 'content.html', 'layout', 'contentType', 'displayPrintButton', 'extraImage',
+					'contacts', 'resources', 'page', 'image', 'imageDescription', 'questionCategories', 'sideArea', 'state',
+				].join(' '))
 				.exec(function (err, page) {
 					context.widget = page && page.widget;
 					return next(err, page);
@@ -88,9 +96,11 @@ exports = module.exports = function (req, res) {
 					description: resource.description,
 					fileUrl: resource.fileUrl,
 					fileType: resource.fileType,
+					filename: resource.file.filename,
 				};
 			}),
 			sideArea: page.sideArea && page.sideArea.show && page.sideArea,
+			state: page.state,
 		};
 		if (page.image.exists) {
 			data.image = formatCloudinaryImage(page.image, page.imageDescription, { width: 750, crop: 'fill' });

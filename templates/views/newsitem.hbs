@@ -41,7 +41,7 @@
 			{{#if image.exists}}
 			<div class="col-md-4 content-page-images">
 				<div class="caption-image">
-					{{{cloudinaryImage image width="640" class="img-responsive"}}}			
+					{{{cloudinaryImage image width="640" class="img-responsive"}}}
 					{{#if imageDescription}}
 					<div class="caption-text">
 						{{imageDescription}}
@@ -57,6 +57,28 @@
 			</div>
 			{{/if}}
 			{{/with}}
+			{{#if data.newsItem.extraImages}}
+			<div class="col-md-4">
+			<div class="content-page-images">
+				<div class="row">
+					{{#each data.newsItem.extraImages}}
+					<div class="col-md-12 col-sm-6 col-xs-12">
+						<div class="caption-image">
+							<a href="{{cloudinaryUrl image}}">
+								{{{cloudinaryImage image width="500" crop="fill" class="img-responsive" alt=caption}}}
+							</a>
+							{{#if caption}}
+							<div class="caption-text">
+								{{caption}}
+							</div>
+							{{/if}}
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			{{/if}}
+			</div>
 		</div>
 	</div>
 </div>

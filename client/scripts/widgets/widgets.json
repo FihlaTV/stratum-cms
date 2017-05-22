@@ -3,6 +3,22 @@
 		"id": "BOAArtrosSkola",
 		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
 	},
+	"LVRAndelKOL": {
+		"id": "LVRAndelKOL",
+		"description": "Andel registrerade patienter med diagnosen KOL i öppenvård som röker."
+	},
+	"LVRAndelKOLSV": {
+		"id": "LVRAndelKOLSV",
+		"description": "Andel registrerade patienter med diagnosen KOL i inneliggande som röker."
+	},
+	"LVRAndelAstma": {
+		"id": "LVRAndelAstma",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård."
+	},
+	"LVRAndelAstma18": {
+		"id": "LVRAndelAstma18",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård under 18."
+	},
 	"BOAAndel": {
 		"id": "BOAAndel",
 		"description": "En beskrivning som förklarar den här widgeten..."
@@ -51,6 +67,10 @@
     "id": "HNSVSat",
     "description": "Upplever god nytta av hörselvårdens insatser."
   },
+  "HNSVBaseRegistrations": {
+    "id": "HNSVBaseRegistrations",
+    "description": "Antal registrerade Baseline-enkäter totalt i registret."
+  },
   "RORImproved": {
     "id": "RORImproved",
     "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
@@ -66,5 +86,9 @@
   "FONOPatientenket": {
     "id": "FONOPatientenket",
     "description": "Andel svar på patientenkät cirka 4 månader efter operation"
+  },
+  "SPOQTotal": {
+    "id": "SPOQTotal",
+    "description": "Totalt antal patienter i spoq"
   }
 }

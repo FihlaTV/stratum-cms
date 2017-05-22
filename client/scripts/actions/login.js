@@ -2,7 +2,6 @@ import fetch from 'isomorphic-fetch';
 import cookies from 'js-cookie';
 
 import { initiateBID } from './bankid';
-
 import { contextError } from './context';
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
@@ -414,7 +413,8 @@ export function dismissTimeleft (timeleft) {
 	return dispatch => {
 		if (timeleft > 0) {
 			dispatch(loginToStratum(true));
-		} else {
+		}
+		else {
 			// Force logout if time has run out
 			dispatch(setTimeleft(timeleft, false));
 			window.location.replace('/logout');
@@ -450,6 +450,9 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
+					if (timeleft <= 0) {
+						window.location.replace('\?loggedout');
+					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {
 						setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);
