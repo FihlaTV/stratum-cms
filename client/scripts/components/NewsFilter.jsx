@@ -18,9 +18,9 @@ const NewsFilter = ({ itemsPerYear = {}, year: currentYear, pathname, query }) =
 		<h2>Filtrera nyheter</h2>
 		<span className="news-filter-header">År</span>
 		<ul className="news-filter-list">
-			{Object.keys(itemsPerYear).reverse().map(year => (
+			{Object.keys(itemsPerYear).sort().reverse().map(year => (
 				<Year key={year} pathname={pathname} query={query} year={year} count={itemsPerYear[year]} active={year !== currentYear}>
-					{year === 'all' ? 'Alla' : year} ({itemsPerYear[year]})
+					{year === 'all' ? 'Alla' : year === ' draft' ? 'Utkast' : year} ({itemsPerYear[year]})
 				</Year>
 			))}
 		</ul>
