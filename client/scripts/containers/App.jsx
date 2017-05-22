@@ -45,6 +45,7 @@ class App extends Component {
 			logout,
 			contextIsVisible,
 			reactRouter,
+			currentRouteIsRegistration,
 		} = this.props;
 		return (
 			<div>
@@ -58,6 +59,7 @@ class App extends Component {
 					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
 					reactRouter={reactRouter}
+					currentRouteIsRegistration={currentRouteIsRegistration}
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
@@ -121,6 +123,7 @@ function mapStateToProps (state) {
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
+		currentRouteIsRegistration: location.pathname === '/registrering' ? 'active' : '',
 	};
 }
 
