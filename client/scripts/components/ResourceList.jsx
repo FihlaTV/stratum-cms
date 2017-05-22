@@ -7,7 +7,7 @@ const ResourceList = ({ resources, inContainer, title = 'Dokument att ladda ner'
 		<ul>
 			{resources.map(({ title, filename, hasFile, fileType = 'other', fileUrl, description }) => (
 				<li key={title}>
-					<i className={`resource-icon resource-${fileType}`}></i>
+					<i className={`resource-icon resource-${fileType}`}/>
 					<a onClick={ReactGA.event({ category: 'Resources', action: 'Download', label: filename })} href={fileUrl}>{title}</a>
 					<p>{description}</p>
 				</li>
