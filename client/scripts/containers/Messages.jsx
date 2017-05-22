@@ -15,7 +15,7 @@ class Messages extends Component {
 			messages = [],
 			showCookieMessage,
 			dispatch,
-			...rest,
+			...rest // eslint-disable-line comma-dangle
 		} = this.props;
 
 		return (
