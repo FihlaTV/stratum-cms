@@ -34,9 +34,6 @@ describe('Tests for Resource component', () => {
 				<p>En annan fil!</p>
 			</li>
 		);
-		console.log(expected.props.children[1]);
 		expect(wrapper.contains(expected)).toEqual(true);
 	});
-	console.log(wrapper.debug());
-
 });
