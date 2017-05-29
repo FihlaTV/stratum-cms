@@ -131,9 +131,7 @@ exports = module.exports = function (req, res) {
 		if (page.image.exists) {
 			data.image = formatCloudinaryImage(page.image, page.imageDescription, { width: 750, crop: 'fill' });
 		}
-		// if (page.pageType === 'Page') {
 
-		// }
 		if (page.pageType === 'SubPage') {
 			data.parentPage = page.get('page').toObject();
 			delete data.parentPage._id;
