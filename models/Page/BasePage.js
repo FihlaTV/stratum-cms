@@ -98,7 +98,7 @@ BasePage.add({
 	lead: {
 		type: Types.Textarea,
 		label: 'Lead text',
-		collapse: true,
+		collapse: false,
 		note: 'This is text is used as a introductory text to the rest of the page content. Placed above the reqular content',
 	},
 	content: {
