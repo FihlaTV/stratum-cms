@@ -121,6 +121,28 @@ img.navbar-brand-image-small{
 	// }
 	.navbar-upper {
 		.clearfix();
+		.navbar-right{
+			.stratum-cms-modern &{
+				margin-right: -8px;
+				margin-top: 11px;
+				> li > a {
+						text-transform: @navbar-main-text-transform;
+						font-family:    @navbar-main-font-family;
+						font-size:      @navbar-main-font-size;
+						font-weight:    @navbar-main-font-weight;
+						color:        	@brand-primary;
+						background:   	@body-bg;
+						padding-top:    @navbar-main-padding-vertical;
+						padding-bottom: @navbar-main-padding-vertical;
+						border-radius: 3px;
+						border: none;
+						&:hover {
+							background: @navbar-main-link-hover-bg;
+							color:      @navbar-main-link-hover-color;
+						}
+				}
+			}
+		}
 		.navbar-nav{
 			> li {
 				.nav-button-text-big, .nav-button-text-small{
