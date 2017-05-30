@@ -170,20 +170,22 @@ export function startWidget (target, widget, queryString, callback = () => {}) {
 	Stratum.containers[widget] = target;
 	initializeExtJS();
 	Ext.tip.QuickTipManager.init();
-	loadEnvironment(function () {
-		const targetNode = document.getElementById(target);
-		// console.log('@before script inject ---- \ntarget: %s, target-in-dom: %o, widget: %s, stratum-target: %s\nAll equal: %o',
-		// 	target,
-		// 	targetNode,
-		// 	widget,
-		// 	Stratum.containers[widget],
-		// 	target === Stratum.containers[widget] && !!targetNode
-		// );
-		if (targetNode) {
-			inject(['/stratum/api/widgets/' + widget + queryString], callback);
-		} else {
-			callback({ cancelled: true, success: false });
-		}
+	Ext.onReady(function () {
+		loadEnvironment(function () {
+			const targetNode = document.getElementById(target);
+			// console.log('@before script inject ---- \ntarget: %s, target-in-dom: %o, widget: %s, stratum-target: %s\nAll equal: %o',
+			// 	target,
+			// 	targetNode,
+			// 	widget,
+			// 	Stratum.containers[widget],
+			// 	target === Stratum.containers[widget] && !!targetNode
+			// );
+			if (targetNode) {
+				inject(['/stratum/api/widgets/' + widget + queryString], callback);
+			} else {
+				callback({ cancelled: true, success: false });
+			}
+		});
 	});
 }
 /**
