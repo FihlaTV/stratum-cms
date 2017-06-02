@@ -7,6 +7,7 @@ import menu from './menu';
 import page from './page';
 import error from './error';
 import faq from './faq';
+import scrollbutton from './scrollbutton';
 import registerInformation from './registerInformation';
 import startPage from './startPage';
 import breadcrumbs from './breadcrumbs';
@@ -28,4 +29,5 @@ export default combineReducers({
 	registerInformation,
 	breadcrumbs,
 	startPage,
+	scrollbutton,
 });
