@@ -45,7 +45,9 @@ class App extends Component {
 			logout,
 			contextIsVisible,
 			reactRouter,
+			currentRoute,
 		} = this.props;
+		const currentRouteIsRegistration = currentRoute.pathname === '/registrering' ? 'active' : '';
 		return (
 			<div>
 				<TopNav
@@ -58,6 +60,7 @@ class App extends Component {
 					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
 					reactRouter={reactRouter}
+					currentRouteIsRegistration={currentRouteIsRegistration}
 				/>
 				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
@@ -121,6 +124,7 @@ function mapStateToProps (state) {
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
+		currentRoute: state.routing.locationBeforeTransitions,
 	};
 }
 
