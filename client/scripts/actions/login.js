@@ -78,7 +78,9 @@ export function changeContext (roleId, unitId, contexts) {
 			.then(json => {
 				if (json.success) {
 					// Stratum Update
-					window.location.reload();
+					if (location.pathname !== '/registrering') {
+						window.location.reload();
+					}
 
 					if (typeof window.assignProfileContext !== 'undefined') {
 						window.assignProfileContext(context);
