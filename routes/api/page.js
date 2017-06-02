@@ -23,7 +23,7 @@ exports = module.exports = function (req, res) {
 				.populate('contacts', 'name note title email phone image')
 				.populate('resources')
 				.populate('widget')
-				.populate('page', 'shortId title slug')
+				.populate('page', 'shortId title slug registerSpecific')
 				.select([
 					'shortId', 'title', 'subtitle', 'slug', 'pageType', 'widget', 'resourcePlacement',
 					'lead', 'content.html', 'layout', 'contentType', 'displayPrintButton', 'extraImage',
@@ -31,8 +31,29 @@ exports = module.exports = function (req, res) {
 				].join(' '))
 				.exec(function (err, page) {
 					context.widget = page && page.widget;
+					context.page = page;
 					return next(err, page);
 				});
+		},
+		menu: function (next) {
+			if (context.page && context.page.pageType === 'Page') {
+				keystone.list('Page').model
+				.findOne()
+				.where('_id', context.page.id)
+				.populate('menu')
+				.exec(next);
+			}
+			else if (context.page && context.page.pageType === 'SubPage') {
+				var parentID = context.page.get('page').id;
+				if (parentID) {
+					keystone.list('Page').model
+					.findOne()
+					.where('_id', parentID)
+					.populate('menu')
+					.exec(next);
+				} else next();
+			}
+			else next();
 		},
 		widget: function (next) {
 			if (!context.widget) {
@@ -58,6 +79,11 @@ exports = module.exports = function (req, res) {
 		},
 	}, function (err, results) {
 		var page = results.page;
+
+		if (results.menu && results.menu.menu && results.menu.menu.registerSpecific && !locals.registerLoggedIn) {
+			page = undefined;
+		}
+
 		if (err || !page) {
 			return res.apiResponse({
 				success: false,
@@ -105,6 +131,7 @@ exports = module.exports = function (req, res) {
 		if (page.image.exists) {
 			data.image = formatCloudinaryImage(page.image, page.imageDescription, { width: 750, crop: 'fill' });
 		}
+
 		if (page.pageType === 'SubPage') {
 			data.parentPage = page.get('page').toObject();
 			delete data.parentPage._id;
