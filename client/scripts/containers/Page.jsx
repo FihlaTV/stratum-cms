@@ -38,6 +38,17 @@ const WidgetContainer = ({
 		return null;
 	}
 	const { title, name, description, type, queryString, widgetSlug, advancedSettings, key, ...widgetProps } = widget;
+	var extraWidgetProperties;
+	if (type === 'keystone' && advancedSettings) {
+		try {
+			extraWidgetProperties = JSON.parse(advancedSettings);
+			if (extraWidgetProperties) {
+				Object.assign(widgetProps, extraWidgetProperties);
+			}
+		}
+		catch (e) { // ignore
+		}
+	}
 	return (
 		<div {...props}>
 			{!hideMetadata && <h2>{title}</h2>}
