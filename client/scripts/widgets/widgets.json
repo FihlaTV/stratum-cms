@@ -1,94 +1,140 @@
 {
 	"BOAArtrosSkola": {
 		"id": "BOAArtrosSkola",
-		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
+    "url": "/stratum/api/statistics/BOA/boaw-unique-active-units?APIKey=bK3H9bwaG4o%3D",
+		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till.",
+    "format": "0"
 	},
 	"LVRAndelKOL": {
 		"id": "LVRAndelKOL",
-		"description": "Andel registrerade patienter med diagnosen KOL i öppenvård som röker."
+    "url": "/stratum/api/statistics/lvr/jumbotroner?nr=1&APIKey=bK3H9bwaG4o=",
+		"description": "Andel registrerade patienter med diagnosen KOL i öppenvård som röker.",
+    "format": "0.0 %"
 	},
 	"LVRAndelKOLSV": {
 		"id": "LVRAndelKOLSV",
-		"description": "Andel registrerade patienter med diagnosen KOL i inneliggande som röker."
+    "url": "/stratum/api/statistics/lvr/jumbotroner?nr=3&APIKey=bK3H9bwaG4o=",
+		"description": "Andel registrerade patienter med diagnosen KOL i inneliggande som röker.",
+    "format": "0.0 %"
 	},
 	"LVRAndelAstma": {
 		"id": "LVRAndelAstma",
-		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård."
+    "url": "/stratum/api/statistics/lvr/jumbotroner?nr=2&APIKey=bK3H9bwaG4o=",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård.",
+    "format": "0.0 %"
 	},
 	"LVRAndelAstma18": {
 		"id": "LVRAndelAstma18",
-		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård under 18."
+    "url": "/stratum/api/statistics/lvr/jumbotroner?nr=4&APIKey=bK3H9bwaG4o=",
+		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård under 18.",
+    "format": "0.0 %"
 	},
 	"BOAAndel": {
 		"id": "BOAAndel",
-		"description": "En beskrivning som förklarar den här widgeten..."
+    "url": "/stratum/api/aggregate/BOA/FirstVisitPatient/Total/count?APIKey=bK3H9bwaG4o%3D",
+		"description": "En beskrivning som förklarar den här widgeten...",
+    "format": "0"
 	},
 	"HNSVSign": {
 		"id": "HNSVSign",
-		"description": "En beskrivning som förklarar den här widgeten..."
+    "url": "/stratum/api/aggregate/hnsv/hnsvmap/total/share(ASignLanguage(1))?APIKey=bK3H9bwaG4o%3D",
+		"description": "En beskrivning som förklarar den här widgeten...",
+    "format": "0.0 %"
 	},
 	"HNSVPirs": {
 		"id": "HNSVPirs",
-		"description": "Hörselnedsättningens påverkan på dagligt liv. Medelvärde."
+    "url": "/stratum/api/statistics/hnsv/pirsny?simple=1&apikey=bK3H9bwaG4o=",
+		"description": "Hörselnedsättningens påverkan på dagligt liv. Medelvärde.",
+    "format": "0.0"
 	},
   "HNSBChildrenNew": {
     "id": "HNSBChildrenNew",
-    "description": "Antalet registrerade barn i registrets nyregistreringsdel."
+    "url": "/stratum/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o=",
+    "description": "Antalet registrerade barn i registrets nyregistreringsdel.",
+    "format": "0"
 	},
   "HNSBCI": {
     "id": "HNSBCI",
-    "description": "Antalet individer i registret som blivit CI-opererade."
+    "url": "/stratum/api/aggregate/hnsb/hnsbci/total/subjectcount?APIKey=bK3H9bwaG4o=",
+    "description": "Antalet individer i registret som blivit CI-opererade.",
+    "format": "0"
 	},
   "MYRPostTotal": {
     "id": "MYRPostTotal",
-    "description": "Antal registreringar totalt i registret."
+    "url": "/stratum/api/aggregate/myr/myrosspost/total/count?APIKey=bK3H9bwaG4o=",
+    "description": "Antal registreringar totalt i registret.",
+    "format": "0"
 	},
   "RORHearingTest": {
     "id": "RORHearingTest",
-    "description": "Andel patienter med SOM som hörselprovats före rörinsättning."
+    "url": "/stratum/api/aggregate/ror/rorpre/total/share(PreHearingTest(1))?PreOpIndic=1&APIKey=bK3H9bwaG4o=",
+    "description": "Andel patienter med SOM som hörselprovats före rörinsättning.",
+    "format": "0.0 %"
 	},
   "RORSatInfo": {
     "id": "RORSatInfo",
-    "description": "Andel anhöriga som är nöjda med information före rörinsättning."
+    "url": "/stratum/api/aggregate/ror/rorpost6/total/share(Post6SatInfo(2,3))?APIKey=bK3H9bwaG4o=",
+    "description": "Andel anhöriga som är nöjda med information före rörinsättning.",
+    "format": "0.0 %"
 	},
   "SEPOps": {
     "id": "SEPOps",
-    "description": "Antal registrerade septumoperationer totalt i registret."
+    "url": "/stratum/api/aggregate/sep/seppost/total/count?APIKey=bK3H9bwaG4o=",
+    "description": "Antal registrerade septumoperationer totalt i registret.",
+    "format": "0"
 	},
   "HNSVRehabTotal": {
     "id": "HNSVRehabTotal",
-    "description": "Andel som fått utvidgad rehabilitering."
+    "url": "/stratum/api/statistics/hnsv/rehab?simple=1&APIKey=bK3H9bwaG4o=",
+    "description": "Andel som fått utvidgad rehabilitering.",
+    "format": "0.0 %"
   },
   "HNSVCI": {
     "id": "HNSVCI",
-    "description": "Andel som har kokleaimplantat."
+    "url": "/stratum/api/statistics/hnsv/implantat?simple=1&APIKey=bK3H9bwaG4o=",
+    "description": "Andel som har kokleaimplantat.",
+    "format": "0.0 %"
   },
   "HNSVSat": {
     "id": "HNSVSat",
-    "description": "Upplever god nytta av hörselvårdens insatser."
+    "url": "/stratum/api/statistics/hnsv/nytta?simple=1&APIKey=bK3H9bwaG4o=",
+    "description": "Upplever god nytta av hörselvårdens insatser.",
+    "format": "0.0 %"
   },
   "HNSVBaseRegistrations": {
     "id": "HNSVBaseRegistrations",
-    "description": "Antal registrerade Baseline-enkäter totalt i registret."
+    "url": "/stratum/api/aggregate/hnsv/hnsvbase/total/count?APIKey=bK3H9bwaG4o=",
+    "description": "Antal registrerade Baseline-enkäter totalt i registret.",
+    "format": "0"
   },
   "RORImproved": {
     "id": "RORImproved",
-    "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
+    "url": "/stratum/api/statistics/ror/improved?APIKey=bK3H9bwaG4o=",
+    "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt",
+    "format": "0.0 %"
   },
   "RORVentetid": {
     "id": "RORVentetid",
-    "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
+    "url": "/stratum/api/statistics/ror/ventetid?APIKey=bK3H9bwaG4o=",
+    "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor",
+    "format": "0.0 %"
   },
   "FONOForbettring": {
     "id": "FONOForbettring",
-    "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
+    "url": "/stratum/api/statistics/fono/forbettring?APIKey=bK3H9bwaG4o=",
+    "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation",
+    "format": "0.0 %"
   },
   "FONOPatientenket": {
     "id": "FONOPatientenket",
-    "description": "Andel svar på patientenkät cirka 4 månader efter operation"
+    "url": "/stratum/api/statistics/fono/patientenket?APIKey=bK3H9bwaG4o=",
+    "description": "Andel svar på patientenkät cirka 4 månader efter operation",
+    "format": "0.0 %"
   },
   "SPOQTotal": {
     "id": "SPOQTotal",
-    "description": "Totalt antal patienter i spoq"
+    "url": "/stratum/api/statistics/spoq/jumbotron?apikey=bK3H9bwaG4o=",
+    "description": "Totalt antal patienter i spoq",
+    "format": "0"
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import widgets from '../widgets/';
 
 class WidgetWrapper extends Component {
@@ -7,15 +7,16 @@ class WidgetWrapper extends Component {
 		this.state = {};
 	}
 	render () {
-		const Widget = widgets[this.props.id];
+		var Widget = widgets[this.props.id];
+		if (!Widget) Widget = widgets.DefaultWidget;
 		return Widget ? (
 			<Widget {...this.props}>{this.props.children}</Widget>
 		) : null;
 	}
 }
 
-WidgetWrapper.propTypes = {
-	id: PropTypes.oneOf(Object.keys(widgets)).isRequired,
-};
+// WidgetWrapper.propTypes = {
+// 	id: PropTypes.oneOf(Object.keys(widgets)).isRequired,
+// };
 
 export default WidgetWrapper;

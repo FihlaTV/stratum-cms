@@ -25,12 +25,12 @@ const WidgetContainer = ({ link, linkText, linkType, page, children, wide, wideJ
 
 const StartPageWidget = (props) =>
 {
-	const { digit, description, keystoneWidget } = props;
+	const { digit, description, keystoneWidget, url, format } = props;
 
 	if (keystoneWidget) {
 		return (
 			<WidgetContainer {...props}>
-				<WidgetWrapper id={keystoneWidget} description={description} />
+				<WidgetWrapper id={keystoneWidget} description={description} url={url} format={format} />
 			</WidgetContainer>
 		);
 	}

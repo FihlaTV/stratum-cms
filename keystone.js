@@ -121,7 +121,7 @@ var nav = {
 	// Hide users from menu for now
 	// 'users': 'users',
 
-	'widgets': ['widgets', 'start-page-widgets'],
+	'widgets': ['widgets', 'start-page-widgets', 'keystone-widgets'],
 };
 
 // Portal specific menu items

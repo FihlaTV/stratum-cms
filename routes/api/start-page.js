@@ -115,11 +115,13 @@ exports = module.exports = function (req, res) {
 						&& widget.widget && widget.widget.type === 'keystone') {
 					keystone.list('KeystoneWidget').model
 						.findOne()
-						.select('name')
+						.select('name url format')
 						.where('_id', widget.widget.keystoneWidget)
 						.exec(function (err, kWidget) {
 							if (!err && kWidget) {
 								widget.keystoneWidget = kWidget.name;
+								widget.url = kWidget.url;
+								widget.format = kWidget.format;
 							}
 							cb(err);
 						});
