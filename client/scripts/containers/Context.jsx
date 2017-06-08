@@ -8,9 +8,9 @@ import ContextSyncButton from '../components/ContextSyncButton';
 class Context extends Component {
 	componentDidMount () {}
 	componentWillReceiveProps (nextProps) {
-		const { contexts, inRole, inUnit, dispatch, firstTime } = nextProps;
+		const { contexts, inRole, inUnit, dispatch } = nextProps;
 		if (this.props.contexts !== contexts) {
-			dispatch(initContextSelector(contexts, inRole, inUnit, firstTime && !this.props.firstTime));
+			dispatch(initContextSelector(contexts, inRole, inUnit));
 		}
 	}
 	render () {
@@ -25,7 +25,6 @@ class Context extends Component {
 			onFirstAccept,
 			inRole,
 			inUnit,
-			firstTime,
 			requireChange,
 			onSubmit,
 			initial,
@@ -66,7 +65,7 @@ class Context extends Component {
 							disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole}
 							isSyncing={isSyncing}
 							onClick={() => {
-								onSubmit(currentRole, currentUnit, firstTime);
+								onSubmit(currentRole, currentUnit);
 							}}>
 							{requireChange ? 'Acceptera' : 'Byt'}
 						</ContextSyncButton>}

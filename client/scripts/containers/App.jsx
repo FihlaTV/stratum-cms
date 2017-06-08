@@ -33,7 +33,6 @@ class App extends Component {
 			wrongRegister,
 			setContext,
 			setContextTarget,
-			initial,
 			timeleft,
 			onTimeleftDismiss,
 			showTimeleft,
@@ -70,10 +69,9 @@ class App extends Component {
 					target={contextTarget}
 					inUnit={context && context.Unit.UnitID}
 					inRole={context && context.Role.RoleID}
-					firstTime={initial}
 					onLogout={logout}
-					onSubmit={(role, unit, forceReload) => {
-						setContext(role, unit, contexts, forceReload);
+					onSubmit={(role, unit) => {
+						setContext(role, unit, contexts);
 					}
 					}
 					onCancel={() => showContextModal(false)}
@@ -98,8 +96,8 @@ function mapDispatchToProps (dispatch) {
 		logout: () => {
 			dispatch(logoutFromStratum());
 		},
-		setContext: (role, unit, contexts, forceReload) => {
-			dispatch(changeContext(role, unit, contexts, forceReload));
+		setContext: (role, unit, contexts) => {
+			dispatch(changeContext(role, unit, contexts));
 		},
 		onTimeleftDismiss: (timeleft) => {
 			dispatch(dismissTimeleft(timeleft));

@@ -52,7 +52,7 @@ function setContext (context) {
 	};
 }
 
-export function changeContext (roleId, unitId, contexts, forceReload) {
+export function changeContext (roleId, unitId, contexts) {
 
 	return (dispatch, getState) => {
 		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
@@ -78,9 +78,10 @@ export function changeContext (roleId, unitId, contexts, forceReload) {
 			.then(json => {
 				if (json.success) {
 					// Stratum Update
-					if (forceReload) {
+					if (location.pathname !== '/registrering') {
 						window.location.reload();
 					}
+
 					if (typeof window.assignProfileContext !== 'undefined') {
 						window.assignProfileContext(context);
 					}
