@@ -219,3 +219,10 @@ exports.requireUser = function (req, res, next) {
 		next();
 	}
 };
+
+exports.redirectOldBrowsers = function (req, res, next) {
+	if (req.headers['user-agent'].indexOf('MSIE') !== -1 && req.headers['user-agent'].indexOf('MSIE 1') === -1 && req.originalUrl !== '/unsupported.html') {
+		res.redirect('/unsupported.html');
+	}
+	else next();
+};
