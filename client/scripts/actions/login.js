@@ -450,9 +450,11 @@ export function checkTimeleft (repeatAfter) {
 			.then(json => {
 				if (json.success) {
 					const timeleft = json.data;
-					dispatch(setTimeleft(timeleft));
 					if (timeleft <= 0) {
 						window.location.replace('\?loggedout');
+					}
+					else {
+						dispatch(setTimeleft(timeleft));
 					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {
