@@ -112,13 +112,13 @@ function mapDispatchToProps (dispatch) {
 }
 function mapStateToProps (state) {
 	return {
-		context: window.location.href.indexOf('loggedout') < 0 ? state.login.context : undefined,
+		context: state.login.context,
 		contextIsLoading: state.login.contextIsLoading,
 		initial: state.login.initial,
 		contexts: state.login.contexts,
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
-		showTimeleft: state.login.showTimeleft || window.location.href.indexOf('loggedout') > 0,
+		showTimeleft: state.login.showTimeleft,
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,

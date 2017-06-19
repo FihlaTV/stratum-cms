@@ -451,7 +451,7 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					if (timeleft <= 0) {
-						window.location.replace('\?loggedout');
+						window.location.replace('\logout');
 					}
 					else {
 						dispatch(setTimeleft(timeleft));
