@@ -1,9 +1,9 @@
 import React from 'react';
-import Icon from 'react-fontawesome';
+import Icon from './Icon';
 
 const PrintButton = () => (
 	<a href="#print" onClick={(e) => { e.preventDefault(); window.print(); }} className="print-button">
-		<Icon name="print" />
+		<Icon name="print"/>
 	</a>
 );
 
