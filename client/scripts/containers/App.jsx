@@ -46,7 +46,7 @@ class App extends Component {
 			reactRouter,
 			currentRoute,
 		} = this.props;
-		const currentRouteIsRegistration = currentRoute && currentRoute.pathname === '/registrering' ? 'active' : '';
+		var currentRouteIsRegistration = currentRoute === '/registrering' ? 'active' : '';
 		const modifiedShowTimeLeft = showTimeleft || (window.location.href.indexOf('loggedout') > 0 && !(timeleft > 0));
 		return (
 			<div>
@@ -123,6 +123,7 @@ function mapStateToProps (state) {
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
+		currentRoute: state.routing.locationBeforeTransitions.pathname,
 	};
 }
 
