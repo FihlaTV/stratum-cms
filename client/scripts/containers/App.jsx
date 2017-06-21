@@ -46,7 +46,8 @@ class App extends Component {
 			reactRouter,
 			currentRoute,
 		} = this.props;
-		const currentRouteIsRegistration = currentRoute.pathname === '/registrering' ? 'active' : '';
+		const currentRouteIsRegistration = currentRoute && currentRoute.pathname === '/registrering' ? 'active' : '';
+		const modifiedShowTimeLeft = showTimeleft || (window.location.href.indexOf('loggedout') > 0 && !(timeleft > 0));
 		return (
 			<div>
 				<TopNav
@@ -61,7 +62,7 @@ class App extends Component {
 					reactRouter={reactRouter}
 					currentRouteIsRegistration={currentRouteIsRegistration}
 				/>
-				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
+				<TimeLeftDialog show={modifiedShowTimeLeft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
 				<Context
 					contexts={contexts}
@@ -112,13 +113,13 @@ function mapDispatchToProps (dispatch) {
 }
 function mapStateToProps (state) {
 	return {
-		context: window.location.href.indexOf('loggedout') < 0 ? state.login.context : undefined,
+		context: state.login.context,
 		contextIsLoading: state.login.contextIsLoading,
 		initial: state.login.initial,
 		contexts: state.login.contexts,
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
-		showTimeleft: state.login.showTimeleft || window.location.href.indexOf('loggedout') > 0,
+		showTimeleft: state.login.showTimeleft,
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
