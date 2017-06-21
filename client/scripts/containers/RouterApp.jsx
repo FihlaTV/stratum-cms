@@ -8,8 +8,8 @@ import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
 import Messages from './Messages';
-import ScrollButton from '../components/scrollbutton';
-import { showScrollButton } from '../actions/scrollbutton';
+// import ScrollButton from '../components/scrollbutton';
+// import { showScrollButton } from '../actions/scrollbutton';
 
 const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 	if (hasGrid) {
@@ -37,9 +37,9 @@ class App extends Component {
 		if (nextProps.error.status && this.props.location.pathname !== '/404') {
 			this.props.router.push('/404');
 		}
-		const { dispatch } = this.props;
-		const pageIsCropped = document.body.scrollHeight > window.innerHeight;
-		dispatch(showScrollButton(pageIsCropped));
+		// const { dispatch } = this.props;
+		// const pageIsCropped = document.body.scrollHeight > window.innerHeight;
+		// dispatch(showScrollButton(pageIsCropped));
 	}
 
 	render () {
@@ -49,16 +49,16 @@ class App extends Component {
 			registerInformation,
 			breadcrumbs,
 			location,
-			showScrollButton,
+			//showScrollButton,
 		} = this.props;
-
+		// const pageIsCropped = document.body.scrollHeight > window.innerHeight;
 		return location.pathname === '/404' ? children : (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
 				<Menu items={menuItems}/>
 				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
-					{showScrollButton && <ScrollButton/>}
+					{/* showScrollButton && pageIsCropped && <ScrollButton/> */}
 				</MainContainer>
 				<Footer {...registerInformation}/>
 			</div>
