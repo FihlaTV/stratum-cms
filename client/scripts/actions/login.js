@@ -451,8 +451,10 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
+
 					if (timeleft <= 0) {
-						window.location.replace('\?loggedout');
+						window.location.replace('?loggedout');
+						dispatch(logoutFromStratum());
 					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {
