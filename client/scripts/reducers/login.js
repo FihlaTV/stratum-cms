@@ -16,7 +16,7 @@ import {
 	UPDATE_SITHS_NEW_CARD,
 	} from '../actions/login';
 
-const { CLIENT_DEMO_USERNAME } = process.env;
+const { CLIENT_DEMO_USERNAME, CLIENT_EXTERNAL_LOGIN, CLIENT_EXTERNAL_LOGIN_LABEL } = process.env;
 
 const demoUser = CLIENT_DEMO_USERNAME;
 
@@ -33,6 +33,14 @@ const initialState = {
 	},
 	demoUser,
 };
+
+// Adds the ability to insert external registration login.
+if (CLIENT_EXTERNAL_LOGIN) {
+	initialState.externalLogin = {
+		label: CLIENT_EXTERNAL_LOGIN_LABEL,
+		link: CLIENT_EXTERNAL_LOGIN,
+	};
+}
 
 export default (state = initialState, action) => {
 	switch (action.type) {

@@ -14,6 +14,19 @@ const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
 	return <a href="/registrering" className={className} {...props}>{children}</a>;
 };
 
+const NavParent = ({ children }) => (
+	<ul className="nav navbar-nav navbar-right">
+		{children}
+	</ul>
+);
+
+const LoginButton = ({ onClick, label, externalLink }) => (
+	<li>
+		<a href={externalLink || '#'} onClick={onClick}>{label}</a>
+	</li>
+);
+
+
 const TopNav = ({
 	loading,
 	context,
@@ -25,6 +38,8 @@ const TopNav = ({
 	showLoginModal,
 	reactRouter,
 	currentRouteIsRegistration,
+	loginButtonLabel = 'Logga in',
+	externalLogin,
 }) => {
 	const spinnerStyle = {
 		display: loading ? 'block' : 'none',
@@ -33,9 +48,16 @@ const TopNav = ({
 		right: '10px',
 	};
 	const visibility = loading ? { visibility: 'hidden' } : {};
+	if (externalLogin) {
+		return (
+			<NavParent>
+				<LoginButton label={loginButtonLabel} externalLink={externalLogin}/>
+			</NavParent>
+		);
+	}
 	if (loading || context || wrongRegister) {
 		return (
-			<ul className="nav navbar-nav navbar-right">
+			<NavParent>
 				<Spinner small style={spinnerStyle}/>
 				<li style={visibility} className={currentRouteIsRegistration}>
 					<RegistrationLink disabled={wrongRegister} reactRouter={reactRouter}>
@@ -55,19 +77,18 @@ const TopNav = ({
 						}}
 					/>
 				</li>
-			</ul>
+			</NavParent>
 		);
 	}
 	return (
-		<ul className="nav navbar-nav navbar-right">
-			<li>
-				<a href="#" onClick={showLoginModal}>Logga in</a>
-			</li>
-		</ul>
+		<NavParent>
+			<LoginButton label={loginButtonLabel} onClick={showLoginModal} />;
+		</NavParent>
 	);
 };
 
 TopNav.propTypes = {
+	externalLogin: PropTypes.string,
 	reactRouter: PropTypes.bool,
 };
 

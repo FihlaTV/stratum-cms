@@ -3,6 +3,7 @@ import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { IndexLink } from 'react-router';
 import UserContext from '../containers/App';
+import TopNav from './TopNav';
 
 function formatMenu (menuItems, level = 0) {
 	return menuItems.reduce((prev, menuItem, i, arr) => {
@@ -76,7 +77,9 @@ function getLinkContents (item, level, desktop = false) {
 
 const Menu = ({
 	items,
+	externalLogin = {},
 }) => {
+	const { label, link } = externalLogin;
 	return (
 		<Navbar className="navbar-big navbar-big-tabbed" staticTop fluid>
 			<div className="navbar-header-container">
@@ -99,7 +102,10 @@ const Menu = ({
 					</div>
 				</div>
 				<div className="navbar-upper">
-					<UserContext reactRouter/>
+					{link
+						? <TopNav externalLogin={link} loginButtonLabel={label}/>
+						: <UserContext reactRouter/>
+					}
 				</div>
 			</Navbar.Collapse>
 		</Navbar>
