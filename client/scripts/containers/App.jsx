@@ -33,6 +33,7 @@ class App extends Component {
 			wrongRegister,
 			setContext,
 			setContextTarget,
+			initial,
 			timeleft,
 			onTimeleftDismiss,
 			showTimeleft,
@@ -70,6 +71,7 @@ class App extends Component {
 					target={contextTarget}
 					inUnit={context && context.Unit.UnitID}
 					inRole={context && context.Role.RoleID}
+					firstTime={initial}
 					onLogout={logout}
 					onSubmit={(role, unit) => {
 						setContext(role, unit, contexts);
