@@ -25,7 +25,6 @@ class Context extends Component {
 			onFirstAccept,
 			inRole,
 			inUnit,
-			firstTime,
 			requireChange,
 			onSubmit,
 			initial,
