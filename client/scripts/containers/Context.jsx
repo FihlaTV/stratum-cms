@@ -8,9 +8,9 @@ import ContextSyncButton from '../components/ContextSyncButton';
 class Context extends Component {
 	componentDidMount () {}
 	componentWillReceiveProps (nextProps) {
-		const { contexts, inRole, inUnit, dispatch } = nextProps;
+		const { contexts, inRole, inUnit, dispatch, firstTime } = nextProps;
 		if (this.props.contexts !== contexts) {
-			dispatch(initContextSelector(contexts, inRole, inUnit));
+			dispatch(initContextSelector(contexts, inRole, inUnit, firstTime && !this.props.firstTime));
 		}
 	}
 	render () {
