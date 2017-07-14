@@ -3,21 +3,26 @@ import { Row, Jumbotron as BootstrapJumbotron, Grid, Col } from 'react-bootstrap
 import NewsLink from './NewsLink';
 import StartPageWidget from './StartPageWidget';
 
-const WideJumbotron = ({ header, newsItem, resource, widgets }) => (
-	<Grid>
-		<Col md={8} sm={10}>
-			<h1>{header}</h1>
-			{newsItem && <NewsLink slug={newsItem.slug} className="jumbotron-news-link">{newsItem.label}</NewsLink>}
-			<hr/>
-			<Row>
-				{widgets.slice(0, 2).map((widget) =>
-					<StartPageWidget key={widget.slug} {...widget} wide wideJumbotron />
-				)}
-			</Row>
-			{resource && <a href={resource.url} target="_blank" className="jumbotron-resource-link">{resource.label}</a>}
-		</Col>
-	</Grid>
-);
+const WideJumbotron = ({ header, newsItem, resource, widgets }) => {
+	const manyWidgets = widgets.length > 2;
+	return (
+		<Grid>
+			<Col md={8} sm={10}>
+				<h1>{header}</h1>
+				{newsItem && <NewsLink slug={newsItem.slug} className="jumbotron-news-link">{newsItem.label}</NewsLink>}
+				<hr/>
+			</Col>
+			<Col sm={manyWidgets ? 12 : 10} md={manyWidgets ? 12 : 8}>
+				<Row>
+					{widgets.slice(0, 4).map((widget) =>
+						<StartPageWidget key={widget.slug} {...widget} wideJumbotron wide={!manyWidgets} />
+					)}
+				</Row>
+				{resource && <a href={resource.url} target="_blank" className="jumbotron-resource-link">{resource.label}</a>}
+			</Col>
+		</Grid>
+	);
+};
 
 const RegularJumbotron = ({ header, widgets, description }) => (
 	<div>
@@ -46,6 +51,9 @@ const Jumbotron = ({
 	let classNames = [];
 	if (isWide) {
 		classNames.push('jumbotron-wide');
+		if (widgets.length <= 2) {
+			classNames.push('jumbotron-wide-fixed-height');
+		}
 	}
 	if (portal) {
 		classNames.push('jumbotron-portal');
