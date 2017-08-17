@@ -38,6 +38,7 @@ keystone.pre('static', stratumProxy);
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('routes', middleware.initErrorHandlers);
+keystone.pre('routes', middleware.redirectOldBrowsers);
 keystone.pre('render', middleware.flashMessages);
 
 // Handle 404 errors

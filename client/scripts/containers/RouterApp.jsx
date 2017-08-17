@@ -8,6 +8,7 @@ import { Grid } from 'react-bootstrap';
 import { fetchMenuItems } from '../actions/menu';
 import { fetchRegisterInformation } from '../actions/registerInformation';
 import Messages from './Messages';
+import ScrollButton from '../components/scrollbutton';
 
 const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 	if (hasGrid) {
@@ -29,12 +30,14 @@ class App extends Component {
 		const { dispatch } = this.props;
 		dispatch(fetchMenuItems());
 		dispatch(fetchRegisterInformation());
+
 	}
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.error.status && this.props.location.pathname !== '/404') {
 			this.props.router.push('/404');
 		}
 	}
+
 	render () {
 		const {
 			children,
@@ -43,13 +46,13 @@ class App extends Component {
 			breadcrumbs,
 			location,
 		} = this.props;
-
 		return location.pathname === '/404' ? children : (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
-				<Menu items={menuItems} tabLayout={process.env.CLIENT_THEME === 'modern'}/>
+				<Menu items={menuItems}/>
 				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
+					<ScrollButton/>
 				</MainContainer>
 				<Footer {...registerInformation}/>
 			</div>
@@ -64,6 +67,7 @@ function mapStateToProps (state, { location }) {
 		error: state.error,
 		registerInformation: state.registerInformation,
 		breadcrumbs: state.breadcrumbs.items,
+		showScrollButton: state.scrollbutton.show,
 	};
 }
 

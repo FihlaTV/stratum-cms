@@ -143,6 +143,7 @@ class Page extends Component {
 		}
 		return undefined;
 	}
+
 	render () {
 		const {
 			page = {},
@@ -167,6 +168,7 @@ class Page extends Component {
 			state,
 		} = page;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
+
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
@@ -196,6 +198,7 @@ class Page extends Component {
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
 					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
+
 				</Col>
 			</Row>
 		);

@@ -52,7 +52,7 @@ function setContext (context) {
 	};
 }
 
-export function changeContext (roleId, unitId, contexts, forceReload) {
+export function changeContext (roleId, unitId, contexts) {
 
 	return (dispatch, getState) => {
 		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
@@ -78,9 +78,10 @@ export function changeContext (roleId, unitId, contexts, forceReload) {
 			.then(json => {
 				if (json.success) {
 					// Stratum Update
-					if (forceReload) {
+					if (location.pathname !== '/registrering') {
 						window.location.reload();
 					}
+
 					if (typeof window.assignProfileContext !== 'undefined') {
 						window.assignProfileContext(context);
 					}
@@ -450,8 +451,10 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
+
 					if (timeleft <= 0) {
-						window.location.replace('\?loggedout');
+						window.location.replace('?loggedout');
+						dispatch(logoutFromStratum());
 					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {

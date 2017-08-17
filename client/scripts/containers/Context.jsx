@@ -25,7 +25,6 @@ class Context extends Component {
 			onFirstAccept,
 			inRole,
 			inUnit,
-			firstTime,
 			requireChange,
 			onSubmit,
 			initial,
@@ -66,7 +65,7 @@ class Context extends Component {
 							disabled={!currentUnit || inUnit === currentUnit && inRole === currentRole}
 							isSyncing={isSyncing}
 							onClick={() => {
-								onSubmit(currentRole, currentUnit, firstTime);
+								onSubmit(currentRole, currentUnit);
 							}}>
 							{requireChange ? 'Acceptera' : 'Byt'}
 						</ContextSyncButton>}
