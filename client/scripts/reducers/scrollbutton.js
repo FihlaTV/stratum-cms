@@ -1,7 +1,7 @@
 import { SHOW_SCROLL_BUTTON } from '../actions/scrollbutton';
 const initialState = {
 	show: true,
- };
+};
 
 export default (state = initialState, action) => {
 	switch (action.type) {
