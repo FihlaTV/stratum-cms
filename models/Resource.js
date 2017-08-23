@@ -26,7 +26,7 @@ if (USE_AZURE) {
 		adapter: azure,
 		azure: {
 			generateFilename: (filename) => {
-				var extension = USE_AZURE ? path.extname(filename).toLowerCase() : ('.' + filename.extension);
+				var extension = path.extname(filename).toLowerCase();
 				return `r/${filename.originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
 			},
 			container: keystone.get('brand safe'),
