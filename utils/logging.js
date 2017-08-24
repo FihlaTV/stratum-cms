@@ -1,9 +1,9 @@
-var winston = require('winston');
-var expressLogger = require('express-winston').logger;
+const winston = require('winston');
+const expressLogger = require('express-winston').logger;
 
-var LOG_LEVEL = process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'warn' : 'info');
+const LOG_LEVEL = process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'warn' : 'info');
 
-var transports = [
+const transports = [
 	new winston.transports.File({
 		name: 'Default',
 		filename: 'testlogs.log',
@@ -20,7 +20,7 @@ var transports = [
 	}),
 ];
 
-var winstonLogger = new (winston.Logger)({
+const winstonLogger = new (winston.Logger)({
 	transports: transports,
 	level: LOG_LEVEL,
 	handleExceptions: true,
