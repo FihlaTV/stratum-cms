@@ -23,7 +23,7 @@ const InputPersonalNr = ({
 			<div className={classNames.join(' ')}>
 				<label htmlFor="bankIDPersonalNr">Personnummer: </label>
 				<div className="input-group">
-					<span className="input-group-addon"><i className="fa fa-user"></i></span>
+					<span className="input-group-addon"><i className="fa fa-user" /></span>
 					<input
 						type="text"
 						className="form-control check-validation next-to-icon"
@@ -48,4 +48,4 @@ InputPersonalNr.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 };
 
- export default InputPersonalNr;
+export default InputPersonalNr;

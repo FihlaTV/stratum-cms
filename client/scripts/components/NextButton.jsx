@@ -16,4 +16,4 @@ NextButton.propTypes = {
 	onClick: PropTypes.func.isRequired,
 };
 
- export default NextButton;
+export default NextButton;

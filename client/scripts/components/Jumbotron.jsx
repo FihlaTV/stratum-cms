@@ -39,7 +39,7 @@ const Jumbotron = ({
 	newsItem,
 	resource,
 	portal,
-	...props,
+	...props
 }) => {
 	const isWide = type === 'wide';
 

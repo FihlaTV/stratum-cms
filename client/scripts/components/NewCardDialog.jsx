@@ -9,7 +9,7 @@ function FieldGroup ({ id, label, help, refInput, style, inputStyle, ...props })
 			<FormControl ref={refInput} style={inputStyle} {...props} />
 			{help && <HelpBlock>{help}</HelpBlock>}
 		</FormGroup>
-  );
+	);
 }
 
 const NewCardDialog = ({
@@ -68,4 +68,4 @@ NewCardDialog.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 };
 
- export default NewCardDialog;
+export default NewCardDialog;

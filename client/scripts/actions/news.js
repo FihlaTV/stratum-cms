@@ -6,8 +6,9 @@ export const CLEAR_NEWS_ARTICLE = 'CLEAR_NEWS_ARTICLE';
 
 function getYearlyCount (newsItems) {
 	return newsItems.reduce(
-		(prev, { publishedDate }) => {
-			const year = (new Date(publishedDate)).getFullYear();
+		(prev, { publishedDate, state }) => {
+			const year = state !== 'draft' ? (new Date(publishedDate)).getFullYear() : ' draft';
+
 			prev[year] = prev[year] || 0;
 			prev[year]++;
 			prev.all++;
@@ -32,7 +33,7 @@ export function fetchNewsItemsIfNeeded () {
 		if (news.fetchedItems) {
 			return;
 		}
-		return fetch('/api/news')
+		return fetch('/api/news', { credentials: 'include' })
        .then(res => res.json())
 		.then(json => {
 			if (json.success) {
@@ -61,7 +62,7 @@ export function getNewsArticle (nyhet, params) {
 		url += queryString;
 	}
 	return (dispatch) => {
-		return	fetch(url)
+		return	fetch(url, { credentials: 'include' })
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {

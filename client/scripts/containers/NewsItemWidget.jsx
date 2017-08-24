@@ -64,6 +64,6 @@ const mapDispatchToProps = (dispatch) => ({
 NewsItemWidget.propTypes = {
 	layout: PropTypes.oneOf(['smallImage', 'bigImage']),
 	slug: PropTypes.string,
- };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsItemWidget);

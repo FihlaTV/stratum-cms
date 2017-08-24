@@ -45,7 +45,10 @@ class App extends Component {
 			logout,
 			contextIsVisible,
 			reactRouter,
+			currentRoute,
 		} = this.props;
+		var currentRouteIsRegistration = currentRoute === '/registrering' ? 'active' : '';
+		const modifiedShowTimeLeft = showTimeleft || (window.location.href.indexOf('loggedout') > 0 && !(timeleft > 0));
 		return (
 			<div>
 				<TopNav
@@ -58,8 +61,9 @@ class App extends Component {
 					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
 					reactRouter={reactRouter}
+					currentRouteIsRegistration={currentRouteIsRegistration}
 				/>
-				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
+				<TimeLeftDialog show={modifiedShowTimeLeft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
 				<Login/>
 				<Context
 					contexts={contexts}
@@ -69,8 +73,8 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout}
-					onSubmit={(role, unit, forceReload) => {
-						setContext(role, unit, contexts, forceReload);
+					onSubmit={(role, unit) => {
+						setContext(role, unit, contexts);
 					}
 					}
 					onCancel={() => showContextModal(false)}
@@ -95,8 +99,8 @@ function mapDispatchToProps (dispatch) {
 		logout: () => {
 			dispatch(logoutFromStratum());
 		},
-		setContext: (role, unit, contexts, forceReload) => {
-			dispatch(changeContext(role, unit, contexts, forceReload));
+		setContext: (role, unit, contexts) => {
+			dispatch(changeContext(role, unit, contexts));
 		},
 		onTimeleftDismiss: (timeleft) => {
 			dispatch(dismissTimeleft(timeleft));
@@ -121,6 +125,7 @@ function mapStateToProps (state) {
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
+		currentRoute: state.routing.locationBeforeTransitions.pathname,
 	};
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 import ResourceList from '../scripts/components/ResourceList';
+import ReactGA from 'react-ga';
 
 describe('Tests for Resource component', () => {
 	const resources = [
@@ -20,6 +21,7 @@ describe('Tests for Resource component', () => {
 	];
 
 	const wrapper = shallow(<ResourceList resources={resources}/>);
+
 	it('Will contain a <h2>Dokument att ladda ner</h2>', () => {
 		expect(wrapper.contains(<h2>Dokument att ladda ner</h2>));
 	});
@@ -27,8 +29,8 @@ describe('Tests for Resource component', () => {
 	it('Will contain a <li> with the info of the first resource item.', () => {
 		const expected = (
 			<li>
-				<i className="resource-icon resource-image"></i>
-				<a href="/temp/r/En-annan-fil--r1JES6ZZl.jpg">En annan fil!</a>
+				<i className="resource-icon resource-image"/>
+				<a onClick={ReactGA.event({ category: 'Resources', action: 'Download', label: 'filename' })} href="/temp/r/En-annan-fil--r1JES6ZZl.jpg">En annan fil!</a>
 				<p>En annan fil!</p>
 			</li>
 		);

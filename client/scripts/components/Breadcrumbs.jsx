@@ -25,6 +25,6 @@ Breadcrumbs.propTypes = {
 		url: PropTypes.string.isRequired,
 		label: PropTypes.string.isRequired,
 	})),
- };
+};
 
 export default Breadcrumbs;

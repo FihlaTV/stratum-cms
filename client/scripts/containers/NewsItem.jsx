@@ -53,27 +53,28 @@ class NewsItem extends Component {
 	}
 
 	newsItem () {
-		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [], extraImages = [] } = this.props;
+		const { publishedDate, title, imageLayout, image, content = {}, author, resources = [], extraImages = [], state } = this.props;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
+		var publishedAt = publishedDate !== null ? moment(publishedDate).format('L') : 'Utkast';
 		return (
 			<div className="news-item-full">
 				<Row>
 					<Col md={8}>
-						<article className="base-page clearfix">
+						<article className={`base-page clearfix` + `${state === 'draft' ? ' draft draft-banner' : ''}`}>
 							<header>
-								<span className="published-at">{moment(publishedDate).format('L')}</span>
+								<span className="published-at">{publishedAt}</span>
 								<h1>{title}</h1>
 							</header>
 							{imageLayout === 'landscape' && image && this.landscape(image)}
 							<div className="post">
 								<p className="lead">{content.lead}</p>
-								{content.extended && <div dangerouslySetInnerHTML={{ __html: content.extended.html }}></div>}
+								{content.extended && <div dangerouslySetInnerHTML={{ __html: content.extended.html }} />}
 							</div>
 							{author && this.getAuthorComponent(author)}
 						</article>
 					</Col>
 					<Col md={4}>{imageLayout === 'portrait' && image && <DockedImages images={[image]} enlargeable wide={false} />}
-					{resources.length > 0 && <ResourceList	resources={resources} inContainer={isModernTheme}/>}
+						{resources.length > 0 && <ResourceList	resources={resources} inContainer={isModernTheme}/>}
 					</Col>
 					<Col md={4}>
 						<DockedImages imageSMCols={12} imageMDCols={12} images={extraImages} enlargeable/>

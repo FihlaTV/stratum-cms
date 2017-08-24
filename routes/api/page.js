@@ -9,22 +9,46 @@ exports = module.exports = function (req, res) {
 	};
 	var locals = res.locals || {};
 	var context = {};
+	var states = ['published'];
+	if (req.user && req.user.canAccessKeystone) {
+		states.push('draft');
+	}
 	async.series({
 		page: function (next) {
 			keystone.list('BasePage').model
-				.findOne()
+				.findOne({ state: { $in: states } })
 				.where('shortId', filters.shortId)
-				.where('state', 'published')
+
 				.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 				.populate('contacts', 'name note title email phone image')
 				.populate('resources')
 				.populate('widget')
-				.populate('page', 'shortId title slug')
-				.select('shortId title subtitle slug pageType widget resourcePlacement lead content.html layout contentType displayPrintButton extraImage contacts resources page image questionCategories sideArea')
+				.populate('page', 'shortId title slug registerSpecific')
 				.exec(function (err, page) {
 					context.widget = page && page.widget;
+					context.page = page;
 					return next(err, page);
 				});
+		},
+		menu: function (next) {
+			if (context.page && context.page.pageType === 'Page') {
+				keystone.list('Page').model
+				.findOne()
+				.where('_id', context.page.id)
+				.populate('menu')
+				.exec(next);
+			}
+			else if (context.page && context.page.pageType === 'SubPage') {
+				var parentID = context.page.get('page').id;
+				if (parentID) {
+					keystone.list('Page').model
+					.findOne()
+					.where('_id', parentID)
+					.populate('menu')
+					.exec(next);
+				} else next();
+			}
+			else next();
 		},
 		widget: function (next) {
 			if (!context.widget) {
@@ -50,6 +74,11 @@ exports = module.exports = function (req, res) {
 		},
 	}, function (err, results) {
 		var page = results.page;
+
+		if (results.menu && results.menu.menu && results.menu.menu.registerSpecific && !locals.registerLoggedIn) {
+			page = undefined;
+		}
+
 		if (err || !page) {
 			return res.apiResponse({
 				success: false,
@@ -78,23 +107,28 @@ exports = module.exports = function (req, res) {
 					description: contact.description,
 					email: contact.email,
 					phone: contact.phone,
-					image: formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }),
+					image: contact.image.exists ? formatCloudinaryImage(contact.image, null, { width: 160, height: 160, crop: 'thumb', gravity: 'face' }) : undefined,
 				};
 			}),
 			questionCategories: page.questionCategories,
-			resources: page.resources.map(function (resource) {
-				return {
-					title: resource.title,
-					description: resource.description,
-					fileUrl: resource.fileUrl,
-					fileType: resource.fileType,
-				};
-			}),
+			resources: page.resources
+				.filter(({ fileUrl }) => !!fileUrl)
+				.map(({ title, description, fileUrl, fileType, filename }) =>
+					({
+						title,
+						description,
+						fileUrl,
+						fileType,
+						filename,
+					})
+				),
 			sideArea: page.sideArea && page.sideArea.show && page.sideArea,
+			state: page.state,
 		};
 		if (page.image.exists) {
 			data.image = formatCloudinaryImage(page.image, page.imageDescription, { width: 750, crop: 'fill' });
 		}
+
 		if (page.pageType === 'SubPage') {
 			data.parentPage = page.get('page').toObject();
 			delete data.parentPage._id;

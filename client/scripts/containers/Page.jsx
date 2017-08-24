@@ -32,7 +32,7 @@ function queryStringToObject (queryString = '') {
 const WidgetContainer = ({
 	widget,
 	hideMetadata,
-	...props,
+	...props
 }) => {
 	if (!widget) {
 		return null;
@@ -51,8 +51,9 @@ const PageContainer = ({
 	loading,
 	children,
 	layout,
+	state,
 }) => (
-	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}`}>
+	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}` + ` ${state === 'draft' ? 'draft draft-banner' : ''}`}>
 		{loading ? null : children}
 	</article>
 );
@@ -142,6 +143,7 @@ class Page extends Component {
 		}
 		return undefined;
 	}
+
 	render () {
 		const {
 			page = {},
@@ -163,12 +165,14 @@ class Page extends Component {
 			resourcePlacement,
 			sideArea,
 			widget,
+			state,
 		} = page;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
+
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
-					<PageContainer loading={loading} layout={layout}>
+					<PageContainer loading={loading} layout={layout} state={state}>
 						<header>
 							<h1>{title}</h1>
 						</header>
@@ -194,6 +198,7 @@ class Page extends Component {
 					<ContactPersons contacts={contacts}/>
 					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
 					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
+
 				</Col>
 			</Row>
 		);

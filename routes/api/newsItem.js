@@ -11,12 +11,16 @@ exports = module.exports = function (req, res) {
 	};
 	locals.data = {};
 
+	var states = ['published'];
+	if (req.user && req.user.canAccessKeystone) {
+		states.push('draft');
+	}
 
 	keystone.list('NewsItem').model.findOne({
-		state: 'published',
+		state: { $in: states },
 		slug: locals.filters.newsItem,
-		publishedDate: { $lte: new Date() },
 	})
+	.or([{ publishedDate: { $lte: new Date() } }, { state: 'draft' }])
 	.populate('author resources')
 	.exec(function (err, newsItem) {
 		if (err || !newsItem) {
@@ -44,6 +48,7 @@ exports = module.exports = function (req, res) {
 			extraImages: newsItem.extraImages.map(function (image) {
 				return formatCloudinaryImage(image.image, image.caption, { width: 500, crop: 'fill' });
 			}),
+			state: newsItem.state,
 		};
 		if (newsItem.image.public_id) {
 			data.image = formatCloudinaryImage(newsItem.image, newsItem.imageDescription, imageSettings);

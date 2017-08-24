@@ -51,13 +51,13 @@ const DockedImages = ({
 	return (
 		<div className="content-page-images">
 			<Row>
-			{images && images.map((image, i) =>
-				<Col md={imageMDCols} sm={imageSMCols} xs={imageXSCols} key={`extra-image-${i}`}>
-					<div className="caption-image">
-						<EnlargeableImage enlargeable={enlargeable} image={image}/>
-						{image.description && <div className="caption-text">{image.description}</div>}
-					</div>
-				</Col>
+				{images && images.map((image, i) =>
+					<Col md={imageMDCols} sm={imageSMCols} xs={imageXSCols} key={`extra-image-${i}`}>
+						<div className="caption-image">
+							<EnlargeableImage enlargeable={enlargeable} image={image}/>
+							{image.description && <div className="caption-text">{image.description}</div>}
+						</div>
+					</Col>
 				)}
 			</Row>
 		</div>

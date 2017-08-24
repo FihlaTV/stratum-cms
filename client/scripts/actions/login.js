@@ -2,7 +2,6 @@ import fetch from 'isomorphic-fetch';
 import cookies from 'js-cookie';
 
 import { initiateBID } from './bankid';
-
 import { contextError } from './context';
 
 export const SET_LOGIN_METHOD = 'SET_LOGIN_METHOD';
@@ -53,7 +52,7 @@ function setContext (context) {
 	};
 }
 
-export function changeContext (roleId, unitId, contexts, forceReload) {
+export function changeContext (roleId, unitId, contexts) {
 
 	return (dispatch, getState) => {
 		const context = contexts.find((c) => c.Unit.UnitID === unitId && c.Role.RoleID === roleId);
@@ -79,9 +78,10 @@ export function changeContext (roleId, unitId, contexts, forceReload) {
 			.then(json => {
 				if (json.success) {
 					// Stratum Update
-					if (forceReload) {
+					if (location.pathname !== '/registrering') {
 						window.location.reload();
 					}
+
 					if (typeof window.assignProfileContext !== 'undefined') {
 						window.assignProfileContext(context);
 					}
@@ -414,7 +414,8 @@ export function dismissTimeleft (timeleft) {
 	return dispatch => {
 		if (timeleft > 0) {
 			dispatch(loginToStratum(true));
-		} else {
+		}
+		else {
 			// Force logout if time has run out
 			dispatch(setTimeleft(timeleft, false));
 			window.location.replace('/logout');
@@ -450,6 +451,11 @@ export function checkTimeleft (repeatAfter) {
 				if (json.success) {
 					const timeleft = json.data;
 					dispatch(setTimeleft(timeleft));
+
+					if (timeleft <= 0) {
+						window.location.replace('?loggedout');
+						dispatch(logoutFromStratum());
+					}
 					// Less than 3 minutes left
 					if (timeleft > 0 && typeof repeatAfter === 'number') {
 						setTimeout(() => dispatch(checkTimeleft(repeatAfter)), repeatAfter);

@@ -17,7 +17,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Router } from 'react-router';
 import routes from './routes';
 
-// Webpack dependencies
+/**
+ * Webpack dependencies, these are only need when running
+ * outside the SPA since react-bootstrap has it's own
+ * javascript solution
+ */
 // import 'jquery'; // not needed, bundled with bootstrap
 import 'bootstrap';
 

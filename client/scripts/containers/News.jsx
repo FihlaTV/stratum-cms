@@ -38,8 +38,8 @@ class News extends Component {
 					<Row>
 						<Col md={8}>
 							{items.slice(currentPage * itemsPerPage - itemsPerPage, currentPage * itemsPerPage)
-								.map(({ slug, ...rest }) => (
-									<NewsListItem key={slug} slug={slug} {...rest}/>
+								.map(({ slug, state, ...rest }) => (
+									<NewsListItem key={slug} slug={slug} state={state} {...rest}/>
 								))
 							}
 							<Pagination prev next items={Math.ceil(items.length / itemsPerPage)} activePage={currentPage} onSelect={(p) => this.navigateToPage(p)}/>
@@ -57,7 +57,11 @@ class News extends Component {
 };
 
 function getFilteredNews (items = [], year, page) {
-	if (year !== 'all') {
+	if (year === ' draft') {
+		return items.filter(({ state }) => {
+			return state === 'draft';
+		});
+	} else if (year !== 'all') {
 		return items.filter(({ publishedDate }) => {
 			return (new Date(publishedDate)).getFullYear() === parseInt(year, 10);
 		});

@@ -19,4 +19,4 @@ ResetState.propTypes = {
 	onClick: PropTypes.func.isRequired,
 };
 
- export default ResetState;
+export default ResetState;

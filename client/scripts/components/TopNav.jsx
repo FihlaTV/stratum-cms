@@ -24,8 +24,8 @@ const TopNav = ({
 	shrinkUnitName,
 	showLoginModal,
 	reactRouter,
+	currentRouteIsRegistration,
 }) => {
-	const isRegistration = location.pathname === '/registrering' ? 'active' : '';
 	const spinnerStyle = {
 		display: loading ? 'block' : 'none',
 		margin: 14,
@@ -37,7 +37,7 @@ const TopNav = ({
 		return (
 			<ul className="nav navbar-nav navbar-right">
 				<Spinner small style={spinnerStyle}/>
-				<li style={visibility} className={isRegistration}>
+				<li style={visibility} className={currentRouteIsRegistration}>
 					<RegistrationLink disabled={wrongRegister} reactRouter={reactRouter}>
 						<p className="nav-button-text-big">Registrering</p>
 						<p className="nav-button-text-small">med mera</p>

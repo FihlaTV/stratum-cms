@@ -150,6 +150,10 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 				case 'profile':
 					Stratum.ApplicationForRegistrations(lc.hash, lc.query);
 					break;
+				case 'page':
+					lc.query.scope = 1;
+					Stratum.ApplicationForRegistrations(lc.hash, lc.query);
+					break;
 				default:
 					Stratum.ApplicationForRegistrations('page', { id: Profile.Site.FirstPage.PageID, scope: 1 });
 					break;
@@ -166,20 +170,22 @@ export function startWidget (target, widget, queryString, callback = () => {}) {
 	Stratum.containers[widget] = target;
 	initializeExtJS();
 	Ext.tip.QuickTipManager.init();
-	loadEnvironment(function () {
-		const targetNode = document.getElementById(target);
-		// console.log('@before script inject ---- \ntarget: %s, target-in-dom: %o, widget: %s, stratum-target: %s\nAll equal: %o',
-		// 	target,
-		// 	targetNode,
-		// 	widget,
-		// 	Stratum.containers[widget],
-		// 	target === Stratum.containers[widget] && !!targetNode
-		// );
-		if (targetNode) {
-			inject(['/stratum/api/widgets/' + widget + queryString], callback);
-		} else {
-			callback({ cancelled: true, success: false });
-		}
+	Ext.onReady(function () {
+		loadEnvironment(function () {
+			const targetNode = document.getElementById(target);
+			// console.log('@before script inject ---- \ntarget: %s, target-in-dom: %o, widget: %s, stratum-target: %s\nAll equal: %o',
+			// 	target,
+			// 	targetNode,
+			// 	widget,
+			// 	Stratum.containers[widget],
+			// 	target === Stratum.containers[widget] && !!targetNode
+			// );
+			if (targetNode) {
+				inject(['/stratum/api/widgets/' + widget + queryString], callback);
+			} else {
+				callback({ cancelled: true, success: false });
+			}
+		});
 	});
 }
 /**
@@ -207,6 +213,26 @@ function getHasBeenInitialized () {
 	return hasBeenInitialized;
 }
 
+function injectWithCacheBusting (urisToInject, startFunction) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4 && this.status === 200) {
+			const response = JSON.parse(this.responseText).data;
+			const stratumVersion = response.StratumVersion;
+			const versionizedInjects = urisToInject.map(function (current) {
+				current = current + '?sv=' + stratumVersion;
+				return current;
+			});
+
+			inject(
+				versionizedInjects,
+				() => { setHasBeenInitialized(true); startFunction(); }
+			);
+		}
+	};
+	xhttp.open('GET', `/stratum/api/configurations/globals?_=${(new Date()).getTime()}`, true);
+	xhttp.send();
+}
 export default function (target, widget, queryString = '', callback = () => {}) {
 	if (!target || !widget) {
 		return;
@@ -218,21 +244,19 @@ export default function (target, widget, queryString = '', callback = () => {}) 
 
 		// Always load all stratum scripts to avoid missing variables when loading registration application.
 		if (!getHasBeenInitialized()) {
-			inject(
-				[
-					'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
-					'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
-					'/stratum/Default2.css',
-					'/stratum/ExtJS/ext-all.js',
-					'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
-					'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
-					'/stratum/Directs/Handlers/ScriptGenerator.ashx',
-					'/stratum/Scripts/Repository.js',
-					'/stratum/Scripts/ManagerForSubjects.js',
-					'/stratum/Scripts/ApplicationForRegistrations.js',
-				],
-				() => { setHasBeenInitialized(true); startFn(); }
-			);
+			var urisToInject = [
+				'/stratum/ExtJS/packages/ext-theme-stratum/build/resources/ext-theme-stratum-all_01.css',
+				'/stratum/ExtJS/packages/sencha-charts/build/crisp/resources/sencha-charts-all.css',
+				'/stratum/Default2.css',
+				'/stratum/ExtJS/ext-all.js',
+				'/stratum/ExtJS/packages/ext-locale/build/ext-locale-sv_SE.js',
+				'/stratum/ExtJS/packages/sencha-charts/build/sencha-charts.js',
+				'/stratum/Directs/Handlers/ScriptGenerator.ashx',
+				'/stratum/Scripts/Repository.js',
+				'/stratum/Scripts/ManagerForSubjects.js',
+				'/stratum/Scripts/ApplicationForRegistrations.js',
+			];
+			injectWithCacheBusting(urisToInject, startFn);
 		} else {
 			startFn();
 		}

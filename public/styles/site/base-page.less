@@ -14,10 +14,6 @@
 		padding: @base-page-padding-desktop;
 	}
 	.post {
-		img {
-			.img-responsive();
-			width: 100%;
-		}
 		> table {
 			.table();
 			.table-striped();
@@ -36,6 +32,7 @@
 		}
 	}
 }
+
 .sub-menu{
 	display: none;
 	@media (min-width: @grid-float-breakpoint) {
@@ -100,4 +97,13 @@
 			}
 		}
 	}
+}
+.draft {
+	border: dashed 2px;
+}
+.draft-banner {
+	background-image: url('../../images/draft.svg');
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-position: right top;
 }
