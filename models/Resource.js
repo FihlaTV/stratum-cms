@@ -25,9 +25,9 @@ if (USE_AZURE) {
 	storage = new keystone.Storage({
 		adapter: azure,
 		azure: {
-			generateFilename: (filename) => {
-				var extension = path.extname(filename).toLowerCase();
-				return `r/${filename.originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
+			generateFilename: ({ originalname }) => {
+				var extension = path.extname(originalname).toLowerCase();
+				return `r/${originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
 			},
 			container: keystone.get('brand safe'),
 		},
