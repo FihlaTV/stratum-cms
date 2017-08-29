@@ -70,7 +70,7 @@ Resource.add({
 		noedit: true,
 		watch: 'file',
 		value: function () {
-			return this.file && this.file.exists;
+			return this.file && !!this.file.get('file');
 		},
 	},
 	fileUrl: {
@@ -80,7 +80,8 @@ Resource.add({
 		watch: 'file',
 		value: function () {
 			if (USE_AZURE) {
-				return (this.file.exists ? this.file.url : '').replace(/^http/, 'https');
+				const fileurl = this.file && this.file.get('file').url;
+				return fileurl ? fileurl.replace(/^http(?=\:)/, 'https') : '';
 			} else {
 				return this.file.filename ? '/temp/' + this.file.filename : '';
 			}
@@ -90,12 +91,6 @@ Resource.add({
 	description: { type: Types.Textarea, initial: true },
 });
 
-Resource.schema.virtual('file.secureUrl').get(function () {
-	if (USE_AZURE) {
-		return this.file && this.file.exists && this.file.url.replace(/^http/, 'https');
-	}
-	return this.fileUrl;
-});
 Resource.schema.virtual('fileType').get(function () {
 	var fileType = this.file && this.file.exists && this.file.filetype;
 	if (typeof fileType !== 'string') {
