@@ -92,7 +92,9 @@ Resource.add({
 });
 
 Resource.schema.virtual('fileType').get(function () {
-	var fileType = this.file && this.file.exists && this.file.filetype;
+	const file = this.file.get('file');
+	const fileType = file.mimetype;
+
 	if (typeof fileType !== 'string') {
 		return;
 	}
