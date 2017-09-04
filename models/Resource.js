@@ -70,7 +70,11 @@ Resource.add({
 		noedit: true,
 		watch: 'file',
 		value: function () {
-			return this.file && !!this.file.get('file');
+			const file = this.file && this.file.get('file');
+			if (!file) {
+				return false;
+			}
+			return USE_AZURE ? !!this.file.url : !!this.file.path;
 		},
 	},
 	fileUrl: {
