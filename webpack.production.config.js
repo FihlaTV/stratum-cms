@@ -107,6 +107,8 @@ function initConfig (_indexPath) {
 
 	if (_indexPath) {
 		regPath = path.resolve(__dirname, _indexPath);
+	} else if (process.argv.indexOf('--env.register') >= 0) {
+		regPath = path.resolve(__dirname, `./registers/${process.argv[process.argv.indexOf('--env.register') + 1]}`);
 	} else {
 		regPath = path.resolve(__dirname, process.argv.indexOf('--env.regPath') >= 0 ? process.argv[process.argv.indexOf('--env.regPath') + 1] : '.');
 	}
