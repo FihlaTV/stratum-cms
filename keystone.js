@@ -18,6 +18,8 @@ var pkg = require('./' + path.join(root, 'package.json'));
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
+var overrideFaviconPath = process.env.FAVICON_PATH || 'override/favicon.ico';
+var favicon = fs.existsSync(overrideFaviconPath) ? overrideFaviconPath : path.join(root, 'public/favicon.ico');
 
 keystone.init({
 
@@ -26,7 +28,7 @@ keystone.init({
 	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(),
 	'title name': process.env.CLIENT_TITLE || '',
 	'static': ['override', path.join(root, 'public')],
-	'favicon': path.join(root, 'public/favicon.ico'),
+	'favicon': favicon,
 	'views': path.join(root, 'templates/views'),
 
 	// Gets the name of the currently active directory
