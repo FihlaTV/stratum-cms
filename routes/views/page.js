@@ -31,7 +31,11 @@ exports = module.exports = function (req, res) {
 			.where('state', 'published')
 			.or([{ registerSpecific: { $ne: true } }, { registerSpecific: locals.registerLoggedIn }])
 			.populate('page', 'shortId slug title menuTitle numberOfSubPages contacts menu questionCategories state registerSpecific')
-			.populate('widget resources')
+			.populate('widget')
+			.populate({
+				path: 'resources',
+				match: { hasFile: true },
+			})
 			.exec(function (err, page) {
 				if (!err) {
 					var parentPage = page ? page.page : null;

@@ -42,7 +42,7 @@ if (USE_AZURE) {
 		adapter: keystone.Storage.Adapters.FS,
 		fs: {
 			path: keystone.expandPath('./override/temp'),
-			generateFilename: ({ originalname }) => { console.log(originalname); return originalname; },
+			generateFilename: ({ originalname }) => originalname,
 			whenExists: 'overwrite',
 		},
 		schema: {
