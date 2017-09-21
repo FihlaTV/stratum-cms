@@ -82,7 +82,7 @@ const TopNav = ({
 	}
 	return (
 		<NavParent>
-			<LoginButton label={loginButtonLabel} onClick={showLoginModal} />;
+			<LoginButton label={loginButtonLabel} onClick={showLoginModal} />
 		</NavParent>
 	);
 };

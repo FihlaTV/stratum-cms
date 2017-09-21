@@ -78,6 +78,7 @@ function getLinkContents (item, level, desktop = false) {
 const Menu = ({
 	items,
 	externalLogin = {},
+	disableLogin,
 }) => {
 	const { label, link } = externalLogin;
 	return (
@@ -101,12 +102,14 @@ const Menu = ({
 						</Nav>
 					</div>
 				</div>
-				<div className="navbar-upper">
-					{link
-						? <TopNav externalLogin={link} loginButtonLabel={label}/>
-						: <UserContext reactRouter/>
-					}
-				</div>
+				{!disableLogin
+					&& <div className="navbar-upper">
+						{link
+							? <TopNav externalLogin={link} loginButtonLabel={label}/>
+							: <UserContext reactRouter/>
+						}
+					</div>
+				}
 			</Navbar.Collapse>
 		</Navbar>
 	);

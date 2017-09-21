@@ -16,11 +16,12 @@ import {
 	UPDATE_SITHS_NEW_CARD,
 	} from '../actions/login';
 
-const { CLIENT_DEMO_USERNAME, CLIENT_EXTERNAL_LOGIN, CLIENT_EXTERNAL_LOGIN_LABEL } = process.env;
+const { CLIENT_DEMO_USERNAME, CLIENT_EXTERNAL_LOGIN, CLIENT_EXTERNAL_LOGIN_LABEL, CLIENT_DISABLE_LOGIN } = process.env;
 
 const demoUser = CLIENT_DEMO_USERNAME;
 
 const initialState = {
+	disableLogin: CLIENT_DISABLE_LOGIN === 'true',
 	loginMethod: LoginMethod.NOT_SELECTED,
 	hasNextState: true,
 	showLoginModal: false,
