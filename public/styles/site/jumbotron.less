@@ -16,8 +16,9 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		@media screen and (min-width: @screen-sm-min) {
-			height: 400px;
-			background-image: url('/images/jumbotron_background.png');
+			&.jumbotron-wide-fixed-height {
+				height: 400px;
+			}
 			padding-top: 64px;
 			margin-bottom: @gutter-xlarge * 2;
 		}

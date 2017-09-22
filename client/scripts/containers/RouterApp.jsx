@@ -45,11 +45,13 @@ class App extends Component {
 			registerInformation,
 			breadcrumbs,
 			location,
+			externalLogin,
+			disableLogin,
 		} = this.props;
 		return location.pathname === '/404' ? children : (
 			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
 				<Messages id="message-container"/>
-				<Menu items={menuItems}/>
+				<Menu items={menuItems} externalLogin={externalLogin} disableLogin={disableLogin} />
 				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
 					{children}
 					<ScrollButton/>
@@ -68,6 +70,8 @@ function mapStateToProps (state, { location }) {
 		registerInformation: state.registerInformation,
 		breadcrumbs: state.breadcrumbs.items,
 		showScrollButton: state.scrollbutton.show,
+		externalLogin: state.login.externalLogin,
+		disableLogin: state.login.disableLogin,
 	};
 }
 
