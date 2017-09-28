@@ -88,7 +88,7 @@ exports = module.exports = function (req, res) {
 				});
 		},
 		startPageWidgets: function (next) {
-			if (IS_PORTAL || !context.showJumbotron) {
+			if (!context.showJumbotron) {
 				return next();
 			}
 			keystone.list('StartPageWidget').model
@@ -107,9 +107,6 @@ exports = module.exports = function (req, res) {
 			});
 		},
 		keystoneWidgets: function (next) {
-			if (IS_PORTAL) {
-				return next();
-			}
 			async.each(context.spWidgets, function (widget, cb) {
 				if (widget.useWidget
 						&& widget.widget && widget.widget.type === 'keystone') {
