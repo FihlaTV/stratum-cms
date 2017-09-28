@@ -24,6 +24,29 @@
 			}
 		}
 	}
+	&.sub-registers-modern {
+		ul {
+			a {
+				color: @headings-color;
+				border-radius: 5px;
+				font-family: @headings-font-family;
+				font-size: 16px;
+				background-color: @grid-bg-secondary;
+				text-decoration: none;
+
+				.glyphicon-chevron-right();
+
+				&:before {
+					color: lighten(@headings-color, 10%);
+				}
+
+				&:hover {
+					background-color: darken(@grid-bg-secondary, 10%);
+					color: darken(@headings-color, 10%);
+				}
+			}
+		}
+	}
 	&.sub-registers-simple{
 		overflow: hidden;
 		.white-well();

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import Spinner from '../components/Spinner';
 import { Col, Row, Grid } from 'react-bootstrap';
-import Jumbotron from '../components/Jumbotron';
+import JumbotronInner from '../components/Jumbotron';
 import { fetchStartPage } from '../actions/startPage';
 import ImageWidget from '../components/ImageWidget';
 import InternalLink from '../components/InternalLink';
@@ -10,9 +10,11 @@ import NewsRollWidget from './NewsRollWidget';
 import NewsItemWidget from './NewsItemWidget';
 import PageLink from './PageLink';
 
+const isModernTheme = process.env.CLIENT_THEME === 'modern';
+
 const SubRegisterList = ({ subRegisters = [] }) =>
 (
-	<div className="sub-registers sub-registers-simple">
+	<div className={`sub-registers sub-registers-${isModernTheme ? 'modern' : 'simple'}`}>
 		<ul>
 			{subRegisters.map(({ name, url }, i) => (
 				<li key={`subregister-${i}`}>
@@ -75,41 +77,34 @@ class Index extends Component {
 		if (informationBlurb.type === 'image') {
 			descriptionClassNames.push('startpage-description-height');
 		}
-		const Jumbo = jumbotron ? <Jumbotron {...jumbotron} widgets={widgets} portal={isPortal}/> : null;
-		const Description = (
+		const Jumbotron = jumbotron ? <JumbotronInner {...jumbotron} widgets={widgets} portal={isPortal}/> : null;
+
+		const Description = description.html && header ? (
 			<div className={descriptionClassNames.join(' ')}>
 				<h2>{header}</h2>
 				<div dangerouslySetInnerHTML={{ __html: description.html }} />
 			</div>
-		);
-		if (isPortal) {
-			return (
-				<Grid>
-					<Col md={7}>
-						{Jumbo}
-						{Description}
-					</Col>
-					<Col md={5}>
-						<h2>Delregister</h2>
-						<SubRegisterList subRegisters={subRegisters} />
-						{this.getInformationBlurbComponent(informationBlurb)}
-						{quickLink && quickLink.page && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
-					</Col>
-				</Grid>
-			);
-		}
+		) : null;
+
 		return (
 			<div>
-				{jumbotron && jumbotron.type === 'wide' ? Jumbo : <Grid>{Jumbo}</Grid>}
+				{jumbotron && jumbotron.type === 'wide' ? Jumbotron : <Grid>{Jumbotron}</Grid>}
 				<Grid>
 					<InternalLinks internalLinks={internalLinks} />
 					{internalLinks.length > 0 && <hr className="hr-block" />}
 					<Row>
 						<Col md={7}>
 							{Description}
+							{isPortal && (
+								<div>
+									<h2>Delregister</h2>
+									<SubRegisterList subRegisters={subRegisters} />
+								</div>
+							)}
 						</Col>
 						<Col md={5}>
 							{this.getInformationBlurbComponent(informationBlurb)}
+							{isPortal && quickLink && quickLink.page && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
 						</Col>
 					</Row>
 				</Grid>
