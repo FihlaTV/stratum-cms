@@ -62,7 +62,7 @@ exports = module.exports = function (req, res) {
 			if (context.widget.type === 'keystone') {
 				keystone.list('KeystoneWidget').model
 					.findOne()
-					.select('description name')
+					.select('description name url format')
 					.where('_id', context.widget.keystoneWidget)
 					.where('removed', false)
 					.exec(next);

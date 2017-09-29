@@ -30,20 +30,23 @@ exports.loadWidgets = function (callback) {
 			async.each(context.widgetsFull, function (widget, cb) {
 				KeystoneWidget.model.findOne()
 					.where('name', widget.id)
-					.select('name description')
+					.select('name description url format')
 					.exec(function (err, dWidget) {
 						if (err) {
 							cb(err);
 							return;
 						}
-						if (dWidget && dWidget.description !== widget.description) {
-							// Update description
+						if ((dWidget && dWidget.description !== widget.description) || (dWidget && dWidget.url !== widget.url) || (dWidget && dWidget.format && dWidget.format !== widget.format)) {
+							dWidget.set('url', widget.url);
+							dWidget.set('format', widget.format);
 							dWidget.description = widget.description;
 							context.updatedWidgets.push(dWidget.name);
 							dWidget.save(cb);
 						} else if (!dWidget) { // New widget
 							var newWidget = new KeystoneWidget.model({
 								name: widget.id,
+								url: widget.url,
+								format: widget.format,
 								description: widget.description,
 								removed: false,
 							});
@@ -67,20 +70,20 @@ exports.loadWidgets = function (callback) {
 				multi: true,
 			}, next);
 		},
-		removeOldWidgets: function (next) {
-			KeystoneWidget.model.update({
-				name: {
-					$nin: context.widgets,
-				},
-				removed: {
-					$ne: true,
-				},
-			}, {
-				removed: true,
-			}, {
-				multi: true,
-			}, next);
-		},
+		// removeOldWidgets: function (next) {
+		// 	KeystoneWidget.model.update({
+		// 		name: {
+		// 			$nin: context.widgets,
+		// 		},
+		// 		removed: {
+		// 			$ne: true,
+		// 		},
+		// 	}, {
+		// 		removed: true,
+		// 	}, {
+		// 		multi: true,
+		// 	}, next);
+		// },
 	},
 		function (err) {
 			if (callback) {

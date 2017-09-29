@@ -9,8 +9,8 @@ var keystone = require('keystone');
  */
 
 var KeystoneWidget = new keystone.List('KeystoneWidget', {
-	nocreate: true,
-	noedit: true,
+	// nocreate: true,
+	// noedit: true,
 	nodelete: true,
 	autokey: {
 		from: 'name',
@@ -24,13 +24,23 @@ KeystoneWidget.add({
 		type: String,
 		required: true,
 	},
+	url: {
+		type: String,
+		required: true,
+		default: '',
+	},
 	description: {
 		type: String,
+	},
+	format: {
+		type: String,
+		required: false,
+		default: '0',
 	},
 	removed: {
 		type: Boolean,
 		default: false,
-		noedit: true,
+		// noedit: true,
 	},
 });
 KeystoneWidget.defaultColumns = 'name, description, removed';
