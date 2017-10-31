@@ -87,6 +87,10 @@
     "id": "FONOPatientenket",
     "description": "Andel svar på patientenkät cirka 4 månader efter operation"
   },
+  "PsykRegNewsletter": {
+    "id": "PsykRegNewsletter",
+    "description": "Nyhetsbrev för portalen för psykiatriregister."
+  },
   "SPOQTotal": {
     "id": "SPOQTotal",
     "description": "Totalt antal patienter i spoq"

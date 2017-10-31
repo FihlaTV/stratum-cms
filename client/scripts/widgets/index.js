@@ -21,6 +21,7 @@ import RORVentetid from './RORVentetid';
 import FONOForbettring from './FONOForbettring';
 import FONOPatientenket from './FONOPatientenket';
 import SPOQTotal from './SPOQTotal';
+import PsykRegNewsletter from './PsykRegNewsletter';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -45,6 +46,7 @@ export { RORVentetid };
 export { FONOForbettring };
 export { FONOPatientenket };
 export { SPOQTotal };
+export { PsykRegNewsletter };
 
 export default {
 	BOAArtrosSkola,
@@ -70,4 +72,5 @@ export default {
 	FONOForbettring,
 	FONOPatientenket,
 	SPOQTotal,
+	PsykRegNewsletter,
 };
