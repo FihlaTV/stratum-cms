@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-md-5">
 			{{#if isPortal}}
-			<h2>Delregister</h2>
+			<h2>{{#if data.startPage.subRegisterTitle}}{{data.startPage.subRegisterTitle}}{{else}}Delregister{{/if}}</h2>
 			<div class="sub-registers sub-registers-simple">
 				<ul>
 				{{#each data.subRegisters}}
