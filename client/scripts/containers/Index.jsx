@@ -71,6 +71,7 @@ class Index extends Component {
 			isPortal,
 			informationBlurb = {},
 			subRegisters = [],
+			subRegisterTitle = 'Delregister',
 			quickLink,
 		} = this.props;
 		let descriptionClassNames = ['base-column', 'brief-info-column'];
@@ -97,7 +98,7 @@ class Index extends Component {
 							{Description}
 							{isPortal && (
 								<div>
-									<h2>Delregister</h2>
+									<h2>{subRegisterTitle}</h2>
 									<SubRegisterList subRegisters={subRegisters} />
 								</div>
 							)}

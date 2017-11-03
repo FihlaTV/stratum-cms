@@ -189,6 +189,11 @@ StartPage.add({
 				note: 'The page which should be linked to',
 			},
 		},
+		subRegisterTitle: {
+			type: String,
+			hidden: !keystone.get('is portal'),
+			default: 'Delregister',
+		},
 	}
 );
 
