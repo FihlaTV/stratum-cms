@@ -74,7 +74,7 @@ exports = module.exports = function (req, res) {
 		startPage: function (next) {
 			keystone.list('StartPage').model
 				.findOne()
-				.select('header description.html jumbotron informationBlurb quickLink internalLinks')
+				.select('header description.html jumbotron informationBlurb quickLink subRegisterTitle internalLinks')
 				.populate('informationBlurb.newsItem', 'image title slug imageLayout publishedDate content.lead')
 				.populate('quickLink.page', 'slug shortId')
 				.populate('jumbotron.newsItem', 'title slug')
