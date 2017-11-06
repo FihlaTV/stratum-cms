@@ -4,7 +4,7 @@ import { Grid } from 'react-bootstrap';
 
 const Footer = ({
 	name,
-	location,
+	location = {},
 	email,
 	phone,
 }) => {
