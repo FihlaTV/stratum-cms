@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {
+	Button,
+	FormGroup,
+	FormControl,
+	ControlLabel,
+	Alert,
+} from 'react-bootstrap';
+
+const successParam = 'newsletter_success=1';
 
 export default class PsykRegNewsletter extends Component {
 	constructor (props) {
@@ -7,6 +15,11 @@ export default class PsykRegNewsletter extends Component {
 		this.state = {
 			email: '',
 			name: '',
+			location: `${window.location.origin}${window.location
+				.pathname}?${successParam}`,
+			success: !!window.location.href.match(
+				new RegExp(`(?:\\?|&)${successParam}(?:&|$)`)
+			),
 		};
 	}
 	isEmailValid () {
@@ -19,7 +32,11 @@ export default class PsykRegNewsletter extends Component {
 			: this.isEmailValid() ? 'success' : 'error';
 	}
 	render () {
-		return (
+		return this.state.success ? (
+			<Alert bsStyle="success">
+				<strong>Tack för din prenumeration.</strong>
+			</Alert>
+		) : (
 			<form
 				name="fpren"
 				action="https://newsletter.paloma.se//register/"
@@ -30,6 +47,11 @@ export default class PsykRegNewsletter extends Component {
 			>
 				<input type="hidden" name="distlistkey" value="66488" />
 				<input type="hidden" name="gora" value="pren" />
+				<input
+					type="hidden"
+					name="tacksida"
+					value={this.state.location}
+				/>
 				<FormGroup>
 					<ControlLabel>Namn</ControlLabel>
 					<FormControl
@@ -61,9 +83,7 @@ export default class PsykRegNewsletter extends Component {
 				<Button
 					type="submit"
 					bsStyle="primary"
-					disabled={
-						!this.isEmailValid() || !this.state.name
-					}
+					disabled={!this.isEmailValid() || !this.state.name}
 				>
 					Skicka
 				</Button>
