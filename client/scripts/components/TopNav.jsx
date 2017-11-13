@@ -22,7 +22,7 @@ const NavParent = ({ children }) => (
 
 const LoginButton = ({ onClick, label, externalLink }) => (
 	<li>
-		<a href={externalLink || '#'} onClick={onClick}>{label}</a>
+		<a href={externalLink || '#'} target={externalLink ? '_blank' : null} onClick={onClick}>{label}</a>
 	</li>
 );
 
