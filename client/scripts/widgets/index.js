@@ -21,6 +21,9 @@ import RORVentetid from './RORVentetid';
 import FONOForbettring from './FONOForbettring';
 import FONOPatientenket from './FONOPatientenket';
 import SPOQTotal from './SPOQTotal';
+import KRHOperationer from './KRHOperationer';
+import KRHInsattaProteser from './KRHInsattaProteser';
+import KRHArtikelnummer from './KRHArtikelnummer';
 import DefaultWidget from './Defaultwidget';
 
 export { BOAArtrosSkola };
@@ -46,6 +49,9 @@ export { RORVentetid };
 export { FONOForbettring };
 export { FONOPatientenket };
 export { SPOQTotal };
+export { KRHOperationer };
+export { KRHInsattaProteser };
+export { KRHArtikelnummer };
 export { DefaultWidget };
 
 export default {
@@ -72,5 +78,8 @@ export default {
 	FONOForbettring,
 	FONOPatientenket,
 	SPOQTotal,
+	KRHOperationer,
+	KRHInsattaProteser,
+	KRHArtikelnummer,
 	DefaultWidget,
 };
