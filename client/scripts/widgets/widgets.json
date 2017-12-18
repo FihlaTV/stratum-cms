@@ -99,7 +99,7 @@
     "id": "KRHOperationer",
     "description": "Antal höftledsoperationer"
   },
-  "KRHInsatta": {
+  "KRHInsattaProteser": {
     "id": "KRHInsatta",
     "description": "Antal insatta proteser"
   },
