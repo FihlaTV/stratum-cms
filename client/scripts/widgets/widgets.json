@@ -94,5 +94,17 @@
   "SPOQTotal": {
     "id": "SPOQTotal",
     "description": "Totalt antal patienter i spoq"
+  },
+  "KRHOperationer": {
+    "id": "KRHOperationer",
+    "description": "Antal höftledsoperationer"
+  },
+  "KRHInsatta": {
+    "id": "KRHInsatta",
+    "description": "Antal insatta proteser"
+  },
+  "KRHArtikelnummer": {
+    "id": "KRHArtikelnummer",
+    "description": "Antal artikelnummer"
   }
 }
