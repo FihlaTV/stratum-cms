@@ -100,7 +100,7 @@
     "description": "Antal höftledsoperationer"
   },
   "KRHInsattaProteser": {
-    "id": "KRHInsatta",
+    "id": "KRHInsattaProteser",
     "description": "Antal insatta proteser"
   },
   "KRHArtikelnummer": {
