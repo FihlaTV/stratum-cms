@@ -74,8 +74,10 @@
 	li.nav-page-draft {
 			> a {
 				border: dashed 2px;
-    		box-sizing: border-box;
-    		padding: 8px 13px;
+        box-sizing: border-box;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        padding-left: extract(@side-nav-link-padding, 2) + @gutter-large - 2;
 			}
 	}
 	li.nav-page-draft + li.nav-page-draft{
