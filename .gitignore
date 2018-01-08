@@ -54,3 +54,4 @@ last_commit.json
 
 # IIS Web config
 web.config
+build-registers.js

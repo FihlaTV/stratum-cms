@@ -130,16 +130,21 @@ img.navbar-brand-image-small{
 						font-family:    @navbar-main-font-family;
 						font-size:      @navbar-main-font-size;
 						font-weight:    @navbar-main-font-weight;
-						color:        	white;
+						color:        	@navbar-main-link-color;
 						background:   	@navbar-default-bg;
 						padding-top:    @navbar-main-padding-vertical;
 						padding-bottom: @navbar-main-padding-vertical;
 						border-radius: 	@border-radius-main;
-						border: white 1px solid;
-						&:hover {
+						border: @navbar-main-link-color 1px solid;
+						&:hover, &:active, &:focus, &:active:focus {
 							background: darken(@navbar-default-bg, 10%);
-							color: white;
-							border: white 1px solid;
+							color: @navbar-main-link-color;
+							border: @navbar-main-link-color 1px solid;
+							outline: none;
+						}
+						&:active:focus {
+							background: darken(@navbar-default-bg, 20%);
+							border: @navbar-main-link-color 1px solid;
 						}
 				}
 			}
