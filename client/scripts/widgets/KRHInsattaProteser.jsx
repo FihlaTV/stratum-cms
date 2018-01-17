@@ -10,7 +10,7 @@ const KRHInsattaProteser = ({
 			description={description}
 			format="0"
         />
-    );
+	);
 };
 
 KRHInsattaProteser.defaultProps = {};

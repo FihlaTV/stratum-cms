@@ -2,7 +2,7 @@ import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
 const KRHArtikelnummer = ({
-    description,
+	description,
 }) => {
 	return (
 		<StartPageWidget
@@ -10,7 +10,7 @@ const KRHArtikelnummer = ({
 			description={description}
 			format="0"
         />
-    );
+	);
 };
 
 KRHArtikelnummer.defaultProps = {};
