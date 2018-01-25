@@ -154,8 +154,10 @@ export function startRegistrations (target = 'sw-registrations', callback = () =
 					lc.query.scope = 1;
 					Stratum.ApplicationForRegistrations(lc.hash, lc.query);
 					break;
-				default:
+				case '':
 					Stratum.ApplicationForRegistrations('page', { id: Profile.Site.FirstPage.PageID, scope: 1 });
+					break;
+				default:
 					break;
 			}
 		};
