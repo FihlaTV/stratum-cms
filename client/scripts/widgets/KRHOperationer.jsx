@@ -10,7 +10,7 @@ const KRHOperationer = ({
 			description={description}
 			format="0"
         />
-    );
+	);
 };
 
 KRHOperationer.defaultProps = {};
