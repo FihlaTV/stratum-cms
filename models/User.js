@@ -16,7 +16,7 @@ User.add({
 	phone: { type: String },
 	title: { type: String, label: 'Work Title' },
 }, 'Permissions', {
-	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
+	isAdmin: { type: Boolean, initial: true, label: 'Can access Keystone', index: true },
 	isAuthorized: { type: Boolean, label: 'Can access login required pages', dependsOn: { isAdmin: false } },
 });
 
