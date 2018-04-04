@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Jumbotron as BootstrapJumbotron, Grid, Col } from 'react-bootstrap';
 import NewsLink from './NewsLink';
 import StartPageWidget from './StartPageWidget';

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import es6Promise from 'es6-promise';
 import Spinner from '../components/Spinner';
 import fetch from 'isomorphic-fetch';

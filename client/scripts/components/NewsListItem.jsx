@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import NewsLink from './NewsLink';
 import moment from 'moment';
 import 'moment/locale/sv';

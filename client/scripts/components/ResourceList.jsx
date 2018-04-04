@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
 const ResourceList = ({ resources, inContainer, title = 'Dokument att ladda ner' }) => (
