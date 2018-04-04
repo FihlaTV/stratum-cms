@@ -19,7 +19,9 @@
 		"describe": true,
 		"it": true,
 		"jQuery": true,
-		"Keystone": true
+		"Keystone": true,
+		"test": true,
+		"expect": true
 	}
 }
 
