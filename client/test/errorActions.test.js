@@ -10,10 +10,10 @@ describe('newError action', () => {
 	test(
         'newError sends an action with type: NEW_ERROR and an empty string when not passed a message',
         () => {
-            const expectedAction = { type: NEW_ERROR, message: '' };
+	const expectedAction = { type: NEW_ERROR, message: '' };
 
-            expect(newError()).toEqual(expectedAction);
-        }
+	expect(newError()).toEqual(expectedAction);
+}
     );
 });
 
