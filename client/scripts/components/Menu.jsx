@@ -20,7 +20,7 @@ function formatMenu (menuItems, level = 0) {
 			);
 		}
 		let retVal = prev.concat([
-			<LinkContainer to={`${url}`} activeClassName="active" key={key}>
+			<LinkContainer to={`${url}`} key={key}>
 				{getLinkContents(menuItem, level, null)}
 			</LinkContainer>,
 		]);
@@ -31,7 +31,7 @@ function formatMenu (menuItems, level = 0) {
 		 */
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
-				<LinkContainer to={`${url}`} activeClassName="active" key={`${key}-desktop`}>
+				<LinkContainer to={`${url}`} key={`${key}-desktop`}>
 					{getLinkContents({ url, label, key, state }, level, true)}
 				</LinkContainer>
 			);
@@ -86,7 +86,7 @@ const Menu = ({
 			<div className="navbar-header-container">
 				<Navbar.Header>
 					<Navbar.Brand>
-						<IndexLink to="/" activeClassName="active">
+						<IndexLink to="/">
 							<img src="/images/logo_menu_big.png" style={{ display: 'none' }} alt="Registercentrum" className="navbar-brand-image-big" />
 							<img src="/images/logo_menu_small.png" alt="Registercentrum" className="navbar-brand-image-small" />
 						</IndexLink>

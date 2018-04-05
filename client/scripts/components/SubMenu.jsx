@@ -32,7 +32,7 @@ function renderLink (activeTopPage = {}) {
 			cls.push('nav-page-draft');
 		}
 		const Link = (
-			<LinkContainer key={key} to={`${url}`} activeClassName="active" className={cls.join(' ')}>
+			<LinkContainer key={key} to={`${url}`} className={cls.join(' ')}>
 				<NavItem>
 					{label}
 				</NavItem>
@@ -42,6 +42,10 @@ function renderLink (activeTopPage = {}) {
 		return displaySubNav ? [Link, <SubNav containsSubPages key={`sub-nav-${key}`} menuItems={items}/>] : Link;
 	};
 }
+
+const NavHeader = ({ header }) => (
+	<NavItem disabled className="nav-header">{header}</NavItem>
+);
 
 const SubNav = ({
 	menuItems = [],
@@ -54,7 +58,7 @@ const SubNav = ({
 		: (inContainer ? 'nav-page' : 'nav-page-new');
 	return (
 		<Nav bsStyle="pills" className={cls} stacked>
-			{header && <h2>{header}</h2>}
+			{header && <NavHeader header={header} />}
 			{menuItems.map(renderLink(activeTopPage))}
 		</Nav>
 	);

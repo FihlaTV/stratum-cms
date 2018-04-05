@@ -18,10 +18,12 @@
 			> a {
 				border-radius: 0;
 			}
-		}
-		> h2 {
-			margin: 0;
-			padding: @side-nav-link-padding;
+			&.nav-header > a {
+				.h2;
+				margin: 0;
+				border: 0;
+				padding: @side-nav-link-padding;
+			}
 		}
 	}
 	&.nav-page {
