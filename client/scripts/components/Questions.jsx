@@ -10,6 +10,7 @@ const Questions = ({ faqArr }) => (
 				<PanelGroup
 					accordion
 					bsClass="panel-group panel-group-faq"
+					id={category}
 				>
 					{questions.map(({ question, answer }) => (
 						<Panel key={question} eventKey={question}>
