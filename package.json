@@ -98,12 +98,8 @@
     "lint": "eslint . --ext=js --ext=jsx",
     "lint_fix": "eslint . --fix --ext=js --ext=jsx",
     "test": "jest client/test/",
-    "test:watch": "npm test -- --watch"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "test:watch": "npm test -- --watch",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,json,css,less,yml}": ["prettier --write", "git add"]
