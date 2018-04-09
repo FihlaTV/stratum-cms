@@ -32,7 +32,7 @@ keystone.init({
 	'views': path.join(root, 'templates/views'),
 
 	// Gets the name of the currently active directory
-	'app name': appName,
+				'app name': appName,
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
 		layoutsDir: path.join(root, 'templates/views/layouts'),
