@@ -1,22 +1,38 @@
-import React, { PropTypes } from 'react';
-import { Accordion, Panel } from 'react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Panel, PanelGroup } from 'react-bootstrap';
 
 const Questions = ({ faqArr }) => (
 	<div>
-		{faqArr.map(categoryObj => (
-			<div key={categoryObj.category}>
-				<h2>{categoryObj.category}</h2>
-				<Accordion bsClass="panel-group panel-group-faq">
-					{categoryObj.questions.map(questionObj => <Panel key={questionObj.question} header={questionObj.question} eventKey={questionObj.question} >
-						<div dangerouslySetInnerHTML={{ __html: questionObj.answer }} />
-					</Panel>)}
-				</Accordion>
+		{faqArr.map(({ category, questions }) => (
+			<div key={category}>
+				<h2>{category}</h2>
+				<PanelGroup
+					accordion
+					bsClass="panel-group panel-group-faq"
+					id={category}
+				>
+					{questions.map(({ question, answer }) => (
+						<Panel key={question} eventKey={question}>
+							<Panel.Heading>
+								<Panel.Title toggle>{question}</Panel.Title>
+							</Panel.Heading>
+							<Panel.Body collapsible>
+								<div
+									dangerouslySetInnerHTML={{
+										__html: answer,
+									}}
+								/>
+							</Panel.Body>
+						</Panel>
+					))}
+				</PanelGroup>
 			</div>
 		))}
 	</div>
 );
 
 Questions.propTypes = {
-	faqArr:	PropTypes.array.isRequired,
+	faqArr: PropTypes.array.isRequired,
 };
 export default Questions;

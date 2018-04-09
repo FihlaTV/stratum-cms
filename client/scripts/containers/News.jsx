@@ -31,6 +31,11 @@ class News extends Component {
 			return children;
 		}
 		if (!loading) {
+			let paginationItems = [];
+			let pages = Math.ceil(items.length / itemsPerPage) || 1;
+			for (let i = 1; i <= pages; i++) {
+				paginationItems.push(<Pagination.Item key={`pagination-item-${i}`} active={i === currentPage} onClick={() => this.navigateToPage(i)}>{i}</Pagination.Item>);
+			}
 			return (
 				<div>
 					<h1>{title}</h1>
@@ -42,7 +47,11 @@ class News extends Component {
 									<NewsListItem key={slug} slug={slug} state={state} {...rest}/>
 								))
 							}
-							<Pagination prev next items={Math.ceil(items.length / itemsPerPage)} activePage={currentPage} onSelect={(p) => this.navigateToPage(p)}/>
+							<Pagination>
+								<Pagination.Prev disabled={currentPage === 1} onClick={() => this.navigateToPage(currentPage - 1)}/>
+								{paginationItems}
+								<Pagination.Next disabled={pages === currentPage} onClick={() => this.navigateToPage(currentPage + 1)}/>
+							</Pagination>
 						</Col>
 						<Col md={4}>
 							<NewsFilter year={currentYear} itemsPerYear={itemsPerYear} pathname={location.pathname} query={location.query} />
