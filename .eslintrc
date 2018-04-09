@@ -3,7 +3,8 @@
 		"node": true
 	},
 	"extends": [
-		"keystone-react"
+		"keystone-react",
+		"prettier"
 	],
 	"rules": {
 		"react/jsx-no-bind": 0,
