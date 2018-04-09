@@ -3,7 +3,7 @@ import fetch from '../utils/testable-fetch';
 export const RECEIVE_START_PAGE = 'RECEIVE_START_PAGE';
 // export const SET_LOADING = 'SET_LOADING';
 
-function receiveStartPage (startPage) {
+function receiveStartPage(startPage) {
 	return {
 		type: RECEIVE_START_PAGE,
 		...startPage,
@@ -17,8 +17,8 @@ function receiveStartPage (startPage) {
 // 	};
 // }
 
-export function fetchStartPage () {
-	return (dispatch) => {
+export function fetchStartPage() {
+	return dispatch => {
 		// dispatch(setLoading(true));
 		return fetch(`/api/start-page`)
 			.then(res => res.json())

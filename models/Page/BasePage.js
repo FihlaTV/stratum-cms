@@ -50,7 +50,7 @@ BasePage.add(
 			noedit: true,
 			hidden: true,
 			watch: true,
-			value: function (callback) {
+			value: function(callback) {
 				callback(null, this.getValue('__t'));
 			},
 		},
@@ -204,13 +204,13 @@ BasePage.add(
 );
 BasePage.defaultColumns = 'title, pageType|20%';
 
-BasePage.schema.virtual('titleForMenu').get(function () {
+BasePage.schema.virtual('titleForMenu').get(function() {
 	return this.get('menuTitle') || this.get('title');
 });
 
 BasePage.schema.virtual('extraImages').get(extensions.addExtraImages);
 
-BasePage.schema.virtual('directPath').get(function () {
+BasePage.schema.virtual('directPath').get(function() {
 	return '/' + this.slug + '/p/' + this.shortId;
 });
 

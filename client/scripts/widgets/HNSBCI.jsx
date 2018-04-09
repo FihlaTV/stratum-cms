@@ -1,9 +1,7 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const HNSBCI = ({
-	description,
-}) => {
+const HNSBCI = ({ description }) => {
 	return (
 		<StartPageWidget
 			url="/stratum/api/aggregate/hnsb/hnsbci/total/subjectcount?APIKey=bK3H9bwaG4o="

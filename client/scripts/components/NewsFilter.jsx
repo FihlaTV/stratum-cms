@@ -3,27 +3,56 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 const Year = ({ year, count, pathname, query, active, children }) => {
-	const filterQuery = { year: year === 'all' ? undefined : year, page: undefined };
-	return (<li>
-		{active
-			? <Link to={{ pathname: pathname, query: Object.assign({}, query, filterQuery) }}>
-				{children}
-			</Link>
-			: children
-		}
-	</li>);
+	const filterQuery = {
+		year: year === 'all' ? undefined : year,
+		page: undefined,
+	};
+	return (
+		<li>
+			{active ? (
+				<Link
+					to={{
+						pathname: pathname,
+						query: Object.assign({}, query, filterQuery),
+					}}
+				>
+					{children}
+				</Link>
+			) : (
+				children
+			)}
+		</li>
+	);
 };
 
-const NewsFilter = ({ itemsPerYear = {}, year: currentYear, pathname, query }) => (
+const NewsFilter = ({
+	itemsPerYear = {},
+	year: currentYear,
+	pathname,
+	query,
+}) => (
 	<div className="news-filter side-area">
 		<h2>Filtrera nyheter</h2>
 		<span className="news-filter-header">År</span>
 		<ul className="news-filter-list">
-			{Object.keys(itemsPerYear).sort().reverse().map(year => (
-				<Year key={year} pathname={pathname} query={query} year={year} count={itemsPerYear[year]} active={year !== currentYear}>
-					{year === 'all' ? 'Alla' : year === ' draft' ? 'Utkast' : year} ({itemsPerYear[year]})
-				</Year>
-			))}
+			{Object.keys(itemsPerYear)
+				.sort()
+				.reverse()
+				.map(year => (
+					<Year
+						key={year}
+						pathname={pathname}
+						query={query}
+						year={year}
+						count={itemsPerYear[year]}
+						active={year !== currentYear}
+					>
+						{year === 'all'
+							? 'Alla'
+							: year === ' draft' ? 'Utkast' : year}{' '}
+						({itemsPerYear[year]})
+					</Year>
+				))}
 		</ul>
 	</div>
 );

@@ -13,8 +13,8 @@ import ScrollButton from '../components/scrollbutton';
 const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 	if (hasGrid) {
 		return (
-			<Grid {...props} >
-				{breadcrumbs && <Breadcrumbs items={breadcrumbs}/>}
+			<Grid {...props}>
+				{breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 				{children}
 			</Grid>
 		);
@@ -23,22 +23,21 @@ const MainContainer = ({ hasGrid, children = null, breadcrumbs, ...props }) => {
 };
 
 class App extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
-	componentDidMount () {
+	componentDidMount() {
 		const { dispatch } = this.props;
 		dispatch(fetchMenuItems());
 		dispatch(fetchRegisterInformation());
-
 	}
-	componentWillReceiveProps (nextProps) {
+	componentWillReceiveProps(nextProps) {
 		if (nextProps.error.status && this.props.location.pathname !== '/404') {
 			this.props.router.push('/404');
 		}
 	}
 
-	render () {
+	render() {
 		const {
 			children,
 			menuItems,
@@ -48,21 +47,34 @@ class App extends Component {
 			externalLogin,
 			disableLogin,
 		} = this.props;
-		return location.pathname === '/404' ? children : (
-			<div className={`stratum-cms-${process.env.CLIENT_THEME || 'default'}`}>
-				<Messages id="message-container"/>
-				<Menu items={menuItems} externalLogin={externalLogin} disableLogin={disableLogin} />
-				<MainContainer hasGrid={location.pathname !== '/'} breadcrumbs={breadcrumbs} id="keystone-main-container">
+		return location.pathname === '/404' ? (
+			children
+		) : (
+			<div
+				className={`stratum-cms-${process.env.CLIENT_THEME ||
+					'default'}`}
+			>
+				<Messages id="message-container" />
+				<Menu
+					items={menuItems}
+					externalLogin={externalLogin}
+					disableLogin={disableLogin}
+				/>
+				<MainContainer
+					hasGrid={location.pathname !== '/'}
+					breadcrumbs={breadcrumbs}
+					id="keystone-main-container"
+				>
 					{children}
-					<ScrollButton/>
+					<ScrollButton />
 				</MainContainer>
-				<Footer {...registerInformation}/>
+				<Footer {...registerInformation} />
 			</div>
 		);
 	}
 }
 
-function mapStateToProps (state, { location }) {
+function mapStateToProps(state, { location }) {
 	return {
 		location,
 		menuItems: state.menu.items,

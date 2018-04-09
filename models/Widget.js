@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
+var Types = keystone.Field.Types;
 
 /**
  * Widget Model
@@ -30,16 +30,19 @@ Widget.add({
 	},
 	type: {
 		type: Types.Select,
-		options: [{
-			value: 'stratum',
-			label: 'Stratum Widget',
-		}, {
-			value: 'keystone',
-			label: 'Keystone Widget',
-		// }, {
-		// 	value: 'other',
-		// 	label: 'Other'
-		}],
+		options: [
+			{
+				value: 'stratum',
+				label: 'Stratum Widget',
+			},
+			{
+				value: 'keystone',
+				label: 'Keystone Widget',
+				// }, {
+				// 	value: 'other',
+				// 	label: 'Other'
+			},
+		],
 	},
 	stratumWidget: {
 		type: Types.Relationship,
@@ -76,7 +79,8 @@ Widget.add({
 	},
 	queryString: {
 		type: String,
-		note: 'Add query parameters here, if necessary, on the format one=1&two=abc',
+		note:
+			'Add query parameters here, if necessary, on the format one=1&two=abc',
 		dependsOn: {
 			type: 'stratum',
 		},

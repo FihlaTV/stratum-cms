@@ -21,7 +21,11 @@ const BankID = ({
 		case LoginStages.INPUT_PERSONAL_NUMBER:
 			return (
 				<div>
-					<InputPersonalNr onChange={onPersonalNumberBlur} onSubmit={onSubmit} valid={validPNr}/>
+					<InputPersonalNr
+						onChange={onPersonalNumberBlur}
+						onSubmit={onSubmit}
+						valid={validPNr}
+					/>
 				</div>
 			);
 		case LoginStages.AWAIT_BID_TOKEN:
@@ -30,7 +34,7 @@ const BankID = ({
 			return (
 				<div>
 					<Spinner />
-					<BIDStatusMessage statusCode={status}/>
+					<BIDStatusMessage statusCode={status} />
 				</div>
 			);
 		case LoginStages.LOGIN_COMPLETED:
@@ -43,7 +47,7 @@ const BankID = ({
 	}
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		personalNumber: state.bankId.personalNumber,
 		validPNr: state.bankId.personalNumberValidity,
@@ -54,9 +58,9 @@ const mapStateToProps = (state) => {
 		error: state.bankId.error,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		onPersonalNumberBlur: (personalNumber) => {
+		onPersonalNumberBlur: personalNumber => {
 			dispatch(validatePersonalNumber(personalNumber));
 		},
 	};

@@ -4,26 +4,31 @@ import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { connect } from 'react-redux';
 
 class Registration extends Component {
-	componentWillMount () {
+	componentWillMount() {
 		const { dispatch } = this.props;
 
-		dispatch(setBreadcrumbs([{ url: '/registrering', label: 'Registrering' }], true, 'Registrering'));
+		dispatch(
+			setBreadcrumbs(
+				[{ url: '/registrering', label: 'Registrering' }],
+				true,
+				'Registrering'
+			)
+		);
 	}
-	componentWillUnmount () {
+	componentWillUnmount() {
 		const { dispatch } = this.props;
 
 		dispatch(clearBreadcrumbs());
 	}
-	render () {
+	render() {
 		return (
 			<div>
 				<div className="base-page base-page-full">
-					<StratumWidget target="sw-registrations"/>
+					<StratumWidget target="sw-registrations" />
 				</div>
 			</div>
 		);
 	}
 }
-
 
 export default connect()(Registration);

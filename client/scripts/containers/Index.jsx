@@ -12,9 +12,12 @@ import PageLink from './PageLink';
 
 const isModernTheme = process.env.CLIENT_THEME === 'modern';
 
-const SubRegisterList = ({ subRegisters = [] }) =>
-(
-	<div className={`sub-registers sub-registers-${isModernTheme ? 'modern' : 'simple'}`}>
+const SubRegisterList = ({ subRegisters = [] }) => (
+	<div
+		className={`sub-registers sub-registers-${
+			isModernTheme ? 'modern' : 'simple'
+		}`}
+	>
 		<ul>
 			{subRegisters.map(({ name, url }, i) => (
 				<li key={`subregister-${i}`}>
@@ -25,8 +28,7 @@ const SubRegisterList = ({ subRegisters = [] }) =>
 	</div>
 );
 
-const InternalLinks = ({ internalLinks = [] }) =>
-{
+const InternalLinks = ({ internalLinks = [] }) => {
 	if (internalLinks.length > 0) {
 		const cols = Math.min(internalLinks.length, 4);
 		return (
@@ -43,25 +45,30 @@ const InternalLinks = ({ internalLinks = [] }) =>
 };
 
 class Index extends Component {
-	componentDidMount () {
+	componentDidMount() {
 		const { dispatch } = this.props;
 
 		dispatch(fetchStartPage());
 	}
-	getInformationBlurbComponent (informationBlurb) {
+	getInformationBlurbComponent(informationBlurb) {
 		const { type: ibType } = informationBlurb;
 		switch (ibType) {
 			case 'newsItem':
-				return <NewsItemWidget slug={informationBlurb.newsItem.slug} layout={informationBlurb.newsItemLayout} />;
+				return (
+					<NewsItemWidget
+						slug={informationBlurb.newsItem.slug}
+						layout={informationBlurb.newsItemLayout}
+					/>
+				);
 			case 'newsRoll':
 				return <NewsRollWidget />;
 			case 'image':
-				return <ImageWidget {...informationBlurb.image}/>;
+				return <ImageWidget {...informationBlurb.image} />;
 			default:
 				return null;
 		}
 	}
-	render () {
+	render() {
 		const {
 			jumbotron,
 			description = {},
@@ -78,18 +85,31 @@ class Index extends Component {
 		if (informationBlurb.type === 'image') {
 			descriptionClassNames.push('startpage-description-height');
 		}
-		const Jumbotron = jumbotron ? <JumbotronInner {...jumbotron} widgets={widgets} portal={isPortal}/> : null;
-
-		const Description = description.html && header ? (
-			<div className={descriptionClassNames.join(' ')}>
-				<h2>{header}</h2>
-				<div dangerouslySetInnerHTML={{ __html: description.html }} />
-			</div>
+		const Jumbotron = jumbotron ? (
+			<JumbotronInner
+				{...jumbotron}
+				widgets={widgets}
+				portal={isPortal}
+			/>
 		) : null;
+
+		const Description =
+			description.html && header ? (
+				<div className={descriptionClassNames.join(' ')}>
+					<h2>{header}</h2>
+					<div
+						dangerouslySetInnerHTML={{ __html: description.html }}
+					/>
+				</div>
+			) : null;
 
 		return (
 			<div>
-				{jumbotron && jumbotron.type === 'wide' ? Jumbotron : <Grid>{Jumbotron}</Grid>}
+				{jumbotron && jumbotron.type === 'wide' ? (
+					Jumbotron
+				) : (
+					<Grid>{Jumbotron}</Grid>
+				)}
 				<Grid>
 					<InternalLinks internalLinks={internalLinks} />
 					{internalLinks.length > 0 && <hr className="hr-block" />}
@@ -99,13 +119,26 @@ class Index extends Component {
 							{isPortal && (
 								<div>
 									<h2>{subRegisterTitle}</h2>
-									<SubRegisterList subRegisters={subRegisters} />
+									<SubRegisterList
+										subRegisters={subRegisters}
+									/>
 								</div>
 							)}
 						</Col>
 						<Col md={5}>
-							{this.getInformationBlurbComponent(informationBlurb)}
-							{isPortal && quickLink && quickLink.page && <PageLink pageId={quickLink.page.shortId} className="startpage-portal-link">{quickLink.text}</PageLink>}
+							{this.getInformationBlurbComponent(
+								informationBlurb
+							)}
+							{isPortal &&
+								quickLink &&
+								quickLink.page && (
+									<PageLink
+										pageId={quickLink.page.shortId}
+										className="startpage-portal-link"
+									>
+										{quickLink.text}
+									</PageLink>
+								)}
 						</Col>
 					</Row>
 				</Grid>
@@ -113,12 +146,12 @@ class Index extends Component {
 		);
 	}
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		...state.startPage,
 	};
 };
 
-Index.propTypes = { };
+Index.propTypes = {};
 
 export default connect(mapStateToProps)(Index);

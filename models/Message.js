@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
+var Types = keystone.Field.Types;
 
 /**
  * Message Model
@@ -25,11 +25,20 @@ Message.add({
 	},
 	endTime: {
 		type: Types.Datetime,
-		note: 'Determines after which time the message should no longer be displayed. Both `startTime` and `endTime` is required for the message to show at all',
+		note:
+			'Determines after which time the message should no longer be displayed. Both `startTime` and `endTime` is required for the message to show at all',
 		format: dateFormat,
 	},
-	status: { type: Types.Select, options: 'info, warning, danger, success', default: 'info' },
-	dismissible: { type: Boolean, default: true, note: 'Uncheck this if the user shouldn\'t be able to close the message' },
+	status: {
+		type: Types.Select,
+		options: 'info, warning, danger, success',
+		default: 'info',
+	},
+	dismissible: {
+		type: Boolean,
+		default: true,
+		note: "Uncheck this if the user shouldn't be able to close the message",
+	},
 });
 
 Message.defaultColumns = 'title, startTime|20%, endTime|20%, status|20%';

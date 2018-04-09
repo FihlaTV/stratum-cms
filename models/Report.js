@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
+var Types = keystone.Field.Types;
 
 /**
  * Report Model
@@ -16,7 +16,11 @@ var Report = new keystone.List('Report', {
 
 Report.add({
 	title: { type: String, required: true },
-	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
+	publishedDate: {
+		type: Types.Date,
+		index: true,
+		dependsOn: { state: 'published' },
+	},
 	year: { type: Number },
 	pdf: { type: Types.CloudinaryImage, autoCleanup: !keystone.get('is demo') },
 });

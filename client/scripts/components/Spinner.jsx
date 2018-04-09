@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Spinner = ({ small, style }) =>
-	(<div className={small ? 'spinner spinner-small' : 'spinner'} style={style}>
+const Spinner = ({ small, style }) => (
+	<div className={small ? 'spinner spinner-small' : 'spinner'} style={style}>
 		<div className="rect1" />
 		<div className="rect2" />
 		<div className="rect3" />
 		<div className="rect4" />
 		<div className="rect5" />
-	</div>);
+	</div>
+);
 
 Spinner.propTypes = {
 	small: PropTypes.bool,

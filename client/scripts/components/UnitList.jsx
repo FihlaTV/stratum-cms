@@ -9,7 +9,7 @@ const UnitList = ({
 	context,
 	roleChange,
 	unitChange,
-    units,
+	units,
 	roles,
 	register,
 }) => {
@@ -31,7 +31,13 @@ const UnitList = ({
 			/>
 			<FormGroup>
 				<ControlLabel>Register: </ControlLabel>
-				<FormControl rows="2" style={{ resize: 'none', overflow: 'hidden' }} componentClass="textarea" value={register} disabled/>
+				<FormControl
+					rows="2"
+					style={{ resize: 'none', overflow: 'hidden' }}
+					componentClass="textarea"
+					value={register}
+					disabled
+				/>
 			</FormGroup>
 		</form>
 	);

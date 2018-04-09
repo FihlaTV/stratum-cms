@@ -7,26 +7,37 @@ import User from './User';
 const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
 	const className = 'nav-button-text registration-link';
 	if (disabled) {
-		return <a className={className} disabled {...props}>{children}</a>;
+		return (
+			<a className={className} disabled {...props}>
+				{children}
+			</a>
+		);
 	}
 	// if (reactRouter) {
 	// 	return <Link to="/registrering" className={className} {...props}>{children}</Link>;
 	// }
-	return <a href="/registrering" className={className} {...props}>{children}</a>;
+	return (
+		<a href="/registrering" className={className} {...props}>
+			{children}
+		</a>
+	);
 };
 
 const NavParent = ({ children }) => (
-	<ul className="nav navbar-nav navbar-right">
-		{children}
-	</ul>
+	<ul className="nav navbar-nav navbar-right">{children}</ul>
 );
 
 const LoginButton = ({ onClick, label, externalLink }) => (
 	<li>
-		<a href={externalLink || '#'} target={externalLink ? '_blank' : null} onClick={onClick}>{label}</a>
+		<a
+			href={externalLink || '#'}
+			target={externalLink ? '_blank' : null}
+			onClick={onClick}
+		>
+			{label}
+		</a>
 	</li>
 );
-
 
 const TopNav = ({
 	loading,
@@ -52,27 +63,34 @@ const TopNav = ({
 	if (externalLogin) {
 		return (
 			<NavParent>
-				<LoginButton label={loginButtonLabel} externalLink={externalLogin}/>
+				<LoginButton
+					label={loginButtonLabel}
+					externalLink={externalLogin}
+				/>
 			</NavParent>
 		);
 	}
 	if (loading || context || wrongRegister) {
 		return (
 			<NavParent>
-				<Spinner small style={spinnerStyle}/>
+				<Spinner small style={spinnerStyle} />
 				<li style={visibility} className={currentRouteIsRegistration}>
-					<RegistrationLink disabled={wrongRegister} reactRouter={reactRouter}>
+					<RegistrationLink
+						disabled={wrongRegister}
+						reactRouter={reactRouter}
+					>
 						<p className="nav-button-text-big">Registrering</p>
 						<p className="nav-button-text-small">med mera</p>
 					</RegistrationLink>
 				</li>
 				<li style={visibility}>
-					<User ref={setContextTarget}
+					<User
+						ref={setContextTarget}
 						context={context}
 						wrongRegister={wrongRegister}
 						onUserHover={onUserHover}
 						shrinkName={shrinkUnitName}
-						onClick={(e) => {
+						onClick={e => {
 							e.preventDefault();
 							showContextModal(true);
 						}}

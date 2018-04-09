@@ -1,11 +1,14 @@
 var keystone = require('keystone');
 
-exports = module.exports = function (req, res) {
-	keystone.list('RegisterInformation').model
-		.findOne()
+exports = module.exports = function(req, res) {
+	keystone
+		.list('RegisterInformation')
+		.model.findOne()
 		.sort('sortOrder')
-		.select('name phone email location.street1 location.street2 location.zipCode location.city')
-		.exec(function (err, results) {
+		.select(
+			'name phone email location.street1 location.street2 location.zipCode location.city'
+		)
+		.exec(function(err, results) {
 			var registerInformation;
 			if (err) {
 				return res.apiResponse({

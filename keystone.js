@@ -70,7 +70,7 @@ keystone.init({
 	'wysiwyg cloudinary images': true,
 	'keystone widgets index': path.join(
 		root,
-		'/client/scripts/widgets/widgets.json',
+		'/client/scripts/widgets/widgets.json'
 	),
 	'ga property front': process.env.GA_PROPERTY_FRONT,
 	'react spa': process.env.REACT_SPA === 'true',
@@ -112,7 +112,7 @@ if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
 	try {
 		keystone.set(
 			'last commit',
-			JSON.parse(fs.readFileSync('last_commit.json', 'utf8')),
+			JSON.parse(fs.readFileSync('last_commit.json', 'utf8'))
 		);
 	} catch (e) {
 		console.log(e);

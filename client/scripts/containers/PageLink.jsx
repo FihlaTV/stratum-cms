@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 class PageLink extends Component {
-	findPage (pageId, menuItems) {
+	findPage(pageId, menuItems) {
 		if (!pageId) {
 			return null;
 		}
@@ -20,12 +20,16 @@ class PageLink extends Component {
 			return prev;
 		}, null);
 	}
-	render () {
+	render() {
 		const { menuItems, pageId, children, ...rest } = this.props;
 		const menu = this.findPage(pageId, menuItems);
 
 		if (menu) {
-			return <Link to={`${menu.url}`} {...rest}>{children || menu.label}</Link>;
+			return (
+				<Link to={`${menu.url}`} {...rest}>
+					{children || menu.label}
+				</Link>
+			);
 		}
 		return null;
 	}
