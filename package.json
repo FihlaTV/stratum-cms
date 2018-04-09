@@ -89,13 +89,16 @@
   },
   "scripts": {
     "start": "node keystone.js",
-    "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
-    "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
-    "build_register": "webpack -p --config webpack.production.config --env.register",
-        "lint": "eslint . --ext=js --ext=jsx",
+    "start_prod_cmd":
+      "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
+    "build_prod_cmd":
+      "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
+    "build_register":
+      "webpack -p --config webpack.production.config --env.register",
+    "lint": "eslint . --ext=js --ext=jsx",
     "lint_fix": "eslint . --fix --ext=js --ext=jsx",
     "test": "jest client/test/",
-    "test:watch": "npm test -- --watch",
+    "test:watch": "npm test -- --watch"
   },
   "husky": {
     "hooks": {
@@ -103,13 +106,10 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,less,yml}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,jsx,json,css,less,yml}": ["prettier --write", "git add"]
   },
   "jest": {
-              "globalSetup": "<rootDir>/client/test/testconfig.js",
+    "globalSetup": "<rootDir>/client/test/testconfig.js",
     "setupTestFrameworkScriptFile": "<rootDir>/client/test/setupTest.js"
   },
   "main": "keystone.js"
