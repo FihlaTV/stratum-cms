@@ -1,9 +1,7 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const SEPOps = ({
-	description,
-}) => {
+const SEPOps = ({ description }) => {
 	return (
 		<StartPageWidget
 			url="/stratum/api/aggregate/sep/seppost/total/count?APIKey=bK3H9bwaG4o="

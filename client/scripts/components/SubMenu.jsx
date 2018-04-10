@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -6,8 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap';
  * Returns the current active page on top level
  * When @activePageId points to a sub page
  */
-function findActivePage (activePageId, menuItems = []) {
-	return menuItems.find((item) => {
+function findActivePage(activePageId, menuItems = []) {
+	return menuItems.find(item => {
 		if (item.pageKey !== activePageId) {
 			return findActivePage(activePageId, item.items);
 		}
@@ -15,11 +16,12 @@ function findActivePage (activePageId, menuItems = []) {
 	});
 }
 
-function renderLink (activeTopPage = {}) {
-	return (menuItem) => {
+function renderLink(activeTopPage = {}) {
+	return menuItem => {
 		const { key, url, label, items = [], pageKey, state } = menuItem;
 		const cls = [];
-		const displaySubNav = pageKey === activeTopPage.pageKey && items.length > 0;
+		const displaySubNav =
+			pageKey === activeTopPage.pageKey && items.length > 0;
 
 		if (items.length > 0) {
 			cls.push('has-sub-pages');
@@ -31,16 +33,29 @@ function renderLink (activeTopPage = {}) {
 			cls.push('nav-page-draft');
 		}
 		const Link = (
-			<LinkContainer key={key} to={`${url}`} activeClassName="active" className={cls.join(' ')}>
-				<NavItem>
-					{label}
-				</NavItem>
+			<LinkContainer key={key} to={`${url}`} className={cls.join(' ')}>
+				<NavItem>{label}</NavItem>
 			</LinkContainer>
 		);
 
-		return displaySubNav ? [Link, <SubNav containsSubPages key={`sub-nav-${key}`} menuItems={items}/>] : Link;
+		return displaySubNav
+			? [
+					Link,
+					<SubNav
+						containsSubPages
+						key={`sub-nav-${key}`}
+						menuItems={items}
+					/>,
+			  ]
+			: Link;
 	};
 }
+
+const NavHeader = ({ header }) => (
+	<NavItem disabled className="nav-header">
+		{header}
+	</NavItem>
+);
 
 const SubNav = ({
 	menuItems = [],
@@ -49,11 +64,12 @@ const SubNav = ({
 	header,
 	inContainer,
 }) => {
-	const cls = containsSubPages ? 'nav-page-second'
-		: (inContainer ? 'nav-page' : 'nav-page-new');
+	const cls = containsSubPages
+		? 'nav-page-second'
+		: inContainer ? 'nav-page' : 'nav-page-new';
 	return (
 		<Nav bsStyle="pills" className={cls} stacked>
-			{header && <h2>{header}</h2>}
+			{header && <NavHeader header={header} />}
 			{menuItems.map(renderLink(activeTopPage))}
 		</Nav>
 	);
@@ -68,13 +84,18 @@ const SubMenu = ({
 }) => {
 	const { items = [] } = menuBlock;
 	const activeTopPage = findActivePage(activePageId, items);
-	const onePageWithChildren = items.length === 1 && items[0].items && items[0].items.length > 0;
+	const onePageWithChildren =
+		items.length === 1 && items[0].items && items[0].items.length > 0;
 	return displaySingleItem || items.length > 1 || onePageWithChildren ? (
 		<div className="sub-menu">
-			<SubNav menuItems={items} activeTopPage={activeTopPage} header={displayHeader && menuBlock.label} inContainer={inContainer}/>
+			<SubNav
+				menuItems={items}
+				activeTopPage={activeTopPage}
+				header={displayHeader && menuBlock.label}
+				inContainer={inContainer}
+			/>
 		</div>
 	) : null;
-
 };
 
 SubMenu.propTypes = {
@@ -83,6 +104,6 @@ SubMenu.propTypes = {
 	displaySingleItem: PropTypes.bool,
 	inContainer: PropTypes.bool,
 	menuBlock: PropTypes.object,
- };
+};
 
 export default SubMenu;

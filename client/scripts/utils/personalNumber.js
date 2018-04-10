@@ -1,6 +1,6 @@
-const CURRENT_YEAR = (new Date()).getFullYear();
+const CURRENT_YEAR = new Date().getFullYear();
 
-function isValidSwedishPIN (pin) {
+function isValidSwedishPIN(pin) {
 	pin = pin
 		.replace(/\D/g, '') // strip out all but digits
 		.split('') // convert string to array
@@ -12,12 +12,12 @@ function isValidSwedishPIN (pin) {
 		return false;
 	}
 	var sum = pin
-	// convert to number
-		.map(function (n) {
+		// convert to number
+		.map(function(n) {
 			return Number(n);
 		})
-	// perform arithmetic and return sum
-		.reduce(function (previous, current, index) {
+		// perform arithmetic and return sum
+		.reduce(function(previous, current, index) {
 			// multiply every other number with two
 			if (index % 2) {
 				current *= 2;
@@ -34,9 +34,10 @@ function isValidSwedishPIN (pin) {
 	return sum % 10 === 0;
 }
 
-export function isValidPersonalNumber (personalNumber) {
-	let matches = personalNumber
-		.match(/^(19|20)((\d{2})(\d{2})(\d{2})-{0,1}\d{4})$/);
+export function isValidPersonalNumber(personalNumber) {
+	let matches = personalNumber.match(
+		/^(19|20)((\d{2})(\d{2})(\d{2})-{0,1}\d{4})$/
+	);
 
 	if (matches) {
 		let year = parseInt(matches[1] + matches[3], 10);

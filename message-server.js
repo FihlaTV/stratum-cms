@@ -10,15 +10,17 @@ require('dotenv').load();
 var keystone = require('keystone');
 
 keystone.init({
-	'name': process.env.MESSAGE_SERVER_NAME || 'Message Server',
-	'brand': process.env.MESSAGE_SERVER_BRAND || 'Message Server',
-	'updates': 'updates/message-server',
+	name: process.env.MESSAGE_SERVER_NAME || 'Message Server',
+	brand: process.env.MESSAGE_SERVER_BRAND || 'Message Server',
+	updates: 'updates/message-server',
 	'auto update': true,
-	'mongo': process.env.MESSAGE_SERVER_MONGO_URI || 'mongodb://localhost/message-server',
+	mongo:
+		process.env.MESSAGE_SERVER_MONGO_URI ||
+		'mongodb://localhost/message-server',
 	'is message server': true,
-	'session': true,
+	session: true,
 	'session store': 'mongo',
-	'auth': true,
+	auth: true,
 	'user model': 'User',
 	'cookie secret': process.env.MESSAGE_SERVER_COOKIE_SECRET || 'stratum-cms',
 	'cors allow origin': true,
@@ -34,7 +36,7 @@ require('./models/Message');
 
 var messageRoute = require('./routes/api/messages.js');
 
-keystone.set('routes', function (app) {
+keystone.set('routes', function(app) {
 	app.all('/*', keystone.middleware.api);
 	// Allow cross domain calls for messages
 	app.get('/messages', keystone.middleware.cors);

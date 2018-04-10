@@ -22,6 +22,10 @@ import FONOForbettring from './FONOForbettring';
 import FONOPatientenket from './FONOPatientenket';
 import SPOQTotal from './SPOQTotal';
 import DefaultWidget from './Defaultwidget';
+import PsykRegNewsletter from './PsykRegNewsletter';
+import KRHOperationer from './KRHOperationer';
+import KRHInsattaProteser from './KRHInsattaProteser';
+import KRHArtikelnummer from './KRHArtikelnummer';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -47,6 +51,10 @@ export { FONOForbettring };
 export { FONOPatientenket };
 export { SPOQTotal };
 export { DefaultWidget };
+export { PsykRegNewsletter };
+export { KRHOperationer };
+export { KRHInsattaProteser };
+export { KRHArtikelnummer };
 
 export default {
 	BOAArtrosSkola,
@@ -73,4 +81,8 @@ export default {
 	FONOPatientenket,
 	SPOQTotal,
 	DefaultWidget,
+	PsykRegNewsletter,
+	KRHOperationer,
+	KRHInsattaProteser,
+	KRHArtikelnummer,
 };

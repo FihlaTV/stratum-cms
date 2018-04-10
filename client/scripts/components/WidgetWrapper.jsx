@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 import widgets from '../widgets/';
 
 class WidgetWrapper extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
-	render () {
+	render() {
 		var Widget = widgets[this.props.id];
 		if (!Widget) Widget = widgets.DefaultWidget;
 		return Widget ? (

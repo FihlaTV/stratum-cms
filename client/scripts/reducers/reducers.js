@@ -7,12 +7,12 @@ import menu from './menu';
 import page from './page';
 import error from './error';
 import faq from './faq';
+import scrollbutton from './scrollbutton';
 import registerInformation from './registerInformation';
 import startPage from './startPage';
 import breadcrumbs from './breadcrumbs';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-
 
 export default combineReducers({
 	login,
@@ -28,4 +28,5 @@ export default combineReducers({
 	registerInformation,
 	breadcrumbs,
 	startPage,
+	scrollbutton,
 });

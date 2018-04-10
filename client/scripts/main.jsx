@@ -17,7 +17,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Router } from 'react-router';
 import routes from './routes';
 
-// Webpack dependencies
+/**
+ * Webpack dependencies, these are only need when running
+ * outside the SPA since react-bootstrap has it's own
+ * javascript solution
+ */
 // import 'jquery'; // not needed, bundled with bootstrap
 import 'bootstrap';
 
@@ -34,9 +38,9 @@ const routerContainer = document.getElementById('react-container');
 const keystoneWidgets = document.querySelectorAll('.keystone-widget');
 
 let store = compose(
-		applyMiddleware(thunkMiddleware),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
-	)(createStore)(reducers);
+	applyMiddleware(thunkMiddleware),
+	window.devToolsExtension ? window.devToolsExtension() : f => f
+)(createStore)(reducers);
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -50,7 +54,7 @@ if (module.hot) {
 
 // Set a unique window name for stratum session cookie
 if (!window.name) {
-	window.name = 'T' + (new Date()).getTime();
+	window.name = 'T' + new Date().getTime();
 	cookies.set(stratumSessionCookie, window.name, cookieConf);
 }
 window.addEventListener('focus', () => {
@@ -67,19 +71,26 @@ if (routerContainer) {
 
 	render(
 		<Provider store={store}>
-			<Router history={history} routes={routes} onUpdate={function () {
-				const { action, pathname } = this.state.location;
-				if (!CLIENT_GA_PROPERTY) {
-					return;
-				}
-				// Quick fix for not logging multiple views when redirecting pages.
-				// TODO: Better solution when using REPLACE action.
-				if (action !== 'REPLACE' || pathname !== lastUpdate.pathname) {
-					ReactGA.set({ page: window.location.pathname });
-					ReactGA.pageview(window.location.pathname);
-				}
-				lastUpdate = { action, pathname };
-			}}/>
+			<Router
+				history={history}
+				routes={routes}
+				onUpdate={function() {
+					const { action, pathname } = this.state.location;
+					if (!CLIENT_GA_PROPERTY) {
+						return;
+					}
+					// Quick fix for not logging multiple views when redirecting pages.
+					// TODO: Better solution when using REPLACE action.
+					if (
+						action !== 'REPLACE' ||
+						pathname !== lastUpdate.pathname
+					) {
+						ReactGA.set({ page: window.location.pathname });
+						ReactGA.pageview(window.location.pathname);
+					}
+					lastUpdate = { action, pathname };
+				}}
+			/>
 		</Provider>,
 		routerContainer
 	);

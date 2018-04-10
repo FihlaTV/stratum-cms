@@ -8,7 +8,7 @@ const StatusCodes = {
 	COMPLETE: 'COMPLETE',
 };
 
-function getStatus (status) {
+function getStatus(status) {
 	switch (status) {
 		case StatusCodes.NO_CLIENT:
 		case StatusCodes.OUTSTANDING_TRANSACTION:
@@ -19,7 +19,8 @@ function getStatus (status) {
 			};
 		case StatusCodes.USER_SIGN:
 			return {
-				message: 'Skriv in din personliga kod i appen för Mobilt BankID.',
+				message:
+					'Skriv in din personliga kod i appen för Mobilt BankID.',
 				alert: 'info',
 				icon: 'fa-info',
 			};
@@ -34,9 +35,7 @@ function getStatus (status) {
 	}
 }
 
-const BIDStatusMessage = ({
-    statusCode,
-}) => {
+const BIDStatusMessage = ({ statusCode }) => {
 	const status = getStatus(statusCode);
 	return (
 		<Alert alertType={status.alert} faIcon={status.icon}>

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 import configureMockStore from 'redux-mock-store';
@@ -14,7 +13,7 @@ describe('menu async actions', () => {
 		nock.cleanAll();
 	});
 
-	it('creates a RECEIVE_MENU_ITEMS action with all menu items on menu fetch', () => {
+	test('creates a RECEIVE_MENU_ITEMS action with all menu items on menu fetch', () => {
 		const menuItems = [
 			{
 				url: '/contact',
@@ -54,7 +53,8 @@ describe('menu async actions', () => {
 								label: 'Sub Page',
 								key: 'sub-page',
 								pageKey: 'ryf2UZ2f',
-							}, {
+							},
+							{
 								url: '/about/more',
 								label: 'Sub Page 2',
 								key: 'sub-page2',
@@ -78,9 +78,8 @@ describe('menu async actions', () => {
 
 		const store = mockStore({ menu: { items: [] } });
 
-		return store.dispatch(actions.fetchMenuItems())
-			.then(() => {
-				expect(store.getActions()).toMatch(expectedActions);
-			});
+		return store.dispatch(actions.fetchMenuItems()).then(() => {
+			expect(store.getActions()).toMatchObject(expectedActions);
+		});
 	});
 });

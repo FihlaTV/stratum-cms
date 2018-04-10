@@ -1,12 +1,12 @@
 .resource-list {
-	@media print{
+	@media print {
 		display: none;
 	}
-	ul{
+	ul {
 		list-style: none;
 		padding-left: 0;
-		li{
-			>a{
+		li {
+			> a {
 				font-size: ceil(@font-size-base * 1.2);
 			}
 			min-height: 64px;
@@ -18,38 +18,38 @@
 			text-overflow: ellipsis;
 		}
 	}
-	.resource-icon{
+	.resource-icon {
 		.fa-icon();
 		position: absolute;
 		right: @gutter-large;
 		top: @gutter-large;
 		font-size: 32px;
 		color: @primary-light;
-		&.resource-pdf:before{
+		&.resource-pdf:before {
 			content: @fa-var-file-pdf-o;
 		}
-		&.resource-powerpoint:before{
+		&.resource-powerpoint:before {
 			content: @fa-var-file-powerpoint-o;
 		}
-		&.resource-image:before{
+		&.resource-image:before {
 			content: @fa-var-file-image-o;
 		}
-		&.resource-video:before{
+		&.resource-video:before {
 			content: @fa-var-file-video-o;
 		}
-		&.resource-audio:before{
+		&.resource-audio:before {
 			content: @fa-var-file-audio-o;
 		}
-		&.resource-word:before{
+		&.resource-word:before {
 			content: @fa-var-file-word-o;
 		}
-		&.resource-excel:before{
+		&.resource-excel:before {
 			content: @fa-var-file-excel-o;
 		}
-		&.resource-text:before{
+		&.resource-text:before {
 			content: @fa-var-file-text-o;
 		}
-		&.resource-other:before{
+		&.resource-other:before {
 			content: @fa-var-file-o;
 		}
 	}

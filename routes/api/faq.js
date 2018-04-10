@@ -1,11 +1,11 @@
 var keystone = require('keystone');
 
-exports = module.exports = function (req, res) {
-	var query = keystone.list('Question').model
-		.where('isActive', true)
+exports = module.exports = function(req, res) {
+	var query = keystone
+		.list('Question')
+		.model.where('isActive', true)
 		.sort('sortOrder')
 		.populate('category');
-
 
 	if (req.params.questionCategory) {
 		query.where({
@@ -14,7 +14,7 @@ exports = module.exports = function (req, res) {
 			},
 		});
 	}
-	query.exec(function (err, questions) {
+	query.exec(function(err, questions) {
 		if (err) {
 			return res.apiResponse({
 				success: false,
@@ -22,19 +22,24 @@ exports = module.exports = function (req, res) {
 			});
 		}
 		var categories = [];
-		questions.forEach(function (question) {
-			var	category = question.category;
+		questions.forEach(function(question) {
+			var category = question.category;
 			if (category) {
-				var id = Number.isInteger(category.sortOrder) ? category.sortOrder : 0;
+				var id = Number.isInteger(category.sortOrder)
+					? category.sortOrder
+					: 0;
 				categories[id] = categories[id] || {
 					category: category.category,
 					questions: [],
 				};
-				var qAndA = { question: question.question, answer: question.answer.html };
+				var qAndA = {
+					question: question.question,
+					answer: question.answer.html,
+				};
 				categories[id].questions.push(qAndA);
 			}
 		});
-		var cleanCategories = categories.filter(function (category) {
+		var cleanCategories = categories.filter(function(category) {
 			return category !== null;
 		});
 		return res.apiResponse({
@@ -49,5 +54,4 @@ exports = module.exports = function (req, res) {
 			},
 		});
 	} */
-
 };

@@ -1,6 +1,6 @@
 const initialState = {
 	location: {},
- };
+};
 
 import { RECEIVE_REGISTER_INFORMATION } from '../actions/registerInformation';
 

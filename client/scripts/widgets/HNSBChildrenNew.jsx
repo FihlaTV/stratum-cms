@@ -1,9 +1,7 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const HNSBChildrenNew = ({
-	description,
-}) => {
+const HNSBChildrenNew = ({ description }) => {
 	return (
 		<StartPageWidget
 			url="/stratum/api/aggregate/hnsb/hnsbbase/total/subjectcount?APIKey=bK3H9bwaG4o="

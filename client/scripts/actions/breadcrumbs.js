@@ -10,10 +10,12 @@ const indexRoute = { url: '/', label: 'Start' };
  * @param breadcrumbs {array} array consisting of objects of shap { url: 'link-to-title', label: 'Title' }
  * @param addIndexRoute {boolean} adds a index route at the start of the breadcrumbs linking to the index page.
  */
-export function setBreadcrumbs (breadcrumbs = [], addIndexRoute = true, title) {
+export function setBreadcrumbs(breadcrumbs = [], addIndexRoute = true, title) {
 	let bcs = breadcrumbs;
 	if (addIndexRoute) {
-		bcs = breadcrumbs.map((bc) => Object.assign({}, bc, { url: `${indexRoute.url}${bc.url}` }));
+		bcs = breadcrumbs.map(bc =>
+			Object.assign({}, bc, { url: `${indexRoute.url}${bc.url}` })
+		);
 		bcs.unshift(indexRoute);
 	}
 	if (title) {
@@ -25,7 +27,7 @@ export function setBreadcrumbs (breadcrumbs = [], addIndexRoute = true, title) {
 	};
 }
 
-export function setTitle (title) {
+export function setTitle(title) {
 	if (!title) {
 		document.title = CLIENT_TITLE;
 	} else if (!CLIENT_TITLE) {
@@ -38,7 +40,7 @@ export function setTitle (title) {
 /**
  * Clears all breadcrumbs from the current state.
  */
-export function clearBreadcrumbs (clearTitle = true) {
+export function clearBreadcrumbs(clearTitle = true) {
 	if (clearTitle) {
 		setTitle('');
 	}

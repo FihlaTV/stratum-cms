@@ -1,19 +1,23 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'react-bootstrap';
 
 const Message = ({
-		id,
-		title,
-		text,
-		onDismiss,
-		visible = true,
-		children,
-		className,
-		status,
-	}) =>
-	visible
-	? (
-		<Alert className={className} bsStyle={status} onDismiss={onDismiss ? () => onDismiss(id) : null}>
+	id,
+	title,
+	text,
+	onDismiss,
+	visible = true,
+	children,
+	className,
+	status,
+}) =>
+	visible ? (
+		<Alert
+			className={className}
+			bsStyle={status}
+			onDismiss={onDismiss ? () => onDismiss(id) : null}
+		>
 			{title && <h4>{title}</h4>}
 			{text && <p>{text}</p>}
 			{children}

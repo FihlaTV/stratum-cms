@@ -1,14 +1,21 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import NewsLink from './NewsLink';
 import moment from 'moment';
 import 'moment/locale/sv';
 
 const NewsListItem = ({ slug, title, publishedDate, content, state = {} }) => {
-	var publishedAt = publishedDate !== null ? moment(publishedDate).format('L') : 'Utkast';
+	var publishedAt =
+		publishedDate !== null ? moment(publishedDate).format('L') : 'Utkast';
 	return (
-		<div className="news-list-item" >
+		<div className="news-list-item">
 			<NewsLink slug={slug}>
-				<div className={`news-list-item-content` + `${state === 'draft' ? ' draft' : ''}`}>
+				<div
+					className={
+						`news-list-item-content` +
+						`${state === 'draft' ? ' draft' : ''}`
+					}
+				>
 					<h2>{title}</h2>
 					<p className="published-at">{publishedAt}</p>
 					<p className="lead">{content.lead}</p>

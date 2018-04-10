@@ -1,10 +1,11 @@
-.jumbotron{
-	&.jumbotron-portal{
+.jumbotron {
+	&.jumbotron-portal {
 		padding: @gutter-large;
 		@media screen and (min-width: @screen-md-min) {
 			padding: @gutter-large*2.5;
 		}
-		h1,.h1{
+		h1,
+		.h1 {
 			font-size: @font-size-base*3.2;
 			margin-bottom: 15px;
 		}
@@ -16,12 +17,16 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		@media screen and (min-width: @screen-sm-min) {
-			height: 400px;
-			background-image: url('/images/jumbotron_background.png');
+			&.jumbotron-wide-fixed-height {
+				height: 400px;
+				padding-bottom: 0;
+			}
 			padding-top: 64px;
+			padding-bottom: 64px;
 			margin-bottom: @gutter-xlarge * 2;
 		}
-		h1,.h1 {
+		h1,
+		.h1 {
 			font-size: 30px;
 			font-weight: 300;
 		}
@@ -37,12 +42,13 @@
 		padding-top: @gutter-large * 2;
 		a.jumbotron-news-link {
 			display: inline-block;
-			font-family: "Roboto Slab";
+			font-family: 'Roboto Slab';
 			color: @text-color;
 			font-size: 20px;
 			font-weight: 300;
 			margin-bottom: 5px;
-			&,&:hover {
+			&,
+			&:hover {
 				text-decoration: none;
 			}
 			&:after {
@@ -55,7 +61,7 @@
 			margin-left: 20px;
 			&:before {
 				position: absolute;
-				content: " ";
+				content: ' ';
 				background: url(/images/download.svg) no-repeat;
 				background-size: contain;
 				width: 15px;
@@ -69,7 +75,7 @@
 			font-size: 14px;
 			text-decoration: underline;
 			&:after {
-				content: " ";
+				content: ' ';
 				background: url('/images/chevron.svg') no-repeat;
 				background-size: 10px;
 				background-size: contain;
@@ -96,14 +102,14 @@
 		// 	font-size: (@font-size-base * 3.5);
 		// }
 	}
-	&.jumbotron-top{
+	&.jumbotron-top {
 		margin-top: -@navbar-margin-bottom;
 	}
-	&.jumbotron-gradient{
+	&.jumbotron-gradient {
 		#gradient > .vertical(darken(@jumbotron-bg, 10); @jumbotron-bg);
 	}
 	.container & {
-	  border-radius: @border-radius-main; // Only round corners at higher resolutions if contained in a container
-	  .base-shadow();
+		border-radius: @border-radius-main; // Only round corners at higher resolutions if contained in a container
+		.base-shadow();
 	}
 }

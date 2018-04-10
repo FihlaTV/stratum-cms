@@ -1,10 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-
-const Breadcrumbs = ({
-	items = [],
-}) => {
+const Breadcrumbs = ({ items = [] }) => {
 	return items.length > 0 ? (
 		<ol className="breadcrumb">
 			{items.map(({ url, label }, i) => {
@@ -17,14 +15,15 @@ const Breadcrumbs = ({
 			})}
 		</ol>
 	) : null;
-
 };
 
 Breadcrumbs.propTypes = {
-	items: PropTypes.arrayOf(PropTypes.shape({
-		url: PropTypes.string.isRequired,
-		label: PropTypes.string.isRequired,
-	})),
- };
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			url: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	),
+};
 
 export default Breadcrumbs;

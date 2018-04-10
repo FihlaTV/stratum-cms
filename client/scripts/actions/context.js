@@ -5,21 +5,21 @@ export const SET_UNIT = 'SET_UNIT';
 export const RECEIVE_CONTEXTS = 'RECEIVE_CONTEXTS';
 export const SET_TARGET = 'SET_TARGET';
 
-export function showContextModal (show) {
+export function showContextModal(show) {
 	return {
 		type: SHOW_CONTEXT_MODAL,
 		show: show,
 	};
 }
 
-export function setTarget (target) {
+export function setTarget(target) {
 	return {
 		type: SET_TARGET,
 		target: process.env.NODE_ENV === 'development' ? null : target,
 	};
 }
 
-export function initContextSelector (contexts, roleId, unitId, initial) {
+export function initContextSelector(contexts, roleId, unitId, initial) {
 	// Find all unique roles for current contexts
 	const roles = contexts.reduce((roles, context) => {
 		if (roles.every(x => x.RoleID !== context.Role.RoleID)) {
@@ -46,7 +46,7 @@ export function initContextSelector (contexts, roleId, unitId, initial) {
 	return ret;
 }
 
-function getUnits (contexts, roleId) {
+function getUnits(contexts, roleId) {
 	return contexts.reduce((units, context) => {
 		if (context.Role.RoleID === roleId) {
 			units.push(context.Unit);
@@ -55,7 +55,7 @@ function getUnits (contexts, roleId) {
 	}, []);
 }
 
-export function roleChange (roleId) {
+export function roleChange(roleId) {
 	return (dispatch, getState) => {
 		dispatch(setRole(roleId, getState().context.contexts));
 		const state = getState();
@@ -65,12 +65,12 @@ export function roleChange (roleId) {
 	};
 }
 
-function shouldSetUnit (state) {
+function shouldSetUnit(state) {
 	const { currentUnit, currentRole, units } = state.context;
 	return !currentUnit && currentRole && units && units.length === 1;
 }
 
-function setRole (roleId, contexts) {
+function setRole(roleId, contexts) {
 	return {
 		type: SET_ROLE,
 		roleId,
@@ -83,14 +83,14 @@ function setRole (roleId, contexts) {
 	};
 }
 
-export function unitChange (unitId) {
+export function unitChange(unitId) {
 	return {
 		type: SET_UNIT,
 		unitId: unitId,
 	};
 }
 
-export function contextError (error) {
+export function contextError(error) {
 	return {
 		type: CONTEXT_ERROR,
 		error: error,
@@ -99,7 +99,7 @@ export function contextError (error) {
 
 export const SET_ENTERING = 'SET_ENTERING';
 
-export function setEntering (isEntering) {
+export function setEntering(isEntering) {
 	return {
 		type: SET_ENTERING,
 		isEntering: isEntering,

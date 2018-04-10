@@ -4,19 +4,22 @@ import { connect } from 'react-redux';
 import { clearError } from '../actions/error';
 
 class ErrorPage extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.props.clearError();
 	}
-	render () {
-		const message = this.props.error.message === 'null' ? '' : this.props.message;
+	render() {
+		const message =
+			this.props.error.message === 'null' ? '' : this.props.message;
 		return (
 			<div className="container error-page">
 				<h1>Kunde inte hitta sidan du letade efter</h1>
 				<p className="error-page-message">{message}</p>
-				<p className="back-link"><Link to="/">Gå tillbaka till startsidan</Link></p>
+				<p className="back-link">
+					<Link to="/">Gå tillbaka till startsidan</Link>
+				</p>
 			</div>
 		);
 	}
@@ -26,7 +29,7 @@ const mapStateToProps = ({ error }) => {
 	return { error };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		clearError: () => dispatch(clearError()),
 	};

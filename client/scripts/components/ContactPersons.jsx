@@ -1,13 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Image, Glyphicon } from 'react-bootstrap';
 
-const ContactPerson = ({
-	name,
-	image = {},
-	description,
-	email,
-	phone,
-}) => {
+const ContactPerson = ({ name, image = {}, description, email, phone }) => {
 	return (
 		<div className="contact-person">
 			<div className="contact-person-image">
@@ -15,22 +10,33 @@ const ContactPerson = ({
 			</div>
 			<div className="contact-person-info">
 				<h3>{name}</h3>
-				{description && <p className="contact-person-title">{description}</p>}
-				{phone && <p><Glyphicon glyph="phone" /> {phone}</p>}
-				{email && <p><a href={`mailto:${email}`}><Glyphicon glyph="envelope" /> {email}</a></p>}
+				{description && (
+					<p className="contact-person-title">{description}</p>
+				)}
+				{phone && (
+					<p>
+						<Glyphicon glyph="phone" /> {phone}
+					</p>
+				)}
+				{email && (
+					<p>
+						<a href={`mailto:${email}`}>
+							<Glyphicon glyph="envelope" /> {email}
+						</a>
+					</p>
+				)}
 			</div>
 		</div>
 	);
 };
 
-const ContactPersons = ({
-	contacts = [],
-}) => (
+const ContactPersons = ({ contacts = [] }) => (
 	<div className="content-page-contacts">
-		{contacts.map((contact, i) => <ContactPerson {...contact} key={`contact-${i}`} />)}
+		{contacts.map((contact, i) => (
+			<ContactPerson {...contact} key={`contact-${i}`} />
+		))}
 	</div>
 );
-
 
 ContactPersons.propTypes = {
 	contacts: PropTypes.arrayOf(

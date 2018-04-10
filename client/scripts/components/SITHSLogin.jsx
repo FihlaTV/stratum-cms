@@ -4,7 +4,7 @@ import Alert from './Alert';
 import NewCardDialog from './NewCardDialog';
 
 const SITHSLogin = ({
-    status,
+	status,
 	onNewCardSubmit = () => {},
 	onNewCardChange = () => {},
 }) => {
@@ -12,21 +12,31 @@ const SITHSLogin = ({
 		case 'SITHS_INTRO':
 			return (
 				<Alert alertType="info">
-					<p><strong>Först!</strong> Se till att ditt SITHS-kort sitter i datorn. Klicka sen på Nästa.</p>
+					<p>
+						<strong>Först!</strong> Se till att ditt SITHS-kort
+						sitter i datorn. Klicka sen på Nästa.
+					</p>
 				</Alert>
 			);
 		case 'SITHS_DO_LOGIN':
 			return (
 				<div>
-					<Spinner/>
+					<Spinner />
 				</div>
 			);
 		case 'SITHS_NEW_CARD':
 			return (
 				<div>
 					<Alert alertType="info">
-						<p><strong>Håller du på att logga in första gången?</strong></p>
-						<p>Då ska du fylla i de uppgifter du fått för engångsbruk.</p>
+						<p>
+							<strong>
+								Håller du på att logga in första gången?
+							</strong>
+						</p>
+						<p>
+							Då ska du fylla i de uppgifter du fått för
+							engångsbruk.
+						</p>
 					</Alert>
 					<NewCardDialog
 						onSubmit={onNewCardSubmit}
@@ -37,10 +47,14 @@ const SITHSLogin = ({
 		case 'SITHS_NEW_CARD_COMPLETE':
 			return (
 				<Alert alertType="success">
-					<p>Ditt kort är nu kopplat till systemet. Klicka på knappen <strong>Logga in</strong> och gör om de tidigare stegen i inloggningen.</p>
+					<p>
+						Ditt kort är nu kopplat till systemet. Klicka på knappen{' '}
+						<strong>Logga in</strong> och gör om de tidigare stegen
+						i inloggningen.
+					</p>
 				</Alert>
 			);
-		default :
+		default:
 			return <h1>SITHS</h1>;
 	}
 };

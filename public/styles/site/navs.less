@@ -1,33 +1,35 @@
 // Navs
 // --------------------------------------------------
 
-
 // Base class
 // --------------------------------------------------
 
-.nav-pills.nav-stacked{
+.nav-pills.nav-stacked {
 	> li {
 		+ li {
 			margin-top: 0px;
 		}
 	}
-	&.nav-page, &.nav-page-new {
+	&.nav-page,
+	&.nav-page-new {
 		margin-bottom: @gutter-xlarge;
 		font-family: @nav-font-family;
 		> li {
 			> a {
 				border-radius: 0;
 			}
-		}
-		> h2 {
-			margin: 0;
-			padding: @side-nav-link-padding;
+			&.nav-header > a {
+				.h2;
+				margin: 0;
+				border: 0;
+				padding: @side-nav-link-padding;
+			}
 		}
 	}
 	&.nav-page {
 		overflow: hidden;
 		.white-well();
-		.nav-page-second{
+		.nav-page-second {
 			> li {
 				> a {
 					border-left-width: 5px;
@@ -47,7 +49,8 @@
 		border-bottom-width: 2px;
 		margin-bottom: @gutter*4;
 	}
-	&.nav-page-new, &.nav-page-new .nav-page-second {
+	&.nav-page-new,
+	&.nav-page-new .nav-page-second {
 		> li {
 			> a {
 				border-top: 2px dotted @gray-light;
@@ -63,7 +66,7 @@
 			}
 		}
 	}
-	&.nav-page-second{
+	&.nav-page-second {
 		> li {
 			> a {
 				padding-left: extract(@side-nav-link-padding, 2) + @gutter-large;
@@ -72,17 +75,24 @@
 		}
 	}
 	li.nav-page-draft {
-			> a {
-				border: dashed 2px;
-    		box-sizing: border-box;
-    		padding: 8px 13px;
-			}
+		> a {
+			border: dashed 2px;
+			box-sizing: border-box;
+			padding-top: 9px;
+			padding-bottom: 9px;
+			padding-left: extract(@side-nav-link-padding, 2) + @gutter-large - 2;
+		}
 	}
-	li.has-sub-pages{
+	li.nav-page-draft + li.nav-page-draft {
+		> a {
+			border-top: none;
+		}
+	}
+	li.has-sub-pages {
 		> a {
 			padding-right: extract(@side-nav-link-padding, 2) + 10px;
 		}
-		> a:before{
+		> a:before {
 			.fa-icon();
 			position: absolute;
 			content: @fa-var-chevron-right;
@@ -91,16 +101,16 @@
 			right: extract(@side-nav-link-padding, 2);
 			transform: translateY(-50%);
 		}
-		&.expanded{
-			> a:before{
+		&.expanded {
+			> a:before {
 				content: @fa-var-chevron-down;
 			}
-			&.active > a:before{
-		        color: @nav-pills-active-link-hover-color;
+			&.active > a:before {
+				color: @nav-pills-active-link-hover-color;
 			}
 		}
-		&:hover{
-			a:before{
+		&:hover {
+			a:before {
 				color: @link-hover-color;
 			}
 		}

@@ -1,4 +1,4 @@
-# Stratum CMS 
+# Stratum CMS
 
 [![Build Status](https://travis-ci.org/Registercentrum/stratum-cms.svg?branch=master)](https://travis-ci.org/Registercentrum/stratum-cms)
 [![Stories in Prepared](https://badge.waffle.io/registercentrum/stratum-cms.png?label=prepared&title=Prepared)](http://waffle.io/registercentrum/stratum-cms)
@@ -25,6 +25,8 @@ With the possibility to override static resources.
 To be able to run the project there needs to ba a .env file including:
 
 * `CLOUDINARY_URL`
-* `ROOT` pointing to the root directory (required when running in register directory) 
+* `ROOT` pointing to the root directory (required when running in register directory)
 * `BRAND` brand name (optional)
 
+## NPM Scripts
+* To build the front-end for a specific register run the following command: `npm run  build_register -- $1` where `$1` represents a register name e.g. `boa`. This name should correspond to the register's root folder.

@@ -1,6 +1,6 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
-var	BasePage = keystone.list('BasePage');
+var Types = keystone.Field.Types;
+var BasePage = keystone.list('BasePage');
 
 /**
  * Page Model
@@ -39,13 +39,13 @@ Page.relationship({
 	ref: 'SubPage',
 	refPath: 'page',
 });
-Page.schema.virtual('decreaseSubPages').set(function () {
+Page.schema.virtual('decreaseSubPages').set(function() {
 	this.set('numberOfSubPages', Math.max(0, this.numberOfSubPages - 1));
 });
-Page.schema.virtual('increaseSubPages').set(function () {
+Page.schema.virtual('increaseSubPages').set(function() {
 	this.set('numberOfSubPages', this.numberOfSubPages + 1);
 });
-Page.schema.virtual('hasSubPages').get(function () {
+Page.schema.virtual('hasSubPages').get(function() {
 	return this.get('numberOfSubPages') > 0;
 });
 

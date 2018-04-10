@@ -1,7 +1,7 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
-var	BasePage = keystone.list('BasePage');
-var	async = require('async');
+var Types = keystone.Field.Types;
+var BasePage = keystone.list('BasePage');
+var async = require('async');
 
 /**
  * Sub Page Model
@@ -29,12 +29,12 @@ SubPage.add('Sub Page Settings', {
 		required: true,
 	},
 });
-SubPage.schema.pre('remove', function (done) {
+SubPage.schema.pre('remove', function(done) {
 	SubPage.model
 		.findOne()
 		.where('_id', this._id)
 		.populate('page')
-		.exec(function (err, subPage) {
+		.exec(function(err, subPage) {
 			// Decrease subpage
 			if (subPage && subPage.page) {
 				subPage.page.set('decreaseSubPages');
@@ -44,52 +44,59 @@ SubPage.schema.pre('remove', function (done) {
 			}
 		});
 });
-SubPage.schema.pre('save', function (done) {
+SubPage.schema.pre('save', function(done) {
 	var postSubPage = this;
 	var Page = keystone.list('Page');
 	var context = {};
 
-	async.series({
-		getPrePage: function (next) {
-			SubPage.model
-				.findOne()
-				.where('_id', postSubPage._id)
-				.populate('page')
-				.exec(function (err, preSubPage) {
-					context.prePage = preSubPage && preSubPage.page;
-					next(err);
-				});
-		},
-		getPostPage: function (next) {
-			Page.model
-				.findOne()
-				.where('_id', postSubPage.page)
-				.exec(function (err, postPage) {
-					context.postPage = postPage;
-					next(err);
-				});
-		},
-		checkIfPageDiffers: function (next) {
-			if (context.postPage && context.prePage && context.postPage.equals(context.prePage)) {
-				// Do nothing
+	async.series(
+		{
+			getPrePage: function(next) {
+				SubPage.model
+					.findOne()
+					.where('_id', postSubPage._id)
+					.populate('page')
+					.exec(function(err, preSubPage) {
+						context.prePage = preSubPage && preSubPage.page;
+						next(err);
+					});
+			},
+			getPostPage: function(next) {
+				Page.model
+					.findOne()
+					.where('_id', postSubPage.page)
+					.exec(function(err, postPage) {
+						context.postPage = postPage;
+						next(err);
+					});
+			},
+			checkIfPageDiffers: function(next) {
+				if (
+					context.postPage &&
+					context.prePage &&
+					context.postPage.equals(context.prePage)
+				) {
+					// Do nothing
+					next();
+					return;
+				}
+				if (context.postPage) {
+					// Increase postpage
+					context.postPage.set('increaseSubPages');
+					context.postPage.save();
+				}
+				if (context.prePage) {
+					// Decrease pre page
+					context.prePage.set('decreaseSubPages');
+					context.prePage.save();
+				}
 				next();
-				return;
-			}
-			if (context.postPage) {
-				// Increase postpage
-				context.postPage.set('increaseSubPages');
-				context.postPage.save();
-			}
-			if (context.prePage) {
-				// Decrease pre page
-				context.prePage.set('decreaseSubPages');
-				context.prePage.save();
-			}
-			next();
+			},
 		},
-	}, function (err) {
-		done(err);
-	});
+		function(err) {
+			done(err);
+		}
+	);
 });
 
 SubPage.register();

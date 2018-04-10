@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
+var Types = keystone.Field.Types;
 
 /**
  * StartPageWidget Model
@@ -23,7 +23,8 @@ StartPageWidget.add({
 	widget: {
 		type: Types.Relationship,
 		ref: 'Widget',
-		filters: { // only works with keystone widgets for now
+		filters: {
+			// only works with keystone widgets for now
 			type: 'keystone',
 		},
 		dependsOn: { useWidget: true },
@@ -31,9 +32,13 @@ StartPageWidget.add({
 	},
 	description: { type: Types.Textarea },
 	linkType: { type: Types.Select, options: ['static', 'page'] },
-	linkText: { type: String, default: 'Se mer statistik', dependsOn: {
-		linkType: ['static', 'page'],
-	} },
+	linkText: {
+		type: String,
+		default: 'Se mer statistik',
+		dependsOn: {
+			linkType: ['static', 'page'],
+		},
+	},
 	page: {
 		type: Types.Relationship,
 		ref: 'BasePage',
@@ -46,6 +51,5 @@ StartPageWidget.add({
 	},
 });
 
-StartPageWidget.defaultColumns = 'title, useWidget, showOnStartPage';
+StartPageWidget.defaultColumns = 'name, useWidget, showOnStartPage';
 StartPageWidget.register();
-

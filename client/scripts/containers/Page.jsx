@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPage } from '../actions/page';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
@@ -14,30 +15,38 @@ import ResourceList from '../components/ResourceList';
 import WidgetWrapper from '../components/WidgetWrapper';
 import StratumWidget from '../components/StratumWidget';
 
-const SideArea = ({
-	title,
-	content = {},
-}) => (
+const SideArea = ({ title, content = {} }) => (
 	<div className="side-area">
 		<h2>{title}</h2>
 		<div dangerouslySetInnerHTML={{ __html: content.html }} />
 	</div>
 );
 
-function queryStringToObject (queryString = '') {
+function queryStringToObject(queryString = '') {
 	const replacedQuery = queryString.replace(/&/g, '","').replace(/=/g, '":"');
-	return replacedQuery ? JSON.parse(`{"${replacedQuery}"}`, (key, value) => key === '' ? value : decodeURIComponent(value)) : {};
+	return replacedQuery
+		? JSON.parse(
+				`{"${replacedQuery}"}`,
+				(key, value) => (key === '' ? value : decodeURIComponent(value))
+		  )
+		: {};
 }
 
-const WidgetContainer = ({
-	widget,
-	hideMetadata,
-	...props,
-}) => {
+const WidgetContainer = ({ widget, hideMetadata, ...props }) => {
 	if (!widget) {
 		return null;
 	}
-	const { title, name, description, type, queryString, widgetSlug, advancedSettings, key, ...widgetProps } = widget;
+	const {
+		title,
+		name,
+		description,
+		type,
+		queryString,
+		widgetSlug,
+		advancedSettings,
+		key,
+		...widgetProps
+	} = widget;
 	var extraWidgetProperties;
 	if (type === 'keystone' && advancedSettings) {
 		try {
@@ -45,32 +54,42 @@ const WidgetContainer = ({
 			if (extraWidgetProperties) {
 				Object.assign(widgetProps, extraWidgetProperties);
 			}
-		}
-		catch (e) { // ignore
+		} catch (e) {
+			// ignore
 		}
 	}
 	return (
 		<div {...props}>
 			{!hideMetadata && <h2>{title}</h2>}
 			{!hideMetadata && <p>{description}</p>}
-			{type === 'keystone' ? <WidgetWrapper id={name} {...widgetProps}/> : <StratumWidget id={key} target={`sw-${key}`} widget={widgetSlug} query={queryStringToObject(queryString)} advancedSettings={advancedSettings} />}
+			{type === 'keystone' ? (
+				<WidgetWrapper id={name} {...widgetProps} />
+			) : (
+				<StratumWidget
+					id={key}
+					target={`sw-${key}`}
+					widget={widgetSlug}
+					query={queryStringToObject(queryString)}
+					advancedSettings={advancedSettings}
+				/>
+			)}
 		</div>
 	);
 };
 
-const PageContainer = ({
-	loading,
-	children,
-	layout,
-	state,
-}) => (
-	<article className={`base-page${layout === 'full' ? ' base-page-full' : ''}` + ` ${state === 'draft' ? 'draft draft-banner' : ''}`}>
+const PageContainer = ({ loading, children, layout, state }) => (
+	<article
+		className={
+			`base-page${layout === 'full' ? ' base-page-full' : ''}` +
+			` ${state === 'draft' ? 'draft draft-banner' : ''}`
+		}
+	>
 		{loading ? null : children}
 	</article>
 );
 
 class Page extends Component {
-	componentWillMount () {
+	componentWillMount() {
 		const { dispatch, params, menuItems } = this.props;
 		const { pageId, menu } = params;
 		if (pageId) {
@@ -79,7 +98,7 @@ class Page extends Component {
 			this.redirectFromMenu(menu, menuItems);
 		}
 	}
-	componentWillReceiveProps (nextProps) {
+	componentWillReceiveProps(nextProps) {
 		const { dispatch, params, page, menuItems } = this.props;
 		const nextPageId = nextProps.params.pageId;
 		const nextPage = nextProps.page;
@@ -87,8 +106,13 @@ class Page extends Component {
 		if (nextPageId && params.pageId !== nextPageId) {
 			dispatch(fetchPage(nextPageId));
 		}
-		if (nextPage && nextPage !== page || nextProps.menuItem !== menuItems) {
-			const currentMenu = nextProps.menuItems.find((menu) => menu.key === nextProps.params.menu);
+		if (
+			(nextPage && nextPage !== page) ||
+			nextProps.menuItem !== menuItems
+		) {
+			const currentMenu = nextProps.menuItems.find(
+				menu => menu.key === nextProps.params.menu
+			);
 			if (currentMenu && nextPage) {
 				this.setBreadcrumbs(currentMenu, nextPage);
 			}
@@ -97,12 +121,12 @@ class Page extends Component {
 			this.redirectFromMenu(nextProps.params.menu, nextProps.menuItems);
 		}
 	}
-	componentWillUnmount () {
+	componentWillUnmount() {
 		const { dispatch } = this.props;
 		dispatch(clearBreadcrumbs());
 		dispatch(clearPage());
 	}
-	redirectFromMenu (menuSlug, menuItems) {
+	redirectFromMenu(menuSlug, menuItems) {
 		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
 		// Redirect to found page
 		if (rePage) {
@@ -112,38 +136,44 @@ class Page extends Component {
 			this.props.router.replace('/404');
 		}
 	}
-	getPageUrl (menu, page, parentPage) {
+	getPageUrl(menu, page, parentPage) {
 		const { slug, shortId } = page;
 		const parentUrl = parentPage ? `${parentPage.slug}/` : '';
 
 		return `${menu}/${parentUrl}${slug}/p/${shortId}`;
 	}
-	setBreadcrumbs (menu, page) {
+	setBreadcrumbs(menu, page) {
 		const { dispatch } = this.props;
 		const { parentPage, title } = page;
 		let breadcrumbs = [];
 
 		breadcrumbs.push({ url: `${menu.key}`, label: menu.label });
 		if (parentPage) {
-			breadcrumbs.push({ url: this.getPageUrl(menu.key, parentPage), label: parentPage.title });
+			breadcrumbs.push({
+				url: this.getPageUrl(menu.key, parentPage),
+				label: parentPage.title,
+			});
 		}
-		breadcrumbs.push({ url: this.getPageUrl(menu.key, page, parentPage), label: title });
+		breadcrumbs.push({
+			url: this.getPageUrl(menu.key, page, parentPage),
+			label: title,
+		});
 
 		dispatch(setBreadcrumbs(breadcrumbs, true, title));
 	}
-	findFirstPageInMenu (menuKey, menuItems) {
-		const menuBlock = menuItems.find((item) => item.key === menuKey);
+	findFirstPageInMenu(menuKey, menuItems) {
+		const menuBlock = menuItems.find(item => item.key === menuKey);
 		if (menuBlock && menuBlock.items && menuBlock.items.length > 0) {
 			return menuBlock.items[0];
 		}
 
 		return null;
 	}
-	findMenuBlock (pageId, menuItems = [], level = 0) {
+	findMenuBlock(pageId, menuItems = [], level = 0) {
 		if (!pageId) {
 			return;
 		}
-		const matches = menuItems.filter((menuItem) => {
+		const matches = menuItems.filter(menuItem => {
 			if (menuItem.items && menuItem.pageKey !== pageId) {
 				return this.findMenuBlock(pageId, menuItem.items, level + 1);
 			}
@@ -154,12 +184,9 @@ class Page extends Component {
 		}
 		return undefined;
 	}
-	render () {
-		const {
-			page = {},
-			menuItems = [],
-			loading = true,
-		} = this.props;
+
+	render() {
+		const { page = {}, menuItems = [], loading = true } = this.props;
 		const {
 			title,
 			lead,
@@ -178,41 +205,102 @@ class Page extends Component {
 			state,
 		} = page;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
+
 		return (
 			<Row>
 				<Col md={layout === 'full' ? 12 : 8}>
-					<PageContainer loading={loading} layout={layout} state={state}>
+					<PageContainer
+						loading={loading}
+						layout={layout}
+						state={state}
+					>
 						<header>
 							<h1>{title}</h1>
 						</header>
-						{image && <div className="caption-ct base-page-head-image base-page-head-image-full">
-							<img src={image.url} alt={image.description} className="img-response"/>
-							{image.description && <div className="caption-text">{image.description}</div>}
-						</div>}
-						{lead && <p className="lead">
-							{lead}
-						</p>}
-						{widget && widget.size === 'large' && <WidgetContainer widget={widget} className="widget widget-large" hideMetadata/>}
-						<div dangerouslySetInnerHTML={{ __html: content.html }} className="post" />
-						{displayPrintButton && <PrintButton/>}
-						{questionCategories.length > 0 && <FAQ categories={questionCategories}/>}
+						{image && (
+							<div className="caption-ct base-page-head-image base-page-head-image-full">
+								<img
+									src={image.url}
+									alt={image.description}
+									className="img-response"
+								/>
+								{image.description && (
+									<div className="caption-text">
+										{image.description}
+									</div>
+								)}
+							</div>
+						)}
+						{lead && <p className="lead">{lead}</p>}
+						{widget &&
+							widget.size === 'large' && (
+								<WidgetContainer
+									widget={widget}
+									className="widget widget-large"
+									hideMetadata
+								/>
+							)}
+						<div
+							dangerouslySetInnerHTML={{ __html: content.html }}
+							className="post"
+						/>
+						{displayPrintButton && <PrintButton />}
+						{questionCategories.length > 0 && (
+							<FAQ categories={questionCategories} />
+						)}
 					</PageContainer>
-					{resources.length > 0 && resourcePlacement === 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
+					{resources.length > 0 &&
+						resourcePlacement === 'left' && (
+							<ResourceList
+								resources={resources}
+								inContainer={isModernTheme}
+							/>
+						)}
 				</Col>
 				<Col md={layout === 'full' ? 12 : 4}>
-					{layout !== 'full' && <SubMenu menuBlock={this.findMenuBlock(shortId, menuItems)} activePageId={shortId} displayHeader={isModernTheme} inContainer={!isModernTheme} />}
-					{widget && widget.size !== 'large' && <WidgetContainer widget={widget} className="side-area widget widget-small" />}
+					{layout !== 'full' && (
+						<SubMenu
+							menuBlock={this.findMenuBlock(shortId, menuItems)}
+							activePageId={shortId}
+							displayHeader={isModernTheme}
+							inContainer={!isModernTheme}
+						/>
+					)}
+					{widget &&
+						widget.size !== 'large' && (
+							<WidgetContainer
+								widget={widget}
+								className="side-area widget widget-small"
+							/>
+						)}
 					{sideArea && <SideArea {...sideArea} />}
-					{contacts.length > 0 && <h2>{contacts.length > 1 ? 'Kontaktpersoner' : 'Kontaktperson'}</h2>}
-					<ContactPersons contacts={contacts}/>
-					<DockedImages imageSMCols={12} imageMDCols={layout === 'full' ? 6 : 12} images={extraImages} enlargeable/>
-					{resources.length > 0 && resourcePlacement !== 'left' && <ResourceList resources={resources} inContainer={isModernTheme}/>}
+					{contacts.length > 0 && (
+						<h2>
+							{contacts.length > 1
+								? 'Kontaktpersoner'
+								: 'Kontaktperson'}
+						</h2>
+					)}
+					<ContactPersons contacts={contacts} />
+					<DockedImages
+						imageSMCols={12}
+						imageMDCols={layout === 'full' ? 6 : 12}
+						images={extraImages}
+						enlargeable
+					/>
+					{resources.length > 0 &&
+						resourcePlacement !== 'left' && (
+							<ResourceList
+								resources={resources}
+								inContainer={isModernTheme}
+							/>
+						)}
 				</Col>
 			</Row>
 		);
 	}
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		page: state.page.currentPage,
 		loading: state.page.isLoading,

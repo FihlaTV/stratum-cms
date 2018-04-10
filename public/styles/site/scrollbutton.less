@@ -1,0 +1,51 @@
+.scrollbutton {
+	display: block;
+	float: right;
+	height: 60px;
+	width: 60px;
+	border-radius: 60px;
+	background-color: @grid-bg-primary;
+	padding: 14px 16px;
+	text-decoration: none;
+	margin-bottom: @gutter-large;
+	margin-right: @gutter-large;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	font-family: @headings-font-family;
+	cursor: pointer;
+	span {
+		display: inline-block;
+		width: 28px;
+		height: 17px;
+		line-height: 14px;
+		vertical-align: top;
+		stroke: @brand-primary;
+		stroke-width: 0.8px;
+	}
+	&:hover {
+		stroke: white;
+		color: @brand-primary;
+		text-decoration: none;
+		background-color: darken(@grid-bg-primary, 10%);
+	}
+	@media (max-width: @screen-md-min) {
+		background-color: @brand-primary;
+		color: white;
+		span {
+			stroke: white;
+		}
+		&:hover {
+			color: white;
+			text-decoration: none;
+			background-color: darken(@brand-primary, 10%);
+		}
+	}
+}
+
+.scrollbutton-text {
+	margin-top: -2px;
+	display: inline-block;
+	line-height: 14px;
+	vertical-align: top;
+	font-size: 14px;
+	font-weight: 400;
+}

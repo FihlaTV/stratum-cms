@@ -9,11 +9,10 @@ import Page from './containers/Page';
 import Index from './containers/Index';
 import Registration from './containers/Registration';
 
-
 export default (
 	<Route path="/" component={App}>
 		<IndexRoute component={Index} />
-		<Route path="nyheter" component={News} >
+		<Route path="nyheter" component={News}>
 			<Route path=":nyhet" component={NewsItem} />
 		</Route>
 		<Route path="faq" component={FAQ} />

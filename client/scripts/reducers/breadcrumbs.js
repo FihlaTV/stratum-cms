@@ -1,6 +1,6 @@
 const initialState = {
 	items: [],
- };
+};
 
 import { SET_BREADCRUMBS, CLEAR_BREADCRUMBS } from '../actions/breadcrumbs';
 

@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class User extends Component {
-	render () {
+	render() {
 		const {
 			context,
 			onUserHover,
@@ -12,21 +13,37 @@ class User extends Component {
 		if (context) {
 			const { User, Unit, Role } = context;
 			const unitRegEx = new RegExp(`(.{0,${unitMaxLength - 3}}).*`);
-			const unitName = Unit.UnitName.length > unitMaxLength && shrinkName ? Unit.UnitName.replace(unitRegEx, '$1...') : Unit.UnitName;
+			const unitName =
+				Unit.UnitName.length > unitMaxLength && shrinkName
+					? Unit.UnitName.replace(unitRegEx, '$1...')
+					: Unit.UnitName;
 			return (
-				<a className="nav-button-text login-user-display" href="#" onMouseEnter={() => onUserHover(true)} onMouseLeave={() => onUserHover(false)} onClick={onClick}>
-					<p className="nav-button-text-big username">{User.FirstName} {User.LastName}</p>
-					<p className="nav-button-text-small unitname">{unitName} ({Role.RoleName})</p>
+				<a
+					className="nav-button-text login-user-display"
+					href="#"
+					onMouseEnter={() => onUserHover(true)}
+					onMouseLeave={() => onUserHover(false)}
+					onClick={onClick}
+				>
+					<p className="nav-button-text-big username">
+						{User.FirstName} {User.LastName}
+					</p>
+					<p className="nav-button-text-small unitname">
+						{unitName} ({Role.RoleName})
+					</p>
 				</a>
 			);
 		} else {
 			return (
-				<a className="nav-button-text login-user-display login-user-display-wrong" href="#" onClick={onClick}>
+				<a
+					className="nav-button-text login-user-display login-user-display-wrong"
+					href="#"
+					onClick={onClick}
+				>
 					Välj nedan
 				</a>
 			);
 		}
-
 	}
 }
 
