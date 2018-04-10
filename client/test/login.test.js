@@ -19,16 +19,13 @@ describe('login async actions', () => {
 			.query(true)
 			.reply(200, { success: false });
 
-		const expectedActions = [
-			{ type: actions.LOGIN_ERROR },
-		];
+		const expectedActions = [{ type: actions.LOGIN_ERROR }];
 
 		const store = mockStore({});
 
-		return store.dispatch(actions.logoutFromStratum())
-			.then(() => {
-				expect(store.getActions()).toMatchObject(expectedActions);
-			});
+		return store.dispatch(actions.logoutFromStratum()).then(() => {
+			expect(store.getActions()).toMatchObject(expectedActions);
+		});
 	});
 });
 

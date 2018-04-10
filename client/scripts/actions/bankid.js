@@ -1,6 +1,11 @@
 import fetch from 'isomorphic-fetch';
 import { isValidPersonalNumber } from '../utils/personalNumber';
-import { LoginStages, loginToStratum, setHasNextState, loginError } from './login';
+import {
+	LoginStages,
+	loginToStratum,
+	setHasNextState,
+	loginError,
+} from './login';
 
 // BankID actions
 export const INPUT_PERSONAL_NUMBER = 'INPUT_PERSONAL_NUMBER';
@@ -11,47 +16,47 @@ export const SET_BID_ORDER = 'SET_BID_ORDER';
 export const INCREMENT_BID_TRIES = 'INCREMENT_BID_TRIES';
 export const SET_USER_NAME = 'SET_USER_NAME';
 
-export function inputPersonalNumber (personalNumber) {
+export function inputPersonalNumber(personalNumber) {
 	return {
 		type: INPUT_PERSONAL_NUMBER,
 		personalNumber,
 	};
 }
 
-export function setUserName (userName) {
+export function setUserName(userName) {
 	return {
 		type: SET_USER_NAME,
 		userName,
 	};
 }
 
-export function setPersonalNumberValidity (validity) {
+export function setPersonalNumberValidity(validity) {
 	return {
 		type: SET_PERSONAL_NUMBER_VALIDITY,
 		validity,
 	};
 }
 
-export function setBIDStage (bidStage) {
+export function setBIDStage(bidStage) {
 	return {
 		type: SET_BID_STAGE,
 		bidStage,
 	};
 }
 
-export function setBIDStatus (status) {
+export function setBIDStatus(status) {
 	return {
 		type: SET_BID_STATUS,
 		status,
 	};
 }
-function incrementBIDTries () {
+function incrementBIDTries() {
 	return {
 		type: INCREMENT_BID_TRIES,
 	};
 }
 
-function receivedBIDToken (data) {
+function receivedBIDToken(data) {
 	return {
 		type: SET_BID_ORDER,
 		orderRef: data.orderRef,
@@ -59,7 +64,7 @@ function receivedBIDToken (data) {
 	};
 }
 
-export function validatePersonalNumber (personalNumber) {
+export function validatePersonalNumber(personalNumber) {
 	return dispatch => {
 		const valid = isValidPersonalNumber(personalNumber);
 
@@ -71,7 +76,7 @@ export function validatePersonalNumber (personalNumber) {
 	};
 }
 
-export function initiateBID () {
+export function initiateBID() {
 	return (dispatch, getState) => {
 		const state = getState();
 		if (state.bankId.personalNumberValidity) {
@@ -82,9 +87,12 @@ export function initiateBID () {
 	};
 }
 
-export function getToken (personalNumber) {
+export function getToken(personalNumber) {
 	return dispatch => {
-		return fetch(`/stratum/api/authentication/bid/order/${personalNumber}?_=${(new Date()).getTime()}`, { credentials: 'include' })
+		return fetch(
+			`/stratum/api/authentication/bid/order/${personalNumber}?_=${new Date().getTime()}`,
+			{ credentials: 'include' }
+		)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
@@ -93,7 +101,7 @@ export function getToken (personalNumber) {
 					return dispatch(collectBIDLogin(json.data.orderRef));
 				} else {
 					const error = new Error(getBIDErrorMessage(json.message));
-					throw (error);
+					throw error;
 				}
 			})
 			.catch(error => {
@@ -103,7 +111,7 @@ export function getToken (personalNumber) {
 	};
 }
 
-function getBIDErrorMessage (errorCode) {
+function getBIDErrorMessage(errorCode) {
 	switch (errorCode) {
 		case 'EXPIRED_TRANSACTION':
 			return 'Du tog för lång tid på dig. Börja om från början.';
@@ -115,16 +123,19 @@ function getBIDErrorMessage (errorCode) {
 	}
 }
 
-function shouldContinueCollect (state) {
+function shouldContinueCollect(state) {
 	return state.bankId.bidStage === LoginStages.BID_COLLECT;
 }
-function isBIDCompleted (state) {
+function isBIDCompleted(state) {
 	return state.bankId.status === 'COMPLETE';
 }
 
-export function collectBIDLogin (orderRef) {
+export function collectBIDLogin(orderRef) {
 	return (dispatch, getState) => {
-		return fetch(`/stratum/api/authentication/bid/collect/${orderRef}?_=${(new Date()).getTime()}`, { credentials: 'include' })
+		return fetch(
+			`/stratum/api/authentication/bid/collect/${orderRef}?_=${new Date().getTime()}`,
+			{ credentials: 'include' }
+		)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
@@ -135,11 +146,14 @@ export function collectBIDLogin (orderRef) {
 					} else if (shouldContinueCollect(getState())) {
 						// Repeat call until completion, delay for 2 seconds
 						dispatch(incrementBIDTries());
-						return setTimeout(() => dispatch(collectBIDLogin(orderRef)), 2000);
+						return setTimeout(
+							() => dispatch(collectBIDLogin(orderRef)),
+							2000
+						);
 					}
 				} else {
 					const error = new Error(getBIDErrorMessage(json.message));
-					throw (error);
+					throw error;
 				}
 			})
 			.catch(error => {

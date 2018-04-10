@@ -7,33 +7,47 @@ import moment from 'moment';
 import 'moment/locale/sv';
 
 class NewsRollWidget extends Component {
-	componentDidMount () {
+	componentDidMount() {
 		this.props.fetchNewsItemsIfNeeded();
 	}
-	render () {
+	render() {
 		const { title, maxItems, items, loading } = this.props;
-		return loading ? <Spinner /> : (
+		return loading ? (
+			<Spinner />
+		) : (
 			<div className="information-blurb">
 				<div className="news-roll-simple">
 					<h2>{title}</h2>
 					<ul>
-						{items.slice(0, maxItems).map(({ title, publishedDate, slug }) => (
-							<li key={slug}>
-								<span className="news-roll-date">{moment(publishedDate).format('L')}</span>
-								<NewsLink slug={slug} className="news-roll-title">{title}</NewsLink>
-							</li>
-						))}
+						{items
+							.slice(0, maxItems)
+							.map(({ title, publishedDate, slug }) => (
+								<li key={slug}>
+									<span className="news-roll-date">
+										{moment(publishedDate).format('L')}
+									</span>
+									<NewsLink
+										slug={slug}
+										className="news-roll-title"
+									>
+										{title}
+									</NewsLink>
+								</li>
+							))}
 					</ul>
 					<NewsLink>Se fler nyheter.</NewsLink>
 				</div>
 			</div>
 		);
 	}
-};
+}
 
-const mapStateToProps = ({ news }) => ({ items: news.items, loading: news.loading });
+const mapStateToProps = ({ news }) => ({
+	items: news.items,
+	loading: news.loading,
+});
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
 	fetchNewsItemsIfNeeded: () => dispatch(fetchNewsItemsIfNeeded()),
 });
 

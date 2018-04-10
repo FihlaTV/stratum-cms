@@ -60,17 +60,21 @@
     "eslint": "3.19.0",
     "eslint-config-keystone": "3.0.0",
     "eslint-config-keystone-react": "1.0.0",
+    "eslint-config-prettier": "2.9.0",
     "eslint-plugin-react": "6.10.3",
     "expect": "22.4.3",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.11.1",
     "gulp": "3.9.1",
+    "husky": "0.14.3",
     "iis": "0.2.0",
     "jest": "^22.4.3",
     "less-loader": "4.0.3",
+    "lint-staged": "7.0.4",
     "merge-stream": "1.0.1",
     "mocha": "5.0.5",
     "nock": "9.2.3",
+    "prettier": "1.11.1",
     "react-test-renderer": "15.6.2",
     "react-transform-hmr": "1.0.4",
     "redux-mock-store": "1.2.1",
@@ -85,13 +89,20 @@
   },
   "scripts": {
     "start": "node keystone.js",
-    "start_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
-    "build_prod_cmd": "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
-    "build_register": "webpack -p --config webpack.production.config --env.register",
+    "start_prod_cmd":
+      "set NODE_ENV=production&&webpack -p --config webpack.production.config.js&&node keystone.js",
+    "build_prod_cmd":
+      "set NODE_ENV=production&&webpack -p --config webpack.production.config.js",
+    "build_register":
+      "webpack -p --config webpack.production.config --env.register",
     "lint": "eslint . --ext=js --ext=jsx",
     "lint_fix": "eslint . --fix --ext=js --ext=jsx",
     "test": "jest client/test/",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,css,less,yml}": ["prettier --write", "git add"]
   },
   "jest": {
     "globalSetup": "<rootDir>/client/test/testconfig.js",

@@ -5,7 +5,7 @@ import { IndexLink } from 'react-router';
 import UserContext from '../containers/App';
 import TopNav from './TopNav';
 
-function formatMenu (menuItems, level = 0) {
+function formatMenu(menuItems, level = 0) {
 	return menuItems.reduce((prev, menuItem, i, arr) => {
 		const { url, label, key, items, state } = menuItem;
 
@@ -38,11 +38,10 @@ function formatMenu (menuItems, level = 0) {
 		}
 
 		return retVal;
-
 	}, []);
 }
 
-function getLinkContents (item, level, desktop = false) {
+function getLinkContents(item, level, desktop = false) {
 	const { label, key, items, hasChildren = false } = item;
 	let classNames = level === 2 ? ['sub-sub-nav'] : [];
 
@@ -61,25 +60,21 @@ function getLinkContents (item, level, desktop = false) {
 	}
 	if (items && items.length > 0) {
 		return (
-			<NavDropdown onClick={(e) => e.preventDefault()} className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
+			<NavDropdown
+				onClick={e => e.preventDefault()}
+				className={classNames.join(' ')}
+				title={`${label}`}
+				id={`${key}-dropdown`}
+			>
 				{formatMenu(items, false, level + 1)}
 			</NavDropdown>
 		);
 	} else {
-		return (
-			<NavItem className={classNames.join(' ')}>
-				{`${label}`}
-			</NavItem>
-		);
+		return <NavItem className={classNames.join(' ')}>{`${label}`}</NavItem>;
 	}
 }
 
-
-const Menu = ({
-	items,
-	externalLogin = {},
-	disableLogin,
-}) => {
+const Menu = ({ items, externalLogin = {}, disableLogin }) => {
 	const { label, link } = externalLogin;
 	return (
 		<Navbar className="navbar-big navbar-big-tabbed" staticTop fluid>
@@ -87,8 +82,17 @@ const Menu = ({
 				<Navbar.Header>
 					<Navbar.Brand>
 						<IndexLink to="/">
-							<img src="/images/logo_menu_big.png" style={{ display: 'none' }} alt="Registercentrum" className="navbar-brand-image-big" />
-							<img src="/images/logo_menu_small.png" alt="Registercentrum" className="navbar-brand-image-small" />
+							<img
+								src="/images/logo_menu_big.png"
+								style={{ display: 'none' }}
+								alt="Registercentrum"
+								className="navbar-brand-image-big"
+							/>
+							<img
+								src="/images/logo_menu_small.png"
+								alt="Registercentrum"
+								className="navbar-brand-image-small"
+							/>
 						</IndexLink>
 					</Navbar.Brand>
 					<Navbar.Toggle />
@@ -97,25 +101,26 @@ const Menu = ({
 			<Navbar.Collapse>
 				<div className="navbar-main">
 					<div className="navbar-main-container">
-						<Nav pullLeft>
-							{formatMenu(items)}
-						</Nav>
+						<Nav pullLeft>{formatMenu(items)}</Nav>
 					</div>
 				</div>
-				{!disableLogin
-					&& <div className="navbar-upper">
-						{link
-							? <TopNav externalLogin={link} loginButtonLabel={label}/>
-							: <UserContext reactRouter/>
-						}
+				{!disableLogin && (
+					<div className="navbar-upper">
+						{link ? (
+							<TopNav
+								externalLogin={link}
+								loginButtonLabel={label}
+							/>
+						) : (
+							<UserContext reactRouter />
+						)}
 					</div>
-				}
+				)}
 			</Navbar.Collapse>
 		</Navbar>
 	);
-
 };
 
-Menu.propTypes = { };
+Menu.propTypes = {};
 
 export default Menu;

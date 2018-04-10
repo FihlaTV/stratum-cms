@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import widgets from '../widgets/';
 
 class WidgetWrapper extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
-	render () {
+	render() {
 		const Widget = widgets[this.props.id];
 		return Widget ? (
 			<Widget {...this.props}>{this.props.children}</Widget>

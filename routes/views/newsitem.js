@@ -1,9 +1,8 @@
 var keystone = require('keystone');
 
-exports = module.exports = function (req, res) {
-
+exports = module.exports = function(req, res) {
 	var view = new keystone.View(req, res);
-	var	locals = res.locals;
+	var locals = res.locals;
 
 	// Set locals
 	locals.section = 'news';
@@ -14,29 +13,35 @@ exports = module.exports = function (req, res) {
 	locals.data = {};
 
 	// Load the current newsItem
-	view.on('init', function (next) {
+	view.on('init', function(next) {
+		var q = keystone
+			.list('NewsItem')
+			.model.findOne({
+				state: 'published',
+				slug: locals.filters.newsItem,
+				publishedDate: { $lte: new Date() },
+			})
+			.populate('author categories resources');
 
-		var q = keystone.list('NewsItem').model.findOne({
-			state: 'published',
-			slug: locals.filters.newsItem,
-			publishedDate: { $lte: new Date() },
-		}).populate('author categories resources');
-
-		q.exec(function (err, newsItem) {
+		q.exec(function(err, newsItem) {
 			if (!err) {
 				if (!newsItem) {
-					res.notFound(null, 'Det gick inte att hitta någon nyhet som matchade den adress du angav...');
+					res.notFound(
+						null,
+						'Det gick inte att hitta någon nyhet som matchade den adress du angav...'
+					);
 					return;
 				}
 				locals.data.newsItem = newsItem;
-				locals.breadcrumbs.push({ label: newsItem.title, path: '/nyheter/' + newsItem.slug });
+				locals.breadcrumbs.push({
+					label: newsItem.title,
+					path: '/nyheter/' + newsItem.slug,
+				});
 			}
 			next(err);
 		});
-
 	});
 
 	// Render the view
 	view.render('newsitem');
-
 };

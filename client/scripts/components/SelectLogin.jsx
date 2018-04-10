@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 
 export default class SelectLogin extends Component {
-	changeLogin (e) {
+	changeLogin(e) {
 		this.props.onClick(this.props.loginMethod);
 	}
-	render () {
+	render() {
 		return (
 			<div className="col-sm-6">
-				<a href="#" onClick={(e) => this.changeLogin(e)}>
-					<div className={`login-method login-method-${this.props.logoClass}`}>
-						<div className="login-method-logo"/>
+				<a href="#" onClick={e => this.changeLogin(e)}>
+					<div
+						className={`login-method login-method-${
+							this.props.logoClass
+						}`}
+					>
+						<div className="login-method-logo" />
 						{this.props.children}
 					</div>
 				</a>

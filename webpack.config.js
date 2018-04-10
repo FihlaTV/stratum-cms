@@ -23,7 +23,7 @@ module.exports = {
 		new webpack.NoEmitOnErrorsPlugin(),
 		// process.env replacement
 		new webpack.DefinePlugin({
-			'process.env': Object.keys(process.env).reduce(function (o, k) {
+			'process.env': Object.keys(process.env).reduce(function(o, k) {
 				// Whitelist to variables only prefixed with CLIENT_
 				if (k.indexOf('CLIENT_') === 0 || k === 'NODE_ENV') {
 					o[k] = JSON.stringify(process.env[k]);
@@ -45,51 +45,60 @@ module.exports = {
 				options: {
 					cacheDirectory: true,
 					presets: ['es2015', 'react'],
-					plugins: [require('babel-plugin-transform-object-rest-spread'), require('babel-plugin-transform-object-assign')],
+					plugins: [
+						require('babel-plugin-transform-object-rest-spread'),
+						require('babel-plugin-transform-object-assign'),
+					],
 					env: {
 						development: {
-							plugins: [['react-transform', {
-								transforms: [{
-									transform: 'react-transform-hmr',
-									imports: ['react'],
-									locals: ['module'],
-								}],
-							}],
+							plugins: [
+								[
+									'react-transform',
+									{
+										transforms: [
+											{
+												transform:
+													'react-transform-hmr',
+												imports: ['react'],
+												locals: ['module'],
+											},
+										],
+									},
+								],
 							],
 						},
 					},
 				},
-			}, {
+			},
+			{
 				test: /\.less$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					'less-loader',
-				],
-			}, {
+				use: ['style-loader', 'css-loader', 'less-loader'],
+			},
+			{
 				test: /\.css$/,
-				use: [
-					'style-loader',
-					'css-loader',
-				],
-			}, {
+				use: ['style-loader', 'css-loader'],
+			},
+			{
 				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
 					mimetype: 'application/font-woff',
 				},
-			}, {
+			},
+			{
 				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
 					mimetype: 'application/octet-stream',
 				},
-			}, {
+			},
+			{
 				test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'file-loader',
-			}, {
+			},
+			{
 				test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
 				loader: 'url-loader',
 				options: {

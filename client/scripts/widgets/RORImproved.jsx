@@ -1,9 +1,7 @@
 import React from 'react';
 import StartPageWidget from './StartPageWidget';
 
-const RORImproved = ({
-	description,
-}) => {
+const RORImproved = ({ description }) => {
 	return (
 		<StartPageWidget
 			url="/stratum/api/statistics/ror/improved?APIKey=bK3H9bwaG4o="

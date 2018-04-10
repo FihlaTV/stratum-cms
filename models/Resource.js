@@ -1,7 +1,7 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
-var	shortid = require('shortid');
-var	path = require('path');
+var Types = keystone.Field.Types;
+var shortid = require('shortid');
+var path = require('path');
 var azure = require('keystone-storage-adapter-azure');
 
 require('dotenv').load();
@@ -17,7 +17,9 @@ var Resource = new keystone.List('Resource', {
 	defaultSort: '-createdAt',
 });
 
-var USE_AZURE = !!(process.env.AZURE_STORAGE_ACCESS_KEY && process.env.AZURE_STORAGE_ACCOUNT);
+var USE_AZURE = !!(
+	process.env.AZURE_STORAGE_ACCESS_KEY && process.env.AZURE_STORAGE_ACCOUNT
+);
 
 var storage;
 
@@ -27,7 +29,10 @@ if (USE_AZURE) {
 		azure: {
 			generateFilename: ({ originalname }) => {
 				var extension = path.extname(originalname).toLowerCase();
-				return `r/${originalname.substr(0, 65).replace(/\.[a-z0-9]+$/i, '').replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
+				return `r/${originalname
+					.substr(0, 65)
+					.replace(/\.[a-z0-9]+$/i, '')
+					.replace(/\W+/g, '-')}-${shortid.generate()}${extension}`;
 			},
 			container: keystone.get('brand safe'),
 		},
@@ -69,7 +74,7 @@ Resource.add({
 		hidden: true,
 		noedit: true,
 		watch: 'file',
-		value: function () {
+		value: function() {
 			const file = this.file && this.file.get('file');
 			if (!file) {
 				return false;
@@ -82,7 +87,7 @@ Resource.add({
 		dependsOn: { hasFile: true },
 		noedit: true,
 		watch: 'file',
-		value: function () {
+		value: function() {
 			if (USE_AZURE) {
 				const fileurl = this.file && this.file.get('file').url;
 				return fileurl ? fileurl.replace(/^http(?=\:)/, 'https') : '';
@@ -95,7 +100,7 @@ Resource.add({
 	description: { type: Types.Textarea, initial: true },
 });
 
-Resource.schema.virtual('fileType').get(function () {
+Resource.schema.virtual('fileType').get(function() {
 	const file = this.file.get('file');
 	const fileType = file.mimetype;
 
@@ -117,13 +122,22 @@ Resource.schema.virtual('fileType').get(function () {
 	if (fileType === 'application/pdf') {
 		return 'pdf';
 	}
-	if (fileType.indexOf('msword') >= 0 || fileType.indexOf('wordprocessingml') >= 0) {
+	if (
+		fileType.indexOf('msword') >= 0 ||
+		fileType.indexOf('wordprocessingml') >= 0
+	) {
 		return 'word';
 	}
-	if (fileType.indexOf('ms-excel') >= 0 || fileType.indexOf('spreadsheetml') >= 0) {
+	if (
+		fileType.indexOf('ms-excel') >= 0 ||
+		fileType.indexOf('spreadsheetml') >= 0
+	) {
 		return 'excel';
 	}
-	if (fileType.indexOf('powerpoint') >= 0 || fileType.indexOf('presentationml') >= 0) {
+	if (
+		fileType.indexOf('powerpoint') >= 0 ||
+		fileType.indexOf('presentationml') >= 0
+	) {
 		return 'powerpoint';
 	}
 	return 'other';

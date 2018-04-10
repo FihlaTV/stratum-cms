@@ -9,7 +9,8 @@ describe('Tests for NewsListItem component', () => {
 		title: 'Bacon ipsum4',
 		publishedDate: '2015-10-25T22:00:00.000Z',
 		content: {
-			lead: 'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4',
+			lead:
+				'Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!4',
 		},
 	};
 	const wrapper = shallow(
@@ -32,7 +33,9 @@ describe('Tests for NewsListItem component', () => {
 
 	test('Contains a <div> with the class news-list-item-content', () => {
 		expect(wrapper.find('div.news-list-item-content')).toBeTruthy();
-		expect(wrapper.find('div.news-list-item-content').children().length).toEqual(3);
+		expect(
+			wrapper.find('div.news-list-item-content').children().length
+		).toEqual(3);
 	});
 
 	test('Contains a <h2> with the title of the article', () => {
@@ -40,11 +43,14 @@ describe('Tests for NewsListItem component', () => {
 	});
 
 	test('Contains a <p> with published-at class and date', () => {
-		expect(wrapper.contains(<p className="published-at">2015-10-25</p>)).toEqual(true);
+		expect(
+			wrapper.contains(<p className="published-at">2015-10-25</p>)
+		).toEqual(true);
 	});
 
 	test('Contains a <p> with lead class and the content lead text', () => {
-		expect(wrapper.contains(<p className="lead">{article.content.lead}</p>)).toEqual(true);
+		expect(
+			wrapper.contains(<p className="lead">{article.content.lead}</p>)
+		).toEqual(true);
 	});
-
 });

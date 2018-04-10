@@ -19,24 +19,31 @@ var pkg = require('./' + path.join(root, 'package.json'));
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 var overrideFaviconPath = process.env.FAVICON_PATH || 'override/favicon.ico';
-var favicon = fs.existsSync(overrideFaviconPath) ? overrideFaviconPath : path.join(root, 'public/favicon.ico');
+var favicon = fs.existsSync(overrideFaviconPath)
+	? overrideFaviconPath
+	: path.join(root, 'public/favicon.ico');
 
 keystone.init({
-
-	'name': process.env.BRAND || 'Stratum',
-	'brand': process.env.BRAND || 'Stratum',
-	'brand safe': (process.env.BRAND || 'Stratum').trim().replace(/\W+/g, '-').toLowerCase(),
+	name: process.env.BRAND || 'Stratum',
+	brand: process.env.BRAND || 'Stratum',
+	'brand safe': (process.env.BRAND || 'Stratum')
+		.trim()
+		.replace(/\W+/g, '-')
+		.toLowerCase(),
 	'title name': process.env.CLIENT_TITLE || '',
-	'static': ['override', path.join(root, 'public')],
-	'favicon': favicon,
-	'views': path.join(root, 'templates/views'),
+	static: ['override', path.join(root, 'public')],
+	favicon: favicon,
+	views: path.join(root, 'templates/views'),
 
 	// Gets the name of the currently active directory
 	'app name': appName,
 	'view engine': 'hbs',
 	'custom engine': handlebars.create({
 		layoutsDir: path.join(root, 'templates/views/layouts'),
-		partialsDir: [path.join(root, 'templates/views/partials'), path.join(root, 'templates/views/widgets')],
+		partialsDir: [
+			path.join(root, 'templates/views/partials'),
+			path.join(root, 'templates/views/widgets'),
+		],
 		defaultLayout: 'default',
 		helpers: new Helpers(),
 		extname: '.hbs',
@@ -44,29 +51,34 @@ keystone.init({
 	'show version': !!process.env.SHOW_VERSION,
 	// Set https as default for cloudinary resources (override per image with secure=false)
 	'cloudinary config': { secure: true },
-	'updates': path.join(root, 'updates'),
+	updates: path.join(root, 'updates'),
 	'auto update': true,
-	'mongo': process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
+	mongo: process.env.MONGO_URI || 'mongodb://localhost/' + pkg.name,
 
-	'session': true,
+	session: true,
 	'session store': 'mongo',
-	'auth': true,
+	auth: true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET || 'stratum-cms',
 	'protect all pages': process.env.PROTECT_ALL_PAGES === 'true',
 	'stratum api key': process.env.STRATUM_API_KEY,
-	'stratum server': process.env.STRATUM_SERVER || 'stratum.registercentrum.se',
+	'stratum server':
+		process.env.STRATUM_SERVER || 'stratum.registercentrum.se',
 	'is portal': process.env.IS_PORTAL === 'true',
 	'is demo': process.env.CLIENT_IS_DEMO === 'true',
 	'has login': process.env.HAS_LOGIN === 'true',
 	'wysiwyg cloudinary images': true,
-	'keystone widgets index': path.join(root, '/client/scripts/widgets/widgets.json'),
+	'keystone widgets index': path.join(
+		root,
+		'/client/scripts/widgets/widgets.json'
+	),
 	'ga property front': process.env.GA_PROPERTY_FRONT,
 	'react spa': process.env.REACT_SPA === 'true',
 
 	'register id': process.env.CLIENT_REGISTER_ID,
 	// Redirect to regular page if whole site is access restricted
-	'signin redirect': process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
+	'signin redirect':
+		process.env.PROTECT_ALL_PAGES === 'true' ? '/' : '/keystone',
 	'signout redirect': '/',
 	'cors allow origin': true,
 	'default region': 'SE',
@@ -98,7 +110,10 @@ if (keystone.get('is demo')) {
 
 if (keystone.get('show version') && fs.existsSync('last_commit.json')) {
 	try {
-		keystone.set('last commit', JSON.parse(fs.readFileSync('last_commit.json', 'utf8')));
+		keystone.set(
+			'last commit',
+			JSON.parse(fs.readFileSync('last_commit.json', 'utf8'))
+		);
 	} catch (e) {
 		console.log(e);
 	}
@@ -114,16 +129,16 @@ keystone.set('routes', require('./' + path.join(root, 'routes')));
 
 var nav = {
 	'global-settings': ['start-pages', 'register-information'],
-	'pages': ['pages', 'sub-pages', 'menu-blocks'],
-	'news': 'news-items',
-	'resources': 'resources',
-	'contacts': 'contacts',
-	'questions': ['questions', 'question-categories'],
+	pages: ['pages', 'sub-pages', 'menu-blocks'],
+	news: 'news-items',
+	resources: 'resources',
+	contacts: 'contacts',
+	questions: ['questions', 'question-categories'],
 
 	// Hide users from menu for now
 	// 'users': 'users',
 
-	'widgets': ['widgets', 'start-page-widgets'],
+	widgets: ['widgets', 'start-page-widgets'],
 };
 
 // Portal specific menu items
@@ -136,7 +151,7 @@ keystone.set('nav', nav);
 // Output environment variable
 console.log('Currently running in ' + keystone.get('env'));
 
-keystone.post('updates', function () {
+keystone.post('updates', function() {
 	stratum.loadWidgets();
 
 	// Not used at the present..

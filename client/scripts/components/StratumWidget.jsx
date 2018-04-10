@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import StratumLoader, { startRegistrations, startWidget } from '../utils/stratumLoader';
+import StratumLoader, {
+	startRegistrations,
+	startWidget,
+} from '../utils/stratumLoader';
 import Spinner from './Spinner';
 
 const REGISTRATIONS_WIDGET_NAME = 'registrations';
 
-function getNonce () {
-	return ((new Date()).getTime() + parseInt(Math.random() * 100)).toString(36);
+function getNonce() {
+	return (new Date().getTime() + parseInt(Math.random() * 100)).toString(36);
 }
 
 class StratumWidget extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			loading: true,
 		};
 	}
-	componentWillMount () {
+	componentWillMount() {
 		const { target: _target } = this.props;
 		const target = _target || `stratum-widget-${getNonce()}`;
 
 		this.setState({ target });
 	}
-	componentDidMount () {
+	componentDidMount() {
 		const { target } = this.state;
 		const { widget, query, advancedSettings } = this.props;
 		const queryString = this.formatQuery(query);
@@ -31,19 +34,36 @@ class StratumWidget extends Component {
 			this.startWidget({ target, widget, query, advancedSettings });
 		} else {
 			this.evalAdvancedSettings(advancedSettings);
-			StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
+			StratumLoader(target, widget, queryString, success =>
+				this.finishedLoading(success)
+			);
 		}
 	}
-	componentWillReceiveProps ({ widget: nWidget, query: nQuery, target: nTarget, id: nId, advancedSettings }) {
+	componentWillReceiveProps({
+		widget: nWidget,
+		query: nQuery,
+		target: nTarget,
+		id: nId,
+		advancedSettings,
+	}) {
 		const { widget, target, id } = this.props;
 
-		if (widget && nWidget && (nWidget !== widget || nTarget !== target || nId !== id)) {
+		if (
+			widget &&
+			nWidget &&
+			(nWidget !== widget || nTarget !== target || nId !== id)
+		) {
 			this.componentWillUnmount();
 			this.setState({ loading: true });
-			this.startWidget({ widget: nWidget, query: nQuery, target: this.state.target, advancedSettings });
+			this.startWidget({
+				widget: nWidget,
+				query: nQuery,
+				target: this.state.target,
+				advancedSettings,
+			});
 		}
 	}
-	componentWillUnmount () {
+	componentWillUnmount() {
 		const { purgeOrphans } = window;
 		const { target } = this.state;
 
@@ -51,12 +71,15 @@ class StratumWidget extends Component {
 			purgeOrphans(document.getElementById(target));
 		}
 	}
-	formatQuery (query) {
-		const parameters = Object.keys(query).reduce((prev, key, i) => `${prev}${i > 0 ? '&' : ''}${key}=${query[key]}`, '');
+	formatQuery(query) {
+		const parameters = Object.keys(query).reduce(
+			(prev, key, i) => `${prev}${i > 0 ? '&' : ''}${key}=${query[key]}`,
+			''
+		);
 
 		return parameters ? `?${parameters}` : '';
 	}
-	finishedLoading ({ cancelled, success } = {}) {
+	finishedLoading({ cancelled, success } = {}) {
 		if (!cancelled) {
 			this.setState({
 				loading: false,
@@ -64,7 +87,7 @@ class StratumWidget extends Component {
 		}
 	}
 	// TODO: Would be nice to disallow the use of injecting javascript from backend.
-	evalAdvancedSettings (advancedSettings) {
+	evalAdvancedSettings(advancedSettings) {
 		if (!advancedSettings) {
 			return;
 		}
@@ -75,33 +98,35 @@ class StratumWidget extends Component {
 			console.log('Error loading advanced settings', err);
 		}
 	}
-	startWidget ({ target, widget, query, advancedSettings }) {
+	startWidget({ target, widget, query, advancedSettings }) {
 		const queryString = this.formatQuery(query);
 
 		if (widget === REGISTRATIONS_WIDGET_NAME) {
 			if (!window.Stratum.ApplicationForRegistrations) {
-				StratumLoader(target, widget, queryString, (success) => this.finishedLoading(success));
+				StratumLoader(target, widget, queryString, success =>
+					this.finishedLoading(success)
+				);
 			} else {
-				startRegistrations(target, (success) => this.finishedLoading(success));
+				startRegistrations(target, success =>
+					this.finishedLoading(success)
+				);
 			}
 		} else if (widget !== REGISTRATIONS_WIDGET_NAME) {
 			this.evalAdvancedSettings(advancedSettings);
-			startWidget(target, widget, queryString, (success) => this.finishedLoading(success));
+			startWidget(target, widget, queryString, success =>
+				this.finishedLoading(success)
+			);
 		}
 	}
-	render () {
+	render() {
 		const { loading, target } = this.state;
 
-		return (
-			<div id={target}>
-				{loading && <Spinner />}
-			</div>
-		);
+		return <div id={target}>{loading && <Spinner />}</div>;
 	}
 }
 
 StratumWidget.defaultProps = {
-	registrationId: `registration-script-${(new Date()).getTime()}`,
+	registrationId: `registration-script-${new Date().getTime()}`,
 	widget: REGISTRATIONS_WIDGET_NAME,
 	query: {},
 };

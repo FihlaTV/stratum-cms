@@ -9,19 +9,22 @@ var EXTRA_IMAGE = {
 };
 
 var EXTRA_IMAGE_CAPTION = {
-	type: Types.Textarea, collapse: true,
+	type: Types.Textarea,
+	collapse: true,
 };
 
-exports.extraImages = function (extraConfigs, _names) {
+exports.extraImages = function(extraConfigs, _names) {
 	var tmp = {};
 	var names = _names || EXTRA_IMAGES_NAMES;
-	names.forEach(function (name) {
+	names.forEach(function(name) {
 		tmp[name] = EXTRA_IMAGE;
 		tmp[name + 'Caption'] = EXTRA_IMAGE_CAPTION;
 
 		if (extraConfigs) {
 			for (var attrname in extraConfigs) {
-				if (Object.prototype.hasOwnProperty.call(extraConfigs, attrname)) {
+				if (
+					Object.prototype.hasOwnProperty.call(extraConfigs, attrname)
+				) {
 					tmp[name][attrname] = extraConfigs[attrname];
 					tmp[name + 'Caption'][attrname] = extraConfigs[attrname];
 				}
@@ -31,10 +34,10 @@ exports.extraImages = function (extraConfigs, _names) {
 	return tmp;
 };
 
-exports.addExtraImages = function () {
+exports.addExtraImages = function() {
 	var me = this;
 	var extraImages = [];
-	EXTRA_IMAGES_NAMES.forEach(function (name) {
+	EXTRA_IMAGES_NAMES.forEach(function(name) {
 		var path = me.extraImage;
 		if (path && path[name] && path[name].exists) {
 			extraImages.push({

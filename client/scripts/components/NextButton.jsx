@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NextButton = (props) => {
-	const { children = 'Nästa', onClick, isLoading, loadingText = 'Laddar...', ...other } = props;
+const NextButton = props => {
+	const {
+		children = 'Nästa',
+		onClick,
+		isLoading,
+		loadingText = 'Laddar...',
+		...other
+	} = props;
 
 	return (
-		<button {...other} className="btn btn-primary" onClick={
-			e => {
+		<button
+			{...other}
+			className="btn btn-primary"
+			onClick={e => {
 				e.preventDefault();
 				onClick();
-			}}>{isLoading ? loadingText : children}</button>
+			}}
+		>
+			{isLoading ? loadingText : children}
+		</button>
 	);
 };
 
