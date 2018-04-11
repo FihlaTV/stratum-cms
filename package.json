@@ -102,7 +102,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,less,yml}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,less}": ["prettier --write", "git add"]
   },
   "jest": {
     "globalSetup": "<rootDir>/client/test/testconfig.js",
