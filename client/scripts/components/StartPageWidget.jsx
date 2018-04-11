@@ -43,12 +43,16 @@ const WidgetContainer = ({
 );
 
 const StartPageWidget = props => {
-	const { digit, description, keystoneWidget } = props;
+	const { digit, description, keystoneWidget, properties } = props;
 
 	if (keystoneWidget) {
 		return (
 			<WidgetContainer {...props}>
-				<WidgetWrapper id={keystoneWidget} description={description} />
+				<WidgetWrapper
+					id={keystoneWidget}
+					description={description}
+					{...properties}
+				/>
 			</WidgetContainer>
 		);
 	}

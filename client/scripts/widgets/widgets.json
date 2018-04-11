@@ -116,5 +116,10 @@
   "KRHArtikelnummer": {
     "id": "KRHArtikelnummer",
     "description": "Antal artikelnummer"
+  },
+  "StartPageWidget": {
+    "id": "StartPageWidget",
+    "description":
+      "Enkel widget som är till för att visa en statistiksiffra givet en url och format. Parametrar: @url: url till stratum-api, @format: beskriver formateringen av resultatdatan."
   }
 }
