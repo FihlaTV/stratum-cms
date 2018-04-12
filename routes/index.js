@@ -19,13 +19,13 @@
  */
 
 var keystone = require('keystone');
-var	middleware = require('./middleware');
-var	importRoutes = keystone.importer(__dirname);
-	// Webpack (dev only)
-var	webpack = require('webpack');
-var	webpackDevMiddleware = require('webpack-dev-middleware');
-var	webpackHotMiddleware = require('webpack-hot-middleware');
-var	webpackConfig = require('../webpack.config');
+var middleware = require('./middleware');
+var importRoutes = keystone.importer(__dirname);
+// Webpack (dev only)
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpackConfig = require('../webpack.config');
 
 var stratumProxy = require('./proxies/stratum');
 
@@ -38,15 +38,16 @@ keystone.pre('static', stratumProxy);
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('routes', middleware.initErrorHandlers);
+keystone.pre('routes', middleware.redirectOldBrowsers);
 keystone.pre('render', middleware.flashMessages);
 
 // Handle 404 errors
-keystone.set('404', function (req, res, next) {
+keystone.set('404', function(req, res, next) {
 	res.notFound();
 });
 
 // Handle other errors
-keystone.set('500', function (err, req, res, next) {
+keystone.set('500', function(err, req, res, next) {
 	var title;
 	var message;
 
@@ -68,11 +69,16 @@ var routes = {
 // Setup webpack compiler
 
 // Setup Route Bindings
-exports = module.exports = function (app) {
+exports = module.exports = function(app) {
 	// Activate webpack hot reload middleware
 	if (keystone.get('env') === 'development') {
 		var compiler = webpack(webpackConfig);
-		app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
+		app.use(
+			webpackDevMiddleware(compiler, {
+				noInfo: true,
+				publicPath: webpackConfig.output.publicPath,
+			})
+		);
 		app.use(webpackHotMiddleware(compiler));
 	}
 
@@ -115,7 +121,6 @@ exports = module.exports = function (app) {
 	if (keystone.get('protect all pages')) {
 		app.get('/*', middleware.requireUser);
 	}
-
 
 	// Logout
 	app.get('/logout', routes.views.logout);

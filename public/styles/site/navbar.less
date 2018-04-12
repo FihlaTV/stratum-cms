@@ -10,11 +10,13 @@
 // @navbar-image-height: 60px;
 @navbar-image-big-height: 80px;
 @navbar-main-height: 46px;
-@navbar-main-padding-vertical:          ((@navbar-main-height - @line-height-computed) / 2);
+@navbar-main-padding-vertical: (
+	(@navbar-main-height - @line-height-computed) / 2
+);
 
 img.navbar-brand-image,
 img.navbar-brand-image-big,
-img.navbar-brand-image-small{
+img.navbar-brand-image-small {
 	height: @navbar-image-height;
 	// margin: ((@navbar-height - @navbar-image-height) / 2) 0;
 	margin-left: @navbar-padding-horizontal;
@@ -72,26 +74,27 @@ img.navbar-brand-image-small{
 	}
 	> .search > a {
 		@media (min-width: @screen-lg-min) {
-			margin-left: 2*@gutter;
+			margin-left: 2 * @gutter;
 		}
 		.fa-icon();
-		&:before{
+		&:before {
 			content: @fa-var-search;
 		}
 	}
 	// Hide caret and dropdown in desktop
 	@media (min-width: @grid-float-breakpoint) {
-		.active{
-			a > .caret, > ul.dropdown-menu {
+		.active {
+			a > .caret,
+			> ul.dropdown-menu {
 				display: none;
 			}
 		}
 	}
 	@media (max-width: @grid-float-breakpoint-max) {
-		.active.dropdown{
+		.active.dropdown {
 			display: inherit;
 		}
-		.dropdown-mobile > a{
+		.dropdown-mobile > a {
 			display: none;
 		}
 		// Dropdowns get custom display when collapsed
@@ -100,7 +103,7 @@ img.navbar-brand-image-small{
 				padding-left: 25px + 15px;
 			}
 			li.has-sub-pages {
-				> a:after{
+				> a:after {
 					content: ' ';
 					.caret;
 					margin-left: 7px;
@@ -121,65 +124,97 @@ img.navbar-brand-image-small{
 	// }
 	.navbar-upper {
 		.clearfix();
-		.navbar-nav{
+		.navbar-right {
+			.stratum-cms-modern & {
+				margin-right: -@gutter;
+				margin-top: 10px;
+				> li > a {
+					text-transform: @navbar-main-text-transform;
+					font-family: @navbar-main-font-family;
+					font-size: @navbar-main-font-size;
+					font-weight: @navbar-main-font-weight;
+					color: @navbar-main-link-color;
+					background: @navbar-default-bg;
+					padding-top: @navbar-main-padding-vertical;
+					padding-bottom: @navbar-main-padding-vertical;
+					border-radius: @border-radius-main;
+					border: @navbar-main-link-color 1px solid;
+					&:hover,
+					&:active,
+					&:focus,
+					&:active:focus {
+						background: darken(@navbar-default-bg, 10%);
+						color: @navbar-main-link-color;
+						border: @navbar-main-link-color 1px solid;
+						outline: none;
+					}
+					&:active:focus {
+						background: darken(@navbar-default-bg, 20%);
+						border: @navbar-main-link-color 1px solid;
+					}
+				}
+			}
+		}
+		.navbar-nav {
 			> li {
-				.nav-button-text-big, .nav-button-text-small{
+				.nav-button-text-big,
+				.nav-button-text-small {
 					display: inline-block;
 					margin-bottom: 0;
 				}
-				.nav-button-text-big{
-					&:after{
+				.nav-button-text-big {
+					&:after {
 						content: '\00A0 \2014 \00A0';
 					}
 				}
 			}
 		}
 		@media (min-width: @grid-float-breakpoint) {
-			.navbar-nav{
+			.navbar-nav {
 				> li {
-					&.active{
-						> a.registration-link{
+					&.active {
+						> a.registration-link {
 							.btn-default;
 						}
 					}
-					&:last-child{
+					&:last-child {
 						// margin-right: @gutter-large + @navbar-main-padding-vertical;
 					}
 					> a {
 						.btn;
 						.btn-default;
 						margin-left: @gutter;
-
 					}
-					a.registration-link{
-					// 	height: 45px;
-					// 	display: table-cell;
-					// 	padding: 0 15px;
+					a.registration-link {
+						// 	height: 45px;
+						// 	display: table-cell;
+						// 	padding: 0 15px;
 						.btn-primary;
 					}
-					a.nav-button-text{
+					a.nav-button-text {
 						height: 45px;
 						display: block;
 						padding: 6px 10px;
 						position: relative;
-						.nav-button-text-big, .nav-button-text-small{
+						.nav-button-text-big,
+						.nav-button-text-small {
 							display: block;
 						}
-						.nav-button-text-big{
-							&:after{
+						.nav-button-text-big {
+							&:after {
 								content: none;
 							}
 							font-size: 12px; //floor(@font-size-base * 1.1);
 						}
-						.nav-button-text-small{
+						.nav-button-text-small {
 							font-size: 10px; //floor(@font-size-base * 0.9);
 						}
 					}
-					a.login-user-display{
+					a.login-user-display {
 						// padding: @gutter @gutter*2+10px @gutter @gutter;
 						// text-align: right;
 						padding-right: 30px;
-						&:after{
+						&:after {
 							.fa-icon();
 							content: @fa-var-chevron-down;
 							font-size: 12px;
@@ -189,7 +224,7 @@ img.navbar-brand-image-small{
 							margin-top: -5px;
 						}
 					}
-					a.login-user-display-wrong{
+					a.login-user-display-wrong {
 						padding-top: 12px;
 						font-size: 14px;
 					}
@@ -201,25 +236,25 @@ img.navbar-brand-image-small{
 			left: 50%;
 			top: @gutter + 10px;
 			pointer-events: none;
-			&>*{
+			& > * {
 				pointer-events: all;
 			}
 			@media (min-width: @screen-md-min) {
-				margin-left: -@container-md/2;
+				margin-left: -@container-md / 2;
 			}
 			@media (min-width: @screen-lg-min) {
-				margin-left: -@container-lg/2;
+				margin-left: -@container-lg / 2;
 			}
 		}
 	}
-	.navbar-main .navbar-nav{
+	.navbar-main .navbar-nav {
 		@media (min-width: @grid-float-breakpoint) {
 			> li > a {
 				&:hover,
 				&:focus {
 					border-bottom: 3px solid @brand-primary;
 					margin-bottom: -3px;
-					.transition(border-bottom .2s ease-in-out);
+					.transition(border-bottom 0.2s ease-in-out);
 					.stratum-cms-modern & {
 						margin-bottom: 0;
 						border-bottom: 0;
@@ -260,19 +295,20 @@ img.navbar-brand-image-small{
 		border-top-width: @navbar-big-border-top-width-desktop;
 	}
 
-	> .container-fluid{
+	> .container-fluid {
 		@media (min-width: @grid-float-breakpoint) {
 			padding-left: 0;
 			padding-right: 0;
 		}
 	}
-	.navbar-brand-image-big{
+	.navbar-brand-image-big {
 		height: @navbar-image-big-height;
 		margin: ((@navbar-height - @navbar-image-big-height) / 2) 0;
 		display: none;
 	}
 
-	.navbar-header-container,.navbar-main-container {
+	.navbar-header-container,
+	.navbar-main-container {
 		.clearfix();
 		@media (min-width: @grid-float-breakpoint) {
 			.container;
@@ -281,10 +317,10 @@ img.navbar-brand-image-small{
 	.navbar-header {
 		// &:extend(.clearfix all);
 		@media (min-width: @grid-float-breakpoint) {
-			.navbar-brand-image-big{
+			.navbar-brand-image-big {
 				display: inline !important;
 			}
-			.navbar-brand-image-small{
+			.navbar-brand-image-small {
 				display: none;
 			}
 			// height: 92px;
@@ -297,14 +333,13 @@ img.navbar-brand-image-small{
 		padding: ((@navbar-height - @navbar-image-height) / 2) 0;
 		@media (min-width: @grid-float-breakpoint) {
 			height: @navbar-header-height;
-			padding: (@navbar-header-height - @navbar-image-big-height)/2 @navbar-padding-horizontal;
+			padding: (@navbar-header-height - @navbar-image-big-height)/2
+				@navbar-padding-horizontal;
 		}
 		// @media (max-width: @grid-float-breakpoint - 1) {
 		height: @navbar-height;
-
 	}
 	.navbar-main {
-
 		@media (min-width: @grid-float-breakpoint) {
 			background-color: @navbar-main-bg;
 			border-top: @navbar-main-border-top;
@@ -313,16 +348,11 @@ img.navbar-brand-image-small{
 			margin: (@navbar-main-padding-vertical / 2) -@navbar-padding-horizontal;
 
 			> li > a {
-				padding-top:    10px;
+				padding-top: 10px;
 				padding-bottom: 10px;
 				line-height: @line-height-computed;
 			}
 
-			@media (max-width: @grid-float-breakpoint-max) {
-				> li.navbar-main-tab {
-					width: 100% !important;
-				}
-			}
 			// Uncollapse the nav
 			@media (min-width: @grid-float-breakpoint) {
 				float: left;
@@ -331,20 +361,21 @@ img.navbar-brand-image-small{
 					float: left;
 					> a {
 						text-transform: @navbar-main-text-transform;
-						font-family:    @navbar-main-font-family;
-						font-size:      @navbar-main-font-size;
-						font-weight:    @navbar-main-font-weight;
-						color:          @navbar-main-link-color;
-						background:     @navbar-main-link-bg;
-						padding-top:    @navbar-main-padding-vertical;
+						font-family: @navbar-main-font-family;
+						font-size: @navbar-main-font-size;
+						font-weight: @navbar-main-font-weight;
+						color: @navbar-main-link-color;
+						background: @navbar-main-link-bg;
+						padding-top: @navbar-main-padding-vertical;
 						padding-bottom: @navbar-main-padding-vertical;
 						&:hover {
 							background: @navbar-main-link-hover-bg;
-							color:      @navbar-main-link-hover-color;
+							color: @navbar-main-link-hover-color;
 						}
 					}
 					&.active > a {
-						&, &:hover {
+						&,
+						&:hover {
 							background: @navbar-main-link-active-bg;
 							color: @navbar-main-link-active-color;
 						}
@@ -354,9 +385,11 @@ img.navbar-brand-image-small{
 				}
 				.stratum-cms-modern & {
 					width: 100%;
+					display: flex;
 					> li {
+						flex-grow: 1;
 						> a {
-							padding: @navbar-main-padding-vertical 0;
+							padding: @navbar-main-padding-vertical @gutter;
 							text-align: center;
 							margin-right: @gutter;
 							border-radius: 3px 3px 0 0;

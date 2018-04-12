@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
 class StartPageWidget extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			loadComplete: false,
 		};
 	}
-	onComplete (error) {
+	onComplete(error) {
 		this.setState({
 			error: error,
 			loadComplete: true,
 		});
 	}
-	render () {
+	render() {
 		return (
 			<div>
 				<StratumSimpleData
@@ -22,9 +22,12 @@ class StartPageWidget extends Component {
 					onLoadComplete={this.onComplete.bind(this)}
 					className="startpage-widget-digit"
 					format={this.props.format}
+					root={this.props.root}
 					unstyled
-					/>
-				<span className="startpage-widget-text">{this.state.loadComplete && this.props.description}</span>
+				/>
+				<span className="startpage-widget-text">
+					{this.state.loadComplete && this.props.description}
+				</span>
 			</div>
 		);
 	}

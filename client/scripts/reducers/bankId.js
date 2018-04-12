@@ -1,5 +1,12 @@
-import { INPUT_PERSONAL_NUMBER, SET_PERSONAL_NUMBER_VALIDITY, SET_BID_STAGE,
-	SET_BID_STATUS, SET_BID_ORDER, INCREMENT_BID_TRIES, SET_USER_NAME } from '../actions/bankid';
+import {
+	INPUT_PERSONAL_NUMBER,
+	SET_PERSONAL_NUMBER_VALIDITY,
+	SET_BID_STAGE,
+	SET_BID_STATUS,
+	SET_BID_ORDER,
+	INCREMENT_BID_TRIES,
+	SET_USER_NAME,
+} from '../actions/bankid';
 import { LoginStages, RESET_STATE } from '../actions/login';
 
 const initialState = {

@@ -1,4 +1,4 @@
-const initialState = { };
+const initialState = {};
 
 import { RECEIVE_START_PAGE } from '../actions/startPage';
 
@@ -14,9 +14,21 @@ export default (state = initialState, action) => {
 				widgets,
 				isPortal,
 				subRegisters,
+				subRegisterTitle,
 				quickLink,
 			} = action;
-			return Object.assign({}, state, { description, header, internalLinks, informationBlurb, jumbotron, widgets, isPortal, subRegisters, quickLink });
+			return Object.assign({}, state, {
+				description,
+				header,
+				internalLinks,
+				informationBlurb,
+				jumbotron,
+				widgets,
+				isPortal,
+				subRegisters,
+				quickLink,
+				subRegisterTitle,
+			});
 		default:
 			return state;
 	}

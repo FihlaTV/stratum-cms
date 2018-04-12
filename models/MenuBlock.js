@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var	Types = keystone.Field.Types;
+var Types = keystone.Field.Types;
 
 /**
  * Menu Block Model
@@ -16,12 +16,13 @@ var MenuBlock = new keystone.List('MenuBlock', {
 	},
 });
 
-MenuBlock.add({
-	name: {
-		type: String,
-		required: true,
+MenuBlock.add(
+	{
+		name: {
+			type: String,
+			required: true,
+		},
 	},
-},
 	{ heading: 'Advanced settings' },
 	{
 		registerSpecific: {
@@ -30,7 +31,8 @@ MenuBlock.add({
 		},
 		static: {
 			type: Boolean,
-			note: 'Advanced option: Check this if this menu item should link to a specific URL',
+			note:
+				'Advanced option: Check this if this menu item should link to a specific URL',
 		},
 		section: {
 			type: Types.Select,
@@ -51,18 +53,19 @@ MenuBlock.add({
 				section: 'external',
 			},
 		},
-	});
+	}
+);
 MenuBlock.relationship({
 	path: 'pages',
 	ref: 'Page',
 	refPath: 'menu',
 });
 
-MenuBlock.schema.virtual('key').get(function () {
+MenuBlock.schema.virtual('key').get(function() {
 	return this.get('static') ? this.get('section') : this.get('slug');
 });
 
-MenuBlock.schema.virtual('href').get(function () {
+MenuBlock.schema.virtual('href').get(function() {
 	var sectionLinks = {
 		news: '/nyheter',
 		faq: '/faq',
@@ -70,7 +73,9 @@ MenuBlock.schema.virtual('href').get(function () {
 		external: this.get('staticLink'),
 	};
 
-	return this.get('static') ? sectionLinks[this.get('section')] : ('/' + this.get('slug'));
+	return this.get('static')
+		? sectionLinks[this.get('section')]
+		: '/' + this.get('slug');
 });
 
 MenuBlock.register();

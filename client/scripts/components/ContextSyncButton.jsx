@@ -1,19 +1,23 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
-
-const ContextSyncButton = (props) => {
-	const {
-		onClick,
-		isSyncing,
-		disabled,
-		children,
-		...other,
-	} = props;
+const ContextSyncButton = props => {
+	const { onClick, isSyncing, disabled, children, ...other } = props;
 
 	return (
-		<Button bsStyle="primary" block onClick={onClick} disabled={disabled || isSyncing} {...other}>
-			{isSyncing ? (<i className="fa fa-refresh fa-spin fa-fw" aria-hidden="true" />) : children}
+		<Button
+			bsStyle="primary"
+			block
+			onClick={onClick}
+			disabled={disabled || isSyncing}
+			{...other}
+		>
+			{isSyncing ? (
+				<i className="fa fa-refresh fa-spin fa-fw" aria-hidden="true" />
+			) : (
+				children
+			)}
 		</Button>
 	);
 };

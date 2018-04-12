@@ -1,4 +1,4 @@
-const initialState = { };
+const initialState = {};
 
 import { RECEIVE_WIDGET } from '../actions/widget';
 

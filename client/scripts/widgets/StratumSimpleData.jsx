@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import es6Promise from 'es6-promise';
 import Spinner from '../components/Spinner';
 import fetch from 'isomorphic-fetch';
@@ -20,28 +21,36 @@ const style = {
 };
 
 class StratumSimpleData extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			loading: true,
 		};
 	}
-	componentDidMount () {
+	componentDidMount() {
 		this.fetchNewData();
 	}
-	fetchNewData () {
+	getDescendantProp(obj, desc) {
+		const arr = desc.split('.');
+		while (arr.length && (obj = obj[arr.shift()]));
+		return obj;
+	}
+	fetchNewData() {
 		fetch(this.props.url)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
 					this.setState({
-						data: this.format(json.data),
+						data: this.format(
+							this.getDescendantProp(json, this.props.root)
+						),
 						loading: false,
 					});
-					this.props.onLoadComplete && this.props.onLoadComplete(null);
+					this.props.onLoadComplete &&
+						this.props.onLoadComplete(null);
 				} else {
 					const error = new Error(json.message);
-					throw (error);
+					throw error;
 				}
 			})
 			.catch(error => {
@@ -49,30 +58,31 @@ class StratumSimpleData extends Component {
 				this.props.onLoadComplete && this.props.onLoadComplete(error);
 			});
 	}
-	format (val) {
+	format(val) {
 		const format = this.props.format;
 		switch (typeof format) {
-			case 'function' :
+			case 'function':
 				return format(val);
-			case 'string' :
+			case 'string':
 				return numeral(val).format(format);
-			default :
+			default:
 				return val;
 		}
 	}
-	render () {
+	render() {
 		if (this.state.loading) {
-			return (
-				<Spinner style={{ margin: '10px auto' }}/>
-			);
+			return <Spinner style={{ margin: '10px auto' }} />;
 		} else if (this.state.error) {
-			return (
-				<span>{this.state.error.message}</span>
-			);
+			return <span>{this.state.error.message}</span>;
 		}
 		return (
 			<div>
-				<span style={this.props.unstyled ? {} : style} className={this.props.className}>{this.state.data}</span>
+				<span
+					style={this.props.unstyled ? {} : style}
+					className={this.props.className}
+				>
+					{this.state.data}
+				</span>
 				{this.props.children}
 			</div>
 		);
@@ -81,12 +91,14 @@ class StratumSimpleData extends Component {
 
 StratumSimpleData.defaultProps = {
 	className: 'stratum-widget-indicator',
+	root: 'data',
 };
 
 StratumSimpleData.propTypes = {
 	format: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	onLoadComplete: PropTypes.func,
 	onStart: PropTypes.func,
+	root: PropTypes.string,
 	url: PropTypes.string.isRequired,
 };
 

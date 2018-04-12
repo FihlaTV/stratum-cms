@@ -1,4 +1,4 @@
-const initialState = { };
+const initialState = {};
 
 import { RECEIVE_PAGE, SET_LOADING, CLEAR_PAGE } from '../actions/page';
 

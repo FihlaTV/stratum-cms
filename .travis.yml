@@ -1,11 +1,19 @@
 language: node_js
 node_js:
-- '0.12'
+  - '6'
 script:
-- npm run lint && npm test
+  - npm run lint && npm test
 notifications:
   slack:
     on_success: change
     on_failure: always
     rooms:
       secure: SXVfY/rbKB6tW+Xc53q5eylw4nuuBgniJnfj40qERUKOYRO2RJL12OQ2/scJw5bu1buuExNBC4GPd7qrekqzyE849rema1DcWu9sro7QYAHjqiISifYvOApUXD2lzyN+kgcRGfQRWqPYO8g348Gw4bJuy6uG3Pz0x3w9ZfP4c4z6V8N4mvYGx1Fjwyq9vBNrZ4wFAvogtxepQCByTmX99+NIHqr0dwO2AtM8TvhmNAXo3rPn31t+zulxmL9Gfgokh4FPQi6lrpkkYTBidaL7J0ZSHQwyi6lIcjV8SHmOfir+1fuEJSXCjb8jJkeG2o///ju45xRuZHQMqm6X9GY0FI0a1uNbB8Tx6EN0TDljTK6dCaQ2E+pJ2/tQcgRSqMM0F8JXPFLpcL9AH+c4CSffJi7agdsvZX7Bi5MflkRzsmBCNg3xa4QYJ2H61TBDZcgWn3ytCZ0Cd4fw0CE4444BsdGmjZawxZkKWQ6xFk3Hj48kGoc7zQaFYBD0YUyjBmfBUC5oWHEXoYovVE09ko/XqqOfyk0oIxMNor0ncEbJVK3mDr7i2QLdUGHoyQq0DIPgOLIM25w35r4xOnwZlo4p7l7MtWbMiblql9MqELw2T7wKilzCV4odLvsF1ENEt9d2adMqoWAcfEee0Zcv9A+LI8RC/sNJGBQVTO77garxZTg=
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8

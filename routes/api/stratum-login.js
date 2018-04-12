@@ -1,7 +1,7 @@
 var keystone = require('keystone');
-var	url = require('url');
-var	request = require('request');
-var	zlib = require('zlib');
+var url = require('url');
+var request = require('request');
+var zlib = require('zlib');
 
 /**
  * Returns a function which performs a GET or POST
@@ -10,12 +10,12 @@ var	zlib = require('zlib');
  * @param conf config object for request
  * @param post boolean determines if the request should be a post call or get call.
  */
-function doRequest (conf, res, req, post) {
+function doRequest(conf, res, req, post) {
 	var reqFunc = post ? request.post : request;
-	return reqFunc(conf, function (err, stratumRes, body) {
+	return reqFunc(conf, function(err, stratumRes, body) {
 		if (!err && body) {
 			if (stratumRes.headers['content-encoding'] === 'gzip') {
-				zlib.gunzip(body, function (err, dezipped) {
+				zlib.gunzip(body, function(err, dezipped) {
 					parseResponse(req, res, dezipped.toString('utf-8'), post);
 				});
 			} else {
@@ -31,7 +31,7 @@ function doRequest (conf, res, req, post) {
 	});
 }
 
-function parseResponse (req, res, body, post) {
+function parseResponse(req, res, body, post) {
 	var jsonBody;
 	try {
 		jsonBody = JSON.parse(body);
@@ -60,7 +60,8 @@ function parseResponse (req, res, body, post) {
 			jsonBody = {
 				success: false,
 				code: 'CONTEXT_ERROR',
-				message: 'Could not find user data, most likely error with login synchronization',
+				message:
+					'Could not find user data, most likely error with login synchronization',
 			};
 		}
 	}
@@ -68,10 +69,10 @@ function parseResponse (req, res, body, post) {
 	return res.apiResponse(jsonBody);
 }
 
-exports = module.exports = function (req, res) {
+exports = module.exports = function(req, res) {
 	var referer = req.header('referer');
 	var protocol;
-	var	stratumServer;
+	var stratumServer;
 
 	if (referer) {
 		protocol = referer.split('/')[0];
@@ -80,7 +81,7 @@ exports = module.exports = function (req, res) {
 	}
 
 	stratumServer = protocol + '//' + keystone.get('stratum server');
-	var	conf = {
+	var conf = {
 		rejectUnauthorized: false,
 		encoding: null,
 	};
@@ -96,7 +97,7 @@ exports = module.exports = function (req, res) {
 	conf.uri = url.resolve(stratumServer, req.url);
 	if (req.method === 'POST') {
 		conf.headers = {
-			'Cookie': req.headers.cookie,
+			Cookie: req.headers.cookie,
 			'User-Agent': req.headers['user-agent'],
 		};
 		conf.form = req.body;

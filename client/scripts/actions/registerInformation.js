@@ -2,15 +2,15 @@ import fetch from '../utils/testable-fetch';
 
 export const RECEIVE_REGISTER_INFORMATION = 'RECEIVE_REGISTER_INFORMATION';
 
-function receiveRegisterInformation (registerInformation) {
+function receiveRegisterInformation(registerInformation) {
 	return {
 		type: RECEIVE_REGISTER_INFORMATION,
 		registerInformation,
 	};
 }
 
-export function fetchRegisterInformation (pageId) {
-	return (dispatch) => {
+export function fetchRegisterInformation(pageId) {
+	return dispatch => {
 		return fetch(`/api/register-information`)
 			.then(res => res.json())
 			.then(json => {

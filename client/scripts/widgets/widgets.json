@@ -1,60 +1,67 @@
 {
-	"BOAArtrosSkola": {
-		"id": "BOAArtrosSkola",
-		"description": "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
-	},
-	"LVRAndelKOL": {
-		"id": "LVRAndelKOL",
-		"description": "Andel registrerade patienter med diagnosen KOL i öppenvård som röker."
-	},
-	"LVRAndelKOLSV": {
-		"id": "LVRAndelKOLSV",
-		"description": "Andel registrerade patienter med diagnosen KOL i inneliggande som röker."
-	},
-	"LVRAndelAstma": {
-		"id": "LVRAndelAstma",
-		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård."
-	},
-	"LVRAndelAstma18": {
-		"id": "LVRAndelAstma18",
-		"description": "Andel registrerade patienter med diagnosen Astma i öppenvård under 18."
-	},
-	"BOAAndel": {
-		"id": "BOAAndel",
-		"description": "En beskrivning som förklarar den här widgeten..."
-	},
-	"HNSVSign": {
-		"id": "HNSVSign",
-		"description": "En beskrivning som förklarar den här widgeten..."
-	},
-	"HNSVPirs": {
-		"id": "HNSVPirs",
-		"description": "Hörselnedsättningens påverkan på dagligt liv. Medelvärde."
-	},
+  "BOAArtrosSkola": {
+    "id": "BOAArtrosSkola",
+    "description":
+      "Visar antalet vårdcentraler i Stratum som för tillfället erbjuder artrosskola, och lite till."
+  },
+  "LVRAndelKOL": {
+    "id": "LVRAndelKOL",
+    "description":
+      "Andel registrerade patienter med diagnosen KOL i öppenvård som röker."
+  },
+  "LVRAndelKOLSV": {
+    "id": "LVRAndelKOLSV",
+    "description":
+      "Andel registrerade patienter med diagnosen KOL i inneliggande som röker."
+  },
+  "LVRAndelAstma": {
+    "id": "LVRAndelAstma",
+    "description":
+      "Andel registrerade patienter med diagnosen Astma i öppenvård."
+  },
+  "LVRAndelAstma18": {
+    "id": "LVRAndelAstma18",
+    "description":
+      "Andel registrerade patienter med diagnosen Astma i öppenvård under 18."
+  },
+  "BOAAndel": {
+    "id": "BOAAndel",
+    "description": "En beskrivning som förklarar den här widgeten..."
+  },
+  "HNSVSign": {
+    "id": "HNSVSign",
+    "description": "En beskrivning som förklarar den här widgeten..."
+  },
+  "HNSVPirs": {
+    "id": "HNSVPirs",
+    "description": "Hörselnedsättningens påverkan på dagligt liv. Medelvärde."
+  },
   "HNSBChildrenNew": {
     "id": "HNSBChildrenNew",
     "description": "Antalet registrerade barn i registrets nyregistreringsdel."
-	},
+  },
   "HNSBCI": {
     "id": "HNSBCI",
     "description": "Antalet individer i registret som blivit CI-opererade."
-	},
+  },
   "MYRPostTotal": {
     "id": "MYRPostTotal",
     "description": "Antal registreringar totalt i registret."
-	},
+  },
   "RORHearingTest": {
     "id": "RORHearingTest",
-    "description": "Andel patienter med SOM som hörselprovats före rörinsättning."
-	},
+    "description":
+      "Andel patienter med SOM som hörselprovats före rörinsättning."
+  },
   "RORSatInfo": {
     "id": "RORSatInfo",
-    "description": "Andel anhöriga som är nöjda med information före rörinsättning."
-	},
+    "description":
+      "Andel anhöriga som är nöjda med information före rörinsättning."
+  },
   "SEPOps": {
     "id": "SEPOps",
     "description": "Antal registrerade septumoperationer totalt i registret."
-	},
+  },
   "HNSVRehabTotal": {
     "id": "HNSVRehabTotal",
     "description": "Andel som fått utvidgad rehabilitering."
@@ -73,18 +80,51 @@
   },
   "RORImproved": {
     "id": "RORImproved",
-    "description": "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
+    "description":
+      "Andel barn med SOM som har fått förbättrad hörsel postoperativt"
   },
   "RORVentetid": {
     "id": "RORVentetid",
-    "description": "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
+    "description":
+      "Andel barn med SOM eller rAOM med väntetid från OP beslut till OP av mindre än 4 veckor"
   },
   "FONOForbettring": {
     "id": "FONOForbettring",
-    "description": "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
+    "description":
+      "Andel patienter som upplever rösten som bättre eller mycket bättre efter operation"
   },
   "FONOPatientenket": {
     "id": "FONOPatientenket",
     "description": "Andel svar på patientenkät cirka 4 månader efter operation"
+  },
+  "PsykRegNewsletter": {
+    "id": "PsykRegNewsletter",
+    "description": "Nyhetsbrev för portalen för psykiatriregister."
+  },
+  "SPOQTotal": {
+    "id": "SPOQTotal",
+    "description": "Totalt antal patienter i spoq"
+  },
+  "KRHOperationer": {
+    "id": "KRHOperationer",
+    "description": "Antal höftledsoperationer"
+  },
+  "KRHInsattaProteser": {
+    "id": "KRHInsattaProteser",
+    "description": "Antal insatta proteser"
+  },
+  "KRHArtikelnummer": {
+    "id": "KRHArtikelnummer",
+    "description": "Antal artikelnummer"
+  },
+  "SimpleSideWidget": {
+    "id": "SimpleSideWidget",
+    "description":
+      "Enkel widget som är till för att visa en statistiksiffra i högermarginalen givet en url och format. Parametrar: @url: url till stratum-api, @format: beskriver formateringen av resultatdatan."
+  },
+  "StartPageWidget": {
+    "id": "StartPageWidget",
+    "description":
+      "Enkel widget som är till för att visa en statistiksiffra givet en url och format. Parametrar: @url: url till stratum-api, @format: beskriver formateringen av resultatdatan."
   }
 }

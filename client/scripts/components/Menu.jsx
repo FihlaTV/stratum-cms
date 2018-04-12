@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { IndexLink } from 'react-router';
 import UserContext from '../containers/App';
+import TopNav from './TopNav';
 
-function formatMenu (menuItems, tabLayout, level = 0) {
-	const totalMenuCharacters = level === 0 && tabLayout && menuItems.reduce((p, c) => p + c.label.length, 0);
-
+function formatMenu(menuItems, level = 0) {
 	return menuItems.reduce((prev, menuItem, i, arr) => {
 		const { url, label, key, items, state } = menuItem;
 
@@ -16,13 +15,13 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 		 */
 		if (level > 0 && items && items.length > 0) {
 			return prev.concat(
-				formatMenu([{ url, label, key, hasChildren: true }], tabLayout, level),
-				formatMenu(items, tabLayout, level + 1)
+				formatMenu([{ url, label, key, hasChildren: true }], level),
+				formatMenu(items, level + 1)
 			);
 		}
 		let retVal = prev.concat([
-			<LinkContainer to={`${url}`} activeClassName="active" key={key}>
-				{getLinkContents(menuItem, tabLayout, level, null, totalMenuCharacters)}
+			<LinkContainer to={`${url}`} key={key}>
+				{getLinkContents(menuItem, level, null)}
 			</LinkContainer>,
 		]);
 
@@ -32,20 +31,18 @@ function formatMenu (menuItems, tabLayout, level = 0) {
 		 */
 		if (level === 0 && items && items.length > 0) {
 			retVal.push(
-				<LinkContainer to={`${url}`} activeClassName="active" key={`${key}-desktop`}>
-					{getLinkContents({ url, label, key, state }, tabLayout, level, true, totalMenuCharacters)}
+				<LinkContainer to={`${url}`} key={`${key}-desktop`}>
+					{getLinkContents({ url, label, key, state }, level, true)}
 				</LinkContainer>
 			);
 		}
 
 		return retVal;
-
 	}, []);
 }
 
-function getLinkContents (item, tabLayout, level, desktop = false, totalMenuCharacters) {
+function getLinkContents(item, level, desktop = false) {
 	const { label, key, items, hasChildren = false } = item;
-	const tabWidthStyle = tabLayout && totalMenuCharacters ? { width: `${100 * label.length / totalMenuCharacters}%` } : {};
 	let classNames = level === 2 ? ['sub-sub-nav'] : [];
 
 	if (level === 0) {
@@ -54,7 +51,7 @@ function getLinkContents (item, tabLayout, level, desktop = false, totalMenuChar
 		} else if (items && items.length > 0) {
 			classNames.push('hidden-md', 'hidden-lg');
 		}
-		if ((desktop || !items) && tabLayout && totalMenuCharacters) {
+		if (desktop || !items) {
 			classNames.push('navbar-main-tab');
 		}
 	}
@@ -63,32 +60,39 @@ function getLinkContents (item, tabLayout, level, desktop = false, totalMenuChar
 	}
 	if (items && items.length > 0) {
 		return (
-			<NavDropdown onClick={(e) => e.preventDefault()} className={classNames.join(' ')} title={`${label}`} id={`${key}-dropdown`}>
+			<NavDropdown
+				onClick={e => e.preventDefault()}
+				className={classNames.join(' ')}
+				title={`${label}`}
+				id={`${key}-dropdown`}
+			>
 				{formatMenu(items, false, level + 1)}
 			</NavDropdown>
 		);
 	} else {
-		return (
-			<NavItem className={classNames.join(' ')} style={tabWidthStyle}>
-				{`${label}`}
-			</NavItem>
-		);
+		return <NavItem className={classNames.join(' ')}>{`${label}`}</NavItem>;
 	}
 }
 
-
-const Menu = ({
-	items,
-	tabLayout,
-}) => {
+const Menu = ({ items, externalLogin = {}, disableLogin }) => {
+	const { label, link } = externalLogin;
 	return (
 		<Navbar className="navbar-big navbar-big-tabbed" staticTop fluid>
 			<div className="navbar-header-container">
 				<Navbar.Header>
 					<Navbar.Brand>
-						<IndexLink to="/" activeClassName="active">
-							<img src="/images/logo_menu_big.png" style={{ display: 'none' }} alt="Registercentrum" className="navbar-brand-image-big" />
-							<img src="/images/logo_menu_small.png" alt="Registercentrum" className="navbar-brand-image-small" />
+						<IndexLink to="/">
+							<img
+								src="/images/logo_menu_big.png"
+								style={{ display: 'none' }}
+								alt="Registercentrum"
+								className="navbar-brand-image-big"
+							/>
+							<img
+								src="/images/logo_menu_small.png"
+								alt="Registercentrum"
+								className="navbar-brand-image-small"
+							/>
 						</IndexLink>
 					</Navbar.Brand>
 					<Navbar.Toggle />
@@ -97,22 +101,26 @@ const Menu = ({
 			<Navbar.Collapse>
 				<div className="navbar-main">
 					<div className="navbar-main-container">
-						<Nav pullLeft>
-							{formatMenu(items, tabLayout)}
-						</Nav>
+						<Nav pullLeft>{formatMenu(items)}</Nav>
 					</div>
 				</div>
-				<div className="navbar-upper">
-					<UserContext reactRouter/>
-				</div>
+				{!disableLogin && (
+					<div className="navbar-upper">
+						{link ? (
+							<TopNav
+								externalLogin={link}
+								loginButtonLabel={label}
+							/>
+						) : (
+							<UserContext reactRouter />
+						)}
+					</div>
+				)}
 			</Navbar.Collapse>
 		</Navbar>
 	);
-
 };
 
-Menu.propTypes = {
-	tabLayout: PropTypes.bool,
-};
+Menu.propTypes = {};
 
 export default Menu;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ContextSelect from './ContextSelect';
 import { FormControl, ControlLabel, FormGroup } from 'react-bootstrap';
 
@@ -8,7 +9,7 @@ const UnitList = ({
 	context,
 	roleChange,
 	unitChange,
-    units,
+	units,
 	roles,
 	register,
 }) => {
@@ -30,7 +31,13 @@ const UnitList = ({
 			/>
 			<FormGroup>
 				<ControlLabel>Register: </ControlLabel>
-				<FormControl rows="2" style={{ resize: 'none', overflow: 'hidden' }} componentClass="textarea" value={register} disabled/>
+				<FormControl
+					rows="2"
+					style={{ resize: 'none', overflow: 'hidden' }}
+					componentClass="textarea"
+					value={register}
+					disabled
+				/>
 			</FormGroup>
 		</form>
 	);

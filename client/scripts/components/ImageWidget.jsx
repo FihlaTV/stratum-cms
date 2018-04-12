@@ -9,6 +9,6 @@ const ImageWidget = ({ url }) => {
 	);
 };
 
-ImageWidget.propTypes = { };
+ImageWidget.propTypes = {};
 
 export default ImageWidget;

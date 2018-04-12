@@ -1,10 +1,10 @@
-.base-page{
+.base-page {
 	.white-well();
 	background-color: @base-page-bg-color;
 	margin-bottom: @gutter-xlarge;
-	h1{
+	h1 {
 		margin-bottom: @gutter * 2;
-		.base-page-divider{
+		.base-page-divider {
 			border-bottom: 1px solid @primary-light;
 			padding-bottom: @gutter;
 		}
@@ -14,20 +14,16 @@
 		padding: @base-page-padding-desktop;
 	}
 	.post {
-		img {
-			.img-responsive();
-			width: 100%;
-		}
 		> table {
 			.table();
 			.table-striped();
 		}
 	}
 }
-.base-page-head-image{
+.base-page-head-image {
 	margin-top: @gutter-large;
 	margin-bottom: @gutter-large;
-	&.base-page-head-image-full{
+	&.base-page-head-image-full {
 		margin-left: -@gutter-large;
 		margin-right: -@gutter-large;
 		@media (min-width: @screen-md-min) {
@@ -36,36 +32,38 @@
 		}
 	}
 }
-.sub-menu{
+
+.sub-menu {
 	display: none;
 	@media (min-width: @grid-float-breakpoint) {
 		display: block;
 	}
 }
-.content-page-images{
-	a.caption-image{
+.content-page-images {
+	a.caption-image {
 		display: block;
 	}
-	.caption-image{
+	.caption-image {
 		overflow: hidden;
 		.white-well();
-		.caption-text{
+		.caption-text {
 			padding: @gutter;
 		}
-		a > img, > img{
+		a > img,
+		> img {
 			width: 100%;
 		}
 		margin-bottom: @gutter-xlarge;
 	}
 }
-.content-page-contacts{
-	.contact-person{
+.content-page-contacts {
+	.contact-person {
 		.clearfix();
 		.white-well();
 		padding: @gutter-large;
 		margin-bottom: @gutter-xlarge;
 
-		.contact-person-image{
+		.contact-person-image {
 			.make-xs-column(3);
 			.make-md-column(12);
 			> img {
@@ -73,10 +71,10 @@
 				.img-circle();
 			}
 		}
-		.contact-person-info{
+		.contact-person-info {
 			.make-xs-column(9);
 			.make-md-column(12);
-			h3{
+			h3 {
 				text-transform: none;
 			}
 			.contact-person-title {
@@ -84,7 +82,7 @@
 				font-style: italic;
 				margin-bottom: 8px;
 			}
-			p{
+			p {
 				font-size: floor(@font-size-base * 0.85);
 				margin-bottom: 5px;
 			}
@@ -95,7 +93,7 @@
 				margin-bottom: @gutter-large;
 				.center-block();
 			}
-			& .contact-person-info{
+			& .contact-person-info {
 				text-align: center;
 			}
 		}
@@ -103,4 +101,10 @@
 }
 .draft {
 	border: dashed 2px;
+}
+.draft-banner {
+	background-image: url('../../images/draft.svg');
+	background-size: 200px 200px;
+	background-repeat: no-repeat;
+	background-position: right top;
 }

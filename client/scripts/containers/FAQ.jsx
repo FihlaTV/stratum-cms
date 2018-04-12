@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getQuestions } from '../actions/faq';
@@ -6,12 +7,9 @@ import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import Questions from '../components/Questions';
 import Spinner from '../components/Spinner';
 
-const FAQContainer = ({
-	title,
-	children,
-}) => (
+const FAQContainer = ({ title, children }) => (
 	<Row>
-		<Col md={8} >
+		<Col md={8}>
 			<div className="base-page">
 				<h1>{title}</h1>
 				{children}
@@ -21,28 +19,33 @@ const FAQContainer = ({
 );
 
 class FAQ extends Component {
-	componentDidMount () {
+	componentDidMount() {
 		const { categories, menu, getQuestions, route } = this.props;
 		if (menu.items.length >= 1 && !categories) {
 			this.setBreadcrumbs(menu.items, route.path);
 		}
 		getQuestions(categories);
 	}
-	componentWillReceiveProps ({ menu: nextMenu }) {
+	componentWillReceiveProps({ menu: nextMenu }) {
 		const { menu, categories, route } = this.props;
-		if (nextMenu.items.length >= 1 && menu.items.length === 0 && !categories) {
+		if (
+			nextMenu.items.length >= 1 &&
+			menu.items.length === 0 &&
+			!categories
+		) {
 			this.setBreadcrumbs(nextMenu.items, route.path);
 		}
 	}
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.props.clearBreadcrumbs();
 	}
-	setBreadcrumbs (menuItems, routePath) {
-		const label = menuItems.find(menuItem => menuItem.key === routePath).label;
+	setBreadcrumbs(menuItems, routePath) {
+		const label = menuItems.find(menuItem => menuItem.key === routePath)
+			.label;
 
 		this.props.setBreadcrumbs([{ url: 'faq', label }], true, label);
 	}
-	render () {
+	render() {
 		const { loading, questions, title, categories } = this.props;
 
 		if (loading) {
@@ -51,7 +54,11 @@ class FAQ extends Component {
 		if (categories) {
 			return <Questions faqArr={questions} />;
 		}
-		return <FAQContainer title={title}><Questions faqArr={questions} /></FAQContainer>;
+		return (
+			<FAQContainer title={title}>
+				<Questions faqArr={questions} />
+			</FAQContainer>
+		);
 	}
 }
 
@@ -62,9 +69,9 @@ const mapStateToProps = ({ faq, menu }) => {
 		questions: faq.questions,
 	};
 };
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
 	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
-	getQuestions: (categories) => dispatch(getQuestions(categories)),
+	getQuestions: categories => dispatch(getQuestions(categories)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(FAQ);

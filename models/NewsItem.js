@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
+var defaultSanitizeOpts = require('sanitize-html').defaults;
 var extensions = require('../utils/config-extensions');
 /**
  * NewsItem Model
@@ -16,17 +17,31 @@ var NewsItem = new keystone.List('NewsItem', {
 
 NewsItem.add({
 	title: { type: String, required: true },
-	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
-	author: { type: Types.Relationship, ref: 'User', index: true, collapse: true },
+	state: {
+		type: Types.Select,
+		options: 'draft, published, archived',
+		default: 'draft',
+		index: true,
+	},
+	author: {
+		type: Types.Relationship,
+		ref: 'User',
+		index: true,
+		collapse: true,
+	},
 	publishedDate: {
 		type: Types.Date,
 		index: true,
 		dependsOn: { state: 'published' },
-		note: 'News items without a published date will not be displayed in the news listing.\n\n'
-			+ 'If the date is in the future, the news item will appear at the following date.',
+		note:
+			'News items without a published date will not be displayed in the news listing.\n\n' +
+			'If the date is in the future, the news item will appear at the following date.',
 	},
 	subtitle: { type: String, hidden: true }, // Hide this for future use
-	image: { type: Types.CloudinaryImage, autoCleanup: !keystone.get('is demo') },
+	image: {
+		type: Types.CloudinaryImage,
+		autoCleanup: !keystone.get('is demo'),
+	},
 	imageDescription: {
 		collapse: true,
 		type: String,
@@ -36,11 +51,37 @@ NewsItem.add({
 		options: 'portrait, landscape',
 		default: 'portrait',
 		emptyOption: false,
-		note: 'Determines the position and layout of the news item\'s image. Portrait places is to the right of the text and Landscape above the text',
+		note:
+			"Determines the position and layout of the news item's image. Portrait places is to the right of the text and Landscape above the text",
 	},
 	content: {
-		lead: { type: Types.Textarea, height: 150, note: 'Introduction to the news item. Keep this below ~300 characters' },
-		extended: { type: Types.Markdown, height: 400, toolbarOptions: { hiddenButtons: 'Image,Code' } },
+		lead: {
+			type: Types.Textarea,
+			height: 150,
+			note:
+				'Introduction to the news item. Keep this below ~300 characters',
+		},
+		extended: {
+			type: Types.Markdown,
+			height: 400,
+			toolbarOptions: { hiddenButtons: 'Image,Code' },
+			sanitizeOptions: {
+				allowedTags: defaultSanitizeOpts.allowedTags.concat(['iframe']),
+				allowedAttributes: Object.assign(
+					{},
+					defaultSanitizeOpts.allowedAttributes,
+					{
+						iframe: [
+							'width',
+							'height',
+							'src',
+							'frameborder',
+							'allowfullscreen',
+						],
+					}
+				),
+			},
+		},
 	},
 	resources: {
 		type: Types.Relationship,

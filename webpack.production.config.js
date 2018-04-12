@@ -5,11 +5,25 @@ var node_modules_dir = path.resolve(__dirname, 'node_modules');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var dotenv = require('dotenv');
 
-function generateConfig (indexPath, brand, envVars) {
+function generateConfig(indexPath, brand, envVars) {
 	return {
 		entry: {
 			base: indexPath,
-			vendors: ['react', 'jquery', 'react-bootstrap', 'react-dom', 'redux'],
+			vendors: [
+				'react',
+				'react-bootstrap',
+				'react-dom',
+				'react-router',
+				'redux',
+				'react-redux',
+				'react-router-redux',
+				'es6-promise',
+				'react-ga',
+				'js-cookie',
+				'bootstrap', // TODO: Remove with SPA
+				'jquery', // TODO: Remove with SPA
+				'moment',
+			],
 		},
 		output: {
 			path: path.resolve(__dirname, 'public/dist/'),
@@ -17,7 +31,7 @@ function generateConfig (indexPath, brand, envVars) {
 		},
 		plugins: [
 			new webpack.DefinePlugin({
-				'process.env': Object.keys(envVars).reduce(function (o, k) {
+				'process.env': Object.keys(envVars).reduce(function(o, k) {
 					// Whitelist to variables only prefixed with CLIENT_
 					if (k.indexOf('CLIENT_') === 0) {
 						o[k] = JSON.stringify(envVars[k]);
@@ -34,63 +48,110 @@ function generateConfig (indexPath, brand, envVars) {
 			}),
 			new webpack.optimize.UglifyJsPlugin(),
 			new ExtractTextPlugin(brand + '.styles.css'),
-			new webpack.optimize.CommonsChunkPlugin('vendors', brand + '.vendors.js'),
+			new webpack.optimize.CommonsChunkPlugin({
+				name: 'vendors',
+				filename: brand + '.vendors.js',
+			}),
 		],
 		module: {
-			loaders: [{
-				test: /\.jsx{0,1}$/,
-				loader: 'babel-loader',
-				exclude: [node_modules_dir],
-				query: {
-					presets: ['es2015', 'react'],
-					plugins: ['transform-object-rest-spread', 'transform-object-assign'],
+			rules: [
+				{
+					test: /\.jsx{0,1}$/,
+					loader: 'babel-loader',
+					exclude: node_modules_dir,
+					options: {
+						presets: ['es2015', 'react'],
+						plugins: [
+							require('babel-plugin-transform-object-rest-spread'),
+							require('babel-plugin-transform-object-assign'),
+						],
+					},
 				},
-			}, {
-				test: /\.less$/,
-				loader: ExtractTextPlugin.extract(['css', 'less']),
-			}, {
-				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=application/font-woff',
-			}, {
-				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=application/octet-stream',
-			}, {
-				test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'file',
-			}, {
-				test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=10000&mimetype=image/svg+xml',
-			}],
+				{
+					test: /\.less$/,
+					loader: ExtractTextPlugin.extract([
+						'css-loader',
+						'less-loader',
+					]),
+				},
+				{
+					test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+					loader: 'url-loader',
+					options: {
+						limit: 10000,
+						mimetype: 'application/font-woff',
+					},
+				},
+				{
+					test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+					loader: 'url-loader',
+					options: {
+						limit: 10000,
+						mimetype: 'application/octet-stream',
+					},
+				},
+				{
+					test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+					loader: 'file-loader',
+				},
+				{
+					test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+					loader: 'url-loader',
+					options: {
+						limit: 10000,
+						mimetype: 'image/svg+xml',
+					},
+				},
+			],
 		},
 		resolve: {
-			extensions: ['', '.js', '.jsx'],
+			extensions: ['.js', '.jsx'],
 		},
 	};
 }
 
-function readEnvironmentVariables (filename) {
+function readEnvironmentVariables(filename) {
 	return dotenv.parse(fs.readFileSync(filename));
 }
 
-function initConfig (_indexPath) {
+function initConfig(_indexPath) {
 	var envVars = {};
 	var regPath;
 
 	if (_indexPath) {
 		regPath = path.resolve(__dirname, _indexPath);
+	} else if (process.argv.indexOf('--env.register') >= 0) {
+		regPath = path.resolve(
+			__dirname,
+			`./registers/${
+				process.argv[process.argv.indexOf('--env.register') + 1]
+			}`
+		);
 	} else {
-		regPath = path.resolve(__dirname, process.argv.indexOf('--env.regPath') >= 0 ? process.argv[process.argv.indexOf('--env.regPath') + 1] : '.');
+		regPath = path.resolve(
+			__dirname,
+			process.argv.indexOf('--env.regPath') >= 0
+				? process.argv[process.argv.indexOf('--env.regPath') + 1]
+				: '.'
+		);
 	}
 	try {
 		fs.accessSync(path.resolve(regPath, '.env'), fs.F_OK);
 		envVars = readEnvironmentVariables(path.resolve(regPath, '.env'));
 	} catch (e) {
-		console.log('Missing .env file in ' + regPath + ' or unable to parse .env file...');
+		console.log(
+			'Missing .env file in ' +
+				regPath +
+				' or unable to parse .env file...'
+		);
 		process.exit();
 	}
 
 	// Should result in the same value as 'brand safe' in keystone
-	var brandSafe = (envVars.BRAND || 'app').trim().replace(/\W+/g, '-').toLowerCase();
+	var brandSafe = (envVars.BRAND || 'app')
+		.trim()
+		.replace(/\W+/g, '-')
+		.toLowerCase();
 
 	var indexPath = path.resolve(regPath, 'index.jsx');
 
@@ -103,7 +164,6 @@ function initConfig (_indexPath) {
 	}
 
 	return generateConfig(indexPath, brandSafe, envVars);
-};
+}
 
 module.exports = initConfig();
-module.exports.initConfig = initConfig;

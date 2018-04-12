@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { initLoginModal, getKeystoneContext, logoutFromStratum,
-	changeContext, dismissTimeleft, setShrinkUnitName } from '../actions/login';
+import {
+	initLoginModal,
+	getKeystoneContext,
+	logoutFromStratum,
+	changeContext,
+	dismissTimeleft,
+	setShrinkUnitName,
+} from '../actions/login';
 import { showContextModal, setTarget } from '../actions/context';
 import Login from './Login.jsx';
 import Context from './Context.jsx';
@@ -10,22 +16,22 @@ import TimeLeftDialog from '../components/TimeLeftDialog';
 import TopNav from '../components/TopNav';
 
 class App extends Component {
-	componentDidMount () {
+	componentDidMount() {
 		const { initContext } = this.props;
 		// See if there is any current login
 		initContext(true);
 	}
-	componentWillReceiveProps (nextProps) {
+	componentWillReceiveProps(nextProps) {
 		const { context, initial } = this.props;
 		const { showContextModal, wrongRegister } = nextProps;
 		if (nextProps.context && nextProps.context !== context) {
 			showContextModal && showContextModal(false);
 		}
-		if (!initial && nextProps.initial || wrongRegister) {
+		if ((!initial && nextProps.initial) || wrongRegister) {
 			showContextModal && showContextModal(true);
 		}
 	}
-	render () {
+	render() {
 		const {
 			showLoginModal,
 			showContextModal,
@@ -45,7 +51,13 @@ class App extends Component {
 			logout,
 			contextIsVisible,
 			reactRouter,
+			currentRoute,
 		} = this.props;
+		var currentRouteIsRegistration =
+			currentRoute === '/registrering' ? 'active' : '';
+		const modifiedShowTimeLeft =
+			showTimeleft ||
+			(window.location.href.indexOf('loggedout') > 0 && !(timeleft > 0));
 		return (
 			<div>
 				<TopNav
@@ -54,13 +66,18 @@ class App extends Component {
 					wrongRegister={wrongRegister}
 					showContextModal={showContextModal}
 					showLoginModal={showLoginModal}
-					onUserHover={(hover) => setShrinkUnitName(!hover)}
+					onUserHover={hover => setShrinkUnitName(!hover)}
 					shrinkUnitName={shrinkUnitName && !contextIsVisible}
 					setContextTarget={setContextTarget}
 					reactRouter={reactRouter}
+					currentRouteIsRegistration={currentRouteIsRegistration}
 				/>
-				<TimeLeftDialog show={showTimeleft} timeleft={timeleft} onDismiss={onTimeleftDismiss}/>
-				<Login/>
+				<TimeLeftDialog
+					show={modifiedShowTimeLeft}
+					timeleft={timeleft}
+					onDismiss={onTimeleftDismiss}
+				/>
+				<Login />
 				<Context
 					contexts={contexts}
 					requireChange={wrongRegister}
@@ -69,10 +86,9 @@ class App extends Component {
 					inRole={context && context.Role.RoleID}
 					firstTime={initial}
 					onLogout={logout}
-					onSubmit={(role, unit, forceReload) => {
-						setContext(role, unit, contexts, forceReload);
-					}
-					}
+					onSubmit={(role, unit) => {
+						setContext(role, unit, contexts);
+					}}
 					onCancel={() => showContextModal(false)}
 					onFirstAccept={() => window.location.reload()}
 				/>
@@ -81,46 +97,47 @@ class App extends Component {
 	}
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
 	return {
-		initContext: (initial) => {
+		initContext: initial => {
 			dispatch(getKeystoneContext(initial));
 		},
 		showLoginModal: () => {
 			dispatch(initLoginModal(true));
 		},
-		showContextModal: (e) => {
+		showContextModal: e => {
 			dispatch(showContextModal(e));
 		},
 		logout: () => {
 			dispatch(logoutFromStratum());
 		},
-		setContext: (role, unit, contexts, forceReload) => {
-			dispatch(changeContext(role, unit, contexts, forceReload));
+		setContext: (role, unit, contexts) => {
+			dispatch(changeContext(role, unit, contexts));
 		},
-		onTimeleftDismiss: (timeleft) => {
+		onTimeleftDismiss: timeleft => {
 			dispatch(dismissTimeleft(timeleft));
 		},
-		setShrinkUnitName: (shrink) => {
+		setShrinkUnitName: shrink => {
 			dispatch(setShrinkUnitName(shrink));
 		},
-		setContextTarget: (target) => {
+		setContextTarget: target => {
 			dispatch(setTarget(ReactDOM.findDOMNode(target)));
 		},
 	};
 }
-function mapStateToProps (state) {
+function mapStateToProps(state) {
 	return {
-		context: window.location.href.indexOf('loggedout') < 0 ? state.login.context : undefined,
+		context: state.login.context,
 		contextIsLoading: state.login.contextIsLoading,
 		initial: state.login.initial,
 		contexts: state.login.contexts,
 		wrongRegister: state.login.wrongRegister,
 		timeleft: state.login.timeleft,
-		showTimeleft: state.login.showTimeleft || window.location.href.indexOf('loggedout') > 0,
+		showTimeleft: state.login.showTimeleft,
 		shrinkUnitName: state.login.shrinkUnitName,
 		contextTarget: state.context.target,
 		contextIsVisible: state.context.show,
+		currentRoute: state.routing.locationBeforeTransitions.pathname,
 	};
 }
 

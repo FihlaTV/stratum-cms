@@ -20,6 +20,13 @@ import RORImproved from './RORImproved';
 import RORVentetid from './RORVentetid';
 import FONOForbettring from './FONOForbettring';
 import FONOPatientenket from './FONOPatientenket';
+import SPOQTotal from './SPOQTotal';
+import PsykRegNewsletter from './PsykRegNewsletter';
+import KRHOperationer from './KRHOperationer';
+import KRHInsattaProteser from './KRHInsattaProteser';
+import KRHArtikelnummer from './KRHArtikelnummer';
+import StartPageWidget from './StartPageWidget';
+import SimpleSideWidget from './SimpleSideWidget';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -43,6 +50,13 @@ export { RORImproved };
 export { RORVentetid };
 export { FONOForbettring };
 export { FONOPatientenket };
+export { SPOQTotal };
+export { PsykRegNewsletter };
+export { KRHOperationer };
+export { KRHInsattaProteser };
+export { KRHArtikelnummer };
+export { StartPageWidget };
+export { SimpleSideWidget };
 
 export default {
 	BOAArtrosSkola,
@@ -67,4 +81,11 @@ export default {
 	RORVentetid,
 	FONOForbettring,
 	FONOPatientenket,
+	SPOQTotal,
+	PsykRegNewsletter,
+	KRHOperationer,
+	KRHInsattaProteser,
+	KRHArtikelnummer,
+	StartPageWidget,
+	SimpleSideWidget,
 };

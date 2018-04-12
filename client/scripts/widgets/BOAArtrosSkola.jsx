@@ -1,8 +1,7 @@
 import React from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
-const BOAArtrosSkola = ({
-}) => {
+const BOAArtrosSkola = ({}) => {
 	return (
 		<div>
 			<div className="side-widget">
@@ -12,7 +11,8 @@ const BOAArtrosSkola = ({
 					className="side-widget-digit"
 				>
 					<span className="side-widget-description">
-						mottagningar över hela landet registrerar i BOA-registret.
+						mottagningar över hela landet registrerar i
+						BOA-registret.
 					</span>
 				</StratumSimpleData>
 			</div>

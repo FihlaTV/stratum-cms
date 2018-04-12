@@ -1,6 +1,12 @@
 const initialState = { items: [], cookiesAccepted: true };
 
-import { MESSAGE_ERROR, RECEIVE_MESSAGES, SHOW_MESSAGE, COOKIE_ACCEPTED, REMOVE_MESSAGE } from '../actions/messages';
+import {
+	MESSAGE_ERROR,
+	RECEIVE_MESSAGES,
+	SHOW_MESSAGE,
+	COOKIE_ACCEPTED,
+	REMOVE_MESSAGE,
+} from '../actions/messages';
 
 const message = (state, action) => {
 	switch (action.type) {
@@ -23,7 +29,9 @@ export default (state = initialState, action) => {
 				// Don't add duplicates to items
 				items: state.items.concat(
 					action.messages.filter(msg => {
-						return !state.items.find(newMsg => newMsg._id === msg._id);
+						return !state.items.find(
+							newMsg => newMsg._id === msg._id
+						);
 					})
 				),
 			});
@@ -33,7 +41,7 @@ export default (state = initialState, action) => {
 			});
 		case SHOW_MESSAGE:
 			return Object.assign({}, state, {
-				items: state.items.map((m) => message(m, action)),
+				items: state.items.map(m => message(m, action)),
 			});
 		case COOKIE_ACCEPTED:
 			return Object.assign({}, state, {
@@ -41,7 +49,7 @@ export default (state = initialState, action) => {
 			});
 		case REMOVE_MESSAGE:
 			return Object.assign({}, state, {
-				items: state.items.filter((i) => i._id !== action.message),
+				items: state.items.filter(i => i._id !== action.message),
 			});
 		default:
 			return state;

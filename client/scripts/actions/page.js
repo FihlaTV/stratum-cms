@@ -4,22 +4,22 @@ export const RECEIVE_PAGE = 'RECEIVE_PAGE';
 export const SET_LOADING = 'SET_LOADING';
 export const CLEAR_PAGE = 'CLEAR_PAGE';
 
-function receivePage (page) {
+function receivePage(page) {
 	return {
 		type: RECEIVE_PAGE,
 		page,
 	};
 }
 
-function setLoading (isLoading) {
+function setLoading(isLoading) {
 	return {
 		type: SET_LOADING,
 		isLoading,
 	};
 }
 
-export function fetchPage (pageId) {
-	return (dispatch) => {
+export function fetchPage(pageId) {
+	return dispatch => {
 		dispatch(setLoading(true));
 		return fetch(`/api/pages/${pageId}`, { credentials: 'include' })
 			.then(res => res.json())
@@ -38,7 +38,7 @@ export function fetchPage (pageId) {
 	};
 }
 
-export function clearPage () {
+export function clearPage() {
 	return {
 		type: CLEAR_PAGE,
 	};
