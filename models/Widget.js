@@ -77,6 +77,11 @@ Widget.add({
 			type: ['stratum', 'keystone'],
 		},
 	},
+	properties: {
+		type: Types.Textarea,
+		dependsOn: { type: 'keystone' },
+		collapse: true,
+	},
 	queryString: {
 		type: String,
 		note:
@@ -93,5 +98,30 @@ Widget.add({
 	},
 });
 Widget.defaultColumns = 'name, description, type';
+
+Widget.schema.virtual('propertiesJson').get(function() {
+	let json;
+	try {
+		json = JSON.parse(this.properties);
+	} catch (e) {
+		json = {};
+	}
+	return json;
+});
+
+Widget.schema.path('properties').validate(function(value) {
+	if (!value) {
+		return true;
+	}
+	try {
+		JSON.parse(value);
+	} catch (e) {
+		throw e;
+	}
+	return true;
+});
+Widget.schema.set('toObject', {
+	virtuals: true,
+});
 
 Widget.register();

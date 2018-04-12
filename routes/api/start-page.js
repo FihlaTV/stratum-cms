@@ -125,12 +125,15 @@ exports = module.exports = function(req, res) {
 					.list('StartPageWidget')
 					.model.find()
 					.select(
-						'description digit linkType page link useWidget keystoneWidget widget linkText slug'
+						'description digit linkType page link useWidget widget linkText slug'
 					)
 					.where('showOnStartPage', true)
 					.sort('sortOrder')
 					.limit(8)
-					.populate('widget', 'type widget keystoneWidget')
+					.populate(
+						'widget',
+						'type widget keystoneWidget properties propertiesJson'
+					)
 					.populate('page', 'slug shortId')
 					.exec(function(err, results) {
 						convertResultsToJSON(function(err, results) {
@@ -148,6 +151,7 @@ exports = module.exports = function(req, res) {
 							widget.widget &&
 							widget.widget.type === 'keystone'
 						) {
+							widget.properties = widget.widget.propertiesJson;
 							keystone
 								.list('KeystoneWidget')
 								.model.findOne()

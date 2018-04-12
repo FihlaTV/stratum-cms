@@ -181,6 +181,9 @@ exports = module.exports = function(req, res) {
 				data.widget.advancedSettings = context.widget.advancedSettings;
 				data.widget.queryString = context.widget.queryString;
 				data.widget.key = context.widget.key;
+				if (data.widget.type === 'keystone') {
+					data.widget.properties = context.widget.propertiesJson;
+				}
 				delete data.widget._id;
 			}
 			return res.apiResponse({

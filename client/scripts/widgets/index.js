@@ -25,6 +25,8 @@ import PsykRegNewsletter from './PsykRegNewsletter';
 import KRHOperationer from './KRHOperationer';
 import KRHInsattaProteser from './KRHInsattaProteser';
 import KRHArtikelnummer from './KRHArtikelnummer';
+import StartPageWidget from './StartPageWidget';
+import SimpleSideWidget from './SimpleSideWidget';
 
 export { BOAArtrosSkola };
 export { BOAAndel };
@@ -53,6 +55,8 @@ export { PsykRegNewsletter };
 export { KRHOperationer };
 export { KRHInsattaProteser };
 export { KRHArtikelnummer };
+export { StartPageWidget };
+export { SimpleSideWidget };
 
 export default {
 	BOAArtrosSkola,
@@ -82,4 +86,6 @@ export default {
 	KRHOperationer,
 	KRHInsattaProteser,
 	KRHArtikelnummer,
+	StartPageWidget,
+	SimpleSideWidget,
 };

@@ -45,6 +45,7 @@ const WidgetContainer = ({ widget, hideMetadata, ...props }) => {
 		widgetSlug,
 		advancedSettings,
 		key,
+		properties,
 		...widgetProps
 	} = widget;
 	return (
@@ -52,7 +53,7 @@ const WidgetContainer = ({ widget, hideMetadata, ...props }) => {
 			{!hideMetadata && <h2>{title}</h2>}
 			{!hideMetadata && <p>{description}</p>}
 			{type === 'keystone' ? (
-				<WidgetWrapper id={name} {...widgetProps} />
+				<WidgetWrapper id={name} {...properties} {...widgetProps} />
 			) : (
 				<StratumWidget
 					id={key}
