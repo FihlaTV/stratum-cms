@@ -30,13 +30,20 @@ class StratumSimpleData extends Component {
 	componentDidMount() {
 		this.fetchNewData();
 	}
+	getDescendantProp(obj, desc) {
+		const arr = desc.split('.');
+		while (arr.length && (obj = obj[arr.shift()]));
+		return obj;
+	}
 	fetchNewData() {
 		fetch(this.props.url)
 			.then(res => res.json())
 			.then(json => {
 				if (json.success) {
 					this.setState({
-						data: this.format(json.data),
+						data: this.format(
+							this.getDescendantProp(json, this.props.root)
+						),
 						loading: false,
 					});
 					this.props.onLoadComplete &&
@@ -84,12 +91,14 @@ class StratumSimpleData extends Component {
 
 StratumSimpleData.defaultProps = {
 	className: 'stratum-widget-indicator',
+	root: 'data',
 };
 
 StratumSimpleData.propTypes = {
 	format: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	onLoadComplete: PropTypes.func,
 	onStart: PropTypes.func,
+	root: PropTypes.string,
 	url: PropTypes.string.isRequired,
 };
 
