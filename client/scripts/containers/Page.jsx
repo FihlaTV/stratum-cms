@@ -14,6 +14,7 @@ import FAQ from './FAQ';
 import ResourceList from '../components/ResourceList';
 import WidgetWrapper from '../components/WidgetWrapper';
 import StratumWidget from '../components/StratumWidget';
+import { findMenuBlock, findFirstPageInMenu } from '../utils/menu';
 
 const SideArea = ({ title, content = {} }) => (
 	<div className="side-area">
@@ -117,7 +118,7 @@ class Page extends Component {
 		dispatch(clearPage());
 	}
 	redirectFromMenu(menuSlug, menuItems) {
-		const rePage = this.findFirstPageInMenu(menuSlug, menuItems);
+		const rePage = findFirstPageInMenu(menuSlug, menuItems);
 		// Redirect to found page
 		if (rePage) {
 			this.props.router.replace(`${rePage.url}`);
@@ -151,30 +152,6 @@ class Page extends Component {
 
 		dispatch(setBreadcrumbs(breadcrumbs, true, title));
 	}
-	findFirstPageInMenu(menuKey, menuItems) {
-		const menuBlock = menuItems.find(item => item.key === menuKey);
-		if (menuBlock && menuBlock.items && menuBlock.items.length > 0) {
-			return menuBlock.items[0];
-		}
-
-		return null;
-	}
-	findMenuBlock(pageId, menuItems = [], level = 0) {
-		if (!pageId) {
-			return;
-		}
-		const matches = menuItems.filter(menuItem => {
-			if (menuItem.items && menuItem.pageKey !== pageId) {
-				return this.findMenuBlock(pageId, menuItem.items, level + 1);
-			}
-			return pageId === menuItem.pageKey;
-		});
-		if (matches.length > 0) {
-			return level === 0 ? matches[0] : true;
-		}
-		return undefined;
-	}
-
 	render() {
 		const { page = {}, menuItems = [], loading = true } = this.props;
 		const {
@@ -250,7 +227,7 @@ class Page extends Component {
 				<Col md={layout === 'full' ? 12 : 4}>
 					{layout !== 'full' && (
 						<SubMenu
-							menuBlock={this.findMenuBlock(shortId, menuItems)}
+							menuBlock={findMenuBlock(shortId, menuItems)}
 							activePageId={shortId}
 							displayHeader={isModernTheme}
 							inContainer={!isModernTheme}
