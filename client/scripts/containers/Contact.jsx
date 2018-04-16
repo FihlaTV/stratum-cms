@@ -3,11 +3,16 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
+import { fetchContactsIfNeeded } from '../actions/contacts';
 import { findFirstPageInMenu } from '../utils/menu';
 
 const menuId = 'kontakt';
 
 class Contact extends Component {
+	componentWillMount() {
+		const { fetchContactsIfNeeded } = this.props;
+		fetchContactsIfNeeded();
+	}
 	componentDidMount() {
 		const { menu = {} } = this.props;
 		this.redirectToRegularPage(menu.items);
@@ -37,12 +42,19 @@ class Contact extends Component {
 		this.props.setBreadcrumbs([{ url: menuId, label }], true, label);
 	}
 	render() {
-		const { title } = this.props;
+		const { title, contacts } = this.props;
 		return (
 			<Row>
 				<Col md={8}>
 					<div className="base-page">
 						<h1>{title}</h1>
+						<ul>
+							{contacts.map(({ name, image, title, note }, i) => (
+								<li key={`contact-${i}`}>
+									{name.first} {name.last}
+								</li>
+							))}
+						</ul>
 					</div>
 				</Col>
 			</Row>
@@ -50,13 +62,15 @@ class Contact extends Component {
 	}
 }
 
-const mapStateToProps = ({ faq, menu }) => {
+const mapStateToProps = ({ contacts, menu }) => {
 	return {
-		// 	loading: faq.loading,
+		loading: contacts.loading,
+		contacts: contacts.contacts,
 		menu,
 	};
 };
 const mapDispatchToProps = dispatch => ({
+	fetchContactsIfNeeded: () => dispatch(fetchContactsIfNeeded()),
 	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
