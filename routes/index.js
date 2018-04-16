@@ -92,6 +92,7 @@ exports = module.exports = function(app) {
 	app.get('/api/news/:newsItem/', routes.api.newsItem);
 	app.get('/api/questions', routes.api.faq);
 	app.get('/api/questions/category/:questionCategory', routes.api.faq);
+	app.get('/api/contacts', routes.api.contacts);
 
 	// Allow cross domain calls for messages
 	app.get('/api/messages', keystone.middleware.cors);
