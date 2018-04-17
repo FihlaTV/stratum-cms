@@ -17,6 +17,12 @@ Contact.add({
 		type: Types.CloudinaryImage,
 		autoCleanup: !keystone.get('is demo'),
 	},
+	groups: {
+		type: Types.Relationship,
+		ref: 'ContactGroup',
+		initial: true,
+		many: true,
+	},
 	phone: { type: String },
 	title: { type: String, label: 'Work Title' },
 	note: { type: Types.Textarea, collapse: true },

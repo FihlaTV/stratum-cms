@@ -132,7 +132,7 @@ var nav = {
 	pages: ['pages', 'sub-pages', 'menu-blocks'],
 	news: 'news-items',
 	resources: 'resources',
-	contacts: 'contacts',
+	contacts: ['contacts', 'contact-groups'],
 	questions: ['questions', 'question-categories'],
 
 	// Hide users from menu for now
