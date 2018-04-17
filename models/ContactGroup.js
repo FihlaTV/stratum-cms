@@ -7,6 +7,11 @@ var keystone = require('keystone');
 
 var ContactGroup = new keystone.List('ContactGroup', {
 	map: { name: 'group' },
+	autokey: {
+		from: 'group',
+		path: 'slug',
+		unique: true,
+	},
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
 	sortable: true,
 });
