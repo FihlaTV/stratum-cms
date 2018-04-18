@@ -37,15 +37,22 @@ exports = module.exports = function(req, res) {
 		.select('email phone title note image name groups')
 		.populate('groups', 'group slug')
 		.exec((err, contacts) => {
+			let _contacts = contacts;
 			if (err) {
 				return res.apiResponse({
 					success: false,
 					error: err,
 				});
 			}
+			if (req.params.contactGroups) {
+				const filterGroups = req.params.contactGroups.split(',');
+				_contacts = contacts.filter(({ groups }) =>
+					groups.some(({ slug }) => filterGroups.indexOf(slug) >= 0)
+				);
+			}
 			return res.apiResponse({
 				success: true,
-				data: contacts.map(formatContact),
+				data: _contacts.map(formatContact),
 			});
 		});
 };
