@@ -23,8 +23,11 @@ const formatContact = ({
 	};
 	if (image && image.url) {
 		retObj.image = formatCloudinaryImage(image, name.full, {
-			width: 100,
-			height: 100,
+			width: 230,
+			height: 160,
+			gravity: 'face',
+			crop: 'fill',
+			radius: 5,
 		});
 	}
 	return retObj;

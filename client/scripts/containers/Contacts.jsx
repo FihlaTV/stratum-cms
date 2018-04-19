@@ -8,7 +8,30 @@ import { findFirstPageInMenu } from '../utils/menu';
 
 const menuId = 'kontakt';
 
-class Contact extends Component {
+const Contact = ({ name, image, email, phone, title, note, columns }) => (
+	<div className="contact-list-item">
+		{image && <img src={image.url} className="contact-list-image" />}
+		<h3>
+			{name.first} {name.last}
+		</h3>
+		{title && <p className="contact-list-title">{title}</p>}
+		{note && <p className="contact-list-note">{note}</p>}
+		{phone && (
+			<p>
+				<strong>Telefon: </strong>
+				{phone}
+			</p>
+		)}
+		{email && (
+			<p>
+				<strong>E-post: </strong>
+				<a href={`mailto:${email}`}>{email}</a>
+			</p>
+		)}
+	</div>
+);
+
+class Contacts extends Component {
 	componentWillMount() {
 		const { fetchContactsIfNeeded } = this.props;
 		fetchContactsIfNeeded();
@@ -41,20 +64,33 @@ class Contact extends Component {
 
 		this.props.setBreadcrumbs([{ url: menuId, label }], true, label);
 	}
+	renderContacts(columns = 3, contacts = []) {
+		let retArr = [];
+		for (let i = 0; i < contacts.length / 3; i++) {
+			retArr.push(
+				<Row key={`contact-list-row-${i}`}>
+					{contacts
+						.slice(i * columns, (i + 1) * columns)
+						.map((props, contactNr) => (
+							<Col md={12 / columns} key={`contact-${contactNr}`}>
+								<Contact {...props} />
+							</Col>
+						))}
+				</Row>
+			);
+		}
+		return retArr;
+	}
 	render() {
-		const { title, contacts } = this.props;
+		const { title, contacts, columns } = this.props;
 		return (
 			<Row>
-				<Col md={8}>
+				<Col md={12}>
 					<div className="base-page">
 						<h1>{title}</h1>
-						<ul>
-							{contacts.map(({ name, image, title, note }, i) => (
-								<li key={`contact-${i}`}>
-									{name.first} {name.last}
-								</li>
-							))}
-						</ul>
+						<div className="contact-list">
+							{this.renderContacts(columns, contacts)}
+						</div>
 					</div>
 				</Col>
 			</Row>
@@ -74,10 +110,11 @@ const mapDispatchToProps = dispatch => ({
 	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
 	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
 
-Contact.defaultProps = {
+Contacts.defaultProps = {
 	title: 'Kontakt',
+	columns: 2,
 };
 
-Contact.propTypes = {};
+Contacts.propTypes = {};
