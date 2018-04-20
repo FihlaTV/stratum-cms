@@ -248,7 +248,10 @@ class Page extends Component {
 								: 'Kontaktperson'}
 						</h2>
 					)}
-					<ContactPersons contacts={contacts} />
+					<ContactPersons
+						contacts={contacts}
+						// imageSize={{ width: 160, height: 160 }}
+					/>
 					<DockedImages
 						imageSMCols={12}
 						imageMDCols={layout === 'full' ? 6 : 12}

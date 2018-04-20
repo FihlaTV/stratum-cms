@@ -27,7 +27,6 @@ const formatContact = ({
 			height: 160,
 			gravity: 'face',
 			crop: 'fill',
-			radius: 5,
 		});
 	}
 	return retObj;
