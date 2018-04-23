@@ -5,9 +5,7 @@ exports = module.exports = function(req, res) {
 		.list('RegisterInformation')
 		.model.findOne()
 		.sort('sortOrder')
-		.select(
-			'name phone email location.street1 location.street2 location.zipCode location.city'
-		)
+		.select('name phone email location showMap longitude latitude')
 		.exec(function(err, results) {
 			var registerInformation;
 			if (err) {

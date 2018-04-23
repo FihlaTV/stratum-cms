@@ -6,6 +6,7 @@ import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { fetchContactsIfNeeded } from '../actions/contacts';
 import { findFirstPageInMenu } from '../utils/menu';
 import { Contact } from '../components/ContactPersons';
+import GoogleMap from '../components/GoogleMap';
 
 const menuId = 'kontakt';
 
@@ -63,12 +64,22 @@ class Contacts extends Component {
 		return retArr;
 	}
 	render() {
-		const { title, contacts, columns } = this.props;
+		const {
+			title,
+			contacts,
+			columns,
+			registerInformation = {},
+		} = this.props;
+		const { longitude, latitude, showMap } = registerInformation;
+
 		return (
 			<Row>
 				<Col md={12}>
 					<div className="base-page">
 						<h1>{title}</h1>
+						{showMap && (
+							<GoogleMap lng={longitude} lat={latitude} />
+						)}
 						<div className="contact-list">
 							{this.renderContacts(columns, contacts)}
 						</div>
@@ -79,10 +90,11 @@ class Contacts extends Component {
 	}
 }
 
-const mapStateToProps = ({ contacts, menu }) => {
+const mapStateToProps = ({ registerInformation, contacts, menu }) => {
 	return {
 		loading: contacts.loading,
 		contacts: contacts.contacts,
+		registerInformation: registerInformation,
 		menu,
 	};
 };

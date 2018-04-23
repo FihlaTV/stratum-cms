@@ -43,18 +43,18 @@ RegisterInformation.add(
 		showMap: {
 			type: Boolean,
 			note: 'Shows a map on the contact page',
-			hidden: true,
+			// hidden: true,
 		},
 		// Required currently disable since it doesn't regard the value of showMap
 		latitude: {
-			type: String,
+			type: Number,
 			/* required: true,*/ dependsOn: { showMap: true },
-			hidden: true,
+			// hidden: true,
 		},
 		longitude: {
-			type: String,
+			type: Number,
 			/* required: true,*/ dependsOn: { showMap: true },
-			hidden: true,
+			// hidden: true,
 		},
 	}
 );
