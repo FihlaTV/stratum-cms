@@ -63,13 +63,24 @@
 		padding: @gutter-large;
 		margin-bottom: @gutter-xlarge;
 
-		.contact-image,
-		.contact-placeholder {
+		.contact-image {
 			.make-xs-column(3);
 			.make-md-column(12);
-			> img {
+			> img,
+			> .contact-placeholder {
 				.img-responsive();
 				.img-circle();
+			}
+			> .contact-placeholder {
+				border-radius: 50%;
+				width: 100%;
+				height: auto;
+				padding-top: 100%;
+				position: relative;
+				.glyphicon {
+					font-size: 32px;
+					position: absolute;
+				}
 			}
 		}
 		.contact-info {
@@ -94,6 +105,10 @@
 				.square(160px);
 				margin-bottom: @gutter-large;
 				.center-block();
+				padding-top: 0;
+				.glyphicon {
+					font-size: 72px;
+				}
 			}
 			& .contact-info {
 				text-align: center;
