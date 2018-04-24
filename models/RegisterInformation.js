@@ -31,6 +31,7 @@ RegisterInformation.add(
 		},
 		email: { type: Types.Email },
 		phone: { type: String },
+		fax: { type: String },
 	},
 	'Location',
 	{
@@ -43,18 +44,39 @@ RegisterInformation.add(
 		showMap: {
 			type: Boolean,
 			note: 'Shows a map on the contact page',
-			// hidden: true,
 		},
 		// Required currently disable since it doesn't regard the value of showMap
 		latitude: {
 			type: Number,
 			/* required: true,*/ dependsOn: { showMap: true },
-			// hidden: true,
 		},
 		longitude: {
 			type: Number,
 			/* required: true,*/ dependsOn: { showMap: true },
-			// hidden: true,
+		},
+		locationImage: {
+			type: Types.CloudinaryImage,
+			autoCleanup: !keystone.get('is demo'),
+			dependsOn: { showMap: false },
+		},
+		locationInformation: {
+			type: Types.Markdown,
+			note:
+				'Use this field to for things not covered by the adress fields',
+			collapse: true,
+		},
+	},
+	'Contact Page',
+	{
+		selectedContacts: {
+			type: Types.Relationship,
+			ref: 'Contact',
+			many: true,
+		},
+		contactGroups: {
+			type: Types.Relationship,
+			ref: 'ContactGroup',
+			many: true,
 		},
 	}
 );

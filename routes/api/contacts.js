@@ -2,6 +2,7 @@ const keystone = require('keystone');
 const formatCloudinaryImage = require('../../utils/format-cloudinary-image');
 
 const formatContact = ({
+	_id,
 	email,
 	phone,
 	title,
@@ -20,6 +21,7 @@ const formatContact = ({
 		title,
 		name,
 		note,
+		id: _id,
 	};
 	if (image && image.url) {
 		retObj.image = formatCloudinaryImage(image, name.full, {

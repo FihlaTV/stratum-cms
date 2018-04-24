@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Image } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { fetchContactsIfNeeded } from '../actions/contacts';
@@ -9,6 +9,39 @@ import { Contact } from '../components/ContactPersons';
 import GoogleMap from '../components/GoogleMap';
 
 const menuId = 'kontakt';
+
+const ContactInformation = ({
+	name,
+	location,
+	phone,
+	fax,
+	email,
+	locationInformation,
+}) => {
+	const { street1, street2, zipCode, city } = location;
+
+	return (
+		<div className="contact-information">
+			<h2>{name}</h2>
+			<p>
+				Telefon: {phone}
+				<br />
+				Fax: {fax}
+				<br />
+				<a href={`mailto:${email}`}>{email}</a>
+				<br />
+			</p>
+			<p>
+				{street1}
+				<br />
+				{street2}
+				{street2 && <br />}
+				{zipCode} {city}
+			</p>
+			<div dangerouslySetInnerHTML={{ __html: locationInformation }} />
+		</div>
+	);
+};
 
 class Contacts extends Component {
 	componentWillMount() {
@@ -70,19 +103,51 @@ class Contacts extends Component {
 			columns,
 			registerInformation = {},
 		} = this.props;
-		const { longitude, latitude, showMap } = registerInformation;
+		const {
+			longitude,
+			latitude,
+			showMap,
+			locationImage,
+			selectedContacts = [],
+			contactGroups = [],
+		} = registerInformation;
 
 		return (
 			<Row>
 				<Col md={12}>
-					<div className="base-page">
-						<h1>{title}</h1>
-						{showMap && (
-							<GoogleMap lng={longitude} lat={latitude} />
+					<h1>{title}</h1>
+					{showMap ? (
+						<Row className="contact-location">
+							<Col md={7} className="contact-location-map">
+								<GoogleMap lng={longitude} lat={latitude} />
+							</Col>
+							<Col md={5}>
+								<ContactInformation {...registerInformation} />
+							</Col>
+						</Row>
+					) : (
+						<Row className="contact-location">
+							{locationImage && (
+								<Col md={7} className="contact-location-image">
+									<Image
+										responsive
+										src={locationImage.url}
+										alt={locationImage.description}
+									/>
+								</Col>
+							)}
+							<Col md={5}>
+								<ContactInformation {...registerInformation} />
+							</Col>
+						</Row>
+					)}
+					<div className="contact-list">
+						{this.renderContacts(
+							columns,
+							contacts.filter(
+								({ id }) => selectedContacts.indexOf(id) >= 0
+							)
 						)}
-						<div className="contact-list">
-							{this.renderContacts(columns, contacts)}
-						</div>
 					</div>
 				</Col>
 			</Row>
