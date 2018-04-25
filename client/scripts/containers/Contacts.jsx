@@ -43,6 +43,31 @@ const ContactInformation = ({
 	);
 };
 
+const ContactList = ({ columns, hideImages, contacts = [] }) => {
+	let retArr = [];
+	// Chunk contacts
+	for (let i = 0; i < contacts.length / columns; i++) {
+		retArr.push(
+			contacts
+				.slice(i * columns, (i + 1) * columns)
+				.map((props, contactNr) => (
+					<Col md={12 / columns} key={`contact-${contactNr}`}>
+						<Contact
+							imageSize={{ width: 230, height: 160 }}
+							{...props}
+							hideImage={hideImages}
+						/>
+					</Col>
+				))
+		);
+	}
+	return (
+		<div className="contact-list">
+			{retArr.map((x, i) => <Row key={`contact-list-row-${i}`}>{x}</Row>)}
+		</div>
+	);
+};
+
 class Contacts extends Component {
 	componentWillMount() {
 		const { fetchContactsIfNeeded } = this.props;
@@ -76,26 +101,6 @@ class Contacts extends Component {
 
 		this.props.setBreadcrumbs([{ url: menuId, label }], true, label);
 	}
-	renderContacts(columns, contacts = []) {
-		let retArr = [];
-		for (let i = 0; i < contacts.length / columns; i++) {
-			retArr.push(
-				<Row key={`contact-list-row-${i}`}>
-					{contacts
-						.slice(i * columns, (i + 1) * columns)
-						.map((props, contactNr) => (
-							<Col md={12 / columns} key={`contact-${contactNr}`}>
-								<Contact
-									imageSize={{ width: 230, height: 160 }}
-									{...props}
-								/>
-							</Col>
-						))}
-				</Row>
-			);
-		}
-		return retArr;
-	}
 	render() {
 		const {
 			title,
@@ -110,12 +115,20 @@ class Contacts extends Component {
 			locationImage,
 			selectedContacts = [],
 			contactGroups = [],
+			leadText,
 		} = registerInformation;
 
 		return (
 			<Row>
 				<Col md={12}>
 					<h1>{title}</h1>
+					{leadText && (
+						<Row>
+							<Col lg={10}>
+								<p className="lead">{leadText}</p>
+							</Col>
+						</Row>
+					)}
 					{showMap ? (
 						<Row className="contact-location">
 							<Col md={7} className="contact-location-map">
@@ -141,13 +154,33 @@ class Contacts extends Component {
 							</Col>
 						</Row>
 					)}
-					<div className="contact-list">
-						{this.renderContacts(
-							columns,
-							contacts.filter(
-								({ id }) => selectedContacts.indexOf(id) >= 0
-							)
+					<ContactList
+						columns={columns}
+						contacts={contacts.filter(
+							({ id }) => selectedContacts.indexOf(id) >= 0
 						)}
+					/>
+					<div>
+						{contactGroups.map(({ group, id: groupId }) => {
+							return (
+								<div
+									className="contact-group"
+									key={`contact-group-${groupId}`}
+								>
+									<h2>{group}</h2>
+									<ContactList
+										columns={columns}
+										contacts={contacts.filter(
+											({ groups }) =>
+												groups.some(
+													({ id }) => id === groupId
+												)
+										)}
+										hideImages
+									/>
+								</div>
+							);
+						})}
 					</div>
 				</Col>
 			</Row>

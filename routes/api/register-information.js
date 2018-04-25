@@ -7,12 +7,12 @@ exports = module.exports = function(req, res) {
 		.model.findOne()
 		.sort('sortOrder')
 		.select(
-			'name phone fax email showMap longitude latitude locationInformation.html locationImage selectedContacts contactGroups'
+			'name phone fax email showMap longitude latitude locationInformation.html locationImage selectedContacts contactGroups leadText'
 		)
 		.select(
 			'location.street1 location.street2 location.country location.zipCode location.city'
 		)
-		.populate('contactGroups', 'slug')
+		.populate('contactGroups', 'slug group')
 		.exec((err, results) => {
 			if (err) {
 				return res.apiResponse({
@@ -49,7 +49,7 @@ exports = module.exports = function(req, res) {
 			}
 			if (contactGroups) {
 				registerInformation.contactGroups = contactGroups.map(
-					({ slug }) => slug
+					({ slug, group }) => ({ id: slug, group })
 				);
 			}
 			return res.apiResponse({

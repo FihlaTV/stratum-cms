@@ -16,6 +16,7 @@ export const Contact = ({
 	name = {},
 	image = {},
 	imageSize,
+	hideImage = false,
 	title,
 	note,
 	email,
@@ -24,22 +25,23 @@ export const Contact = ({
 }) => {
 	return (
 		<div className="contact">
-			{image.url ? (
-				<div className="contact-image">
-					<Image
-						width={imageSize && imageSize.width}
-						height={imageSize && imageSize.height}
-						src={image.url}
-						alt={name}
-					/>
-				</div>
-			) : (
-				displayPlaceholder && (
+			{!hideImage &&
+				(image.url ? (
 					<div className="contact-image">
-						<Placeholder name={name} size={imageSize} />
+						<Image
+							width={imageSize && imageSize.width}
+							height={imageSize && imageSize.height}
+							src={image.url}
+							alt={name}
+						/>
 					</div>
-				)
-			)}
+				) : (
+					displayPlaceholder && (
+						<div className="contact-image">
+							<Placeholder name={name} size={imageSize} />
+						</div>
+					)
+				))}
 			<div className="contact-info">
 				<h3>{`${name.first} ${name.last}`}</h3>
 				{title && <p className="contact-title">{title}</p>}

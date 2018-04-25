@@ -113,8 +113,15 @@
 	}
 }
 .contact-list {
+	@media (min-width: @screen-md-min) {
+		margin-bottom: @gutter-large*2;
+	}
+	margin-bottom: 0;
 	.contact {
 		margin-bottom: @gutter-large*2;
+		@media (min-width: @screen-md-min) {
+			margin-bottom: 0;
+		}
 	}
 	.contact-info {
 		font-size: 11px;
@@ -142,5 +149,17 @@
 	.contact-image > img,
 	.contact-placeholder {
 		border-radius: 5px;
+	}
+}
+.contact-group {
+	> .contact-list {
+		.contact-info {
+			> h3 {
+				font-size: 15px;
+			}
+		}
+		.contact-title {
+			font-size: 12px;
+		}
 	}
 }

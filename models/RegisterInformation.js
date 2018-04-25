@@ -68,6 +68,11 @@ RegisterInformation.add(
 	},
 	'Contact Page',
 	{
+		leadText: {
+			type: Types.Textarea,
+			note:
+				'Enter an introductory text which should be displayed on the contact page here.',
+		},
 		selectedContacts: {
 			type: Types.Relationship,
 			ref: 'Contact',
