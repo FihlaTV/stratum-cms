@@ -21,7 +21,7 @@ const ContactInformation = ({
 	const { street1, street2, zipCode, city } = location;
 
 	return (
-		<div className="contact-information">
+		<div className="contact-location-info">
 			<h2>{name}</h2>
 			<p>
 				Telefon: {phone}
@@ -43,7 +43,13 @@ const ContactInformation = ({
 	);
 };
 
-const ContactList = ({ columns, hideImages, contacts = [] }) => {
+const ContactList = ({
+	columns,
+	hideImages,
+	contacts = [],
+	containerClass = '',
+}) => {
+	const className = 'contact-list';
 	let retArr = [];
 	// Chunk contacts
 	for (let i = 0; i < contacts.length / columns; i++) {
@@ -62,7 +68,7 @@ const ContactList = ({ columns, hideImages, contacts = [] }) => {
 		);
 	}
 	return (
-		<div className="contact-list">
+		<div className={`${className} ${containerClass}`}>
 			{retArr.map((x, i) => <Row key={`contact-list-row-${i}`}>{x}</Row>)}
 		</div>
 	);
@@ -120,15 +126,13 @@ class Contacts extends Component {
 
 		return (
 			<Row>
-				<Col md={12}>
+				<Col md={12} className="contact-page">
 					<h1>{title}</h1>
-					{leadText && (
-						<Row>
-							<Col lg={10}>
-								<p className="lead">{leadText}</p>
-							</Col>
-						</Row>
-					)}
+					<Row>
+						<Col lg={10}>
+							<p className="lead">{leadText}</p>
+						</Col>
+					</Row>
 					{showMap ? (
 						<Row className="contact-location">
 							<Col md={7} className="contact-location-map">
@@ -156,9 +160,10 @@ class Contacts extends Component {
 					)}
 					<ContactList
 						columns={columns}
-						contacts={contacts.filter(
-							({ id }) => selectedContacts.indexOf(id) >= 0
-						)}
+						contacts={selectedContacts
+							.map(sId => contacts.find(({ id }) => id === sId))
+							.filter(c => !!c)}
+						containerClass="contact-list-selected"
 					/>
 					<div>
 						{contactGroups.map(({ group, id: groupId }) => {

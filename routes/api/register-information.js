@@ -33,7 +33,7 @@ exports = module.exports = function(req, res) {
 					registerInformation.locationInformation.html;
 			}
 			if (!showMap) {
-				if (locationImage) {
+				if (locationImage && results.locationImage.exists) {
 					registerInformation.locationImage = formatCloudinaryImage(
 						locationImage,
 						name,
@@ -43,6 +43,8 @@ exports = module.exports = function(req, res) {
 							crop: 'fill',
 						}
 					);
+				} else {
+					delete registerInformation.locationImage;
 				}
 				delete registerInformation.longitude;
 				delete registerInformation.latitude;

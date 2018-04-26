@@ -103,7 +103,12 @@
 }
 
 .contact-location {
-	margin-bottom: @gutter-large*2;
+	.contact-location-info {
+		> h2 {
+			margin-bottom: @gutter*2;
+		}
+	}
+	margin-bottom: @gutter-large*3;
 }
 .contact-location-image,
 .contact-location-map {
@@ -113,10 +118,18 @@
 	}
 }
 .contact-list {
-	@media (min-width: @screen-md-min) {
-		margin-bottom: @gutter-large*2;
-	}
 	margin-bottom: 0;
+	&.contact-list-selected {
+		margin-bottom: @gutter-large*2;
+		border-bottom: 1px dashed @brand-primary;
+		@media (min-width: @screen-md-min) {
+			padding-bottom: @gutter-large*3;
+			margin-bottom: @gutter-large*4;
+		}
+	}
+	@media (min-width: @screen-md-min) {
+		margin-bottom: @gutter-large*4;
+	}
 	.contact {
 		margin-bottom: @gutter-large*2;
 		@media (min-width: @screen-md-min) {

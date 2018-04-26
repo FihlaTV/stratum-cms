@@ -27,7 +27,6 @@ const formatContact = ({
 		retObj.image = formatCloudinaryImage(image, name.full, {
 			width: 230,
 			height: 160,
-			gravity: 'face',
 			crop: 'fill',
 		});
 	}
@@ -40,6 +39,7 @@ exports = module.exports = function(req, res) {
 		.model.where('showOnContactPage', true)
 		.select('email phone title note image name groups')
 		.populate('groups', 'group slug')
+		.sort('sortOrder')
 		.exec((err, contacts) => {
 			let _contacts = contacts;
 			if (err) {

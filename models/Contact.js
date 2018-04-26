@@ -7,6 +7,7 @@ var Types = keystone.Field.Types;
  */
 
 var Contact = new keystone.List('Contact', {
+	sortable: true,
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
 });
 
