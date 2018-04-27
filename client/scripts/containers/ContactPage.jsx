@@ -112,6 +112,7 @@ class Contacts extends Component {
 			contacts,
 			columns,
 			registerInformation = {},
+			menu,
 		} = this.props;
 		const {
 			longitude,
@@ -122,7 +123,10 @@ class Contacts extends Component {
 			contactGroups = [],
 			leadText,
 		} = registerInformation;
-
+		// Avoid rendering something in case the page will be redirected
+		if (menu.items.length <= 0) {
+			return null;
+		}
 		return (
 			<Row>
 				<Col md={12} className="contact-page">
