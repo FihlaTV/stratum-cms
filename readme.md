@@ -46,6 +46,7 @@ All environment variables which are prefixed with `CLIENT_` will be exposed to t
 | `SHOW_VERSION` | If true shows information about the current running version along with latest commit and branch in the footer. *Currently not implemented in SPA*. | false | `false` |
 | `PROTECT_ALL_PAGES` | When set to true a middleware is activated on all pages which requires a Keystone login to continue. *Not verified if this is working under SPA*. | false | `false` |
 | `WEBPACK_INDEX_FILE` | Points out a replacement index file for overriding style properties etc. Should be a relative path e.g. `registers/reg_1/index.jsx`. In order for this to work the following file must import the original index file. | false | `N/A` |
+| `CLIENT_GOOGLE_API_KEY` | Represents a Goole Map API key which is needed if the map from the contact page should be displayed.  | false | `N/A` |
 
 ## NPM Scripts
 * To build the front-end for a specific register run the following command: `npm run  build_register -- $1` where `$1` represents a register name e.g. `boa`. This name should correspond to the register's root folder.
