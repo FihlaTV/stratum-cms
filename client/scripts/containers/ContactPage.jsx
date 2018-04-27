@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 import { fetchContactsIfNeeded } from '../actions/contacts';
 import { findFirstPageInMenu } from '../utils/menu';
-import { Contact } from '../components/ContactPersons';
+import Contact from '../components/Contact';
 import GoogleMap from '../components/GoogleMap';
 
 const menuId = 'kontakt';
