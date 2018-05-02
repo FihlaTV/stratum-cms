@@ -7,6 +7,7 @@ var Types = keystone.Field.Types;
  */
 
 var Contact = new keystone.List('Contact', {
+	sortable: true,
 	track: { createdAt: true, updatedAt: true, updatedBy: true },
 });
 
@@ -16,6 +17,12 @@ Contact.add({
 	image: {
 		type: Types.CloudinaryImage,
 		autoCleanup: !keystone.get('is demo'),
+	},
+	groups: {
+		type: Types.Relationship,
+		ref: 'ContactGroup',
+		initial: true,
+		many: true,
 	},
 	phone: { type: String },
 	title: { type: String, label: 'Work Title' },

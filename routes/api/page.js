@@ -121,8 +121,9 @@ exports = module.exports = function(req, res) {
 				}),
 				contacts: page.contacts.map(function(contact) {
 					return {
-						name: contact.name.full,
-						description: contact.description,
+						name: contact.name,
+						title: contact.title,
+						note: contact.note,
 						email: contact.email,
 						phone: contact.phone,
 						image: contact.image.exists

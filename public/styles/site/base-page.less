@@ -57,27 +57,39 @@
 	}
 }
 .content-page-contacts {
-	.contact-person {
+	.contact {
 		.clearfix();
 		.white-well();
 		padding: @gutter-large;
 		margin-bottom: @gutter-xlarge;
 
-		.contact-person-image {
+		.contact-image {
 			.make-xs-column(3);
 			.make-md-column(12);
-			> img {
+			> img,
+			> .contact-placeholder {
 				.img-responsive();
 				.img-circle();
 			}
+			> .contact-placeholder {
+				border-radius: 50%;
+				width: 100%;
+				height: auto;
+				padding-top: 100%;
+				position: relative;
+				.glyphicon {
+					font-size: 32px;
+					position: absolute;
+				}
+			}
 		}
-		.contact-person-info {
+		.contact-info {
 			.make-xs-column(9);
 			.make-md-column(12);
 			h3 {
 				text-transform: none;
 			}
-			.contact-person-title {
+			.contact-title {
 				font-size: @font-size-base * 0.9;
 				font-style: italic;
 				margin-bottom: 8px;
@@ -88,12 +100,17 @@
 			}
 		}
 		@media (min-width: @screen-md-min) {
-			& .contact-person-image > img {
+			.contact-image > img,
+			.contact-image > .contact-placeholder {
 				.square(160px);
 				margin-bottom: @gutter-large;
 				.center-block();
+				padding-top: 0;
+				.glyphicon {
+					font-size: 72px;
+				}
 			}
-			& .contact-person-info {
+			& .contact-info {
 				text-align: center;
 			}
 		}

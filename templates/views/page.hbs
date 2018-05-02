@@ -16,7 +16,7 @@
 				{{#ifeq ../data.widget.size "large"}}
 				{{> widget widget=../data.widget stratumWidget=../stratumWidget keystoneWidget=../keystoneWidget}}
 				{{/ifeq}}
-				
+
 				<div class="post">
 					{{#if lead}}
 					<p class="lead">{{lead}}</p>
@@ -77,17 +77,17 @@
 			<h2>{{pluralTitle data.contacts "Kontaktperson" "Kontaktpersoner"}}</h2>
 			<div class="content-page-contacts">
 				{{#each data.contacts}}
-				<div class="contact-person">
-					<div class="contact-person-image">
+				<div class="contact">
+					<div class="contact-image">
 					{{#if image.exists}}
 						{{{cloudinaryImage image width="160" height="160" crop="thumb" gravity="face"}}}
 					{{else}}
 						<img src="/images/avatar.png" alt="">
 					{{/if}}
 					</div>
-					<div class="contact-person-info">
+					<div class="contact-info">
 						<h3>{{name.full}}</h3>
-						{{#if description}}<p class="contact-person-title">{{description}}</p>{{/if}}
+						{{#if description}}<p class="contact-title">{{description}}</p>{{/if}}
 						{{#if email}}<p><a href="mailto:{{email}}"><span class="glyphicon glyphicon-envelope"></span> <span class="">{{email}}</span></a></p>{{/if}}
 						{{#if phone}}<p><span class="glyphicon glyphicon-phone"></span> {{phone}}</p>{{/if}}
 					</div>
