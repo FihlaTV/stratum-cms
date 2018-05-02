@@ -116,8 +116,20 @@ if (routerContainer) {
 		Array.prototype.forEach.call(keystoneWidgets, kw => {
 			const widgetId = kw.getAttribute('data-keystone-widget');
 			const description = kw.getAttribute('data-widget-description');
+			let properties = kw.getAttribute('data-widget-properties');
+			if (properties) {
+				try {
+					properties = JSON.parse(properties);
+				} catch (e) {
+					properties = {};
+				}
+			}
 			render(
-				<WidgetWrapper id={widgetId} description={description} />,
+				<WidgetWrapper
+					id={widgetId}
+					description={description}
+					{...properties}
+				/>,
 				kw
 			);
 		});
