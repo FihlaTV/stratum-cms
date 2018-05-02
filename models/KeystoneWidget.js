@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
 /**
  * Keystone Widget Model
@@ -25,7 +26,8 @@ KeystoneWidget.add({
 		required: true,
 	},
 	description: {
-		type: String,
+		type: Types.Textarea,
+		height: 350,
 	},
 	removed: {
 		type: Boolean,
