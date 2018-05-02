@@ -120,11 +120,11 @@
   "SimpleSideWidget": {
     "id": "SimpleSideWidget",
     "description":
-      "Enkel widget som är till för att visa en statistiksiffra i högermarginalen givet en url och format. Parametrar: @url: url till stratum-api, @format: beskriver formateringen av resultatdatan."
+      "Enkel widget som är till för att visa en statistiksiffra i högermarginalen givet en url och format. \n\nParametrar: \n@url: url till stratum-api, \n@format: beskriver formateringen av resultatdatan. \n@root: Peka ut varifrån värdet ska hämtas t.ex \"data.result\""
   },
   "StartPageWidget": {
     "id": "StartPageWidget",
     "description":
-      "Enkel widget som är till för att visa en statistiksiffra givet en url och format. Parametrar: @url: url till stratum-api, @format: beskriver formateringen av resultatdatan."
+      "Enkel widget som är till för att visa en statistiksiffra givet en url och format. \n\nParametrar: \n@url: url till stratum-api, \n@format: beskriver formateringen av resultatdatan. \n@root: Peka ut varifrån värdet ska hämtas t.ex \"data.result\""
   }
 }

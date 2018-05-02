@@ -61,8 +61,7 @@ RegisterInformation.add(
 		},
 		locationInformation: {
 			type: Types.Markdown,
-			note:
-				'Use this field to for things not covered by the adress fields',
+			note: 'Use this field for things not covered by the adress fields',
 			collapse: true,
 		},
 	},
