@@ -9,9 +9,40 @@ import {
 import NewsLink from './NewsLink';
 import StartPageWidget from './StartPageWidget';
 
-const WideJumbotron = ({ header, newsItem, resource, widgets }) => {
+const WideJumbotron = ({ header, newsItem, resource, widgets, type }) => {
 	const manyWidgets = widgets.length > 2;
-	return (
+	const isNewsJumbotron = type === 'wideNews';
+	return isNewsJumbotron ? (
+		<Grid>
+			<Row>
+				{newsItem &&
+					newsItem.image && (
+						<Col md={7} lg={6} sm={12} mdPush={5} lgPush={6}>
+							<img
+								className="jumbotron-news-image"
+								src={newsItem.image.url}
+							/>
+						</Col>
+					)}
+				<Col md={5} lg={6} sm={12} mdPull={7} lgPull={6}>
+					<h1>{header}</h1>
+					{newsItem && (
+						<div>
+							<p className="jumbotron-news-lead">
+								{newsItem.lead}
+							</p>
+							<NewsLink
+								slug={newsItem.slug}
+								className="jumbotron-news-link"
+							>
+								{newsItem.label}
+							</NewsLink>
+						</div>
+					)}
+				</Col>
+			</Row>
+		</Grid>
+	) : (
 		<Grid>
 			<Col md={8} sm={10}>
 				<h1>{header}</h1>
@@ -83,11 +114,14 @@ const Jumbotron = ({
 	portal,
 	...props
 }) => {
-	const isWide = type === 'wide';
+	const isWide = type === 'wide' || type === 'wideNews';
 
 	let classNames = [];
 	if (isWide) {
 		classNames.push('jumbotron-wide');
+		if (type === 'wideNews') {
+			classNames.push('jumbotron-wide-news');
+		}
 		if (widgets.length <= 2) {
 			classNames.push('jumbotron-wide-fixed-height');
 		}
@@ -103,6 +137,7 @@ const Jumbotron = ({
 					widgets={widgets}
 					newsItem={newsItem}
 					resource={resource}
+					type={type}
 				/>
 			) : (
 				<RegularJumbotron

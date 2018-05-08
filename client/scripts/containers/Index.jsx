@@ -105,7 +105,8 @@ class Index extends Component {
 
 		return (
 			<div>
-				{jumbotron && jumbotron.type === 'wide' ? (
+				{jumbotron &&
+				(jumbotron.type === 'wide' || jumbotron.type === 'wideNews') ? (
 					Jumbotron
 				) : (
 					<Grid>{Jumbotron}</Grid>

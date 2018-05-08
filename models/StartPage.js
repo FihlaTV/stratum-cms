@@ -66,6 +66,11 @@ StartPage.add(
 						label:
 							'Wide jumbotron with link to news item and two widgets',
 					},
+					{
+						value: 'wideNews',
+						label:
+							'Full width jumbotron with a news item with a faded out image. No support for widgets in this layout.',
+					},
 				],
 			},
 			header: {
@@ -91,14 +96,14 @@ StartPage.add(
 				filters: { state: 'published' },
 				dependsOn: {
 					'jumbotron.isVisible': true,
-					'jumbotron.type': 'wide',
+					'jumbotron.type': ['wide', 'wideNews'],
 				},
 			},
 			newsLinkText: {
 				type: String,
 				dependsOn: {
 					'jumbotron.isVisible': true,
-					'jumbotron.type': 'wide',
+					'jumbotron.type': ['wide', 'wideNews'],
 				},
 			},
 			resource: {
@@ -107,14 +112,14 @@ StartPage.add(
 				many: false,
 				dependsOn: {
 					'jumbotron.isVisible': true,
-					'jumbotron.type': 'wide',
+					'jumbotron.type': ['wide', 'wideNews'],
 				},
 			},
 			resourceLinkText: {
 				type: String,
 				dependsOn: {
 					'jumbotron.isVisible': true,
-					'jumbotron.type': 'wide',
+					'jumbotron.type': ['wide', 'wideNews'],
 				},
 			},
 		},
