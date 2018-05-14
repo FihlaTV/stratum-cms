@@ -38,6 +38,7 @@ class EnlargeableImage extends Component {
 							<Image
 								src={image.nativeUrl || image.url}
 								responsive
+								className="center-block"
 							/>
 						</Modal.Body>
 					</Modal>
