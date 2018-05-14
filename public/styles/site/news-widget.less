@@ -44,13 +44,10 @@
 	}
 	img {
 		&.img-portrait {
+			.img-rounded();
 			margin: 0 auto 10px auto;
-			display: block;
-			@media (min-width: @screen-sm-min) {
-				display: inline;
-				float: right;
-				margin: 0 0 @gutter @gutter;
-			}
+			float: right;
+			margin: 0 0 @gutter @gutter;
 		}
 		&.img-landscape {
 			width: 100%;

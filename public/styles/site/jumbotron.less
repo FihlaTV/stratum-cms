@@ -16,14 +16,34 @@
 		background-color: @jumbotron-wide-bg;
 		background-repeat: no-repeat;
 		background-position: center;
-		@media screen and (min-width: @screen-sm-min) {
-			&.jumbotron-wide-fixed-height {
+		.jumbotron-news-lead {
+			font-size: 18px;
+		}
+		.jumbotron-news-image {
+			margin-top: -@gutter-large * 2;
+			max-width: 100%;
+			margin-bottom: @gutter-large * 1.5;
+			.center-block();
+		}
+		@media screen and (min-width: @screen-md-min) {
+			&.jumbotron-wide-news {
 				height: 400px;
 				padding-bottom: 0;
 			}
+			.jumbotron-news-image {
+				float: right;
+				margin-bottom: -64px;
+			}
+		}
+
+		@media screen and (min-width: @screen-sm-min) {
 			padding-top: 64px;
 			padding-bottom: 64px;
 			margin-bottom: @gutter-xlarge * 2;
+			.jumbotron-news-image {
+				margin-top: -64px;
+				max-width: none;
+			}
 		}
 		h1,
 		.h1 {
@@ -42,7 +62,7 @@
 		padding-top: @gutter-large * 2;
 		a.jumbotron-news-link {
 			display: inline-block;
-			font-family: 'Roboto Slab';
+			font-family: @headings-font-family;
 			color: @text-color;
 			font-size: 20px;
 			font-weight: 300;

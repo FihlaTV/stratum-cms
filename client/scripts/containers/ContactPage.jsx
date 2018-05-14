@@ -23,12 +23,11 @@ const ContactInformation = ({
 		<div className="contact-location-info">
 			<h2>{name}</h2>
 			<p>
-				Telefon: {phone}
-				<br />
-				Fax: {fax}
-				<br />
-				<a href={`mailto:${email}`}>{email}</a>
-				<br />
+				{phone && `Telefon: ${phone}`}
+				{phone && <br />}
+				{fax && `Fax: ${fax}`}
+				{fax && <br />}
+				{email && <a href={`mailto:${email}`}>{email}</a>}
 			</p>
 			<p>
 				{street1}
@@ -131,11 +130,13 @@ class Contacts extends Component {
 			<Row>
 				<Col md={12} className="contact-page">
 					<h1>{title}</h1>
-					<Row>
-						<Col lg={10}>
-							<p className="lead">{leadText}</p>
-						</Col>
-					</Row>
+					{leadText && (
+						<Row>
+							<Col lg={10}>
+								<p className="lead">{leadText}</p>
+							</Col>
+						</Row>
+					)}
 					{showMap ? (
 						<Row className="contact-location">
 							<Col md={7} className="contact-location-map">

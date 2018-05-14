@@ -45,30 +45,49 @@ function formatInformationBlurb(informationBlurb) {
 	}
 }
 
-function formatJumbotron(_jumbotron) {
-	var jumbotron, resource, newsItem;
-	if (_jumbotron && _jumbotron.isVisible) {
+function formatJumbotron({
+	isVisible,
+	header,
+	description,
+	type,
+	resource,
+	resourceLinkText,
+	newsItem,
+	newsLinkText,
+}) {
+	let jumbotron;
+	if (isVisible) {
 		jumbotron = {
-			header: _jumbotron.header,
-			type: _jumbotron.type,
+			header,
+			type,
 		};
-		if (jumbotron.type === 'wide') {
-			resource = _jumbotron.resource;
-			newsItem = _jumbotron.newsItem;
+		if (type === 'wide' || type === 'wideNews') {
 			if (resource) {
 				jumbotron.resource = {
 					url: resource.fileUrl,
-					label: _jumbotron.resourceLinkText || resource.title,
+					label: resourceLinkText || resource.title,
 				};
 			}
 			if (newsItem) {
 				jumbotron.newsItem = {
-					label: _jumbotron.newsLinkText || newsItem.title,
+					label: newsLinkText || newsItem.title,
 					slug: newsItem.slug,
+					lead: newsItem.content && newsItem.content.lead,
+					image: formatCloudinaryImage(newsItem.image, null, {
+						transformation: [
+							{
+								width: 545,
+								height: 400,
+								crop: 'fill',
+							},
+							{ effect: 'gradient_fade:symmetric_pad', x: 0.3 },
+						],
+						format: 'png',
+					}),
 				};
 			}
 		} else {
-			jumbotron.description = _jumbotron.description;
+			jumbotron.description = description;
 		}
 	}
 	return jumbotron;
@@ -104,7 +123,10 @@ exports = module.exports = function(req, res) {
 						'image title slug imageLayout publishedDate content.lead'
 					)
 					.populate('quickLink.page', 'slug shortId')
-					.populate('jumbotron.newsItem', 'title slug')
+					.populate(
+						'jumbotron.newsItem',
+						'title slug content.lead image'
+					)
 					.populate('jumbotron.resource', 'title fileUrl')
 					.populate('internalLinks')
 					.exec(function(err, results) {
