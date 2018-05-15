@@ -77,7 +77,12 @@ function getLinkContents(item, level, desktop = false) {
 const Menu = ({ items, externalLogin = {}, disableLogin }) => {
 	const { label, link } = externalLogin;
 	return (
-		<Navbar className="navbar-big navbar-big-tabbed" staticTop fluid>
+		<Navbar
+			className="navbar-big navbar-big-tabbed"
+			collapseOnSelect
+			staticTop
+			fluid
+		>
 			<div className="navbar-header-container">
 				<Navbar.Header>
 					<Navbar.Brand>
