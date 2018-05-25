@@ -52,6 +52,7 @@ class App extends Component {
 			contextIsVisible,
 			reactRouter,
 			currentRoute,
+			enableSearch,
 		} = this.props;
 		var currentRouteIsRegistration =
 			currentRoute === '/registrering' ? 'active' : '';
@@ -71,6 +72,7 @@ class App extends Component {
 					setContextTarget={setContextTarget}
 					reactRouter={reactRouter}
 					currentRouteIsRegistration={currentRouteIsRegistration}
+					enableSearch={enableSearch}
 				/>
 				<TimeLeftDialog
 					show={modifiedShowTimeLeft}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from './Spinner';
 import User from './User';
-// import { Link } from 'react-router';
+import { Link } from 'react-router';
 
 const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
 	const className = 'nav-button-text registration-link';
@@ -25,6 +25,18 @@ const RegistrationLink = ({ children, reactRouter, disabled, ...props }) => {
 
 const NavParent = ({ children }) => (
 	<ul className="nav navbar-nav navbar-right">{children}</ul>
+);
+
+const SearchButton = ({}) => (
+	<li>
+		<Link
+			// href="#"
+			to="/sok"
+			className="search-button"
+		>
+			<i className="fa fa-icon fa-search" />
+		</Link>
+	</li>
 );
 
 const LoginButton = ({ onClick, label, externalLink }) => (
@@ -52,6 +64,8 @@ const TopNav = ({
 	currentRouteIsRegistration,
 	loginButtonLabel = 'Logga in',
 	externalLogin,
+	enableSearch,
+	searchOnly,
 }) => {
 	const spinnerStyle = {
 		display: loading ? 'block' : 'none',
@@ -60,9 +74,17 @@ const TopNav = ({
 		right: '10px',
 	};
 	const visibility = loading ? { visibility: 'hidden' } : {};
+	if (searchOnly) {
+		return (
+			<NavParent>
+				<SearchButton />
+			</NavParent>
+		);
+	}
 	if (externalLogin) {
 		return (
 			<NavParent>
+				{enableSearch && <SearchButton />}
 				<LoginButton
 					label={loginButtonLabel}
 					externalLink={externalLogin}
@@ -73,6 +95,7 @@ const TopNav = ({
 	if (loading || context || wrongRegister) {
 		return (
 			<NavParent>
+				{enableSearch && <SearchButton />}
 				<Spinner small style={spinnerStyle} />
 				<li style={visibility} className={currentRouteIsRegistration}>
 					<RegistrationLink
@@ -101,6 +124,7 @@ const TopNav = ({
 	}
 	return (
 		<NavParent>
+			{enableSearch && <SearchButton />}
 			<LoginButton label={loginButtonLabel} onClick={showLoginModal} />
 		</NavParent>
 	);

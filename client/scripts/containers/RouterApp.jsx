@@ -59,6 +59,7 @@ class App extends Component {
 					items={menuItems}
 					externalLogin={externalLogin}
 					disableLogin={disableLogin}
+					enableSearch
 				/>
 				<MainContainer
 					hasGrid={location.pathname !== '/'}
