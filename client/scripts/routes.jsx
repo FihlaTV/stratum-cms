@@ -21,7 +21,7 @@ export default (
 		<Route path="404" component={ErrorPage} />
 		<Route path="registrering" component={Registration} />
 		<Route path="kontakt" component={ContactPage} />
-		<Route path="sok" component={SearchPage} />
+		<Route path="sok(/:query)" component={SearchPage} />
 		<Route path=":menu" component={Page}>
 			<Route path=":page(/:subpage)/p/:pageId" component={Page} />
 		</Route>
