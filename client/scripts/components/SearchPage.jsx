@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
+import {
+	Button,
+	Form,
+	FormGroup,
+	FormControl,
+	Pagination,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {
 	fetchSearchResults,
 	changeQuery,
 	clearSearchResults,
+	performGoogleSearch,
 } from '../actions/search';
 // import PropTypes from 'prop-types';
 
@@ -49,6 +56,35 @@ class SearchPage extends Component {
 			clearSearchResults();
 		}
 	}
+	navigateToPage(pageNr) {
+		const { query, pathname } = this.props.location;
+		this.props.router.push({
+			pathname: pathname,
+			query: Object.assign({}, query, {
+				page: pageNr === 1 ? undefined : pageNr,
+			}),
+		});
+	}
+	paginationItems(totalResults, currentPage, resultsPerPage = 10) {
+		const totalPages = Math.ceil(
+			parseInt(totalResults, 10) / resultsPerPage
+		);
+		const startPage = currentPage < 7 ? 1 : currentPage - 5;
+		const endPage = Math.min(totalPages, Math.max(10, currentPage + 5));
+		const retArr = [];
+		for (let i = startPage; i <= endPage; i++) {
+			retArr.push(
+				<Pagination.Item
+					key={`pagination-item-${i}`}
+					active={i === currentPage}
+					onClick={() => this.navigateToPage(i)}
+				>
+					{i}
+				</Pagination.Item>
+			);
+		}
+		return retArr;
+	}
 	render() {
 		const {
 			inputQuery,
@@ -57,8 +93,11 @@ class SearchPage extends Component {
 			results = [],
 			params,
 			loading,
+			location,
+			error,
 		} = this.props;
 		const { query } = params;
+		const currentPage = parseInt(location.query.page, 10) || 1;
 		return (
 			<div className="search-page">
 				<h1>Sök</h1>
@@ -90,13 +129,31 @@ class SearchPage extends Component {
 							bsSize="large"
 							type="submit"
 							bsStyle="primary"
-							disabled={loading || query === inputQuery}
+							disabled={
+								loading || !inputQuery || query === inputQuery
+							}
 						>
 							Sök
 						</Button>
 					</FormGroup>
 				</Form>
-				{loading ? (
+				{error ? (
+					<div>
+						<p>
+							Din sökning kunde inte genomföras,{' '}
+							<a
+								href="#google-search"
+								onClick={e => {
+									e.preventDefault();
+									performGoogleSearch(params.query);
+								}}
+							>
+								klicka här
+							</a>{' '}
+							för att söka via Google.
+						</p>
+					</div>
+				) : loading ? (
 					<span>Loading</span>
 				) : (
 					<div className="search-results">
@@ -113,6 +170,27 @@ class SearchPage extends Component {
 								className="search-results-item"
 							/>
 						))}
+						<Pagination>
+							<Pagination.Prev
+								disabled={currentPage === 1}
+								onClick={() =>
+									this.navigateToPage(currentPage - 1)
+								}
+							/>
+							{this.paginationItems(
+								info.totalResults,
+								currentPage
+							)}
+							<Pagination.Next
+								disabled={
+									currentPage ===
+									Math.ceil(info.totalResults / 10)
+								}
+								onClick={() =>
+									this.navigateToPage(currentPage + 1)
+								}
+							/>
+						</Pagination>
 					</div>
 				)}
 			</div>
@@ -128,6 +206,7 @@ const mapStateToProps = ({ search, menu }, { location }) => {
 		results: search.items,
 		inputQuery: search.query,
 		info: search.searchInformation,
+		error: search.error,
 	};
 };
 const mapDispatchToProps = dispatch => ({

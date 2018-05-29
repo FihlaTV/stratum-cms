@@ -12,6 +12,8 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				loading: true,
 				items: [],
+				query: action.query,
+				error: null,
 			});
 		case FETCH_SEARCH_RESULTS:
 			return Object.assign({}, state, {
@@ -19,6 +21,7 @@ export default (state = initialState, action) => {
 				items: action.items,
 				queries: action.queries,
 				searchInformation: action.searchInformation,
+				error: action.error,
 			});
 		case CLEAR_SEARCH_RESULTS:
 			return initialState;
