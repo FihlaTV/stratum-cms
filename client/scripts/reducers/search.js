@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
 				loading: true,
 				items: [],
 				query: action.query,
+				queries: [],
 				error: null,
 			});
 		case FETCH_SEARCH_RESULTS:

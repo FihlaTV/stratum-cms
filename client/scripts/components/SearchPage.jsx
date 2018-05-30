@@ -33,7 +33,7 @@ class SearchPage extends Component {
 			location,
 		} = this.props;
 		if (params.query) {
-			fetchSearchResults(params.query, location.query.page);
+			fetchSearchResults(params.query, location.query.start);
 		} else {
 			clearSearchResults();
 		}
@@ -47,21 +47,21 @@ class SearchPage extends Component {
 		} = this.props;
 		if (
 			nextParams.query &&
-			(nextLocation.query.page !== location.query.page ||
+			(nextLocation.query.start !== location.query.start ||
 				nextParams.query !== params.query)
 		) {
-			fetchSearchResults(nextParams.query, nextLocation.query.page);
+			fetchSearchResults(nextParams.query, nextLocation.query.start);
 		}
 		if (!nextParams.query && params.query) {
 			clearSearchResults();
 		}
 	}
-	navigateToPage(pageNr) {
+	navigateToPage(startIndex) {
 		const { query, pathname } = this.props.location;
 		this.props.router.push({
 			pathname: pathname,
 			query: Object.assign({}, query, {
-				page: pageNr === 1 ? undefined : pageNr,
+				start: startIndex === 1 ? undefined : startIndex,
 			}),
 		});
 	}
@@ -85,12 +85,38 @@ class SearchPage extends Component {
 		}
 		return retArr;
 	}
+	renderPagination({ nextPage, request, previousPage }) {
+		const { totalResults, startIndex } = request[0];
+		const currentPage = Math.ceil(startIndex / 10);
+		return (
+			<Pagination>
+				{previousPage && (
+					<Pagination.Prev
+						// disabled={currentPage === 1}
+						onClick={() =>
+							this.navigateToPage(previousPage[0].startIndex)
+						}
+					/>
+				)}
+				<Pagination.Item active>{currentPage}</Pagination.Item>
+				{nextPage && (
+					<Pagination.Next
+						// disabled={currentPage === Math.ceil(totalResults / 10)}
+						onClick={() =>
+							this.navigateToPage(nextPage[0].startIndex)
+						}
+					/>
+				)}
+			</Pagination>
+		);
+	}
 	render() {
 		const {
 			inputQuery,
 			changeQuery,
 			info = {},
 			results = [],
+			queries,
 			params,
 			loading,
 			location,
@@ -170,27 +196,7 @@ class SearchPage extends Component {
 								className="search-results-item"
 							/>
 						))}
-						<Pagination>
-							<Pagination.Prev
-								disabled={currentPage === 1}
-								onClick={() =>
-									this.navigateToPage(currentPage - 1)
-								}
-							/>
-							{this.paginationItems(
-								info.totalResults,
-								currentPage
-							)}
-							<Pagination.Next
-								disabled={
-									currentPage ===
-									Math.ceil(info.totalResults / 10)
-								}
-								onClick={() =>
-									this.navigateToPage(currentPage + 1)
-								}
-							/>
-						</Pagination>
+						{queries && this.renderPagination(queries, currentPage)}
 					</div>
 				)}
 			</div>
@@ -207,6 +213,7 @@ const mapStateToProps = ({ search, menu }, { location }) => {
 		inputQuery: search.query,
 		info: search.searchInformation,
 		error: search.error,
+		queries: search.queries,
 	};
 };
 const mapDispatchToProps = dispatch => ({

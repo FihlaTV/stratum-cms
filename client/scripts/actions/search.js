@@ -24,11 +24,10 @@ export function performGoogleSearch(query) {
 	);
 }
 
-export function fetchSearchResults(query, page) {
-	const start = page ? (parseInt(page, 10) - 1) * 10 : 1;
+export function fetchSearchResults(query, startIndex = 1) {
 	const url = `https://www.googleapis.com/customsearch/v1?key=${CLIENT_GOOGLE_API_KEY}&cx=${CLIENT_GOOGLE_SEARCH_CX}&q=${encodeURI(
 		query
-	)}&start=${start}`;
+	)}&start=${startIndex}`;
 	return dispatch => {
 		dispatch({
 			type: BEGIN_FETCH_SEARCH_RESULTS,
