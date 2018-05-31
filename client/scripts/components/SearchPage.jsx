@@ -13,6 +13,8 @@ import {
 	clearSearchResults,
 	performGoogleSearch,
 } from '../actions/search';
+import Spinner from '../components/Spinner';
+import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
 // import PropTypes from 'prop-types';
 
 const ResultItem = ({ htmlTitle, link, snippet, htmlSnippet, className }) => (
@@ -30,13 +32,16 @@ class SearchPage extends Component {
 			params = {},
 			fetchSearchResults,
 			clearSearchResults,
+			title,
 			location,
+			setBreadcrumbs,
 		} = this.props;
 		if (params.query) {
 			fetchSearchResults(params.query, location.query.start);
 		} else {
 			clearSearchResults();
 		}
+		setBreadcrumbs([{ url: '/sok/', label: title }], true, title);
 	}
 	componentWillReceiveProps({ params: nextParams, location: nextLocation }) {
 		const {
@@ -56,6 +61,9 @@ class SearchPage extends Component {
 			clearSearchResults();
 		}
 	}
+	componentWillUnmount() {
+		this.props.clearBreadcrumbs();
+	}
 	navigateToPage(startIndex) {
 		const { query, pathname } = this.props.location;
 		this.props.router.push({
@@ -65,34 +73,13 @@ class SearchPage extends Component {
 			}),
 		});
 	}
-	paginationItems(totalResults, currentPage, resultsPerPage = 10) {
-		const totalPages = Math.ceil(
-			parseInt(totalResults, 10) / resultsPerPage
-		);
-		const startPage = currentPage < 7 ? 1 : currentPage - 5;
-		const endPage = Math.min(totalPages, Math.max(10, currentPage + 5));
-		const retArr = [];
-		for (let i = startPage; i <= endPage; i++) {
-			retArr.push(
-				<Pagination.Item
-					key={`pagination-item-${i}`}
-					active={i === currentPage}
-					onClick={() => this.navigateToPage(i)}
-				>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		return retArr;
-	}
 	renderPagination({ nextPage, request, previousPage }) {
-		const { totalResults, startIndex } = request[0];
+		const { startIndex } = request[0];
 		const currentPage = Math.ceil(startIndex / 10);
 		return (
 			<Pagination>
 				{previousPage && (
 					<Pagination.Prev
-						// disabled={currentPage === 1}
 						onClick={() =>
 							this.navigateToPage(previousPage[0].startIndex)
 						}
@@ -101,7 +88,6 @@ class SearchPage extends Component {
 				<Pagination.Item active>{currentPage}</Pagination.Item>
 				{nextPage && (
 					<Pagination.Next
-						// disabled={currentPage === Math.ceil(totalResults / 10)}
 						onClick={() =>
 							this.navigateToPage(nextPage[0].startIndex)
 						}
@@ -119,11 +105,12 @@ class SearchPage extends Component {
 			queries,
 			params,
 			loading,
-			location,
 			error,
 		} = this.props;
 		const { query } = params;
-		const currentPage = parseInt(location.query.page, 10) || 1;
+		const { request } = queries || {};
+		const currentPage =
+			request && request[0] ? Math.ceil(request[0].startIndex / 10) : 1;
 		return (
 			<div className="search-page">
 				<h1>Sök</h1>
@@ -156,7 +143,9 @@ class SearchPage extends Component {
 							type="submit"
 							bsStyle="primary"
 							disabled={
-								loading || !inputQuery || query === inputQuery
+								loading ||
+								!inputQuery ||
+								query === inputQuery.trim()
 							}
 						>
 							Sök
@@ -180,12 +169,15 @@ class SearchPage extends Component {
 						</p>
 					</div>
 				) : loading ? (
-					<span>Loading</span>
+					<Spinner />
 				) : (
 					<div className="search-results">
 						{query && (
 							<div className="search-results-description">
-								Hittade {info.totalResults} resultat på{' '}
+								{currentPage > 1
+									? `Sida ${currentPage} av`
+									: 'Hittade'}{' '}
+								{info.totalResults} resultat på{' '}
 								<strong>{query}</strong>
 							</div>
 						)}
@@ -196,7 +188,7 @@ class SearchPage extends Component {
 								className="search-results-item"
 							/>
 						))}
-						{queries && this.renderPagination(queries, currentPage)}
+						{queries && this.renderPagination(queries)}
 					</div>
 				)}
 			</div>
@@ -217,10 +209,15 @@ const mapStateToProps = ({ search, menu }, { location }) => {
 	};
 };
 const mapDispatchToProps = dispatch => ({
-	// setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
-	// clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
+	setBreadcrumbs: (...args) => dispatch(setBreadcrumbs(...args)),
+	clearBreadcrumbs: () => dispatch(clearBreadcrumbs()),
 	clearSearchResults: () => dispatch(clearSearchResults()),
 	fetchSearchResults: (...args) => dispatch(fetchSearchResults(...args)),
 	changeQuery: query => dispatch(changeQuery(query)),
 });
+
+SearchPage.defaultProps = {
+	title: 'Sök',
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

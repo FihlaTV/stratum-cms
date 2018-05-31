@@ -9,7 +9,7 @@ import Page from './containers/Page';
 import Index from './containers/Index';
 import Registration from './containers/Registration';
 import ContactPage from './containers/ContactPage';
-import SearchPage from './components/SearchPage';
+import SearchPage from './containers/SearchPage';
 
 export default (
 	<Route path="/" component={App}>
