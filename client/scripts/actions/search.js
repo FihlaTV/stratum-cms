@@ -17,7 +17,7 @@ export function changeQuery(query) {
 
 export function performGoogleSearch(query) {
 	window.open(
-		`https://cse.google.com/cse?q=${encodeURI(
+		`https://cse.google.com/cse?q=${encodeURIComponent(
 			query
 		)}&cx=${CLIENT_GOOGLE_SEARCH_CX}`,
 		'_blank'
@@ -25,7 +25,7 @@ export function performGoogleSearch(query) {
 }
 
 export function fetchSearchResults(query, startIndex = 1) {
-	const url = `https://www.googleapis.com/customsearch/v1?key=${CLIENT_GOOGLE_API_KEY}&cx=${CLIENT_GOOGLE_SEARCH_CX}&q=${encodeURI(
+	const url = `https://www.googleapis.com/customsearch/v1?key=${CLIENT_GOOGLE_API_KEY}&cx=${CLIENT_GOOGLE_SEARCH_CX}&q=${encodeURIComponent(
 		query
 	)}&start=${startIndex}`;
 	return dispatch => {

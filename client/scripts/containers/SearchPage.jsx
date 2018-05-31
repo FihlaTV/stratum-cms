@@ -105,6 +105,7 @@ class SearchPage extends Component {
 			queries,
 			params,
 			loading,
+			title,
 			error,
 		} = this.props;
 		const { query } = params;
@@ -113,12 +114,12 @@ class SearchPage extends Component {
 			request && request[0] ? Math.ceil(request[0].startIndex / 10) : 1;
 		return (
 			<div className="search-page">
-				<h1>Sök</h1>
+				<h1>{title}</h1>
 				<Form
 					onSubmit={e => {
 						e.preventDefault();
 						this.props.router.push({
-							pathname: `/sok/${encodeURI(inputQuery)}`,
+							pathname: `/sok/${encodeURIComponent(inputQuery)}`,
 						});
 					}}
 					inline
