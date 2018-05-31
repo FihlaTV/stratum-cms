@@ -45,6 +45,7 @@ class App extends Component {
 			breadcrumbs,
 			location,
 			externalLogin,
+			enableSearch,
 			disableLogin,
 		} = this.props;
 		return location.pathname === '/404' ? (
@@ -59,6 +60,7 @@ class App extends Component {
 					items={menuItems}
 					externalLogin={externalLogin}
 					disableLogin={disableLogin}
+					enableSearch={enableSearch}
 				/>
 				<MainContainer
 					hasGrid={location.pathname !== '/'}
@@ -78,6 +80,7 @@ function mapStateToProps(state, { location }) {
 	return {
 		location,
 		menuItems: state.menu.items,
+		enableSearch: state.menu.enableSearch,
 		error: state.error,
 		registerInformation: state.registerInformation,
 		breadcrumbs: state.breadcrumbs.items,

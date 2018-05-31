@@ -12,6 +12,7 @@ import registerInformation from './registerInformation';
 import startPage from './startPage';
 import breadcrumbs from './breadcrumbs';
 import contacts from './contacts';
+import search from './search';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
@@ -31,4 +32,5 @@ export default combineReducers({
 	startPage,
 	scrollbutton,
 	contacts,
+	search,
 });
