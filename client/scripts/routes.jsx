@@ -10,6 +10,7 @@ import Index from './containers/Index';
 import Registration from './containers/Registration';
 import ContactPage from './containers/ContactPage';
 import SearchPage from './containers/SearchPage';
+const { CLIENT_GOOGLE_API_KEY, CLIENT_GOOGLE_SEARCH_CX } = process.env;
 
 export default (
 	<Route path="/" component={App}>
@@ -21,7 +22,10 @@ export default (
 		<Route path="404" component={ErrorPage} />
 		<Route path="registrering" component={Registration} />
 		<Route path="kontakt" component={ContactPage} />
-		<Route path="sok(/:query)" component={SearchPage} />
+		{CLIENT_GOOGLE_API_KEY &&
+			CLIENT_GOOGLE_SEARCH_CX && (
+				<Route path="sok(/:query)" component={SearchPage} />
+			)}
 		<Route path=":menu" component={Page}>
 			<Route path=":page(/:subpage)/p/:pageId" component={Page} />
 		</Route>
