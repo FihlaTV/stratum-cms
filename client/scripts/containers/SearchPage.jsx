@@ -15,7 +15,7 @@ import {
 } from '../actions/search';
 import Spinner from '../components/Spinner';
 import { setBreadcrumbs, clearBreadcrumbs } from '../actions/breadcrumbs';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const ResultItem = ({ htmlTitle, link, snippet, htmlSnippet, className }) => (
 	<div className={className}>
@@ -197,7 +197,6 @@ class SearchPage extends Component {
 	}
 }
 
-// SearchPage.propTypes = { };
 const mapStateToProps = ({ search, menu }, { location }) => {
 	return {
 		loading: search.loading,
@@ -216,6 +215,10 @@ const mapDispatchToProps = dispatch => ({
 	fetchSearchResults: (...args) => dispatch(fetchSearchResults(...args)),
 	changeQuery: query => dispatch(changeQuery(query)),
 });
+
+SearchPage.propTypes = {
+	title: PropTypes.string.isRequired,
+};
 
 SearchPage.defaultProps = {
 	title: 'Sök',
