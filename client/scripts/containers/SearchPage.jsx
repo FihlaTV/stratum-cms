@@ -136,6 +136,7 @@ class SearchPage extends Component {
 							placeholder="Skriv sökord"
 							onChange={e => changeQuery(e.target.value)}
 							className="search-bar-input"
+							autoFocus
 						/>
 					</FormGroup>{' '}
 					<FormGroup>
