@@ -22,6 +22,7 @@ class StartPageWidget extends Component {
 					onLoadComplete={this.onComplete.bind(this)}
 					className="startpage-widget-digit"
 					format={this.props.format}
+					formatFn={this.props.formatFn}
 					root={this.props.root}
 					unstyled
 				/>
