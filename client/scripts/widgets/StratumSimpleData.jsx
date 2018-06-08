@@ -61,6 +61,10 @@ class StratumSimpleData extends Component {
 	format(val) {
 		const { format, formatFn } = this.props;
 		if (formatFn) {
+			/* This should only be used to load advanced formatting from
+			 * the Keystone properties..
+			 */
+
 			/* eslint no-new-func: 0 */
 			return Function('value', formatFn)(val);
 		}
