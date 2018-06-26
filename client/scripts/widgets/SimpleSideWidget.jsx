@@ -1,7 +1,7 @@
 import React from 'react';
 import StratumSimpleData from './StratumSimpleData';
 
-const SimpleSideWidget = ({ url, description, format, root }) => {
+const SimpleSideWidget = ({ url, description, format, formatFn, root }) => {
 	return (
 		<div>
 			<div className="side-widget">
@@ -9,6 +9,7 @@ const SimpleSideWidget = ({ url, description, format, root }) => {
 					unstyled
 					url={url}
 					format={format}
+					formatFn={formatFn}
 					root={root}
 					className="side-widget-digit"
 				>
