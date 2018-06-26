@@ -143,6 +143,9 @@ BasePage.add(
 				),
 			},
 		},
+		isEnglish: {
+			type: Boolean,
+		},
 		displayPrintButton: {
 			type: Boolean,
 			note:

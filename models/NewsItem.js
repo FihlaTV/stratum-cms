@@ -90,6 +90,9 @@ NewsItem.add({
 		collapse: true,
 	},
 	extraImage: extensions.extraImages(),
+	isEnglish: {
+		type: Boolean,
+	},
 });
 
 /**

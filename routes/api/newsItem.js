@@ -55,6 +55,7 @@ exports = module.exports = function(req, res) {
 					});
 				}),
 				state: newsItem.state,
+				isEnglish: newsItem.isEnglish,
 			};
 			if (newsItem.image.public_id) {
 				data.image = formatCloudinaryImage(

@@ -110,6 +110,7 @@ exports = module.exports = function(req, res) {
 				content: page.content,
 				layout: page.layout,
 				contentType: page.contentType,
+				isEnglish: page.isEnglish,
 				displayPrintButton: page.displayPrintButton,
 				resourcePlacement: page.resourcePlacement,
 				widget: page.widget,

@@ -89,6 +89,7 @@ class NewsItem extends Component {
 			resources = [],
 			extraImages = [],
 			state,
+			isEnglish,
 		} = this.props;
 		const isModernTheme = process.env.CLIENT_THEME === 'modern';
 		var publishedAt =
@@ -144,6 +145,7 @@ class NewsItem extends Component {
 							<ResourceList
 								resources={resources}
 								inContainer={isModernTheme}
+								isEnglish={isEnglish}
 							/>
 						)}
 					</Col>

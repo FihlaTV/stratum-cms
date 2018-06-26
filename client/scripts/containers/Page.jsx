@@ -161,6 +161,7 @@ class Page extends Component {
 			layout,
 			image,
 			extraImages = [],
+			isEnglish,
 			displayPrintButton,
 			contacts = [],
 			shortId,
@@ -221,6 +222,7 @@ class Page extends Component {
 							<ResourceList
 								resources={resources}
 								inContainer={isModernTheme}
+								isEnglish={isEnglish}
 							/>
 						)}
 				</Col>
@@ -241,14 +243,7 @@ class Page extends Component {
 							/>
 						)}
 					{sideArea && <SideArea {...sideArea} />}
-					{contacts.length > 0 && (
-						<h2>
-							{contacts.length > 1
-								? 'Kontaktpersoner'
-								: 'Kontaktperson'}
-						</h2>
-					)}
-					<ContactPersons contacts={contacts} />
+					<ContactPersons contacts={contacts} isEnglish={isEnglish} />
 					<DockedImages
 						imageSMCols={12}
 						imageMDCols={layout === 'full' ? 6 : 12}
@@ -260,6 +255,7 @@ class Page extends Component {
 							<ResourceList
 								resources={resources}
 								inContainer={isModernTheme}
+								isEnglish={isEnglish}
 							/>
 						)}
 				</Col>

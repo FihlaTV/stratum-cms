@@ -31,14 +31,17 @@ export const Resource = ({
 const ResourceList = ({
 	resources,
 	inContainer,
-	title = 'Dokument att ladda ner',
+	title,
+	englishTitle,
+	hideTitle,
+	isEnglish,
 }) => (
 	<div
 		className={`resource-list${
 			inContainer ? ' side-area side-area-secondary' : ''
 		}`}
 	>
-		<h2>{title}</h2>
+		{!hideTitle && <h2>{isEnglish ? englishTitle : title}</h2>}
 		<ul>
 			{resources.map((resourceProps, i) => (
 				<Resource key={`resource-${i}`} {...resourceProps} />
@@ -47,8 +50,16 @@ const ResourceList = ({
 	</div>
 );
 
+ResourceList.defaultProps = {
+	title: 'Dokument att ladda ner',
+	englishTitle: 'Documents',
+};
+
 ResourceList.propTypes = {
+	englishTitle: PropTypes.string,
+	hideTitle: PropTypes.bool,
 	inContainer: PropTypes.bool,
+	isEnglish: PropTypes.bool,
 	resources: PropTypes.arrayOf(
 		PropTypes.shape({
 			title: PropTypes.string,
